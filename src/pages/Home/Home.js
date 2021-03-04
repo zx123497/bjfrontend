@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core';   //makeStyle import
-
+import DrawerMenu from '../../parts/DrawerMenu/DrawerMenu'
 const useStyles=makeStyles((theme)=>({   //css這樣寫!! 
     Home:{
         color:theme.palette.ultimate.main,
@@ -31,6 +31,7 @@ const Home=(props)=> {
     const classes=useStyles(); //自己寫的useStyle hook
     return (
         <div className={classes.Home}>  {/*外面包一層DIV */}
+        <DrawerMenu></DrawerMenu>
             <h1 className="title">跟保志玩遊戲學經濟!</h1>
             <div className="subtitle">
                 <h3 >Front End Group</h3>
