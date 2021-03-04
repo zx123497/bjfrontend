@@ -1,3 +1,15 @@
+# Folder Classification
+
+assets: images, data
+components: 元件
+pages: 頁面
+parts: 常駐元件
+service: back end communication
+store: related to reducer
+themes: 主題
+util: back end data processing
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
