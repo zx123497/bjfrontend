@@ -1,26 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
 
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core/styles';
+import Theme from './themes/theme';
+import './App.css';
+import Home from './pages/Home/Home'
+import Register from './pages/Register/Register'
+import BackStage from './pages/Backstage/Backstage'
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <h1>HEllo Wolrd</h1>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const appliedTheme = Theme;
+    return (
+        <BrowserRouter>
+            <ThemeProvider theme={appliedTheme}>
+                <div className="App" >
+                    <Switch>
+                        <Route path='/admin' component={BackStage}/>
+                        <Route path='/' render={() => (
+                            <>
+                                <main>
+                                    <Switch>
+                                    <Route path='/' exact component={Home} />
+                                     <Route path='/register' exact component={Register} />     
+                                    </Switch>
+                                </main>
+                            </>
+                        )}/>
+                    </Switch>
+                </div>
+            </ThemeProvider>
+        </BrowserRouter>
+    );
 }
 
 export default App;
