@@ -7,6 +7,7 @@ import './App.css';
 import Home from './pages/Home/Home'
 import Register from './pages/Register/Register'
 import BackStage from './pages/Backstage/Backstage'
+import SignIn from './pages/SignIn/SignIn'
 function App() {
   const appliedTheme = Theme;
     return (
@@ -20,7 +21,8 @@ function App() {
                                 <main>
                                     <Switch>
                                     <Route path='/' exact component={Home} />
-                                     <Route path='/register' exact component={Register} />     
+                                    <Route path='/register' exact component={Register} />
+                                    <Route path='/SignIn' exact component={SignIn} />     
                                     </Switch>
                                 </main>
                             </>
