@@ -1,10 +1,9 @@
 import React from 'react';
-import {  makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
-import { Link,withRouter } from 'react-router-dom';
+import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
 import BackPage from '../../components/BackPage/BackPage'
 
 const useStyles = makeStyles((theme) => ({
-    Register: {
+    Register2: {
         display:"flex",
         color: theme.palette.ultimate.main,
         backgroundColor: theme.palette.primary.main,
@@ -12,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
         overflow:"hidden",  //解決margin-top塌陷
         alienItems: "center",
         justifyContent:"center",
-        
+
         "& .card":{
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.ultimate.dark,
@@ -44,32 +43,33 @@ const useStyles = makeStyles((theme) => ({
             borderRadius:"20px",
             boxShadow:"none",
             width:"50%",
+            variant:"contained",
             backgroundColor: theme.palette.ultimate.main,
             color:theme.palette.background.paper,
         }
     }
 }));
 
-const Register = (props) => {
+const Register2 = (props) => {
     const classes = useStyles();
     return ( 
-    <div className = { classes.Register } >
-        <BackPage></BackPage>
+    <div className = { classes.Register2 } >
+        <BackPage refs="/Register"></BackPage>
         <Card className = "card">
             <CardContent>
                 <p className = "title">會員註冊</p>
                 <form className = "input" noValidate autoComplete="off">
-                    <TextField id="school" label="學校" type="search" variant="outlined"  size="small" />
-                    <TextField id="Id" label="玩家ID" type="search" variant="outlined"  size="small" />
-                    <TextField id="name" label="姓名" type="search" variant="outlined"  size="small" />
+                    <TextField id="account" label="帳號" type="search" variant="outlined"  size="small" />
+                    <TextField id="password" label="密碼" type="search" variant="outlined"  size="small" />
+                    <TextField id="check_password" label="密碼確認" type="search" variant="outlined"  size="small" />
                 </form>
             </CardContent>
             <CardActions>
-                <Link component={Button} className="next" to={'/Register2'}>下一步</Link>
+                <Button className="next">確認註冊</Button>
             </CardActions>
         </Card>
     </div >
     )
 }
 
-export default withRouter(Register) 
+export default Register2
