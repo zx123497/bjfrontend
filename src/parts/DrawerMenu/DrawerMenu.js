@@ -9,8 +9,6 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -27,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     top: 'auto',
     bottom: 0,
     backgroundColor:theme.palette.background.paper,
-    borderRadius:"20px 20px 0px 0px",
+    borderRadius:"40px 40px 0px 0px",
     boxShadow:"0 -6px 6px rgba(0,0,0,0.2)",
     transition: theme.transitions.create(['display'], {
       easing: theme.transitions.easing.sharp,
