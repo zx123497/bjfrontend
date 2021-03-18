@@ -1,15 +1,15 @@
 import React from 'react';
-import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
+import {  makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
 import { Link,withRouter } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
 
 const useStyles = makeStyles((theme) => ({
-    Register2: {
+    ResetPassword: {
         display:"flex",
         color: theme.palette.ultimate.main,
         backgroundColor: theme.palette.primary.main,
         height:"100vh",
-        overflow:"hidden",  //解決margin-top塌陷
+        overflow:"hidden", 
         alienItems: "center",
         justifyContent:"center",
 
@@ -44,33 +44,32 @@ const useStyles = makeStyles((theme) => ({
             borderRadius:"20px",
             boxShadow:"none",
             width:"50%",
-            variant:"contained",
             backgroundColor: theme.palette.ultimate.main,
             color:theme.palette.background.paper,
-        }
+        },
     }
 }));
 
-const Register2 = (props) => {
+const ResetPassword = (props) => {
     const classes = useStyles();
     return ( 
-    <div className = { classes.Register2 } >
-        <BackPage refs="/Register"></BackPage>
+    <div className = { classes.ResetPassword } >
+        <BackPage refs="/"></BackPage>
         <Card className = "card">
             <CardContent>
-                <p className = "title">會員註冊</p>
+                <p className = "title">更改密碼</p>
                 <form className = "input" noValidate autoComplete="off">
-                    <TextField id="account" label="帳號 (E-mail)" type="search" variant="outlined"  size="small" />
-                    <TextField id="password" label="密碼" type="search" variant="outlined"  size="small" />
-                    <TextField id="check_password" label="密碼確認" type="search" variant="outlined"  size="small" />
+                    <TextField id="oldPW" label="舊密碼" type="search" variant="outlined"  size="small" />
+                    <TextField id="newPW" label="新密碼" type="search" variant="outlined"  size="small" />
+                    <TextField id="checkNewPw" label="重新輸入新密碼" type="search" variant="outlined"  size="small" />
                 </form>
             </CardContent>
             <CardActions>
-                <Link component={Button} className="next" to={'/LogIn'}>確認註冊</Link>
+                <Link component={Button} className="next" to={'/'}>更改</Link>
             </CardActions>
         </Card>
     </div >
     )
 }
 
-export default withRouter(Register2) 
+export default withRouter(ResetPassword) 

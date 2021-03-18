@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         overflow:"hidden",  //解決margin-top塌陷
         alienItems: "center",
         justifyContent:"center",
-        
+
         "& .card":{
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.ultimate.dark,
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
             margin: "auto",
             alienItems: "center",
             borderRadius: 12,
-            boxShadow: '0 8px 16px 0 #BDC9D7',
+            boxShadow: '0 8px 16px 0 rgba(0,0,0,.3)',
         },
         "& .title":{
             color:  theme.palette.primary.main,
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
             width:"50%",
             backgroundColor: theme.palette.ultimate.main,
             color:theme.palette.background.paper,
-        }
+        },
     }
 }));
 
@@ -54,7 +54,7 @@ const Register = (props) => {
     const classes = useStyles();
     return ( 
     <div className = { classes.Register } >
-        <BackPage></BackPage>
+        <BackPage refs="/LogIn"></BackPage>
         <Card className = "card">
             <CardContent>
                 <p className = "title">會員註冊</p>

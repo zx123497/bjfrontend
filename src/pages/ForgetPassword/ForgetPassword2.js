@@ -1,15 +1,15 @@
 import React from 'react';
-import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
+import {  makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
 import { Link,withRouter } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
 
 const useStyles = makeStyles((theme) => ({
-    Register2: {
+    ForgetPassword2: {
         display:"flex",
         color: theme.palette.ultimate.main,
         backgroundColor: theme.palette.primary.main,
         height:"100vh",
-        overflow:"hidden",  //解決margin-top塌陷
+        overflow:"hidden",  
         alienItems: "center",
         justifyContent:"center",
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.ultimate.dark,
             width: "350px",
-            height:"470px",
+            height:"400px",
             margin: "auto",
             alienItems: "center",
             borderRadius: 12,
@@ -40,37 +40,35 @@ const useStyles = makeStyles((theme) => ({
         },
         "& .next":{
             margin:"auto",
-            marginTop:"200px",
+            marginTop:"150px",
             borderRadius:"20px",
             boxShadow:"none",
             width:"50%",
-            variant:"contained",
             backgroundColor: theme.palette.ultimate.main,
             color:theme.palette.background.paper,
-        }
+        },
     }
 }));
 
-const Register2 = (props) => {
+const ForgetPassword2 = (props) => {
     const classes = useStyles();
     return ( 
-    <div className = { classes.Register2 } >
-        <BackPage refs="/Register"></BackPage>
+    <div className = { classes.ForgetPassword2 } >
+        <BackPage refs="/ForgetPassword"></BackPage>
         <Card className = "card">
             <CardContent>
-                <p className = "title">會員註冊</p>
+                <p className = "title">重設密碼</p>
                 <form className = "input" noValidate autoComplete="off">
-                    <TextField id="account" label="帳號 (E-mail)" type="search" variant="outlined"  size="small" />
-                    <TextField id="password" label="密碼" type="search" variant="outlined"  size="small" />
-                    <TextField id="check_password" label="密碼確認" type="search" variant="outlined"  size="small" />
+                    <TextField id="password" label="新密碼" type="search" variant="outlined"  size="small" />
+                    <TextField id="checkPw" label="再次輸入新密碼" type="search" variant="outlined"  size="small" />
                 </form>
             </CardContent>
             <CardActions>
-                <Link component={Button} className="next" to={'/LogIn'}>確認註冊</Link>
+                <Link component={Button} className="next" to={'/LogIn'}>重設</Link>
             </CardActions>
         </Card>
     </div >
     )
 }
 
-export default withRouter(Register2) 
+export default withRouter(ForgetPassword2) 
