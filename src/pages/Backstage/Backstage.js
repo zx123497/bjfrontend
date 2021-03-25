@@ -1,11 +1,24 @@
 import React from 'react'
-
-const Backstage=(props)=> {
+import { makeStyles } from '@material-ui/core';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import NewRoom from './NewRoom/NewRoom'
+import GameIn from './GameIn/GameIn'
+import Lobby from './Lobby/Lobby'
+const BackStage = (props) => {
+    let {path} = useRouteMatch();
     return (
-        <div>
-            <h1>Backstage</h1>
+        <div >
+            
+            <div className="content">
+                <Switch>
+                    <Route exact path={path} render={() => <h1>BackStage</h1>} />
+                    <Route path={`${path}/newroom`} component={NewRoom} />
+                    <Route path={`${path}/gamein`} component={GameIn} />
+                    <Route path={`${path}/lobby`} component={Lobby} />
+                </Switch>
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default Backstage
+export default BackStage

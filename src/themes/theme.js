@@ -19,6 +19,7 @@ const theme = createMuiTheme({
         ultimate: {
             main: "#939597", //gray
             dark: "#7d8082",
+            light:"#cbcccd"
         }
     },
     breakpoints: {
