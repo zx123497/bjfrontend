@@ -52,21 +52,38 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Register2 = (props) => {
+
     const classes = useStyles();
+
+    const [values, setValues] = React.useState({
+        account: '',
+        password:'',
+        check_password:'',
+    });
+
+    const handleChange = (prop) => (event) => {
+        setValues({...values, [prop]: event.target.value });
+    };
+
+    const handleSubmit = (event) =>  {
+        alert('account: ' + values.account + ', password: ' + values.password + ', password: ' + values.check_password);
+        event.preventDefault();
+    };
+
     return ( 
     <div className = { classes.Register2 } >
         <BackPage refs="/Register"></BackPage>
         <Card className = "card">
             <CardContent>
                 <p className = "title">會員註冊</p>
-                <form className = "input" noValidate autoComplete="off">
-                    <TextField id="account" label="帳號 (E-mail)" type="search" variant="outlined"  size="small" />
-                    <TextField id="password" label="密碼" type="search" variant="outlined"  size="small" />
-                    <TextField id="check_password" label="密碼確認" type="search" variant="outlined"  size="small" />
+                <form onSubmit={handleSubmit} className = "input" noValidate autoComplete="off">
+                    <TextField id="account" value={values.account} onChange={handleChange('account')} label="帳號 (E-mail)" type="search" variant="outlined"  size="small" />
+                    <TextField id="password" value={values.password} onChange={handleChange('password')} label="密碼" type="search" variant="outlined"  size="small" />
+                    <TextField id="check_password" value={values.check_password} onChange={handleChange('check_password')} label="密碼確認" type="search" variant="outlined"  size="small" />
                 </form>
             </CardContent>
             <CardActions>
-                <Link component={Button} className="next" to={'/LogIn'}>確認註冊</Link>
+                <Link onClick={handleSubmit} component={Button} className="next" to={'/LogIn'}>確認註冊</Link>
             </CardActions>
         </Card>
     </div >

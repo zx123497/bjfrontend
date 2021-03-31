@@ -56,6 +56,20 @@ const useStyles = makeStyles((theme) => ({
 
 const ForgetPassword = (props) => {
     const classes = useStyles();
+
+    const [values, setValues] = React.useState({
+        email: '',
+    });
+
+    const handleChange = (prop) => (event) => {
+        setValues({...values, [prop]: event.target.value });
+    };
+
+    const handleSubmit = (event) =>  {
+        alert('email: ' + values.email);
+        event.preventDefault();
+    };
+
     return ( 
     <div className = { classes.ForgetPassword } >
         <BackPage refs="/LogIn"></BackPage>
@@ -65,12 +79,12 @@ const ForgetPassword = (props) => {
                 <div className="detail">
                     請至電子信箱收取信件以重新設定密碼
                 </div>
-                <form className = "input" noValidate autoComplete="off">
-                    <TextField id="email" label="電子信箱" type="search" variant="outlined"  size="small" />
+                <form onSubmit={handleSubmit} className = "input" noValidate autoComplete="off">
+                    <TextField id="email" value={values.email} onChange={handleChange('email')} label="電子信箱" type="search" variant="outlined"  size="small" />
                 </form>
             </CardContent>
             <CardActions>
-                <Link component={Button} className="next" to={'/ForgetPassword2'}>發送</Link>
+                <Link component={Button} onClick={handleSubmit} className="next" to={'/ForgetPassword2'}>發送</Link>
             </CardActions>
         </Card>
     </div >
