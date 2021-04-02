@@ -52,20 +52,36 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = (props) => {
     const classes = useStyles();
+
+    const [values, setValues] = React.useState({
+        school: '',
+        Id:'',
+        name:'',
+    });
+
+    const handleChange = (prop) => (event) => {
+        setValues({...values, [prop]: event.target.value });
+    };
+
+    const handleSubmit = (event) =>  {
+        alert('school: ' + values.school + ', id: ' + values.Id + ', name: ' + values.name);
+        event.preventDefault();
+    };
+
     return ( 
     <div className = { classes.Register } >
         <BackPage refs="/LogIn"></BackPage>
         <Card className = "card">
             <CardContent>
                 <p className = "title">會員註冊</p>
-                <form className = "input" noValidate autoComplete="off">
-                    <TextField id="school" label="學校" type="search" variant="outlined"  size="small" />
-                    <TextField id="Id" label="玩家ID" type="search" variant="outlined"  size="small" />
-                    <TextField id="name" label="姓名" type="search" variant="outlined"  size="small" />
+                <form onSubmit={handleSubmit} className = "input" noValidate autoComplete="off">
+                    <TextField id="school" value={values.school} onChange={handleChange('school')} label="學校" type="search" variant="outlined"  size="small" />
+                    <TextField id="Id" value={values.Id} onChange={handleChange('Id')} label="玩家ID" type="search" variant="outlined"  size="small" />
+                    <TextField id="name" value={values.name} onChange={handleChange('name')} label="姓名" type="search" variant="outlined"  size="small" />
                 </form>
             </CardContent>
             <CardActions>
-                <Link component={Button} className="next" to={'/Register2'}>下一步</Link>
+                <Link onClick={handleSubmit} component={Button} className="next" to={'/Register2'}>下一步</Link>
             </CardActions>
         </Card>
     </div >

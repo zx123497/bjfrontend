@@ -1,7 +1,8 @@
 import React from 'react';
-import {  makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
+import {  makeStyles, Card, CardActions, CardContent, Button} from '@material-ui/core';
 import { Link,withRouter } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
+import PasswordInput from '../../components/PasswordInput/PasswordInput';
 
 const useStyles = makeStyles((theme) => ({
     ForgetPassword2: {
@@ -59,8 +60,8 @@ const ForgetPassword2 = (props) => {
             <CardContent>
                 <p className = "title">重設密碼</p>
                 <form className = "input" noValidate autoComplete="off">
-                    <TextField id="password" label="新密碼" type="search" variant="outlined"  size="small" />
-                    <TextField id="checkPw" label="再次輸入新密碼" type="search" variant="outlined"  size="small" />
+                    <PasswordInput field="新密碼"></PasswordInput>
+                    <PasswordInput field="再次輸入新密碼"></PasswordInput>
                 </form>
             </CardContent>
             <CardActions>

@@ -12,6 +12,7 @@ import Register2 from './pages/Register/Register2'
 import ForgetPassword from './pages/ForgetPassword/ForgetPassword'
 import ForgetPassword2 from './pages/ForgetPassword/ForgetPassword2'
 import ResetPassword from './pages/ResetPassword/ResetPassword'
+import Loading from './pages/Loading/Loading'
 import BackStage from './pages/Backstage/Backstage'
 import Navbar from './parts/Navbar/Navbar'
 
@@ -60,6 +61,7 @@ const appliedTheme = Theme;
                                     <Route path='/ForgetPassword' exact component={ForgetPassword} />
                                     <Route path='/ForgetPassword2' exact component={ForgetPassword2} />
                                     <Route path='/ResetPassword' exact component={ResetPassword} />
+                                    <Route path='/Loading' exact component={Loading} />
                                     </Switch>
                                     
                                     

@@ -2,16 +2,7 @@ import React from 'react';
 import {  makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
 import { Link,withRouter } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
-import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
-import FilledInput from '@material-ui/core/FilledInput';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import PasswordInput from '../../components/PasswordInput/PasswordInput';
 
 const useStyles = makeStyles((theme) => ({
     LogIn: {
@@ -50,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         },
         "& .next":{
             margin:"auto",
-            marginTop:"8px",
+            marginTop:"15px",
             borderRadius:"20px",
             boxShadow:"none",
             width:"50%",
@@ -89,7 +80,9 @@ const useStyles = makeStyles((theme) => ({
         },
         "& .bottom":{
             fontSize:"12px",
-            marginLeft:"0",
+            alienItems: "center",
+            margin:"auto",
+            marginTop: "-10px"
         },
     }
 }));
@@ -97,24 +90,43 @@ const useStyles = makeStyles((theme) => ({
 const LogIn = (props) => {
     const classes = useStyles();
 
+    const [values, setValues] = React.useState({
+        account: '',
+    });
+
+    // const [password, setValues] = React.useState(
+    // );
+
+    const handleChange = (prop) => (event) => {
+        setValues({...values, [prop]: event.target.value });
+    };
+
+    const handleSubmit = (event) =>  {
+        alert('account: ' + values.account + ', password: ' + values.password);
+        event.preventDefault();
+    };
+
+    const handlePasswordChange = value=>{
+        setValues();
+    }
     return ( 
     <div className = { classes.LogIn } >
         <BackPage></BackPage>
         <Card className = "card">
             <CardContent>
                 <p className = "title">會員登入</p>
-                <form className = "input" noValidate autoComplete="off">
-                    <TextField id="account" label="帳號" type="search" variant="outlined"  size="small" />
-                    <TextField id="password" label="密碼" type="search" variant="outlined"  size="small" />
+                <form onSubmit={handleSubmit} className = "input" noValidate autoComplete="off">
+                    <TextField id="account" value={values.account} onChange={handleChange('account')} label="帳號" type="search" variant="outlined"  size="small" />
+                    <PasswordInput field="密碼" onChange={handleChange('password')}></PasswordInput>
                 </form>
                 <Link component={Button} className="btn2" to={'/ForgetPassword'}>忘記密碼</Link>
+                <Link component={Button} className="next" to={'/Lobby'}>登入</Link>
             </CardContent>
             <CardActions>
-                <Link component={Button} className="next" to={'/Lobby'}>登入</Link>
-            </CardActions>
             <div className="bottom">
                 還沒有會員嗎?<Link component={Button} className="btn3" to={'/Register'}>立即註冊</Link>
             </div>
+            </CardActions>
         </Card>
     </div >
     )
