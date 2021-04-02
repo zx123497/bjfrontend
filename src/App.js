@@ -16,25 +16,41 @@ import BackStage from './pages/Backstage/Backstage'
 import Navbar from './parts/Navbar/Navbar'
 
 const useStyles = makeStyles((theme) => ({
-    
 
-  }));
+    root:{
+        backgroundColor:"#f5df4d",
+        "& .App":{
+
+            
+        },
+        "& .Container":{
+            margin:"3rem 0 0 0",
+            padding:"1rem",
+        }
+    }
+
+}));
 function App() {
     const classes=useStyles();
-  const appliedTheme = Theme;
+const appliedTheme = Theme; 
     return (
         <div className={classes.root}>
         <BrowserRouter>
             <ThemeProvider theme={appliedTheme}>
             
                 <div className="App" >
-                <Navbar/>
+                    <div>
+                        <Navbar className={classes.nav}/>
+                    </div>
+                    <div className="Container">
                     <Switch>
                         <Route path='/admin' component={BackStage}/>
                         <Route path='/' render={() => (
-                            <>
                             
-                                <main>
+                            
+                                
+                                    
+                                    
                                     <Switch>
                                     <Route path='/' exact component={Home} />
                                     <Route path='/LogIn' exact component={LogIn} />
@@ -45,10 +61,13 @@ function App() {
                                     <Route path='/ForgetPassword2' exact component={ForgetPassword2} />
                                     <Route path='/ResetPassword' exact component={ResetPassword} />
                                     </Switch>
-                                </main>
-                            </>
+                                    
+                                    
+                                
+                            
                         )}/>
                     </Switch>
+                    </div>
                 </div>
             </ThemeProvider>
         </BrowserRouter>
