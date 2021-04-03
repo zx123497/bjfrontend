@@ -15,6 +15,8 @@ import ResetPassword from './pages/ResetPassword/ResetPassword'
 import Loading from './pages/Loading/Loading'
 import BackStage from './pages/Backstage/Backstage'
 import Navbar from './parts/Navbar/Navbar'
+import QRCodeSend from './pages/QRCode/QRCodeSend'
+import QRCodeSend2 from './pages/QRCode/QRCodeSend2'
 
 const useStyles = makeStyles((theme) => ({
     
@@ -46,6 +48,8 @@ function App() {
                                     <Route path='/ForgetPassword2' exact component={ForgetPassword2} />
                                     <Route path='/ResetPassword' exact component={ResetPassword} />
                                     <Route path='/Loading' exact component={Loading} />
+                                    <Route path='/QRCodeSend' exact component={QRCodeSend} />
+                                    <Route path='/QRCodeSend2' exact component={QRCodeSend2} />
                                     </Switch>
                                 </main>
                             </>

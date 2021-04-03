@@ -94,9 +94,6 @@ const LogIn = (props) => {
         account: '',
     });
 
-    // const [password, setValues] = React.useState(
-    // );
-
     const handleChange = (prop) => (event) => {
         setValues({...values, [prop]: event.target.value });
     };
@@ -106,9 +103,6 @@ const LogIn = (props) => {
         event.preventDefault();
     };
 
-    const handlePasswordChange = value=>{
-        setValues();
-    }
     return ( 
     <div className = { classes.LogIn } >
         <BackPage></BackPage>
@@ -120,7 +114,7 @@ const LogIn = (props) => {
                     <PasswordInput field="密碼" onChange={handleChange('password')}></PasswordInput>
                 </form>
                 <Link component={Button} className="btn2" to={'/ForgetPassword'}>忘記密碼</Link>
-                <Link component={Button} className="next" to={'/Lobby'}>登入</Link>
+                <Link onClick={handleSubmit} component={Button} className="next" to={'/Lobby'}>登入</Link>
             </CardContent>
             <CardActions>
             <div className="bottom">
