@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
             display:"flex",
             alignItems:"center",
             justifyContent:"center",
+            
         },
         '& .name':{
             flexGrow:1,
@@ -52,14 +53,21 @@ const useStyles = makeStyles((theme) => ({
             alignItems:"center",
         },
         '& .rooms':{
+            
+            width:"100%",
             marginTop:"2rem",
+            
+        },
+        "& .roomArea":{
+            height:"22rem",
+            overflow:"scroll",
         },
         "& .roomtext":{
             flexGrow:1,
         },
         "& .roombtn":{
             height:"2.5rem",
-            width:"6rem",
+            
             backgroundColor:theme.palette.background.paper,
             boxShadow:"0 0 10px rgba(0,0,0,0.2)",
             borderRadius:"10px"
@@ -178,12 +186,15 @@ const Lobby=()=> {
                    <h2 className="roomtext">已建立房間</h2>
                <Button className="roombtn">+建立房間</Button>
             </div>
-               <Roomcard title="週一經濟" player="2" round="2" status="未開始"/>
+            <div className="roomArea">
+                <Roomcard title="週一經濟" player="2" round="2" status="未開始"/>
                <Roomcard title="週二經濟" player="2" round="2" status="未開始"/>
                <Roomcard title="週三經濟" player="2" round="2" status="未開始"/>
                <Roomcard title="週一經濟" player="2" round="2" status="未開始"/>
                <Roomcard title="週二經濟" player="2" round="2" status="未開始"/>
                <Roomcard title="週三經濟" player="2" round="2" status="未開始"/>
+            </div>
+               
            </div>
         </div>
     )

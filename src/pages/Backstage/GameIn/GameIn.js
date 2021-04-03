@@ -84,7 +84,7 @@ const NewRoom=(props)=> {
                 <p className = "title">周一經濟</p>
                
                     <Button className="in">進入房間</Button>
-                    <Button className="next">進入房間</Button>
+                    <Button className="next">設定房間</Button>
             
             
                 

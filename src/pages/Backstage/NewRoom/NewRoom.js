@@ -71,7 +71,7 @@ const NewRoom=(props)=> {
     const classes = useStyles();
     return ( 
     <div className = { classes.Register } >
-        <BackPage></BackPage>
+
         <Card className = "card">
             
                 <p className = "title">建立房間</p>
