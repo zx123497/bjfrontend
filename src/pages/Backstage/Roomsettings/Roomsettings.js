@@ -5,7 +5,8 @@ import BackPage from '../../../components/BackPage/BackPage';
 import Input from '../../../components/Input/Input';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -96,74 +97,13 @@ const NewRoom=(props)=> {
      const handleMinuteChanged = async(id,value)=>{
         setMinute(value);
      }
-
+     function valuetext(value) {
+        return `${value}:${100-value}`;
+      }
     return ( 
     <div className = { classes.Register } >
-        <BackPage></BackPage>
-        
-            
-            <div className="contents">
-            <h1 className = "title">回合設定</h1>
-            <Input
-              className="input"
-                 key={form.round.id}
-                 id={form.round.id}
-                 elementType={form.round.elementType}
-                 onChange={handleRoundChanged} 
-                 elementConfig={form.round.elementConfig}
-                 value={round} 
-                label={form.round.label}                    
-              />
-              
-              <span style={{margin:"80px 10px 0px 0px"}}>是否新增物件?</span>
-              <FormControlLabel
-        control={
-          <Switch
-            checked={state.checkedB}
-            onChange={handleChange}
-            name="checkedB"
-            color="primary"
-          />
-        }
-        label=""
-      />
-              <Input
-              className={`${state.checkedB ? "" : "hide"}`}
-                 key="item"
-                 id="item"
-                 elementType={form.round.elementType}
-                 onChange={handleItemChanged} 
-                 elementConfig={form.items.elementConfig}
-                 value={item} 
-                label={"新增物件"}                    
-              />
-              <div className="timer">
-                    <span style={{margin:"0px 10px 0px 0px"}}>回合時間</span>
-                    <Input
-              className="time"
-                 key="minute"
-                 id="minute"
-                 elementType={form.minute.elementType}
-                 onChange={handleMinuteChanged} 
-                 elementConfig={form.minute.elementConfig}
-                 value={minute} 
-                                  
-              />
-              <span style={{margin:"0px 10px 0px 10px"}}>分</span>
-              <Input
-              className="time"
-                 key="minute"
-                 id="minute"
-                 elementType={form.minute.elementType}
-                 onChange={handleMinuteChanged} 
-                 elementConfig={form.minute.elementConfig}
-                 value={minute} 
-                                  
-              />
-              <span style={{margin:"0px 10px 0px 10px"}}>秒</span>
-              </div>
-             
-            </div>
+
+     
         <Button className="submit">建立房間</Button>
     </div >
     )
