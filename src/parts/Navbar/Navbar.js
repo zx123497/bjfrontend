@@ -11,35 +11,35 @@ import Menu from './Menu'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    
-"& .bar":{
-    backgroundColor:"transparent",
-    boxShadow: "none",
-},
-    "& .tool":{
-        justifyContent:"flex-end",
+
+    "& .bar": {
+      backgroundColor: "transparent",
+      boxShadow: "none",
+    },
+    "& .tool": {
+      justifyContent: "flex-end",
     }
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   title: {
-    
+
   },
 }));
 
-const ButtonAppBar=(props)=> {
+const ButtonAppBar = (props) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <AppBar  className="bar">
-      
+      <AppBar className="bar">
+
         <Toolbar className="tool">
-        <Button color="inherit" component={Link} to="/login">Login</Button>
-        
-          
-          <Menu/>
+          <Button color="inherit" component={Link} to="/login">Login</Button>
+
+
+          <Menu />
         </Toolbar>
       </AppBar>
     </div>

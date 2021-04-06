@@ -15,45 +15,47 @@ import ResetPassword from './pages/ResetPassword/ResetPassword'
 import Loading from './pages/Loading/Loading'
 import BackStage from './pages/Backstage/Backstage'
 import Navbar from './parts/Navbar/Navbar'
+import GameLobby from './pages/GameLobby/GameLobby'
 
 const useStyles = makeStyles((theme) => ({
-    
 
-  }));
+
+}));
 function App() {
-    const classes=useStyles();
-  const appliedTheme = Theme;
+    const classes = useStyles();
+    const appliedTheme = Theme;
     return (
         <div className={classes.root}>
-        <BrowserRouter>
-            <ThemeProvider theme={appliedTheme}>
-            
-                <div className="App" >
-                <Navbar/>
-                    <Switch>
-                        <Route path='/admin' component={BackStage}/>
-                        <Route path='/' render={() => (
-                            <>
-                            
-                                <main>
-                                    <Switch>
-                                    <Route path='/' exact component={Home} />
-                                    <Route path='/LogIn' exact component={LogIn} />
-                                    <Route path='/register' exact component={Register} />
-                                    <Route path='/register2' exact component={Register2} />
-                                    <Route path='/admin' exact component={BackStage} />
-                                    <Route path='/ForgetPassword' exact component={ForgetPassword} />
-                                    <Route path='/ForgetPassword2' exact component={ForgetPassword2} />
-                                    <Route path='/ResetPassword' exact component={ResetPassword} />
-                                    <Route path='/Loading' exact component={Loading} />
-                                    </Switch>
-                                </main>
-                            </>
-                        )}/>
-                    </Switch>
-                </div>
-            </ThemeProvider>
-        </BrowserRouter>
+            <BrowserRouter>
+                <ThemeProvider theme={appliedTheme}>
+
+                    <div className="App" >
+                        <Navbar />
+                        <Switch>
+                            <Route path='/admin' component={BackStage} />
+                            <Route path='/' render={() => (
+                                <>
+
+                                    <main>
+                                        <Switch>
+                                            <Route path='/' exact component={Home} />
+                                            <Route path='/login' exact component={LogIn} />
+                                            <Route path='/register' exact component={Register} />
+                                            <Route path='/register2' exact component={Register2} />
+                                            <Route path='/admin' exact component={BackStage} />
+                                            <Route path='/forgetpassword' exact component={ForgetPassword} />
+                                            <Route path='/forgetpassword2' exact component={ForgetPassword2} />
+                                            <Route path='/resetpassword' exact component={ResetPassword} />
+                                            <Route path='/loading' exact component={Loading} />
+                                            <Route path='/gamelobby' exact component={GameLobby} />
+                                        </Switch>
+                                    </main>
+                                </>
+                            )} />
+                        </Switch>
+                    </div>
+                </ThemeProvider>
+            </BrowserRouter>
         </div>
     );
 }
