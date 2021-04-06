@@ -5,9 +5,9 @@ import { Link,withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     btn:{
-        position:"absolute",
-        top:"4rem",
-        left:"15px"
+        position:"fixed",
+        top:"75px",
+        left:"12px",
     }
 }));
 

@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
         display:"flex",
         color: theme.palette.ultimate.main,
         backgroundColor: theme.palette.primary.main,
-        height:"100vh",
+        height:"88.8vh",
         overflow:"hidden",  //解決margin-top塌陷
         alienItems: "center",
         justifyContent:"center",
@@ -17,24 +17,30 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.ultimate.dark,
             width: "350px",
-            height:"470px",
+            height:"430px",
             margin: "auto",
             alienItems: "center",
             borderRadius: 12,
             boxShadow: '0 8px 16px 0 rgba(0,0,0,.3)',
         },
         "& .title":{
+            margin: "25px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
             color:  theme.palette.primary.main,
             fontSize: 30,
             fontWeight: 900,
         },
         "& .input": {
+            marginTop: "-10px",
             color: theme.palette.ultimate.main,
             fontSize: 20,
             height: "15px",
+            marginLeft: "17%",
             '& .MuiTextField-root': {
-                margin: theme.spacing(1.8),
-                width: '20ch',
+                marginTop:"25px",
+                width: '80%',
                 color: theme.palette.ultimate.main,
             },
         },
@@ -77,7 +83,7 @@ const Register2 = (props) => {
             <CardContent>
                 <p className = "title">會員註冊</p>
                 <form onSubmit={handleSubmit} className = "input" noValidate autoComplete="off">
-                    <TextField id="account" value={values.account} onChange={handleChange('account')} label="帳號 (E-mail)" type="search" variant="outlined"  size="small" />
+                    <TextField id="account" value={values.account} onChange={handleChange('account')} multiline label="帳號 (E-mail)" type="search" variant="outlined"  size="small" />
                     <TextField id="password" value={values.password} onChange={handleChange('password')} label="密碼" type="search" variant="outlined"  size="small" />
                     <TextField id="check_password" value={values.check_password} onChange={handleChange('check_password')} label="密碼確認" type="search" variant="outlined"  size="small" />
                 </form>

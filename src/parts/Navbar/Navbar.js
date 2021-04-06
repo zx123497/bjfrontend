@@ -12,11 +12,11 @@ import Menu from './Menu'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    
-"& .bar":{
-    backgroundColor:theme.palette.ultimate.main,
-    boxShadow: "0 5px 6px rgba(0,0,0,0.2)",
-},
+
+    "& .bar":{
+      backgroundColor:theme.palette.ultimate.main,
+      boxShadow: "0 5px 6px rgba(0,0,0,0.2)",
+    },
     "& .tool":{
       display:"flex",
       justifyContent:"center",
@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
       textAlign:"center",
       color:theme.palette.background.paper,
     }
-
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -50,15 +49,11 @@ const ButtonAppBar=(props)=> {
 
   return (
     <div className={classes.root}>
-      <AppBar  className="bar">
-      
+      <AppBar  className="bar">      
         <Toolbar className="tool">
         <Menu className="menu"/>
         <h4 className="logo">跟寶治學經濟LOGO</h4>
-        <Button className="login" color="inherit" component={Link} to="/login"><PersonIcon/>登入</Button>
-        
-          
-          
+        <Button className="login" color="inherit" component={Link} to="/login"><PersonIcon/>登入</Button>     
         </Toolbar>
       </AppBar>
     </div>

@@ -1,6 +1,5 @@
 import React,{useState} from 'react'
-import { makeStyles } from '@material-ui/core';   //makeStyle import
-import Input from '@material-ui/core/Input';
+import { makeStyles } from '@material-ui/core'; 
 import TextField from '@material-ui/core/TextField';
 import DrawerMenu from '../../parts/DrawerMenu/DrawerMenu'
 import QRCode from "react-qr-code";
