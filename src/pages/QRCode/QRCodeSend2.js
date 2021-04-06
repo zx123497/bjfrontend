@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
         display:"flex",
         backgroundColor: theme.palette.primary.main,
-        height:"88.8vh",
+        height:"100vh",
         overflow:"hidden", 
         alienItems: "center",
         justifyContent:"center",

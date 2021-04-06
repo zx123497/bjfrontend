@@ -4,7 +4,7 @@ import { Link,withRouter } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
 
 const useStyles = makeStyles((theme) => ({
-    ForgetPassword: {
+    GameIn: {
         display:"flex",
         color: theme.palette.ultimate.main,
         backgroundColor: theme.palette.primary.main,
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.ultimate.dark,
             width: "350px",
-            height:"330px",
+            height:"290px",
             margin: "auto",
             alienItems: "center",
             borderRadius: 12,
@@ -31,13 +31,6 @@ const useStyles = makeStyles((theme) => ({
             color:  theme.palette.primary.main,
             fontSize: 30,
             fontWeight: 900,
-        },
-        "& .detail":{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            fontSize:"12px",
-            marginTop:"40px",
         },
         "& .input": {
             color: theme.palette.ultimate.main,
@@ -56,17 +49,17 @@ const useStyles = makeStyles((theme) => ({
             borderRadius:"20px",
             boxShadow:"none",
             width:"50%",
-            backgroundColor: theme.palette.ultimate.main,
+            backgroundColor: "#B21A0F",
             color:theme.palette.background.paper,
         },
     }
 }));
 
-const ForgetPassword = (props) => {
+const GameIn = (props) => {
     const classes = useStyles();
 
     const [values, setValues] = React.useState({
-        email: '',
+        pincode: '',
     });
 
     const handleChange = (prop) => (event) => {
@@ -74,29 +67,26 @@ const ForgetPassword = (props) => {
     };
 
     const handleSubmit = (event) =>  {
-        alert('email: ' + values.email);
+        alert('pincode: ' + values.pincode);
         event.preventDefault();
     };
 
     return ( 
-    <div className = { classes.ForgetPassword } >
+    <div className = { classes.GameIn } >
         <BackPage refs="/LogIn"></BackPage>
         <Card className = "card">
             <CardContent>
-                <p className = "title">忘記密碼</p>
-                <div className="detail">
-                    請至電子信箱收取信件以重新設定密碼
-                </div>
+                <p className = "title">房間PIN Code</p>
                 <form onSubmit={handleSubmit} className = "input" noValidate autoComplete="off">
-                    <TextField id="email" value={values.email} onChange={handleChange('email')} label="電子信箱" type="search" variant="outlined"  size="small" />
+                    <TextField id="pincode" value={values.pincode} onChange={handleChange('pincode')} type="search" variant="outlined"  size="small" />
                 </form>
             </CardContent>
             <CardActions>
-                <Link component={Button} onClick={handleSubmit} className="next" to={'/ForgetPassword2'}>發送</Link>
+                <Link component={Button} onClick={handleSubmit} className="next" to={'/ForgetPassword2'}>開始遊戲</Link>
             </CardActions>
         </Card>
     </div >
     )
 }
 
-export default withRouter(ForgetPassword) 
+export default withRouter(GameIn) 
