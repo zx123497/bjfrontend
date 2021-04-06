@@ -176,7 +176,7 @@ const Menu = props => {
           </IconButton>
             </div>
             <Drawer
-                anchor="right"
+                anchor="left"
                 open={open}
                 onClose={handleDrawerClose}
             >

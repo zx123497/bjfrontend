@@ -15,6 +15,7 @@ import ResetPassword from './pages/ResetPassword/ResetPassword'
 import Loading from './pages/Loading/Loading'
 import BackStage from './pages/Backstage/Backstage'
 import Navbar from './parts/Navbar/Navbar'
+<<<<<<< HEAD
 import GameLobby from './pages/GameLobby/GameLobby'
 
 const useStyles = makeStyles((theme) => ({
@@ -56,6 +57,69 @@ function App() {
                     </div>
                 </ThemeProvider>
             </BrowserRouter>
+=======
+import UserLobby from './pages/UserLobby/UserLobby'
+const useStyles = makeStyles((theme) => ({
+
+    root:{
+        minHeight:"calc(100vh - 48px)",
+        backgroundColor:"#FFF06B",
+        "& .App":{
+
+            
+        },
+        "& .Container":{
+            height:"calc(100vh - 48px)",
+            margin:"3rem 0 0 0",
+            padding:"1rem",
+        }
+    }
+
+}));
+function App() {
+    const classes=useStyles();
+const appliedTheme = Theme; 
+    return (
+        <div className={classes.root}>
+        <BrowserRouter>
+            <ThemeProvider theme={appliedTheme}>
+            
+                <div className="App" >
+                    <div>
+                        <Navbar className={classes.nav}/>
+                    </div>
+                    <div className="Container">
+                    <Switch>
+                        <Route path='/admin' component={BackStage}/>
+                        <Route path='/' render={() => (
+                            
+                            
+                                
+                                    
+                                    
+                                    <Switch>
+                                    <Route path='/' exact component={Home} />
+                                    <Route path='/LogIn' exact component={LogIn} />
+                                    <Route path='/register' exact component={Register} />
+                                    <Route path='/register2' exact component={Register2} />
+                                   
+                                    <Route path='/ForgetPassword' exact component={ForgetPassword} />
+                                    <Route path='/ForgetPassword2' exact component={ForgetPassword2} />
+                                    <Route path='/ResetPassword' exact component={ResetPassword} />
+                                    <Route path='/Loading' exact component={Loading} />
+                                    <Route path='/user/lobby' exact component={UserLobby} />
+                                    </Switch>
+                                    
+                                    
+                                
+                            
+                        )}/>
+                    </Switch>
+                    </div>
+                </div>
+            </ThemeProvider>
+        </BrowserRouter>
+>>>>>>> 9b522550c966b0fb685448bfd964cb7ad113cf39
         </div>
     );
 }

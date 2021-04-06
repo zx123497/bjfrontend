@@ -149,7 +149,7 @@ const Lobby=()=> {
     const classes=useStyles();
     return (
         <div className={classes.Lobby}>
-           <h1>管理者專區</h1> 
+           <h1>個人專區</h1> 
            <div className={classes.profile}>
                 <div className="photo">
                 
