@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
         display:"flex",
         color: theme.palette.ultimate.main,
         backgroundColor: theme.palette.primary.main,
-        height:"88.8vh",
+        height:"100vh",
         overflow:"hidden",  //解決margin-top塌陷
         alienItems: "center",
         justifyContent:"center",
