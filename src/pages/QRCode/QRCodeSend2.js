@@ -136,7 +136,7 @@ const QRCodeSend2 = (props) => {
     const handleOnChange=(event)=>{
         setMoney(event.target.value);
         console.log(event.target.value);
-        
+       
     }
     const handleQRShow =()=>{
         setShowQR(true);
