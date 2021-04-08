@@ -2,7 +2,8 @@ import React from 'react';
 import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
 import { Link,withRouter } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
-
+import UserService from '../../service/UserService';
+import Noty from 'noty';
 const useStyles = makeStyles((theme) => ({
     Register2: {
         display:"flex",
@@ -66,7 +67,26 @@ const Register2 = (props) => {
     };
 
     const handleSubmit = (event) =>  {
-        alert('account: ' + values.account + ', password: ' + values.password + ', password: ' + values.check_password);
+        
+        const params = new URLSearchParams()
+            params.append('name', 'kiwi')
+            params.append('ID', '104022555')
+            params.append('username', 'ppdragon')
+            params.append('email', 'le05212@gmail.com')
+        params.append('password', 'zx1266')
+        
+        UserService.postRegister(params).then(res=>{
+            new Noty({
+                type: 'success',
+                layout: 'topRight',
+                theme: 'nest',
+                text: `成功: ${res}`,
+                timeout: '4000',
+                progressBar: true,
+                closeWith: ['click']
+            }).show();
+            console.log(res.data);
+        });
         event.preventDefault();
     };
 
