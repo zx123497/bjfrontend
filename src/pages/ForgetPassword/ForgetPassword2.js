@@ -18,30 +18,39 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.ultimate.dark,
             width: "350px",
-            height:"400px",
+            height:"360px",
             margin: "auto",
             alienItems: "center",
             borderRadius: 12,
             boxShadow: '0 8px 16px 0 rgba(0,0,0,.3)',
         },
         "& .title":{
+            margin: "25px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
             color:  theme.palette.primary.main,
             fontSize: 30,
             fontWeight: 900,
         },
         "& .input": {
+            marginTop: "-10px",
             color: theme.palette.ultimate.main,
             fontSize: 20,
             height: "15px",
+            marginLeft: "17%",
             '& .MuiTextField-root': {
-                margin: theme.spacing(1.8),
-                width: '20ch',
+                marginTop: "25px",
+                width: '80%',
                 color: theme.palette.ultimate.main,
             },
         },
+        "& .pwInput":{
+            marginTop: "25px",
+        },
         "& .next":{
             margin:"auto",
-            marginTop:"150px",
+            marginTop:"140px",
             borderRadius:"20px",
             boxShadow:"none",
             width:"50%",
@@ -60,8 +69,8 @@ const ForgetPassword2 = (props) => {
             <CardContent>
                 <p className = "title">重設密碼</p>
                 <form className = "input" noValidate autoComplete="off">
-                    <PasswordInput field="新密碼"></PasswordInput>
-                    <PasswordInput field="再次輸入新密碼"></PasswordInput>
+                    <PasswordInput className = "pwInput" field="新密碼"></PasswordInput>
+                    <PasswordInput className = "pwInput" field="再次輸入新密碼"></PasswordInput>
                 </form>
             </CardContent>
             <CardActions>

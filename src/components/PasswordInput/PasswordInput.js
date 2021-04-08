@@ -10,11 +10,9 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
-    margin: {
-      margin: theme.spacing(1),
-    },
     textField: {
-      width: '20ch',
+      width: '80%',
+      marginTop: "25px",
     },
 }));
 
@@ -39,13 +37,15 @@ const PasswordInput = (props) => {
     };
     const styles = {
         button: {
-          width: 30, height: 30,
-          padding: 22,
+          width: 30, 
+          height: 30,
+          marginRight:"0.1%",
         },
         icon: {
-          width: 30, height: 30,
+          width: 30, 
+          height: 30,
         },
-      };
+    };
 
     return ( 
         <div >
@@ -71,7 +71,7 @@ const PasswordInput = (props) => {
                     </IconButton>
                 </InputAdornment>
                 }
-                labelWidth={70}/>
+                labelWidth={35}/>
             </FormControl>
         </div>
     )
