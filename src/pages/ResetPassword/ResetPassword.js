@@ -18,26 +18,27 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.ultimate.dark,
             width: "350px",
-            height:"470px",
+            height:"430px",
             margin: "auto",
             alienItems: "center",
             borderRadius: 12,
             boxShadow: '0 8px 16px 0 rgba(0,0,0,.3)',
         },
         "& .title":{
+            margin: "25px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
             color:  theme.palette.primary.main,
             fontSize: 30,
             fontWeight: 900,
         },
         "& .input": {
+            marginTop: "-10px",
             color: theme.palette.ultimate.main,
             fontSize: 20,
             height: "15px",
-            '& .MuiTextField-root': {
-                margin: theme.spacing(1.8),
-                width: '20ch',
-                color: theme.palette.ultimate.main,
-            },
+            marginLeft: "17%",
         },
         "& .next":{
             margin:"auto",
@@ -60,9 +61,9 @@ const ResetPassword = (props) => {
             <CardContent>
                 <p className = "title">更改密碼</p>
                 <form className = "input" noValidate autoComplete="off">
-                    <PasswordInput field="舊密碼"></PasswordInput>
-                    <PasswordInput field="新密碼"></PasswordInput>
-                    <PasswordInput field="重新輸入新密碼"></PasswordInput>
+                    <PasswordInput field="舊密碼" ></PasswordInput>
+                    <PasswordInput field="新密碼" ></PasswordInput>
+                    <PasswordInput field="重新輸入新密碼" ></PasswordInput>
                 </form>
             </CardContent>
             <CardActions>

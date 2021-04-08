@@ -12,27 +12,25 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.primary.main,
         height:"100vh",
         overflow:"hidden",  //解決margin-top塌陷
+        flexDirection: "column",
         alienItems: "center",
         justifyContent:"center",
         
-        "& .btn3":{
-            fontSize:"12px",
-            textDecoration:"underline",
-            boxShadow:"none",
-            background:"none",
-            color:theme.palette.secondary.main,
-        },
-        "& .btn3:hover":{
-            color:theme.palette.secondary.light,
-        },  
         "& .loading":{
-            position:"absolute",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
             top:"45%",
             color:"red",
-          
         },
-        "& .p":{
-            
+        "& .text":{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop:"30px",
+            fontSize:"25px",
+            fontWeight:"800",
+            color:"black",
         }
         
     }
@@ -49,11 +47,12 @@ const Loading = (props) => {
     return ( 
     <div className = { classes.Loading } >
         <BackPage refs=""></BackPage> 
-        {/* Accessibility props injected to container */}
+        <div>
             <section className="loading" {...containerProps}>
-                {indicatorEl} {/* renders only while loading */}
+            {indicatorEl}
             </section>
-            <p>等待遊戲開始...</p>
+        </div>
+        <div className="text">等待遊戲開始...</div>
     </div >
     )
 }
