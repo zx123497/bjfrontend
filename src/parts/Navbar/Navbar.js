@@ -12,28 +12,28 @@ import Menu from './Menu'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    
-"& .bar":{
-    backgroundColor:theme.palette.ultimate.main,
-    boxShadow: "0 5px 6px rgba(0,0,0,0.2)",
-},
-    "& .tool":{
-      display:"flex",
-      justifyContent:"center",
+
+    "& .bar": {
+      backgroundColor: theme.palette.ultimate.main,
+      boxShadow: "0 5px 6px rgba(0,0,0,0.2)",
     },
-    "& .PersonalMenuToggler":{
-      color:theme.palette.background.paper,
+    "& .tool": {
+      display: "flex",
+      justifyContent: "center",
     },
-    "& .login":{
-      border:`1px ${theme.palette.background.paper} solid`,
-      color:theme.palette.background.paper,
-      borderRadius:"20px",
-      width:"80px",
+    "& .PersonalMenuToggler": {
+      color: theme.palette.background.paper,
     },
-    "& .logo":{
-      flexGrow:1,
-      textAlign:"center",
-      color:theme.palette.background.paper,
+    "& .login": {
+      border: `1px ${theme.palette.background.paper} solid`,
+      color: theme.palette.background.paper,
+      borderRadius: "20px",
+      width: "80px",
+    },
+    "& .logo": {
+      flexGrow: 1,
+      textAlign: "center",
+      color: theme.palette.background.paper,
     }
 
   },
@@ -53,12 +53,12 @@ const ButtonAppBar = (props) => {
       <AppBar className="bar">
 
         <Toolbar className="tool">
-        <Menu className="menu"/>
-        <h4 className="logo">跟寶治學經濟LOGO</h4>
-        <Button className="login" color="inherit" component={Link} to="/login"><PersonIcon/>登入</Button>
-        
-          
-          
+          <Menu className="menu" />
+          <h4 className="logo">跟寶治學經濟LOGO</h4>
+          <Button className="login" color="inherit" component={Link} to="/login"><PersonIcon />登入</Button>
+
+
+
         </Toolbar>
       </AppBar>
     </div>
