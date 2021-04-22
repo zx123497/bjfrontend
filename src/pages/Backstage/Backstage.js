@@ -5,7 +5,7 @@ import NewRoom from './NewRoom/NewRoom'
 import GameIn from './GameIn/GameIn'
 import Lobby from './Lobby/Lobby'
 import GameLobby from './GameLobby/GameLobby'
-import GameSum from './GameSum.js/GameSum';
+import GameSum from './GameSum/GameSum';
 
 import Roomsettings from './Roomsettings/Roomsettings'
 import WaitingRoom from './WaitingRoom/WaitingRoom'

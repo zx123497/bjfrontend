@@ -9,7 +9,6 @@ import FinalChart from './FinalChart';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        height: "45vh",
         padding: theme.spacing(1),
         paddingRight: theme.spacing(3),
         borderRadius: theme.spacing(2),
@@ -26,15 +25,8 @@ const useStyles = makeStyles((theme) => ({
         "& .label": {
             color: "#00AAA4"
         },
-        "& .container": {
-            backgroundColor: "#cbcccd",
-            marginTop: theme.spacing(1),
-            width: "100%",
-            height: "12vh",
-            overflow: "scroll",
-            overflowX: "hidden",
-        },
         "& .chartContainer": {
+            height: "55vh",
             marginTop: theme.spacing(1),
             marginRight: theme.spacing(2)
         }
@@ -61,18 +53,7 @@ const RecordCard = (props) => {
                         </Select>
                     </FormControl>
                 </div>
-                <div className="row">
-                    <Typography className="label" variant="caption">交易明細</Typography>
-                    <div className="container">
-                        <Record />
-                    </div>
-                </div>
-                <div className="row">
-                    <Typography className="label" variant="caption">交易統計</Typography>
-                    <div className="container">
-                        <Statistic />
-                    </div>
-                </div>
+
                 <div className="row">
                     <Typography className="label" variant="caption">供需曲線</Typography>
                     <div className="chartContainer">

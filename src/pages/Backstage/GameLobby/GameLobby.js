@@ -11,10 +11,9 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: "35px"
     },
     componenet: {
-        width: "100vw",
-        height: "55vh",
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
         marginTop: theme.spacing(3)
     }
 }));
