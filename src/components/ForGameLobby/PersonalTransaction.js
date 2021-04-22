@@ -7,7 +7,6 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(3),
     },
     box: {
-        width: "80%",
         marginLeft: "10%",
         padding: theme.spacing(1),
         borderRadius: theme.spacing(3),

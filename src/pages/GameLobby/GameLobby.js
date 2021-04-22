@@ -8,6 +8,7 @@ import PersonalTransaction from '../../components/ForGameLobby/PersonalTransacti
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        paddingTop: "35px"
     }
 }));
 
