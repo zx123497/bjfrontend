@@ -147,7 +147,7 @@ const LogIn = (props) => {
           layout: "topRight",
           theme: "nest",
           text: `成功: ${res}`,
-          timeout: "4000",
+          timeout: "40000",
           progressBar: true,
           closeWith: ["click"],
         }).show();
