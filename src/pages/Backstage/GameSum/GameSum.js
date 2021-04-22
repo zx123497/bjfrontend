@@ -5,11 +5,11 @@ import RecordCard from './RecordCard';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        paddingTop: "35px"
+        marginTop: "30px"
     },
     upper: {
         margin: theme.spacing(3),
-        marginTop: theme.spacing(6),
+        paddingTop: theme.spacing(6),
         "& .PIN": {
             "& .MuiTypography-root": {
                 textAlign: "center"

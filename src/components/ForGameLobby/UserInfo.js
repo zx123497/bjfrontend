@@ -1,8 +1,9 @@
 // including PIN CODE, member sum, timer, round reminder
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import { Grid, Box, Button, Icon, makeStyles, Typography } from '@material-ui/core';
 import { withRouter, Link } from 'react-router-dom';
 import CropFreeIcon from '@material-ui/icons/CropFree';
+import { socket } from '../../service/socket'
 
 const useStyles = makeStyles((theme) => ({
     Upper: {
@@ -56,6 +57,17 @@ const useStyles = makeStyles((theme) => ({
 
 const UserInfo = (props) => {
 
+    const [connected, setConnected] = useState(false);
+
+    useEffect(() => {
+        socket.emit('startGame', { roomNum: "9487" });
+        socket.on('startGameData', (userData) => {
+            const data = new Map(userData);
+            console.log(data);
+            console.log(data.get('321323'));
+        });
+    }, []);
+
     const classes = useStyles();
 
     return (
@@ -83,7 +95,7 @@ const UserInfo = (props) => {
                         </Box>
                     </Grid>
                     <Grid container xs={3} justify="flex-start">
-                        <Link component={Button} className={classes.button} to={'/ForgetPassword'}>
+                        <Link component={Button} className={classes.button} to={'/qrcode'}>
                             <CropFreeIcon className="component" fontSize="large" />
                             <Typography className="component" variant="caption"> QRcode</Typography>
                         </Link>

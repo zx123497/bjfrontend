@@ -10,7 +10,7 @@ import FinalChart from './FinalChart';
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: theme.spacing(1),
-        paddingRight: theme.spacing(3),
+        paddingRight: theme.spacing(2),
         borderRadius: theme.spacing(2),
         overflow: "scroll",
         "& .row": {

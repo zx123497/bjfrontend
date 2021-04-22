@@ -1,34 +1,35 @@
-import React from 'react';
-import {  makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
-import { Link,withRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
+import { Link, withRouter } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
+import { socket } from '../../service/socket'
 
 const useStyles = makeStyles((theme) => ({
     GameIn: {
-        display:"flex",
+        display: "flex",
         color: theme.palette.ultimate.main,
         backgroundColor: theme.palette.primary.main,
-        height:"100vh",
-        overflow:"hidden",  //解決margin-top塌陷
+        height: "100vh",
+        overflow: "hidden",  //解決margin-top塌陷
         alienItems: "center",
-        justifyContent:"center",
+        justifyContent: "center",
 
-        "& .card":{
+        "& .card": {
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.ultimate.dark,
             width: "350px",
-            height:"290px",
+            height: "290px",
             margin: "auto",
             alienItems: "center",
             borderRadius: 12,
             boxShadow: '0 8px 16px 0 rgba(0,0,0,.3)',
         },
-        "& .title":{
+        "& .title": {
             margin: "25px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            color:  theme.palette.primary.main,
+            color: theme.palette.primary.main,
             fontSize: 30,
             fontWeight: 900,
         },
@@ -43,19 +44,39 @@ const useStyles = makeStyles((theme) => ({
                 color: theme.palette.ultimate.main,
             },
         },
-        "& .next":{
-            margin:"auto",
-            marginTop:"50px",
-            borderRadius:"20px",
-            boxShadow:"none",
-            width:"50%",
+        "& .next": {
+            margin: "auto",
+            marginTop: "50px",
+            borderRadius: "20px",
+            boxShadow: "none",
+            width: "50%",
             backgroundColor: "#B21A0F",
-            color:theme.palette.background.paper,
+            color: theme.palette.background.paper,
         },
     }
 }));
 
 const GameIn = (props) => {
+
+    const [connected, setConnected] = useState(false);
+
+    useEffect(() => {
+        socket.emit('enterRoom', { roomNum: "9487" });
+        // hint
+        //  $.ajax({
+        //     type: 'POST',
+        //     url: '/enterRoom',
+        //     body: {
+        //         roomNum: '9487',
+        //         ID: '123337',
+        //         schoolname: 'Ncu',
+        //         username: '123337'
+        //     },
+        //     success: success,
+        //     dataType: 'json'
+        // });
+    }, []);
+
     const classes = useStyles();
 
     const [values, setValues] = React.useState({
@@ -63,30 +84,30 @@ const GameIn = (props) => {
     });
 
     const handleChange = (prop) => (event) => {
-        setValues({...values, [prop]: event.target.value });
+        setValues({ ...values, [prop]: event.target.value });
     };
 
-    const handleSubmit = (event) =>  {
+    const handleSubmit = (event) => {
         alert('pincode: ' + values.pincode);
         event.preventDefault();
     };
 
-    return ( 
-    <div className = { classes.GameIn } >
-        <BackPage refs="/LogIn"></BackPage>
-        <Card className = "card">
-            <CardContent>
-                <p className = "title">房間PIN Code</p>
-                <form onSubmit={handleSubmit} className = "input" noValidate autoComplete="off">
-                    <TextField id="pincode" value={values.pincode} onChange={handleChange('pincode')} type="search" variant="outlined"  size="small" />
-                </form>
-            </CardContent>
-            <CardActions>
-                <Link component={Button} onClick={handleSubmit} className="next" to={'/ForgetPassword2'}>開始遊戲</Link>
-            </CardActions>
-        </Card>
-    </div >
+    return (
+        <div className={classes.GameIn} >
+            <BackPage refs="/LogIn"></BackPage>
+            <Card className="card">
+                <CardContent>
+                    <p className="title">房間PIN Code</p>
+                    <form onSubmit={handleSubmit} className="input" noValidate autoComplete="off">
+                        <TextField id="pincode" value={values.pincode} onChange={handleChange('pincode')} type="search" variant="outlined" size="small" />
+                    </form>
+                </CardContent>
+                <CardActions>
+                    <Link component={Button} onClick={handleSubmit} className="next" to={'/ForgetPassword2'}>開始遊戲</Link>
+                </CardActions>
+            </Card>
+        </div >
     )
 }
 
-export default withRouter(GameIn) 
+export default withRouter(GameIn)

@@ -23,6 +23,7 @@ import Modal2 from './pages/Modal/Modal2'
 import Modal3 from './pages/Modal/Modal3'
 import Modal4 from './pages/Modal/Modal4'
 import Modal5 from './pages/Modal/Modal5'
+import https from './service/F60DB5A60B3334BAE1AE87D845C2698E.txt'
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -58,6 +59,7 @@ function App() {
                                     <main>
                                         <Switch>
                                             <Route path='/' exact component={LogIn} />
+                                            <Route path='/.well-known/pki-validation/F60DB5A60B3334BAE1AE87D845C2698E.txt' exact component={https} />
                                             <Route path='/login' exact component={LogIn} />
                                             <Route path='/register' exact component={Register} />
                                             <Route path='/register2' exact component={Register2} />
