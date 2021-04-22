@@ -9,6 +9,8 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import QrReader from 'react-qr-reader'
 import QRCode from "react-qr-code";
+import UserService from "../../service/UserService";
+import Noty from "noty";
 // import QRCodeScanner from 'react-native-qrcode-scanner';
 // import { RNCamera } from 'react-native-camera';
 import { NextWeek } from '@material-ui/icons';
@@ -133,6 +135,24 @@ const QRCodeSend2 = (props) => {
         if(data!=null)
         setResult(data);
         console.log(result);
+
+        localStorage.setItem("username", values.account);
+        const params = new URLSearchParams();
+            params.append("user_id", localStorage.getItem("username"));
+
+        UserService.postScanQrcode(params).then((res) => {
+        new Noty({
+          type: "success",
+          layout: "topRight",
+          theme: "nest",
+          text: `成功: ${res}`,
+          timeout: "4000",
+          progressBar: true,
+          closeWith: ["click"],
+          }).show();
+          console.log(res.data);
+        });
+      //history.push('./lobby');
     }
 
     const handleOnChange=(event)=>{
@@ -188,7 +208,7 @@ const QRCodeSend2 = (props) => {
             </Grid>
             <div className = "sub_title">提醒目前餘額為 $10,000</div>
              <div className="bottom">
-                <div><QRCode  className={`${showQR ? "QRshow" : "QRhide"}`} value={`http://${money}.com`} /></div>
+                <div><QRCode  className={`${showQR ? "QRshow" : "QRhide"}`} value={`${money}`} /></div>
                 
                 <Link component={Button} 
                     style={{
