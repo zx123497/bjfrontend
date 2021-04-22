@@ -6,15 +6,16 @@ import UpperBar from '../../../components/ForGameLobby/UpperBar'
 import GameChart from '../../../components/ForGameLobby/GameChart'
 import TransRecord from '../../../components/ForGameLobby/TransRecord'
 import { socket } from '../../../service/socket'
+
 const useStyles = makeStyles((theme) => ({
     root: {
-        paddingTop: "35px"
+        marginTop: "40px"
     },
     componenet: {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: theme.spacing(3)
+        marginTop: theme.spacing(1)
     }
 }));
 
@@ -25,17 +26,17 @@ const GameLobby = (props) => {
     //        sockect try       //
     //////////////////////////////
 
-    const [connected, setConnected] = useState(false);
+    // const [connected, setConnected] = useState(false);
 
-    useEffect(() => {
-        socket.emit('test');
-        socket.on('testResponse', obj => {
-            console.log(obj);
-        });
-        // unsubscribe from event for preventing memory leaks
-    }, []);
+    // useEffect(() => {
+    //     socket.emit('test');
+    //     socket.on('testResponse', obj => {
+    //         console.log(obj);
+    //     });
+    //     // unsubscribe from event for preventing memory leaks
+    // }, []);
 
-    console.log(socket);
+    // console.log(socket);
 
     //////////////////////////////
 

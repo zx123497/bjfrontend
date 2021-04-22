@@ -8,7 +8,6 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: "60vw",
         height: "60vh",
-        backgroundColor: theme.backgroundColor,
         marginTop: theme.spacing(1)
     }
 }));
