@@ -78,7 +78,6 @@ const NewRoom=(props)=> {
                 <form className = "input" noValidate autoComplete="off">
                     <TextField id="school" label="房間名稱" type="search" variant="outlined"  size="small" />
                     <TextField id="Id" label="買賣家初始金額" type="search" variant="outlined"  size="small" />
-                   
                 </form>
             
             

@@ -9,6 +9,8 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import QrReader from 'react-qr-reader'
 import QRCode from "react-qr-code";
+// import QRCodeScanner from 'react-native-qrcode-scanner';
+// import { RNCamera } from 'react-native-camera';
 import { NextWeek } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
@@ -225,6 +227,25 @@ const QRCodeSend2 = (props) => {
                 onScan={handleScan}
                 
                 facingMode={"rear"}/>
+            {/* <QRCodeScanner
+                className="scan"
+                onError={handleError}
+                onScan={handleScan}
+                onRead={this.onSuccess}
+                flashMode={RNCamera.Constants.FlashMode.torch}
+                topContent={
+                    <Text style={styles.centerText}>
+                        Go to{' '}
+                    <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
+                        your computer and scan the QR code.
+                    </Text>
+                }
+                bottomContent={
+                    <TouchableOpacity style={styles.buttonTouchable}>
+                    <Text style={styles.buttonText}>OK. Got it!</Text>
+                    </TouchableOpacity>
+                }
+            /> */}
         </div>
     </div >
     )

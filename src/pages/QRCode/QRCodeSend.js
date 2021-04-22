@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
             alignItems: "center",
             justifyContent:"center",
             textAlign: "center",
-            //marginTop:"-30px",
         },
         "& .switchlimit":{
             marginLeft:"0px",
@@ -56,12 +55,10 @@ const useStyles = makeStyles((theme) => ({
             gridTemplateColumns: "400px",  
         },
         "& .grid-item":{
-            
             //padding: "10px",
         },
         "& .detail":{
             color:  theme.palette.ultimate.main,
-
         },
         "& .sub_title":{
             color:  theme.palette.ultimate.main,
@@ -86,7 +83,6 @@ const useStyles = makeStyles((theme) => ({
         },
         "& .QRhide":{
             display:"none"
-
         },
         "& .Tshow":{
             display:"block",
@@ -117,7 +113,6 @@ const useStyles = makeStyles((theme) => ({
             margin:"auto",
             marginTop:"10px",
             marginBottom:"150px",
-
         },
     }
 }));
@@ -230,15 +225,13 @@ const QRCodeSend2 = (props) => {
                                 value={values.numpeople} onChange={handleChange('numpeople')} type="number" 
                                 style={{width: "20%" }}
                             />
-                <TextField id="numpeople" className = {`${showQR ? "Thide" : "Tshow"}`}
-                    
+                <TextField id="numpeople" className = {`${showQR ? "Thide" : "Tshow"}`} 
                     value={values.numpeople} onChange={handleChange('numpeople')} type="number" 
                     style={{width: "20%" }}
                 />
             </form></div>
             </Grid>
         </Grid>
-
                 </div>   
                 <div className = {`${state.checked ? "unlimit" : "limit"}`}>
                     <FormControlLabel 

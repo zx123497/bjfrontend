@@ -11,7 +11,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Editor } from '@tinymce/tinymce-react';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-
 import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core';
 import React from 'react'
@@ -20,8 +19,7 @@ const useStyles = makeStyles(theme => ({
     Input: {
         padding: 0,
         "&.invalid": {
-            "& h5, & .MuiFormHelperText-root": {
-                
+            "& h5, & .MuiFormHelperText-root": {  
                 color: "red"
             },
             '& .MuiOutlinedInput-root': {
