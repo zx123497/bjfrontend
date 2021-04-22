@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import RecordCard from './RecordCard';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        paddingTop: "35px"
+    },
     upper: {
         margin: theme.spacing(3),
         marginTop: theme.spacing(6),
@@ -69,7 +72,7 @@ const GameSum = (props) => {
     const classes = useStyles();
 
     return (
-        <>
+        <div className={classes.root}>
             <div className={classes.upper}>
                 <div className="PIN">
                     <Grid container>
@@ -116,7 +119,7 @@ const GameSum = (props) => {
 
                 <RecordCard />
             </div>
-        </>
+        </div>
     )
 }
 

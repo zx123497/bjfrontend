@@ -1,7 +1,9 @@
 import React from 'react';
 import {  makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
-import { Link,withRouter } from 'react-router-dom';
+import { Link,withRouter,useHistory } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
+import UserService from "../../service/UserService";
+import Noty from "noty";
 
 const useStyles = makeStyles((theme) => ({
     ForgetPassword: {
@@ -63,7 +65,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ForgetPassword = (props) => {
+    const history = useHistory();
     const classes = useStyles();
+
 
     const [values, setValues] = React.useState({
         email: '',
@@ -74,9 +78,31 @@ const ForgetPassword = (props) => {
     };
 
     const handleSubmit = (event) =>  {
-        alert('email: ' + values.email);
-        event.preventDefault();
-    };
+        //alert('email: ' + values.email);
+
+     if (values.email=="") {
+        alert("請輸入電子信箱");
+     }
+     else{
+        const params = new URLSearchParams();
+            params.append("email", values.email);
+
+        UserService.postForgetPassword(params).then((res) => {
+        new Noty({
+          type: "success",
+          layout: "topRight",
+          theme: "nest",
+          text: `成功: ${res}`,
+          timeout: "4000",
+          progressBar: true,
+          closeWith: ["click"],
+        }).show();
+        console.log(res.data);
+      });
+      history.push('./forgetpassword2');
+    }
+    event.preventDefault();
+  };
 
     return ( 
     <div className = { classes.ForgetPassword } >

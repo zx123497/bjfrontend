@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -17,7 +16,13 @@ import BackStage from './pages/Backstage/Backstage'
 import Navbar from './parts/Navbar/Navbar'
 import GameLobby from './pages/GameLobby/GameLobby'
 import GameIn from './pages/GameIn/GameIn'
-import QRCodeSend2 from './pages/QRCode/QRCodeSend2';
+import QRCodeSend from './pages/QRCode/QRCodeSend'
+import QRCodeSend2 from './pages/QRCode/QRCodeSend2'
+import Modal1 from './pages/Modal/Modal1'
+import Modal2 from './pages/Modal/Modal2'
+import Modal3 from './pages/Modal/Modal3'
+import Modal4 from './pages/Modal/Modal4'
+import Modal5 from './pages/Modal/Modal5'
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -64,6 +69,12 @@ function App() {
                                             <Route path='/gamelobby' exact component={GameLobby} />
                                             <Route path='/gamein' exact component={GameIn} />
                                             <Route path='/qrcode' exact component={QRCodeSend2} />
+                                            <Route path='/teacherqrcode' exact component={QRCodeSend} />
+                                            <Route path='/modal1' exact component={Modal1} />
+                                            <Route path='/modal2' exact component={Modal2} />
+                                            <Route path='/modal3' exact component={Modal3} />
+                                            <Route path='/modal4' exact component={Modal4} />
+                                            <Route path='/modal5' exact component={Modal5} />
                                         </Switch>
                                     </main>
                                 </>
