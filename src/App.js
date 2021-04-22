@@ -25,7 +25,19 @@ import Modal4 from './pages/Modal/Modal4'
 import Modal5 from './pages/Modal/Modal5'
 
 const useStyles = makeStyles((theme) => ({
-
+    root:{
+        minHeight:"calc(100vh - 48px)",
+        backgroundColor:"#FFF06B",
+        "& .App":{
+            height:"calc(100vh - 48px)",
+            
+        },
+        "& .Container":{
+            height:"calc(100vh - 48px)",
+            margin:"3rem 0 0 0",
+            padding:"1rem",
+        }
+    }
 
 }));
 function App() {
@@ -45,7 +57,7 @@ function App() {
 
                                     <main>
                                         <Switch>
-                                            <Route path='/' exact component={Home} />
+                                            <Route path='/' exact component={LogIn} />
                                             <Route path='/login' exact component={LogIn} />
                                             <Route path='/register' exact component={Register} />
                                             <Route path='/register2' exact component={Register2} />
