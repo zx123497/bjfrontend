@@ -8,7 +8,14 @@ import TransRecord from '../../../components/ForGameLobby/TransRecord'
 import { socket } from '../../../service/socket'
 const useStyles = makeStyles((theme) => ({
     root: {
-
+        paddingTop: "35px"
+    },
+    componenet: {
+        width: "100vw",
+        height: "55vh",
+        display: "flex",
+        justifyContent: "center",
+        marginTop: theme.spacing(3)
     }
 }));
 
@@ -39,8 +46,10 @@ const GameLobby = (props) => {
         <div className={classes.root}>
             <UpperBar />
             <AnnouncementLine />
-            <GameChart />
-            <TransRecord />
+            <div className={classes.componenet}>
+                <GameChart />
+                <TransRecord />
+            </div>
         </div>
     )
 }

@@ -6,10 +6,9 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        margin: theme.spacing(5),
-        marginTop: theme.spacing(2),
+        width: "50%",
+        margin: theme.spacing(3),
         paddingBottom: "0",
-        height: "32vh",
         overflow: "scroll",
         overflowX: "hidden",
         "& .row": {

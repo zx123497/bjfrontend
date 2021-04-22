@@ -6,8 +6,6 @@ import Chart from "react-google-charts";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: "100%",
-        height: "25%",
         backgroundColor: theme.backgroundColor,
         marginTop: theme.spacing(1)
     }
