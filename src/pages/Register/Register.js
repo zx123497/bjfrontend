@@ -2,6 +2,7 @@ import React from 'react';
 import {  makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
 import { Link,withRouter } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     Register: {
@@ -57,12 +58,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Register = (props) => {
+    const history = useHistory();
     const classes = useStyles();
 
     const [values, setValues] = React.useState({
-        school: '',
-        Id:'',
-        name:'',
+        schoolname: '',
+        ID:'',
+        username:'',
     });
 
     const handleChange = (prop) => (event) => {
@@ -70,9 +72,28 @@ const Register = (props) => {
     };
 
     const handleSubmit = (event) =>  {
-        alert('school: ' + values.school + ', id: ' + values.Id + ', name: ' + values.name);
+        var message=[];
+        message["schoolname"]="";
+        message["ID"]="";
+        message["username"]="";
+        if(values.schoolname=="")
+            message["schoolname"]="學校 ";
+        if(values.ID=="")
+            message["ID"]="學號 ";
+        if(values.username=="")
+            message["username"]="使用者名稱";
+        if(values.schoolname==""||values.ID==""||values.username=="")
+            alert("請輸入"+message["schoolname"]+message["ID"]+message["username"]);
+        else{
+            localStorage.setItem('schoolname',values.schoolname);
+            localStorage.setItem('ID',values.ID);
+            localStorage.setItem('username',values.username);
+            history.push('./register2');
+        }
         event.preventDefault();
     };
+
+
 
     return ( 
     <div className = { classes.Register } >
@@ -81,13 +102,13 @@ const Register = (props) => {
             <CardContent>
                 <p className = "title">會員註冊</p>
                 <form onSubmit={handleSubmit} className = "input" autoComplete="off">
-                    <TextField id="school" value={values.school} onChange={handleChange('school')} label="學校" type="search" variant="outlined"  size="small" />
-                    <TextField id="Id" value={values.Id} onChange={handleChange('Id')} label="玩家ID" type="search" variant="outlined"  size="small" />
-                    <TextField id="name" value={values.name} onChange={handleChange('name')} label="姓名" type="search" variant="outlined"  size="small" />
+                    <TextField id="schoolname" value={values.schoolname} onChange={handleChange('schoolname')} label="學校" type="search" variant="outlined"  size="small" />
+                    <TextField id="ID" value={values.ID} onChange={handleChange('ID')} label="玩家ID" type="search" variant="outlined"  size="small" />
+                    <TextField id="name" value={values.username} onChange={handleChange('username')} label="姓名" type="search" variant="outlined"  size="small" />
                 </form>
             </CardContent>
             <CardActions>
-                <Link onClick={handleSubmit} component={Button} className="next" to={'/Register2'}>下一步</Link>
+                <Link onClick={handleSubmit} component={Button} className="next">下一步</Link>
             </CardActions>
         </Card>
     </div >
