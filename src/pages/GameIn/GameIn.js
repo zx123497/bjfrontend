@@ -62,18 +62,19 @@ const GameIn = (props) => {
 
     useEffect(() => {
         socket.emit('enterRoom', { roomNum: "9487" });
-        $.ajax({
-            type: 'POST',
-            url: '/enterRoom',
-            body: {
-                roomNum: '9487',
-                ID: '123337',
-                schoolname: 'Ncu',
-                username: '123337'
-            },
-            success: success,
-            dataType: 'json'
-        });
+        // hint
+        //  $.ajax({
+        //     type: 'POST',
+        //     url: '/enterRoom',
+        //     body: {
+        //         roomNum: '9487',
+        //         ID: '123337',
+        //         schoolname: 'Ncu',
+        //         username: '123337'
+        //     },
+        //     success: success,
+        //     dataType: 'json'
+        // });
     }, []);
 
     const classes = useStyles();
