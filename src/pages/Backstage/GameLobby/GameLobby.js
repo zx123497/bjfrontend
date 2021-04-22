@@ -1,11 +1,11 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core'
-import { withRouter } from 'react-router-dom';
-import UpperBar from '../../../components/ForGameLobby/UpperBar'
+import React, { useState, useEffect } from 'react'
+import { withStyles } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core';
 import AnnouncementLine from '../../../components/ForGameLobby/AnnouncementLine'
-import UserInfo from '../../../components/ForGameLobby/UserInfo'
-import PersonalTransaction from '../../../components/ForGameLobby/PersonalTransaction'
-
+import UpperBar from '../../../components/ForGameLobby/UpperBar'
+import GameChart from '../../../components/ForGameLobby/GameChart'
+import TransRecord from '../../../components/ForGameLobby/TransRecord'
+import { socket } from '../../../service/socket'
 const useStyles = makeStyles((theme) => ({
     root: {
         paddingTop: "35px"
@@ -18,7 +18,26 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+
 const GameLobby = (props) => {
+
+    //////////////////////////////
+    //        sockect try       //
+    //////////////////////////////
+
+    const [connected, setConnected] = useState(false);
+
+    useEffect(() => {
+        socket.emit('test');
+        socket.on('testResponse', obj => {
+            console.log(obj);
+        });
+        // unsubscribe from event for preventing memory leaks
+    }, []);
+
+    console.log(socket);
+
+    //////////////////////////////
 
     const classes = useStyles();
 
@@ -26,10 +45,12 @@ const GameLobby = (props) => {
         <div className={classes.root}>
             <UpperBar />
             <AnnouncementLine />
-            <UserInfo />
-            <PersonalTransaction />
+            <div className={classes.componenet}>
+                <GameChart />
+                <TransRecord />
+            </div>
         </div>
     )
 }
 
-export default withRouter(GameLobby)
+export default GameLobby
