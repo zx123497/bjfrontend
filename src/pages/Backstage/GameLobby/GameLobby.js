@@ -9,6 +9,12 @@ import PersonalTransaction from '../../../components/ForGameLobby/PersonalTransa
 const useStyles = makeStyles((theme) => ({
     root: {
         paddingTop: "35px"
+    },
+    componenet: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: theme.spacing(3)
     }
 }));
 

@@ -5,7 +5,10 @@ import { withRouter } from 'react-router-dom';
 import Chart from "react-google-charts";
 
 const useStyles = makeStyles((theme) => ({
-
+    root: {
+        width: "100%",
+        height: "100%"
+    }
 }));
 
 const FinalChart = (props) => {
@@ -13,7 +16,7 @@ const FinalChart = (props) => {
     const classes = useStyles();
 
     return (
-        <Paper>
+        <Paper className={classes.root}>
             <Chart
                 className="lineChart"
                 chartType="LineChart"
