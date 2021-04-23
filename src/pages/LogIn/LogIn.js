@@ -7,12 +7,20 @@ import {
   Button,
   TextField,
 } from "@material-ui/core";
+import IconButton from '@material-ui/core/IconButton';
 import { Link, withRouter,useHistory } from "react-router-dom";
 import BackPage from "../../components/BackPage/BackPage";
+import FormControl from '@material-ui/core/FormControl';
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
 import PasswordInput2 from "../../components/PasswordInput/PasswordInput2";
 import UserService from "../../service/UserService";
 import Noty from "noty";
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+
 
 const useStyles = makeStyles((theme) => ({
   LogIn: {
@@ -56,6 +64,22 @@ const useStyles = makeStyles((theme) => ({
           width: '80%',
           color: theme.palette.ultimate.main,
       },
+    },
+    "& .pw":{
+      width: '80%',
+      marginTop: "25px",
+    },
+    "& .pwButton": {
+      width: 30, 
+      height: 30,
+      marginRight:"0.1%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    "& .pwIcon": {
+      width: 30, 
+      height: 30,
     },
     "& .next": {
       margin: "auto",
@@ -147,7 +171,7 @@ const LogIn = (props) => {
           layout: "topRight",
           theme: "nest",
           text: `成功: ${res}`,
-          timeout: "40000",
+          timeout: "4000",
           progressBar: true,
           closeWith: ["click"],
         }).show();
@@ -155,6 +179,14 @@ const LogIn = (props) => {
       });
       //history.push('./lobby');
     }
+    event.preventDefault();
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({...values, showPassword: !values.showPassword });
+  };
+
+  const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
@@ -174,7 +206,30 @@ const LogIn = (props) => {
               variant="outlined"
               size="small"
             />
-            {/* <PasswordInput2
+            <FormControl className="pw" variant="outlined" size="small">
+            <InputLabel htmlFor="outlined-adornment-password">密碼</InputLabel>
+            <OutlinedInput
+                id="outlined-adornment-password"
+                type={values.showPassword ? 'text' : 'password'}
+                value={values.password}
+                onChange = {handleChange('password')}
+                endAdornment={
+                <InputAdornment position="end">
+                    <IconButton
+                        style={classes.pwButton}
+                        iconstyle={classes.pwIcon}
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                    >
+                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                </InputAdornment>
+                }
+                labelWidth={35}/>
+            </FormControl>
+              {/* <PasswordInput2
               field="密碼"
               id="password"
               onChange={handleChange("password")}
@@ -182,8 +237,7 @@ const LogIn = (props) => {
               value={values.password}
               pw={values.password}
             </PasswordInput2> */}
-            <TextField id="password" value={values.password} onChange={handleChange('password')} label="密碼" type="search" variant="outlined"  size="small" />
-                    
+            {/* <TextField id="password" value={values.password} onChange={handleChange('password')} label="密碼" type="search" variant="outlined"  size="small" />   */} 
           </form>
           <Link component={Button} className="btn2" to={"/ForgetPassword"}>
             忘記密碼

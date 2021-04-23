@@ -1,10 +1,18 @@
 import React from 'react';
 import { makeStyles, TextField, Card, CardActions, CardContent, Button} from '@material-ui/core';
 import { Link,withRouter,useHistory } from 'react-router-dom';
+import IconButton from '@material-ui/core/IconButton';
 import BackPage from '../../components/BackPage/BackPage'
 //import PasswordInput from '../../components/PasswordInput/PasswordInput';
 import UserService from '../../service/UserService';
+import FormControl from '@material-ui/core/FormControl';
 import Noty from 'noty';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+
 const useStyles = makeStyles((theme) => ({
     ResetPassword: {
         display:"flex",
@@ -19,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.ultimate.dark,
             width: "350px",
-            height:"430px",
+            height:"360px",
             margin: "auto",
             alienItems: "center",
             borderRadius: 12,
@@ -46,9 +54,25 @@ const useStyles = makeStyles((theme) => ({
                 color: theme.palette.ultimate.main,
             },
         },
+        "& .pw":{
+            width: '80%',
+            marginTop: "25px",
+        },
+        "& .pwButton": {
+            width: 30, 
+            height: 30,
+            marginRight:"0.1%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+        },
+        "& .pwIcon": {
+            width: 30, 
+            height: 30,
+        },
         "& .next":{
             margin:"auto",
-            marginTop:"200px",
+            marginTop:"140px",
             borderRadius:"20px",
             boxShadow:"none",
             width:"50%",
@@ -76,24 +100,20 @@ const ResetPassword = (props) => {
     const handleSubmit = (event) =>  {
         
         var message=[];
-        message["oldpassword"]="";
         message["password"]="";
         message["check_password"]="";
         message["diffPassword"]="";
         if (values.password !== values.check_password) {
             message["diffPassword"]="密碼不相同\n";
         } 
-        if(values.oldpassword=="")
-            message["oldpassword"]="舊密碼 ";
         if(values.password=="")
             message["password"]="新密碼 ";
         if(values.check_password=="")
             message["check_password"]="確認密碼";
-        if(values.oldpassword==""||values.password==""||values.check_password=="")
-            alert(message["diffPassword"]+"請輸入"+message["oldpassword"]+message["password"]+message["check_password"]);
+        if(values.password==""||values.check_password=="")
+            alert(message["diffPassword"]+"請輸入"+message["password"]+message["check_password"]);
         else {
           const params = new URLSearchParams()
-            //params.append('oldpassword', values.oldpassword)
             params.append('password', values.password)
         
           UserService.postResetPassword(params).then(res=>{
@@ -115,21 +135,75 @@ const ResetPassword = (props) => {
         event.preventDefault();
     };
 
+    const handleClickShowPassword = () => {
+        setValues({...values, showPassword: !values.showPassword });
+    };
+    
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
+    const handleClickShowPassword2 = () => {
+        setValues({...values, showPassword2: !values.showPassword2 });
+    };
+    
+    const handleMouseDownPassword2 = (event) => {
+        event.preventDefault();
+    };
+
     return ( 
     <div className = { classes.ResetPassword } >
         <BackPage refs="/"></BackPage>
         <Card className = "card">
             <CardContent>
                 <p className = "title">更改密碼</p>
-                {/* <form className = "input" noValidate autoComplete="off">
-                    <PasswordInput field="舊密碼" ></PasswordInput>
-                    <PasswordInput field="新密碼" ></PasswordInput>
-                    <PasswordInput field="重新輸入新密碼" ></PasswordInput>
-                </form> */}
                 <form onSubmit={handleSubmit} className = "input" noValidate autoComplete="off">
-                    <TextField id="oldpassword" value={values.oldpassword} onChange={handleChange('oldpassword')} multiline label="舊密碼" type="search" variant="outlined"  size="small" />
-                    <TextField id="password" value={values.password} onChange={handleChange('password')} label="新密碼" type="search" variant="outlined"  size="small" />
-                    <TextField id="check_password" value={values.check_password} onChange={handleChange('check_password')} label="重新輸入新密碼" type="search" variant="outlined"  size="small" />
+                <FormControl className="pw" variant="outlined" size="small">
+                    <InputLabel htmlFor="outlined-adornment-password">新密碼</InputLabel>
+                    <OutlinedInput
+                        id="outlined-adornment-password"
+                        type={values.showPassword ? 'text' : 'password'}
+                        value={values.password}
+                        onChange = {handleChange('password')}
+                        endAdornment={
+                        <InputAdornment position="end">
+                        <IconButton
+                            style={classes.pwButton}
+                            iconstyle={classes.pwIcon}
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                        >
+                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                        </InputAdornment>
+                    }
+                    labelWidth={50}/>
+                </FormControl>
+                <FormControl className="pw" variant="outlined" size="small">
+                    <InputLabel htmlFor="outlined-adornment-password">再次輸入新密碼</InputLabel>
+                    <OutlinedInput
+                        id="outlined-adornment-password"
+                        type={values.showPassword2 ? 'text' : 'password'}
+                        value={values.check_password}
+                        onChange = {handleChange('check_password')}
+                        endAdornment={
+                        <InputAdornment position="end">
+                        <IconButton
+                            style={classes.pwButton}
+                            iconstyle={classes.pwIcon}
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword2}
+                            onMouseDown={handleMouseDownPassword2}
+                            edge="end"
+                        >
+                        {values.showPassword2 ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                        </InputAdornment>
+                    }
+                    labelWidth={115}/>
+                </FormControl> 
                 </form>
             </CardContent>
             <CardActions>
