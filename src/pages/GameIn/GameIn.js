@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
 import { Link, withRouter } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
 import { socket } from '../../service/socket'
-import axios from 'axios';
+import UserService from '../../service/UserService';
 
 const useStyles = makeStyles((theme) => ({
     GameIn: {
@@ -59,47 +59,38 @@ const useStyles = makeStyles((theme) => ({
 
 const GameIn = (props) => {
 
-    const [connected, setConnected] = useState(false);
-
-    useEffect(() => {
-        socket.emit('enterRoom', { roomNum: "9487" });
-        // hint
-        //  $.ajax({
-        //     type: 'POST',
-        //     url: '/enterRoom',
-        //     body: {
-        //         roomNum: '9487',
-        //         ID: '123337',
-        //         schoolname: 'Ncu',
-        //         username: '123337'
-        //     },
-        //     success: success,
-        //     dataType: 'json'
-        // });
-
-        // POST = () => {
-        //     const input = {
-        //         roomNum: '9487',
-        //         ID: '123337',
-        //         schoolname: 'Ncu',
-        //         username: '123337'
-        //     };
-        //     axios.post("/enterRoom", input);
-        // }
-    }, []);
-
     const classes = useStyles();
+
+    const [connected, setConnected] = useState(false);
 
     const [values, setValues] = React.useState({
         pincode: '',
+        username: ''
     });
+
+    socket.emit('enterRoom', { roomNum: "9487" });
+
 
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
     };
 
     const handleSubmit = (event) => {
-        alert('pincode: ' + values.pincode);
+        if ((values.pincode == "")) {
+            alert("請輸入PIN CODE");
+        }
+        else {
+            localStorage.getItem("username", values.username)
+            const params = new URLSearchParams();
+            params.append("roomNum", values.pincode);
+            params.append("ID", values.username);
+            params.append("schoolname", 'NCU');
+            params.append("username", values.username);
+
+            UserService.postEnterRoom(params).then((res) => {
+                console.log(res.data);
+            })
+        }
         event.preventDefault();
     };
 
