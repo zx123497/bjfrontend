@@ -77,15 +77,15 @@ const GameIn = (props) => {
         //     dataType: 'json'
         // });
 
-        POST = () => {
-            const input = {
-                roomNum: '9487',
-                ID: '123337',
-                schoolname: 'Ncu',
-                username: '123337'
-            };
-            axios.post("/enterRoom", input);
-        }
+        // POST = () => {
+        //     const input = {
+        //         roomNum: '9487',
+        //         ID: '123337',
+        //         schoolname: 'Ncu',
+        //         username: '123337'
+        //     };
+        //     axios.post("/enterRoom", input);
+        // }
     }, []);
 
     const classes = useStyles();
