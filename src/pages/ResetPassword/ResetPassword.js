@@ -88,7 +88,6 @@ const ResetPassword = (props) => {
     const classes = useStyles();
     
     const [values, setValues] = React.useState({
-        email: '',
         password:'',
         check_password:'',
     });
