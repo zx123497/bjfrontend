@@ -60,9 +60,6 @@ const useStyles = makeStyles((theme) => ({
 const GameIn = (props) => {
 
     const classes = useStyles();
-
-    const [connected, setConnected] = useState(false);
-
     const [values, setValues] = React.useState({
         pincode: '',
         username: ''
@@ -80,18 +77,18 @@ const GameIn = (props) => {
             alert("請輸入PIN CODE");
         }
         else {
+            event.preventDefault();
             localStorage.getItem("username", values.username)
             const params = new URLSearchParams();
             params.append("roomNum", values.pincode);
             params.append("ID", values.username);
             params.append("schoolname", 'NCU');
             params.append("username", values.username);
-
+            
             UserService.postEnterRoom(params).then((res) => {
-                console.log(res.data);
+                props.history.push('/gamelobby/:' + values.pincode);
             })
         }
-        event.preventDefault();
     };
 
     return (

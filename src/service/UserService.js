@@ -46,6 +46,7 @@ const UserService = {
             const response = await axios.post("/enterRoom", body);
             return response;
         } catch (error) {
+            alert("PIN CODE 無效");
             throw error;
         }
     }

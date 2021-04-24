@@ -35,7 +35,9 @@ const AnnouncementLine = (props) => {
             <Icon className="announcementIcon" color="error">
                 <VolumeUpIcon />
             </Icon>
-            <div className="announcementBody">Announcement Here Here Here Here Here Here Here Here Here Here Here Here</div>
+            <div className="announcementBody">
+                {props.data.roomAnnoucement}
+            </div>
         </Box>
     )
 }
