@@ -3,6 +3,7 @@ import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@
 import { Link, withRouter } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
 import { socket } from '../../service/socket'
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     GameIn: {
@@ -75,6 +76,16 @@ const GameIn = (props) => {
         //     success: success,
         //     dataType: 'json'
         // });
+
+        POST = () => {
+            const input = {
+                roomNum: '9487',
+                ID: '123337',
+                schoolname: 'Ncu',
+                username: '123337'
+            };
+            axios.post("/enterRoom", input);
+        }
     }, []);
 
     const classes = useStyles();
