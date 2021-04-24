@@ -111,6 +111,7 @@ const QRCodeSend2 = (props) => {
     
     const [values, setValues] = React.useState({
         money: '',
+        payment:'',
     });
 
     // const handleChange = (prop) => (event) => {
@@ -131,13 +132,14 @@ const QRCodeSend2 = (props) => {
         console.error(err)
     }
 
-    const handleScan=(data)=>{
-        if(data!=null)
-            setResult(data);
-        console.log(result);
+    const handleScan= (prop) => (event) =>{
+        setValues("payment",values.payment);
 
-        //localStorage.setItem("username", values.account);
-        localStorage.setItem("username", "ally@gmail.com");
+        if(values.payment!=null){
+            setResult(values.payment);
+            console.log(result);
+
+        localStorage.setItem("payment", values.payment);
         const params = new URLSearchParams();
             params.append("user_id", localStorage.getItem("username"));
 
@@ -152,10 +154,11 @@ const QRCodeSend2 = (props) => {
           closeWith: ["click"],
           }).show();
           console.log("當前金額: "+res.data);
-          alert("當前金額: "+res.data);
+           alert("當前金額: "+res.data);
           localStorage.setItem("userMoney"+res.data);
         });
       //history.push('./lobby');
+        }
     }
 
     const handleOnChange=(event)=>{
@@ -186,7 +189,7 @@ const QRCodeSend2 = (props) => {
                 <Grid item>
                 <form onSubmit={handleSubmit}  noValidate autoComplete="off">
                     <TextField disabled id="money" className={`${showQR ? "Tshow" : "Thide"}`} 
-                        value={money} onChange={handleOnChange} type="number" 
+                        value={values.money} onChange={handleOnChange} type="number" 
                         label={
                             <Typography variant="headline" component="h3">轉出</Typography>
                         }
@@ -247,7 +250,8 @@ const QRCodeSend2 = (props) => {
                 delay={300}
                 style={ previewStyle }
                 onError={handleError}
-                onScan={handleScan}
+                value={values.payment}
+                onScan={handleScan("payment")}
                 
                 facingMode={"rear"}/>
             {/* <QRCodeScanner
