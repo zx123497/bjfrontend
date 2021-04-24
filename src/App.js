@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor:"#FFF06B",
         "& .App":{
             height:"calc(100vh - 48px)",
-            
         },
         "& .Container":{
             height:"calc(100vh - 48px)",

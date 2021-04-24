@@ -4,6 +4,13 @@ import { Link,withRouter,useHistory } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
 import UserService from '../../service/UserService';
 import Noty from 'noty';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
+import FormControl from '@material-ui/core/FormControl';
 
 const useStyles = makeStyles((theme) => ({
     Register2: {
@@ -45,6 +52,22 @@ const useStyles = makeStyles((theme) => ({
                 width: '80%',
                 color: theme.palette.ultimate.main,
             },
+        },
+        "& .pw":{
+            width: '80%',
+            marginTop: "25px",
+        },
+        "& .pwButton": {
+            width: 30, 
+            height: 30,
+            marginRight:"0.1%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+        },
+        "& .pwIcon": {
+            width: 30, 
+            height: 30,
         },
         "& .next":{
             margin:"auto",
@@ -116,6 +139,22 @@ const Register2 = (props) => {
         event.preventDefault();
     };
 
+    const handleClickShowPassword = () => {
+        setValues({...values, showPassword: !values.showPassword });
+    };
+    
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
+    const handleClickShowPassword2 = () => {
+        setValues({...values, showPassword2: !values.showPassword2 });
+    };
+    
+    const handleMouseDownPassword2 = (event) => {
+        event.preventDefault();
+    };
+
     return ( 
     <div className = { classes.Register2 } >
         <BackPage refs="/Register"></BackPage>
@@ -124,8 +163,54 @@ const Register2 = (props) => {
                 <p className = "title">會員註冊</p>
                 <form onSubmit={handleSubmit} className = "input" noValidate autoComplete="off">
                     <TextField id="email" value={values.email} onChange={handleChange('email')} multiline label="帳號 (E-mail)" type="search" variant="outlined"  size="small" />
-                    <TextField id="password" value={values.password} onChange={handleChange('password')} label="密碼" type="search" variant="outlined"  size="small" />
-                    <TextField id="check_password" value={values.check_password} onChange={handleChange('check_password')} label="密碼確認" type="search" variant="outlined"  size="small" />
+                    <FormControl className="pw" variant="outlined" size="small">
+                    <InputLabel htmlFor="outlined-adornment-password">密碼</InputLabel>
+                    <OutlinedInput
+                        id="outlined-adornment-password"
+                        type={values.showPassword ? 'text' : 'password'}
+                        value={values.password}
+                        onChange = {handleChange('password')}
+                        endAdornment={
+                        <InputAdornment position="end">
+                        <IconButton
+                            style={classes.pwButton}
+                            iconstyle={classes.pwIcon}
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                        >
+                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                        </InputAdornment>
+                    }
+                    labelWidth={35}/>
+                </FormControl>
+                <FormControl className="pw" variant="outlined" size="small">
+                    <InputLabel htmlFor="outlined-adornment-password">密碼確認</InputLabel>
+                    <OutlinedInput
+                        id="outlined-adornment-password"
+                        type={values.showPassword2 ? 'text' : 'password'}
+                        value={values.check_password}
+                        onChange = {handleChange('check_password')}
+                        endAdornment={
+                        <InputAdornment position="end">
+                        <IconButton
+                            style={classes.pwButton}
+                            iconstyle={classes.pwIcon}
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword2}
+                            onMouseDown={handleMouseDownPassword2}
+                            edge="end"
+                        >
+                        {values.showPassword2 ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                        </InputAdornment>
+                    }
+                    labelWidth={68}/>
+                </FormControl>
+                    {/* <TextField id="password" value={values.password} onChange={handleChange('password')} label="密碼" type="search" variant="outlined"  size="small" />
+                    <TextField id="check_password" value={values.check_password} onChange={handleChange('check_password')} label="密碼確認" type="search" variant="outlined"  size="small" /> */}
                 </form>
             </CardContent>
             <CardActions>
