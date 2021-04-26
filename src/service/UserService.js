@@ -1,7 +1,7 @@
 import axios from './axios';
 
 const UserService = {
-    postRegister: async(body) => {
+    postRegister: async (body) => {
         try {
             const response = await axios.post("/register", body);
             return response;
@@ -9,7 +9,7 @@ const UserService = {
             throw error;
         }
     },
-    postLogin: async(body) => {
+    postLogin: async (body) => {
         try {
             const response = await axios.post("/login", body);
             return response;
@@ -17,7 +17,7 @@ const UserService = {
             throw error;
         }
     },
-    postForgetPassword: async(body) => {
+    postForgetPassword: async (body) => {
         try {
             const response = await axios.post("/forget", body);
             return response;
@@ -33,7 +33,7 @@ const UserService = {
             throw error;
         }
     },
-    postScanQrcode: async(body) => {
+    postScanQrcode: async (body) => {
         try {
             const response = await axios.post("/scanQRcode", body);
             return response;
@@ -41,6 +41,15 @@ const UserService = {
             throw error;
         }
     },
+    postEnterRoom: async (body) => {
+        try {
+            const response = await axios.post("/enterRoom", body);
+            return response;
+        } catch (error) {
+            alert("PIN CODE 無效");
+            throw error;
+        }
+    }
 
 }
 

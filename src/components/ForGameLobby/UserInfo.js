@@ -3,7 +3,7 @@ import { React, useState, useEffect } from 'react';
 import { Grid, Box, Button, Icon, makeStyles, Typography } from '@material-ui/core';
 import { withRouter, Link } from 'react-router-dom';
 import CropFreeIcon from '@material-ui/icons/CropFree';
-import { socket } from '../../service/socket'
+
 
 const useStyles = makeStyles((theme) => ({
     Upper: {
@@ -29,12 +29,21 @@ const useStyles = makeStyles((theme) => ({
             lineHeight: "2rem",
             marginTop: "0.2rem"
         },
-        "& .identity": {
+        "& .identity_sell": {
             width: "80%",
             height: "2.5rem",
             borderRadius: "1rem",
             marginLeft: "10%",
             backgroundColor: "red",
+            color: "white",
+            paddingTop: "0.5rem"
+        },
+        "& .identity_buy": {
+            width: "80%",
+            height: "2.5rem",
+            borderRadius: "1rem",
+            marginLeft: "10%",
+            backgroundColor: "black",
             color: "white",
             paddingTop: "0.5rem"
         }
@@ -50,24 +59,16 @@ const useStyles = makeStyles((theme) => ({
             textAlign: "center"
         }
     },
-    Below: {
+    Below_sell: {
         color: "red"
+    },
+    Below_buy: {
+        color: "black"
     }
 }));
 
 const UserInfo = (props) => {
-
-    const [connected, setConnected] = useState(false);
-
-    useEffect(() => {
-        socket.emit('startGame', { roomNum: "9487" });
-        socket.on('startGameData', (userData) => {
-            const data = new Map(userData);
-            console.log(data);
-            console.log(data.get('123'));
-        });
-    }, []);
-
+    
     const classes = useStyles();
 
     return (
@@ -85,28 +86,51 @@ const UserInfo = (props) => {
                     <Grid item xs={9}>
                         <Box className="box balance">
                             <Typography variant="subtitle2">
-                                目前餘額 $100,000
+                                目前餘額 ${props.data.money}
                         </Typography>
                         </Box>
-                        <Box className="box identity">
+                        
+                        {props.data.role == 'seller' &&
+                        <Box className="box identity_sell">
                             <Typography variant="h5">
                                 賣方
-                        </Typography>
+                            </Typography>
                         </Box>
+                        }
+
+                        {props.data.role == 'buyer' &&
+                        <Box className="box identity_buy">
+                            <Typography variant="h5">
+                                買方
+                            </Typography>
+                        </Box>
+                        }
+                        
                     </Grid>
                     <Grid container xs={3} justify="flex-start">
                         <Link component={Button} className={classes.button} to={'/qrcode'}>
                             <CropFreeIcon className="component" fontSize="large" />
                             <Typography className="component" variant="caption"> QRcode</Typography>
                         </Link>
+                    </Grid> 
+                </Grid>
+            </div>
+
+            {props.data.role == 'seller' &&
+                <div className={classes.Below_sell}>
+                    <Grid container justify="center">
+                        <Typography variant="h4">進貨成本 ${props.data.price}</Typography>
                     </Grid>
-                </Grid>
-            </div>
-            <div className={classes.Below}>
-                <Grid container justify="center">
-                    <Typography variant="h4">進貨成本 $1,500</Typography>
-                </Grid>
-            </div>
+                </div>
+            }
+
+            {props.data.role == 'buyer' &&
+                <div className={classes.Below_buy}>
+                        <Grid container justify="center">
+                        <Typography variant="h4">商品價值 ${props.data.price}</Typography>
+                    </Grid>
+                </div>
+            }
         </div>
     )
 }
