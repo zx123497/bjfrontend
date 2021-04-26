@@ -175,8 +175,22 @@ const LogIn = (props) => {
           progressBar: true,
           closeWith: ["click"],
         }).show();
-        console.log(res.data);
+        if(res.status=="200"){
+          // UserService.getLogin().then((res) => {
+          //   new Noty({
+          //     type: "success",
+          //     layout: "topRight",
+          //     theme: "nest",
+          //     text: `成功: ${res}`,
+          //     timeout: "4000",
+          //     progressBar: true,
+          //     closeWith: ["click"],
+          //   }).show();
+          //   console.log(res);
+          // });
+        }
       });
+      
       //history.push('./lobby');
     }
     event.preventDefault();

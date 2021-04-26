@@ -14,6 +14,7 @@ import { NextWeek } from '@material-ui/icons';
 const useStyles = makeStyles((theme) => ({
     QRCodeSend: {
         display:"flex",
+        color:  theme.palette.ultimate.main,
         backgroundColor: theme.palette.primary.main,
         height:"100vh",
         overflow:"hidden", 
@@ -40,12 +41,16 @@ const useStyles = makeStyles((theme) => ({
             justifyContent:"center",
         },
         "& .num":{
-            marginLeft:"0px",
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
             justifyContent:"center",
-            
+        },
+        "& .people":{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent:"center",       
         },
         "& .grid-container":{
             justifyContent:"center",
@@ -53,12 +58,6 @@ const useStyles = makeStyles((theme) => ({
             display: "grid",
             gridTemplateRows: "10% 20% 10%",
             gridTemplateColumns: "400px",  
-        },
-        "& .grid-item":{
-            //padding: "10px",
-        },
-        "& .detail":{
-            color:  theme.palette.ultimate.main,
         },
         "& .sub_title":{
             color:  theme.palette.ultimate.main,
@@ -177,7 +176,7 @@ const QRCodeSend2 = (props) => {
         <div className="grid-container">
         <div className="grid-item">
         <Grid className="input" container spacing={1} alignItems="flex-end">
-            <Grid item className="icon"><MonetizationOnIcon /></Grid>
+            <Grid item className="icon"><MonetizationOnIcon style={{ color: "black" }}/></Grid>
             <Grid item>
             <form onSubmit={handleSubmit}  noValidate autoComplete="off">
                 <TextField disabled id="money" className={`${showQR ? "Tshow" : "Thide"}`} 
@@ -206,48 +205,73 @@ const QRCodeSend2 = (props) => {
         </div>
         <div className="grid-item">
         <Grid className="switchlimit" container spacing={1} alignItems="flex-end">
-            <Grid item><div className="detail">人數限制</div></Grid>
             <Grid item>
                 <div className = {`${state.checked ? "limit" : "unlimit"}`}>
+                人數限制 &ensp;
+                {showQR?
                     <FormControlLabel 
                         control={
                             <Switch 
-                                checked={state.checked} color="ultimate"
+                                checked={state.checked} color="default"
+                                onChange={handleSwitchChange} name="checked" edge="end" />
+                        } 
+                        className="switch" disabled label="開"/>:
+                    <FormControlLabel 
+                        control={
+                            <Switch 
+                                checked={state.checked} color="default"
                                 onChange={handleSwitchChange} name="checked" edge="end" />
                         } 
                         className="switch" label="開"/>
-
-                    <Grid className="num" container spacing={1} alignItems="flex-end">
-                        <Grid item className={`${showQR ? "" : ""}`}><div className="detail">人數上限</div></Grid>
-                        <Grid item><div className="center-text">
-                        <form onSubmit={handleSubmit}  noValidate autoComplete="off">
+                }
+                    <div className="num" container>
+                        <form className="people" onSubmit={handleSubmit}  noValidate autoComplete="off">
+                            人數上限&ensp;&ensp;
                             <TextField disabled id="numpeople" className={`${showQR ? "Tshow" : "Thide"}`}     
                                 value={values.numpeople} onChange={handleChange('numpeople')} type="number" 
-                                style={{width: "20%" }}
+                                style={{width: "32%", }}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
                             />
-                <TextField id="numpeople" className = {`${showQR ? "Thide" : "Tshow"}`} 
-                    value={values.numpeople} onChange={handleChange('numpeople')} type="number" 
-                    style={{width: "20%" }}
-                />
-            </form></div>
-            </Grid>
-        </Grid>
+                            <TextField id="numpeople" className = {`${showQR ? "Thide" : "Tshow"}`} 
+                                value={values.numpeople} onChange={handleChange('numpeople')} type="number" 
+                                style={{width: "32%", }}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </form>
+                    </div>
                 </div>   
                 <div className = {`${state.checked ? "unlimit" : "limit"}`}>
+                人數限制 &ensp;
+                {showQR?
                     <FormControlLabel 
                         control={
                             <Switch 
-                                checked={state.checked} color="ultimate"
+                                checked={state.checked} color="default"
+                                onChange={handleSwitchChange} name="checked" edge="end" />
+                        } 
+                        className="switch" disabled label="關"/>:
+                    <FormControlLabel 
+                        control={
+                            <Switch 
+                                checked={state.checked} color="default"
                                 onChange={handleSwitchChange} name="checked" edge="end" />
                         } 
                         className="switch" label="關"/>
+                }
                 </div> 
             </Grid>
         </Grid>
         </div>
         <div className="grid-item">
         <div className="bottom">
-            <div><QRCode  className={`${showQR ? "QRshow" : "QRhide"}`} value={`http://${values.money}.com`} /></div>
+            <div>
+                <QRCode  className={`${showQR ? "QRshow" : "QRhide"}`} 
+                    value={`${values.money}`} />
+            </div>
             <Link component={Button} 
                 style={{
                     margin:"auto",

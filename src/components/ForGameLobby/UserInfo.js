@@ -64,7 +64,7 @@ const UserInfo = (props) => {
         socket.on('startGameData', (userData) => {
             const data = new Map(userData);
             console.log(data);
-            console.log(data.get('321323'));
+            console.log(data.get('123'));
         });
     }, []);
 

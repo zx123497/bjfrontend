@@ -1,5 +1,5 @@
 import React from 'react';
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import {  makeStyles, Button, Grid, TextField, Typography} from '@material-ui/core';
 import { Link,withRouter } from 'react-router-dom';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -14,6 +14,12 @@ import Noty from "noty";
 // import QRCodeScanner from 'react-native-qrcode-scanner';
 // import { RNCamera } from 'react-native-camera';
 import { NextWeek } from '@material-ui/icons';
+import { socket } from '../../service/socket'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
@@ -96,6 +102,41 @@ const useStyles = makeStyles((theme) => ({
 
 const QRCodeSend2 = (props) => {
 
+    const [id,setId]=useState("");
+
+    // useEffect(()=>{
+    //     if(socket){
+    //         //連線成功在 console 中打印訊息
+    //         console.log('success connect!')
+    //         //設定監聽
+    //         initWebSocket()
+    //     }
+    // },[socket]);
+
+    // const initWebSocket = () => {
+    //     //對 getMessage 設定監聽，如果 server 有透過 getMessage 傳送訊息，將會在此被捕捉
+    //     socket.on('get_chek_point', msg => {
+    //         console.log(msg);
+    //     })
+    // };
+
+    // function get_chek_point() {      
+    //     socket.on('search_user',  (payer_id)=> {
+
+    //         if(localStorage.getItem('user_id') == payer_id){
+    
+    //             if(id=="yes"){
+    //                 var msg = '1';
+    //                 socket.emit('get_chek_point', msg);
+    //             }
+    //             if(id=="no"){
+    //                 var msg = '0';
+    //                 socket.emit('get_chek_point', msg);
+    //             }
+    //         }
+    //     });
+    // }
+
     const classes = useStyles();
     const [money,setMoney]=useState("0");
     const [showQR,setShowQR]=useState(false);
@@ -103,11 +144,11 @@ const QRCodeSend2 = (props) => {
 
     const [state, setState] = React.useState({
         checked: true,
-      });
+    });
     
     const handleSwitchChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
-      };
+    };
     
     const [values, setValues] = React.useState({
         money: '',
@@ -131,37 +172,61 @@ const QRCodeSend2 = (props) => {
         console.error(err)
     }
 
-    const handleScan=(data)=>{
-        if(data!=null)
-            setResult(data);
-        console.log(result);
+    const [seller, setSeller] = React.useState(false);
 
-        //localStorage.setItem("username", values.account);
-        localStorage.setItem("username", "ally@gmail.com");
-        const params = new URLSearchParams();
-            params.append("user_id", localStorage.getItem("username"));
+    // 確認1
+    const [open1, setopen1] = React.useState(false);
+
+    const handleClose1 = () => {
+        setopen1(false);
+    };
+    ////
+
+    const handleScan=(data)=>{
+    //   if(data!=null){
+        if(1){
+            setResult(data);
+            setResult(2000);
+            console.log("result:"+result);
+
+        
+        console.log(localStorage.getItem("username"));
+        
+        localStorage.setItem("player","seller");
+
+        //收款方
+        if(localStorage.getItem("player")=="seller"){
+            setopen1(true);
+            setSeller(true);//先設為收款方
+
+        }
+
+        const params = new URLSearchParams()
+            params.append("user_id",localStorage.getItem("ID"));
+            params.append("roomNum","9487");
 
         UserService.postScanQrcode(params).then((res) => {
-        new Noty({
-          type: "success",
-          layout: "topRight",
-          theme: "nest",
-          text: `成功: ${res}`,
-          timeout: "4000",
-          progressBar: true,
-          closeWith: ["click"],
-          }).show();
-          console.log("當前金額: "+res.data);
-          alert("當前金額: "+res.data);
-          localStorage.setItem("userMoney"+res.data);
+            new Noty({
+                type: "success",
+                layout: "topRight",
+                theme: "nest",
+                text: `成功: ${res}`,
+                timeout: "4000",
+                progressBar: true,
+                closeWith: ["click"],
+            }).show();
+          
+            console.log("當前金額: " + res.data);
+            //alert("當前金額: " + res.data);
+            localStorage.setItem("userMoney",res.data);
         });
+      }
       //history.push('./lobby');
     }
 
     const handleOnChange=(event)=>{
         setMoney(event.target.value);
-        console.log(event.target.value);
-       
+        console.log(event.target.value);      
     }
     const handleQRShow =()=>{
         setShowQR(true);
@@ -172,7 +237,51 @@ const QRCodeSend2 = (props) => {
 
     return ( 
     <div className = { classes.QRCodeSend2 } >
-        <BackPage refs="/admin/lobby"></BackPage>
+        <BackPage refs="login"></BackPage>
+        
+        {/* 確認1 */}
+        <Dialog
+        PaperProps={{
+          style: { marginTop:"90px", borderRadius: 30, height:"46%", 
+            width:"300px",padding:"28px 20px 28px 20px", backgroundColor:"#EAEAEA",}
+        }}
+        open={open1}
+        onClose={handleClose1}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        >
+        <DialogTitle id="alert-dialog-title"> 
+          <Typography className="title" variant="h6" align="center">交易對象</Typography>
+        </DialogTitle>
+        <DialogContent>
+          <div style={{ position: 'relative', margin:"auto", marginTop:"-2%",
+              marginBottom:"2%", width:"90px", height:"90px", borderRadius:"50%"}}>
+            <img style={{ display: 'block', height:"100%", width:"100%", borderRadius:"50%",}} 
+            src="https://www.harleytherapy.co.uk/counselling/wp-content/uploads/16297800391_5c6e812832.jpg"></img>
+          </div>
+          <Typography align="center" style={{fontSize:"90%", fontWeight:"600", marginBottom:"8%"}}>{localStorage.getItem("player")}</Typography>
+          <Typography align="center" style={{fontSize:"140%"}}>
+              {seller? <div>即將收取  ${result}</div> :<div>即將轉出  ${result}</div> } 
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose1} className="sure"
+            style={{ margin:"auto", fontSize:"90%", fontWeight:"500",
+              borderRadius:"20px", boxShadow:"none", width:"40%",   
+              height:"110%", backgroundColor: "#00AAA4", color:"#FFFFFF"}}>
+            確定
+          </Button>
+          <Button onClick={handleClose1} className="cancel"
+            style={{ margin:"auto", fontSize:"90%", fontWeight:"500",
+              borderRadius:"20px", boxShadow:"none", width:"40%", 
+              height:"110%", backgroundColor: "#848484", color:"#FFFFFF"}}>
+            取消
+          </Button>
+        </DialogActions>
+        </Dialog>
+
+        {/* 確認2 */}
+
         <div className = {`${state.checked ? "pay" : "payhide"}`}>
             <FormControlLabel 
                 control={
@@ -210,6 +319,8 @@ const QRCodeSend2 = (props) => {
                 </Grid>
             </Grid>
             <div className = "sub_title">提醒目前餘額為 $10,000</div>
+            {/* <Button id="yes" onClick={() => setId("yes")} >Yes</Button>
+            <Button id="no" onClick={() => setId("no")} >No</Button> */}
              <div className="bottom">
                 <div><QRCode  className={`${showQR ? "QRshow" : "QRhide"}`} value={`${money}`} /></div>
                 

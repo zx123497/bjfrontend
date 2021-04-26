@@ -166,7 +166,6 @@ const Register2 = (props) => {
                     <FormControl className="pw" variant="outlined" size="small">
                     <InputLabel htmlFor="outlined-adornment-password">密碼</InputLabel>
                     <OutlinedInput
-                        id="outlined-adornment-password"
                         type={values.showPassword ? 'text' : 'password'}
                         value={values.password}
                         onChange = {handleChange('password')}
@@ -189,7 +188,6 @@ const Register2 = (props) => {
                 <FormControl className="pw" variant="outlined" size="small">
                     <InputLabel htmlFor="outlined-adornment-password">密碼確認</InputLabel>
                     <OutlinedInput
-                        id="outlined-adornment-password"
                         type={values.showPassword2 ? 'text' : 'password'}
                         value={values.check_password}
                         onChange = {handleChange('check_password')}
