@@ -25,9 +25,9 @@ const UserService = {
             throw error;
         }
     },
-    postResetPassword: async (body) => {
+    postResetPassword: async(token, body) => {
         try {
-            const response = await axios.post("/reset/:token", body);
+            const response = await axios.post(`/reset/${token}`, body);
             return response;
         } catch (error) {
             throw error;

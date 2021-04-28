@@ -38,24 +38,6 @@ const GameLobby = (props) => {
         roomAnnoucement: ""
     })
 
-    function authenticate() {
-        try {
-            return localStorage.getItem('username');
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    // set player
-    function connectNset() {
-        socket.emit('startGame', { roomNum: "9487" });
-        socket.on('startGameData', (userData) => {
-            const data = new Map(userData);
-            const gameRole = data.get(authenticate());
-            setPlayer(gameRole);
-        });
-    }
-
     // set annoucement
     function announce() {
         socket.on('sys', (sysMsg) => {
@@ -64,7 +46,23 @@ const GameLobby = (props) => {
     }
 
     useEffect(() => {
-        connectNset();
+        socket.emit('startGame', { roomNum: props.match.params.roomNum });
+        socket.on('startGameData', (userData) => {
+            const data = new Map(userData);
+            // const gameRole = data.get(localStorage.getItem(username));
+            try {
+                const gameRole = data.get('123');
+                console.log(gameRole);
+                if(gameRole == undefined){
+                    props.history.push('/gamein');
+                    alert("伺服器錯誤");
+                } else {
+                    setPlayer(gameRole);
+                }
+            } catch(error) {
+                throw error;
+            }
+        });
     }, [props])
 
 
