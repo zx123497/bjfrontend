@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
 import { Link, withRouter } from 'react-router-dom';
 import BackPage from '../../../components/BackPage/BackPage';
@@ -7,104 +7,170 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
+import 'swiper/swiper-bundle.css';
 
 
-const useStyles = makeStyles((theme) => ({
-    Register: {
+import Book from './RoundCard';
 
-        "& .submit": {
-            width: "90%",
-            margin: "0.5rem 1rem",
-            backgroundColor: theme.palette.background.paper,
-            color: theme.palette.text.secondary,
-            borderRadius: "10px",
-            boxShadow: "0 3px 15px rgba(0,0,0,0.2)",
-        },
-        "& .contents": {
-            color: theme.palette.text.primary,
-            backgroundColor: theme.palette.background.paper,
-            borderRadius: "10px",
-            boxShadow: "0 3px 10px rgba(0,0,0,0.2)",
-            padding: "1.5rem",
-            margin: "7rem 1rem 2rem 1rem",
-        },
-        "& .hide": {
-            display: "none",
-        },
-        "& .minute": {
-            width: "3rem"
-        },
-        "& .timer": {
-            marginTop: "2rem",
-            display: "flex",
-            alignItems: "center"
+import 'swiper/swiper.scss';
+import { ArrowForward, ArrowBack } from '@material-ui/icons';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+    const useStyles = makeStyles({
+        newsSwiper:{
+            '& .slide': {
+                width: '80vw',
+                height: '100%',
+                display: "flex",
+                flexWrap: "wrap",
+            },
+            '& .controlPanel': {
+                display: "none",
+                position: 'relative'
+            }
+        },
+        '@media (min-width:768px)': {
+            newsSwiper:{
+               
+                '& .slide': {
+                    width: "100%"
+                },
+                '& .controlPanel': {
+                        position: "absolute",
+                        right: 15,
+                        top: -50,
+                        width: 100,
+                        display: "flex",
+                        justifyContent: "space-around"
+                },
+                '& .arrow': {
+                    fontSize: 40,
+                    "&:hover": {
+                        cursor: "pointer"
+                    },
+                    "&:active": {
+                        filter: "brightness(150%)"
+                    }
+                }
+            },
         }
+        
+    });
 
-
-    }
-}));
-
-const form = {
-    round: {
-        id: "round",
-        elementType: 'input',
-        value: '',
-        elementConfig: {
-            type: "text",
-            placeholder: "填入回合數"
-        },
-        label: "回合數",
-    },
-    items: {
-        id: "items",
-        elementType: 'items',
-        value: '',
-        elementConfig: {
-            type: "text",
-            placeholder: "填入物件名稱"
-        },
-        label: "新增物件",
-    },
-    minute: {
-        id: "items",
-        elementType: 'input',
-        value: '',
-        elementConfig: {
-            type: "text",
-            placeholder: ""
-        },
-
-    },
+const initform = {
+    roomName:"",
+    test:false,
+    roundNum:1,
+    gametype:0,
+    userName:"",
+    initMoney:0,
+    rounds:[
+        {
+            round_id:`1`,
+            ratio:"",
+            items:"",
+            saleMax:0,
+            saleMin:0,
+            buyMax:0,
+            buyMin:0
+        }
+    ],
 }
+
+const slide = [
+    <SwiperSlide key={`1`}className="slide">
+        <Book id={`1`} />
+    </SwiperSlide>
+]
 
 const NewRoom = (props) => {
     const classes = useStyles();
-    const [round, setRound] = useState(form.round.value);
-    const [minute, setMinute] = useState(0);
+    const [form,setForm] = useState(initform);
+    const [slides,setSlides] = useState(slide);
+    const ref = useRef(null);
 
-    const [item, setItem] = useState(form.items.value);
-    const [state, setState] = useState({ checkedA: true, checkedB: true, });
-    const handleRoundChanged = async (id, value) => {
-        setRound(value);
-    }
-    const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
+
+    const newRound = () =>{
+        const new_round={
+            round_id:`${form.roundNum+1}`,
+            ratio:"",
+            items:"",
+            saleMax:0,
+            saleMin:0,
+            buyMax:0,
+            buyMin:0
+        }
     };
-    const handleItemChanged = async (id, value) => {
-        setItem(value);
+
+    const handleRoomName = (evt)=>{
+        setForm({...form,roomName:evt.target.value})
+    };
+
+    const handleInitMoney = (evt)=>{
+        setForm({...form,initMoney:evt.target.value})
+    };
+
+    const goNext = () => {
+        if (ref.current !== null && ref.current.swiper !== null) {
+            ref.current.swiper.slideNext(500);
+        }
+    };
+    
+    const goPrev = () => {
+        if (ref.current !== null && ref.current.swiper !== null) {
+            ref.current.swiper.slidePrev(500);
+        }
+    };
+
+    
+    for (let i = 1; i <= 5; i++) {
+        slides.push(
+            <SwiperSlide 
+                key={`slide-${i}`}
+                className="slide"
+            >
+                <Book id={`${i}`} />
+            </SwiperSlide>
+        )
     }
-    const handleMinuteChanged = async (id, value) => {
-        setMinute(value);
-    }
-    function valuetext(value) {
-        return `${value}:${100 - value}`;
-    }
+
     return (
         <div className={classes.Register} >
-
-
-            <Button className="submit">建立房間</Button>
+            <h1>建立房間</h1>
+            
+            <div className={classes.newsSwiper}>
+           
+                <div className="controlPanel" >
+                    <ArrowBack 
+                        className="arrow"
+                        onClick={ goPrev }
+                        color="primary" 
+                    />
+                    <ArrowForward 
+                        className="arrow"
+                        onClick={ goNext }
+                        color="primary" 
+                    />
+                </div>
+           
+            <Swiper
+                ref={ref}
+                style={{ width: '100%'}}
+                loop
+                slidesPerView='auto'
+                spaceBetween={10}
+                breakpoints={{
+                    768: {
+                        slidesPerView: 4,
+                        slidesPerGroup: 4,
+                        spaceBetween: 20
+                    },
+                }}
+            >
+                {slides}
+            </Swiper>
+        </div>
         </div >
     )
 }
