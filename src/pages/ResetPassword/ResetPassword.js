@@ -1,9 +1,8 @@
 import React from 'react';
-import { makeStyles, TextField, Card, CardActions, CardContent, Button} from '@material-ui/core';
+import { makeStyles, Card, CardActions, CardContent, Button} from '@material-ui/core';
 import { Link,withRouter,useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
-import BackPage from '../../components/BackPage/BackPage'
-//import PasswordInput from '../../components/PasswordInput/PasswordInput';
+import BackPage from '../../components/BackPage/BackPage';
 import UserService from '../../service/UserService';
 import FormControl from '@material-ui/core/FormControl';
 import Noty from 'noty';
@@ -127,9 +126,10 @@ const ResetPassword = (props) => {
             }).show();
             console.log(res.data);
             if( res.status==200){
-                history.push('./login');
+                //history.push('./login');
             }
           });
+          
         }
         event.preventDefault();
     };
