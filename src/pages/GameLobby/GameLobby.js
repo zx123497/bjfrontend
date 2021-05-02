@@ -6,6 +6,7 @@ import AnnouncementLine from '../../components/ForGameLobby/AnnouncementLine'
 import UserInfo from '../../components/ForGameLobby/UserInfo'
 import PersonalTransaction from '../../components/ForGameLobby/PersonalTransaction'
 import { socket } from '../../service/socket'
+import UserService from '../../service/UserService';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,24 +47,32 @@ const GameLobby = (props) => {
     }
 
     useEffect(() => {
-        socket.emit('startGame', { roomNum: props.match.params.roomNum });
-        socket.on('startGameData', (userData) => {
-            const data = new Map(userData);
-            // const gameRole = data.get(localStorage.getItem(username));
-            try {
-                const gameRole = data.get('123');
-                console.log(gameRole);
-                if(gameRole == undefined){
-                    props.history.push('/gamein');
-                    alert("伺服器錯誤");
-                } else {
-                    setPlayer(gameRole);
-                }
-            } catch(error) {
-                throw error;
-            }
-        });
-    }, [props])
+        // localStorage.getItem("username", values.username)
+        const params = new URLSearchParams();
+        params.append("roomNum", props.match.params.roomNum);
+        
+        UserService.postEnterRoom(params).then((res) => {
+            const data = new Map(res);
+            console.log(data.get('123'));
+        })
+        // socket.emit('startGame', { roomNum: props.match.params.roomNum });
+        // socket.on('startGameData', (userData) => {
+        //     const data = new Map(userData);
+        //     // const gameRole = data.get(localStorage.getItem(username));
+        //     try {
+        //         const gameRole = data.get('123');
+        //         console.log(gameRole);
+        //         if(gameRole == undefined){
+        //             props.history.push('/gamein');
+        //             alert("伺服器錯誤");
+        //         } else {
+        //             setPlayer(gameRole);
+        //         }
+        //     } catch(error) {
+        //         throw error;
+        //     }
+        // });
+    }, [])
 
 
     const classes = useStyles();

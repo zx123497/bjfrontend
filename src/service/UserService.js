@@ -49,6 +49,14 @@ const UserService = {
             alert("PIN CODE 無效");
             throw error;
         }
+    },
+    postAssignRole: async (body) => {
+        try {
+            const response = await axios.post("/assignRole", body);
+            return response;
+        } catch (error) {
+            throw error;
+        }
     }
 
 }
