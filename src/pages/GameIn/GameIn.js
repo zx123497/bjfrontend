@@ -82,14 +82,11 @@ const GameIn = (props) => {
             params.append("username", values.username);
             
             UserService.postEnterRoom(params).then((res) => {
-                UserService.getRoom(values.pincode).then((response) => {
-                    console.log(response);
-                    // localStorage.setItem("round", res.round);
-                    // props.history.push('/gamelobby/:' + values.pincode);
-                })
+                    localStorage.setItem("round", res.round);
+                    props.history.push('/gamelobby/:' + values.pincode);
             })
         }
-    };
+    }
 
     return (
         <div className={classes.GameIn} >
