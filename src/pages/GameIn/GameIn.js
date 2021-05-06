@@ -65,7 +65,7 @@ const GameIn = (props) => {
         username: ''
     });
 
-    socket.emit('enterRoom', { roomNum: "9487" });
+    socket.emit('enterRoom', { roomNum: values.pincode });
 
 
     const handleChange = (prop) => (event) => {
