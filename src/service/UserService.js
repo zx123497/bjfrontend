@@ -25,9 +25,9 @@ const UserService = {
             throw error;
         }
     },
-    postResetPassword: async(token, body) => {
+    postResetPassword: async(searchParams, body) => {
         try {
-            const response = await axios.post(`/reset/${token}`, body);
+            const response = await axios.post(`/reset/${searchParams}`, body);
             return response;
         } catch (error) {
             throw error;

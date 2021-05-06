@@ -13,7 +13,7 @@ import UserService from "../../service/UserService";
 import Noty from "noty";
 // import QRCodeScanner from 'react-native-qrcode-scanner';
 // import { RNCamera } from 'react-native-camera';
-import { NextWeek } from '@material-ui/icons';
+import { NextWeek, PanoramaWideAngleTwoTone } from '@material-ui/icons';
 import { socket } from '../../service/socket'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -173,6 +173,7 @@ const QRCodeSend2 = (props) => {
     }
 
     const [seller, setSeller] = React.useState(false);
+    const [haveScan, sethaveScan] = React.useState(false);
 
     // 確認1
     const [open1, setopen1] = React.useState(false);
@@ -185,9 +186,11 @@ const QRCodeSend2 = (props) => {
     const handleScan=(data)=>{
     //   if(data!=null){
         if(1){
+        //if(!haveScan){
             setResult(data);
             setResult(2000);
             console.log("result:"+result);
+            sethaveScan(true);
 
         
         console.log(localStorage.getItem("username"));
@@ -196,13 +199,13 @@ const QRCodeSend2 = (props) => {
 
         //收款方
         if(localStorage.getItem("player")=="seller"){
-            setopen1(true);
+            setopen1(false);  //for test 先關掉
             setSeller(true);//先設為收款方
 
         }
 
         const params = new URLSearchParams()
-            params.append("user_id",localStorage.getItem("ID"));
+            params.append("user_id","123");
             params.append("roomNum","9487");
 
         UserService.postScanQrcode(params).then((res) => {
