@@ -57,8 +57,7 @@ const UserService = {
         } catch (error) {
             throw error;
         }
-    }
-
+    },
 }
 
 export default UserService;

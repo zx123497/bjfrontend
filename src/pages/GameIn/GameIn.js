@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
 import { Link, withRouter } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
-import { socket } from '../../service/socket'
 import UserService from '../../service/UserService';
 
 const useStyles = makeStyles((theme) => ({
@@ -65,9 +64,6 @@ const GameIn = (props) => {
         username: ''
     });
 
-    socket.emit('enterRoom', { roomNum: values.pincode });
-
-
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
     };
@@ -86,7 +82,11 @@ const GameIn = (props) => {
             params.append("username", values.username);
             
             UserService.postEnterRoom(params).then((res) => {
-                props.history.push('/gamelobby/:' + values.pincode);
+                UserService.getRoom(values.pincode).then((response) => {
+                    console.log(response);
+                    // localStorage.setItem("round", res.round);
+                    // props.history.push('/gamelobby/:' + values.pincode);
+                })
             })
         }
     };
