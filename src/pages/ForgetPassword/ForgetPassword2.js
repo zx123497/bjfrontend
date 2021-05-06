@@ -1,7 +1,7 @@
 import React from 'react';
-import {useEffect} from 'react';
+import {useEffect,useRef, useState} from 'react';
 import {  makeStyles, Card, CardActions, CardContent, Button} from '@material-ui/core';
-import { Link,withRouter,useLocation } from 'react-router-dom';
+import { Link,withRouter,useLocation, useHistory, useParams} from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import BackPage from '../../components/BackPage/BackPage'
 import UserService from '../../service/UserService';
@@ -85,13 +85,33 @@ const useStyles = makeStyles((theme) => ({
 const ForgetPassword2 = (props) => {
     const classes = useStyles();
 
+    //let { token } = useParams()
+    //console.log(token);
+    const history = useHistory();
     const location = useLocation();
+    console.log(location);
+
+    const currentPath = location.pathname;
+    const searchParams = new URLSearchParams(location.search);
+
+    // const url = new URL('http://lbdgame.mgt.ncu.edu.tw:8000/forgetpassword2?token='); 
+    // const token2 = new URLSearchParams(url.search);
 
     useEffect(() => {
-        const currentPath = location.pathname;
-        const searchParams = new URLSearchParams(location.search);
-        const token = (searchParams.match(/token=([^&]+)/)||[])[1];
-        console.log(token);
+        // const currentPath = location.pathname;
+        // const searchParams = new URLSearchParams(location.search);
+        // const token = (searchParams.match(/token=([^&]+)/)||[])[1];
+
+        // fetch('http://lbdgame.mgt.ncu.edu.tw:8000/forgetpassword2?token='+ token2).then(data =>{
+        //     console.log(data);
+        //   }); 
+        // console.log(token2);
+
+        currentPath = location.pathname;
+        searchParams = new URLSearchParams(location.search);
+        console.log(currentPath);
+        console.log(searchParams)
+
     }, [location]);
 
 
@@ -120,10 +140,10 @@ const ForgetPassword2 = (props) => {
         if(values.password==""||values.check_password=="")
             alert(message["diffPassword"]+"請輸入"+message["password"]+message["check_password"]);
         else {
-          const params = new URLSearchParams()
+            const params = new URLSearchParams()
             params.append('password', values.password);
         
-          UserService.postResetPassword(params).then(res=>{
+          UserService.postResetPassword(searchParams, params).then(res=>{
             new Noty({
                 type: 'success',
                 layout: 'topRight',
