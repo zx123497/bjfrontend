@@ -46,6 +46,7 @@ const UserService = {
             const response = await axios.post("/enterRoom", body);
             return response;
         } catch (error) {
+            console.log(error);
             alert("PIN CODE 無效");
             throw error;
         }
@@ -58,6 +59,14 @@ const UserService = {
             throw error;
         }
     },
+    postStartGameTime: async (body) => {
+        try {
+            const response = await axios.post("/startGameTime", body);
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 export default UserService;
