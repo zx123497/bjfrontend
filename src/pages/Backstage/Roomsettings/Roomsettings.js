@@ -8,8 +8,6 @@ import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import 'swiper/swiper-bundle.css';
-
-
 import Book from './RoundCard';
 
 import 'swiper/swiper.scss';

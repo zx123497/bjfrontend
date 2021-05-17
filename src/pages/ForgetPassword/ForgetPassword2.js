@@ -91,28 +91,25 @@ const ForgetPassword2 = (props) => {
     const location = useLocation();
     console.log(location);
 
-    const currentPath = location.pathname;
     const searchParams = new URLSearchParams(location.search);
+    const raw_token = location.search;
+    const token = raw_token.match(/token=([^&]+)/)[1];
+    console.log('token:'+token);
 
-    // const url = new URL('http://lbdgame.mgt.ncu.edu.tw:8000/forgetpassword2?token='); 
+    // const url = new URL('http://http://localhost:3000/forgetpassword2?token='); 
     // const token2 = new URLSearchParams(url.search);
+    // console.log(token2);
 
-    useEffect(() => {
-        // const currentPath = location.pathname;
-        // const searchParams = new URLSearchParams(location.search);
-        // const token = (searchParams.match(/token=([^&]+)/)||[])[1];
+    // useEffect(() => {
+    //     // const currentPath = location.pathname;
+    //     // const searchParams = new URLSearchParams(location.search);
+    //     // const token = (searchParams.match(/token=([^&]+)/)||[])[1];
 
-        // fetch('http://lbdgame.mgt.ncu.edu.tw:8000/forgetpassword2?token='+ token2).then(data =>{
-        //     console.log(data);
-        //   }); 
-        // console.log(token2);
-
-        currentPath = location.pathname;
-        searchParams = new URLSearchParams(location.search);
-        console.log(currentPath);
-        console.log(searchParams)
-
-    }, [location]);
+    //     // fetch('http://lbdgame.mgt.ncu.edu.tw:8000/forgetpassword2?token='+ token2).then(data =>{
+    //     //     console.log(data);
+    //     //   }); 
+    //     // console.log(token2);
+    // }, [location]);
 
 
     const [values, setValues] = React.useState({
@@ -143,7 +140,7 @@ const ForgetPassword2 = (props) => {
             const params = new URLSearchParams()
             params.append('password', values.password);
         
-          UserService.postResetPassword(searchParams, params).then(res=>{
+          UserService.postResetPassword(token, params).then(res=>{
             new Noty({
                 type: 'success',
                 layout: 'topRight',
@@ -236,7 +233,7 @@ const ForgetPassword2 = (props) => {
                 </form>
             </CardContent>
             <CardActions>
-                <Link onClick={handleSubmit} component={Button} className="next">更改</Link>
+                <Link onClick={handleSubmit} component={Button} className="next" to={"/user/lobby"}>更改</Link>
             </CardActions>
         </Card>
     </div >
