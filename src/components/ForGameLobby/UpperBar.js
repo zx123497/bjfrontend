@@ -73,12 +73,12 @@ const UpperBar = (props) => {
                         PIN CODE
                     </Typography>
                     <Typography variant="body2">
-                        ABC1234
+                        {props.data.pincode}
                     </Typography>
                 </Grid>
                 <Grid container xs={6} justify="flex-end">
                     <Typography variant="body2">
-                        目前房間人數 <b> 123 </b> 人
+                        目前房間人數 <b> {props.data.totalMemNum} </b> 人
                     </Typography>
                 </Grid>
             </Grid>
@@ -91,14 +91,14 @@ const UpperBar = (props) => {
                         <Grid item xs={8} spacing={3}>
                             <Card className="timeCard minCard">
                                 <Box className="timeNum minNum">
-                                    01
+                                    {props.data.roundTime / 60}
                                 </Box>
                             </Card>
                         </Grid>
                         <Grid item xs={4} spacing={3}>
                             <Card className="timeCard secCard">
                                 <Box className="timeNum secNum">
-                                    23
+                                    {props.data.roundTime % 60}
                                 </Box>
                             </Card>
                         </Grid>

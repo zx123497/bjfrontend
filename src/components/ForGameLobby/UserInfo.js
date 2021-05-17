@@ -85,7 +85,7 @@ const UserInfo = (props) => {
                 <Grid container xs={9}>
                     <Grid item xs={9}>
                         <Box className="box balance">
-                            <Typography variant="subtitle2">
+                            <Typography variant="subtitle">
                                 目前餘額 ${props.data.money}
                         </Typography>
                         </Box>
@@ -119,7 +119,7 @@ const UserInfo = (props) => {
             {props.data.role == 'seller' &&
                 <div className={classes.Below_sell}>
                     <Grid container justify="center">
-                        <Typography variant="h4">進貨成本 ${props.data.price}</Typography>
+                        <Typography variant="h5">進貨成本 ${props.data.price}</Typography>
                     </Grid>
                 </div>
             }
@@ -127,7 +127,7 @@ const UserInfo = (props) => {
             {props.data.role == 'buyer' &&
                 <div className={classes.Below_buy}>
                         <Grid container justify="center">
-                        <Typography variant="h4">商品價值 ${props.data.price}</Typography>
+                        <Typography variant="h5">商品價值 ${props.data.price}</Typography>
                     </Grid>
                 </div>
             }

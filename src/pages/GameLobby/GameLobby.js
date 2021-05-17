@@ -16,18 +16,11 @@ const useStyles = makeStyles((theme) => ({
 
 const GameLobby = (props) => {
 
-    // const [connected, setConnected] = useState(false);
-
-    // useEffect(() => {
-    //     socket.emit('test');
-    //     socket.on('testResponse', obj => {
-    //         console.log(obj);
-    //     });
-    //     // unsubscribe from event for preventing memory leaks
-    // }, []);
-
-    // console.log(socket);
-
+    const [room, setRoom] = useState({
+        pincode: "",
+        totalMemNum: "",
+        roundTime:""
+    })
     
     const [player, setPlayer] = useState({
         money: "",
@@ -47,31 +40,25 @@ const GameLobby = (props) => {
     }
 
     useEffect(() => {
-        // localStorage.getItem("username", values.username)
+        localStorage.setItem("username", '123')
+        const roomNum = props.match.params.roomNum.substr(1);
+        const roundNum = props.match.params.round.substr(1);
+
         const params = new URLSearchParams();
-        params.append("roomNum", props.match.params.roomNum);
-        
-        UserService.postEnterRoom(params).then((res) => {
-            const data = new Map(res);
-            console.log(data.get('123'));
+        params.append("roomNum", roomNum);
+        params.append("roundNum", roundNum);
+
+        UserService.postAssignRole(params).then((res) => {
+            const data = new Map(res.data.data);
+            setRoom({totalMemNum: data.size,
+                     pincode: roomNum, 
+                     roundTime: localStorage.getItem("countdown")});
+
+            const role = data.get(localStorage.getItem('username'));
+            setPlayer({money: role.money,
+                       price: role.price, 
+                       role: role.role});
         })
-        // socket.emit('startGame', { roomNum: props.match.params.roomNum });
-        // socket.on('startGameData', (userData) => {
-        //     const data = new Map(userData);
-        //     // const gameRole = data.get(localStorage.getItem(username));
-        //     try {
-        //         const gameRole = data.get('123');
-        //         console.log(gameRole);
-        //         if(gameRole == undefined){
-        //             props.history.push('/gamein');
-        //             alert("伺服器錯誤");
-        //         } else {
-        //             setPlayer(gameRole);
-        //         }
-        //     } catch(error) {
-        //         throw error;
-        //     }
-        // });
     }, [])
 
 
@@ -79,9 +66,9 @@ const GameLobby = (props) => {
 
     return (
         <div className={classes.root}>
-            <UpperBar />
-            <AnnouncementLine data={annoucement}/>
-            <UserInfo data={player}/>
+            <UpperBar data={room} />
+            <AnnouncementLine data={annoucement} />
+            <UserInfo data={player} />
             <PersonalTransaction />
         </div>
     )

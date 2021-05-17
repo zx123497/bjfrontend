@@ -58,9 +58,14 @@ const useStyles = makeStyles((theme) => ({
 
 const GameIn = (props) => {
 
+    // for testing
+    localStorage.clear();
+    localStorage.setItem("username", '123')
+    // remember to delete
+
     const classes = useStyles();
     const [values, setValues] = React.useState({
-        pincode: '',
+        pincode: null,
         username: ''
     });
 
@@ -73,8 +78,8 @@ const GameIn = (props) => {
             alert("請輸入PIN CODE");
         }
         else {
-            event.preventDefault();
             localStorage.getItem("username", values.username)
+
             const params = new URLSearchParams();
             params.append("roomNum", values.pincode);
             params.append("ID", values.username);
@@ -82,10 +87,15 @@ const GameIn = (props) => {
             params.append("username", values.username);
             
             UserService.postEnterRoom(params).then((res) => {
-                    localStorage.setItem("round", res.round);
-                    props.history.push('/gamelobby/:' + values.pincode);
+                if(res.status == "200") {
+                    const roomDetail = res.data.roomDetail;
+                    localStorage.setItem("countdown", roomDetail.roundTime)
+                    props.history.push(`/gamelobby/:${values.pincode}/:${roomDetail.nowRound}`)
+                }
+                
             })
         }
+        event.preventDefault();
     }
 
     return (
