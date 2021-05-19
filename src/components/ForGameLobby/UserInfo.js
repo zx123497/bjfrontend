@@ -1,75 +1,79 @@
 // including PIN CODE, member sum, timer, round reminder
-import { React, useState, useEffect } from 'react';
-import { Grid, Box, Button, Icon, makeStyles, Typography } from '@material-ui/core';
-import { withRouter, Link } from 'react-router-dom';
-import CropFreeIcon from '@material-ui/icons/CropFree';
-
+import { React, useState, useEffect } from 'react'
+import { Grid, Box, Button, Icon, makeStyles, Typography } from '@material-ui/core'
+import { withRouter, Link } from 'react-router-dom'
+import CropFreeIcon from '@material-ui/icons/CropFree'
 
 const useStyles = makeStyles((theme) => ({
     Upper: {
-        display: "flex",
+        display: 'flex',
         padding: theme.spacing(3),
         paddingTop: theme.spacing(1),
-        "& .avatarContainer": {
-            width: "5rem",
-            height: "5rem",
-            borderRadius: "50%",
-            overflow: "hidden",
-            float: "right",
-            "& .avatar": {
-                height: "100%"
-            }
+        '& .avatarContainer': {
+            width: '5rem',
+            height: '5rem',
+            borderRadius: '50%',
+            overflow: 'hidden',
+            float: 'right',
+            '& .avatar': {
+                height: '100%',
+            },
         },
-        "& .box": {
-            width: "100%",
-            textAlign: "center"
+        '& .box': {
+            width: '100%',
+            textAlign: 'center',
         },
-        "& .balance": {
-            height: "2rem",
-            lineHeight: "2rem",
-            marginTop: "0.2rem"
+        '& .balance': {
+            height: '2rem',
+            lineHeight: '2rem',
+            marginTop: '0.2rem',
         },
-        "& .identity_sell": {
-            width: "80%",
-            height: "2.5rem",
-            borderRadius: "1rem",
-            marginLeft: "10%",
-            backgroundColor: "red",
-            color: "white",
-            paddingTop: "0.5rem"
+        '& .identity_sell': {
+            width: '80%',
+            height: '2.5rem',
+            borderRadius: '1rem',
+            marginLeft: '10%',
+            backgroundColor: 'red',
+            color: 'white',
+            paddingTop: '0.5rem',
         },
-        "& .identity_buy": {
-            width: "80%",
-            height: "2.5rem",
-            borderRadius: "1rem",
-            marginLeft: "10%",
-            backgroundColor: "black",
-            color: "white",
-            paddingTop: "0.5rem"
-        }
+        '& .identity_buy': {
+            width: '80%',
+            height: '2.5rem',
+            borderRadius: '1rem',
+            marginLeft: '10%',
+            backgroundColor: 'black',
+            color: 'white',
+            paddingTop: '0.5rem',
+        },
     },
     button: {
-        padding: "0",
+        padding: '0',
         marginTop: theme.spacing(1.5),
-        width: "30%",
-        display: "block",
-        textAlign: "center",
-        "& .component": {
-            width: "100%",
-            textAlign: "center"
-        }
+        width: '30%',
+        display: 'block',
+        textAlign: 'center',
+        '& .component': {
+            width: '100%',
+            textAlign: 'center',
+        },
     },
     Below_sell: {
-        color: "red"
+        color: 'red',
     },
     Below_buy: {
-        color: "black"
-    }
-}));
+        color: 'black',
+    },
+}))
 
 const UserInfo = (props) => {
-    
-    const classes = useStyles();
+    const classes = useStyles()
+
+    //for Qrcode
+    useEffect(() => {
+        localStorage.setItem('role', props.data.role)
+        localStorage.setItem('price', props.data.price)
+    }, [props])
 
     return (
         <div>
@@ -85,52 +89,48 @@ const UserInfo = (props) => {
                 <Grid container xs={9}>
                     <Grid item xs={9}>
                         <Box className="box balance">
-                            <Typography variant="subtitle">
-                                目前餘額 ${props.data.money}
-                        </Typography>
+                            <Typography variant="subtitle">目前餘額 ${props.data.money}</Typography>
                         </Box>
-                        
-                        {props.data.role == 'seller' &&
-                        <Box className="box identity_sell">
-                            <Typography variant="h5">
-                                賣方
-                            </Typography>
-                        </Box>
-                        }
 
-                        {props.data.role == 'buyer' &&
-                        <Box className="box identity_buy">
-                            <Typography variant="h5">
-                                買方
-                            </Typography>
-                        </Box>
-                        }
-                        
+                        {props.data.role == 'seller' && (
+                            <Box className="box identity_sell">
+                                <Typography variant="h5">賣方</Typography>
+                            </Box>
+                        )}
+
+                        {props.data.role == 'buyer' && (
+                            <Box className="box identity_buy">
+                                <Typography variant="h5">買方</Typography>
+                            </Box>
+                        )}
                     </Grid>
                     <Grid container xs={3} justify="flex-start">
                         <Link component={Button} className={classes.button} to={'/qrcode'}>
                             <CropFreeIcon className="component" fontSize="large" />
-                            <Typography className="component" variant="caption"> QRcode</Typography>
+                            <Typography className="component" variant="caption">
+                                {' '}
+                                QRcode
+                            </Typography>
                         </Link>
-                    </Grid> 
+                    </Grid>
                 </Grid>
             </div>
 
-            {props.data.role == 'seller' &&
+            {props.data.role == 'seller' && (
                 <div className={classes.Below_sell}>
                     <Grid container justify="center">
                         <Typography variant="h5">進貨成本 ${props.data.price}</Typography>
                     </Grid>
                 </div>
-            }
+            )}
 
-            {props.data.role == 'buyer' &&
+            {props.data.role == 'buyer' && (
                 <div className={classes.Below_buy}>
-                        <Grid container justify="center">
+                    <Grid container justify="center">
                         <Typography variant="h5">商品價值 ${props.data.price}</Typography>
                     </Grid>
                 </div>
-            }
+            )}
         </div>
     )
 }

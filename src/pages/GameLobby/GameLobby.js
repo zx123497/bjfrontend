@@ -1,68 +1,64 @@
 import { React, useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core'
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
 import UpperBar from '../../components/ForGameLobby/UpperBar'
 import AnnouncementLine from '../../components/ForGameLobby/AnnouncementLine'
 import UserInfo from '../../components/ForGameLobby/UserInfo'
 import PersonalTransaction from '../../components/ForGameLobby/PersonalTransaction'
 import { socket } from '../../service/socket'
-import UserService from '../../service/UserService';
+import UserService from '../../service/UserService'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        paddingTop: "35px"
-    }
-}));
+        paddingTop: '35px',
+    },
+}))
 
 const GameLobby = (props) => {
-
     const [room, setRoom] = useState({
-        pincode: "",
-        totalMemNum: "",
-        roundTime:""
+        pincode: '',
+        totalMemNum: '',
+        roundTime: '',
     })
-    
+
     const [player, setPlayer] = useState({
-        money: "",
-        price: "",
-        role: ""
-    });
+        money: '',
+        price: '',
+        role: '',
+    })
 
     const [annoucement, setAnnouncement] = useState({
-        roomAnnoucement: ""
+        roomAnnoucement: '',
     })
 
     // set annoucement
     function announce() {
         socket.on('sys', (sysMsg) => {
-            setAnnouncement(sysMsg);
-        });
+            setAnnouncement(sysMsg)
+        })
     }
 
     useEffect(() => {
-        localStorage.setItem("username", '123')
-        const roomNum = props.match.params.roomNum.substr(1);
-        const roundNum = props.match.params.round.substr(1);
+        localStorage.setItem('username', '123')
+        const roomNum = props.match.params.roomNum.substr(1)
+        const roundNum = props.match.params.round.substr(1)
+        localStorage.setItem('roomNum', roomNum) //for Qrcode
+        localStorage.setItem('roundNum', roundNum) //for Qrcode
 
-        const params = new URLSearchParams();
-        params.append("roomNum", roomNum);
-        params.append("roundNum", roundNum);
+        const params = new URLSearchParams()
+        params.append('roomNum', roomNum)
+        params.append('roundNum', roundNum)
 
         UserService.postAssignRole(params).then((res) => {
-            const data = new Map(res.data.data);
-            setRoom({totalMemNum: data.size,
-                     pincode: roomNum, 
-                     roundTime: localStorage.getItem("countdown")});
+            const data = new Map(res.data.data)
+            setRoom({ totalMemNum: data.size, pincode: roomNum, roundTime: localStorage.getItem('countdown') })
 
-            const role = data.get(localStorage.getItem('username'));
-            setPlayer({money: role.money,
-                       price: role.price, 
-                       role: role.role});
+            const role = data.get(localStorage.getItem('username'))
+            setPlayer({ money: role.money, price: role.price, role: role.role })
         })
     }, [])
 
-
-    const classes = useStyles();
+    const classes = useStyles()
 
     return (
         <div className={classes.root}>
