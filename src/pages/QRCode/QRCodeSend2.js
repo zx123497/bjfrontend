@@ -17,6 +17,9 @@ import Noty from 'noty'
 // import { RNCamera } from 'react-native-camera';
 import { NextWeek, PanoramaWideAngleTwoTone } from '@material-ui/icons'
 import { socket } from '../../service/socket'
+import ReactDom from 'react-dom'
+import webSocket from 'socket.io-client'
+import io from 'socket.io-client'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -101,10 +104,12 @@ const useStyles = makeStyles((theme) => ({
 
 const QRCodeSend2 = (props) => {
     const classes = useStyles()
+
+    //const [ws, setWs] = useState(webSocket('http://localhost:3000'))
+    var socket = io()
     const [money, setMoney] = useState('')
     const [showQR, setShowQR] = useState(false)
     const [result, setResult] = useState('No result')
-
     const [state, setState] = React.useState({
         checked: true,
     })
@@ -114,7 +119,6 @@ const QRCodeSend2 = (props) => {
     }
 
     const handleSubmit = (event) => {
-        //alert('money: ' + values.money)
         event.preventDefault()
     }
 
@@ -130,10 +134,41 @@ const QRCodeSend2 = (props) => {
     const [seller, setSeller] = React.useState(false)
     const [haveScan, sethaveScan] = React.useState(false)
     const [open1, setOpen1] = React.useState(false)
-    const [open2, setOpen2] = React.useState(false)
-    const [open3, setOpen3] = React.useState(true)
+    const [open2, setOpen2] = React.useState(true)
+    const [open3, setOpen3] = React.useState(false)
     const [trans, setTrans] = React.useState(false)
     const [roundNum, setRoundNum] = React.useState('0')
+
+    useEffect(() => {
+        // seller receiver 賣方 收款方
+        // buyer payer     買方 付款方
+        if (localStorage.getItem('role') == 'seller') {
+            setSeller(true)
+        } else {
+            setSeller(false)
+        }
+
+        const params = new URLSearchParams()
+        params.append('user_id', localStorage.getItem('username'))
+        params.append('roomNum', localStorage.getItem('roomNum'))
+
+        UserService.postScanQrcode(params).then((res) => {
+            new Noty({
+                type: 'success',
+                layout: 'topRight',
+                theme: 'nest',
+                text: `成功: ${res}`,
+                timeout: '4000',
+                progressBar: true,
+                closeWith: ['click'],
+            }).show()
+
+            if (res) {
+                //console.log('當前金額: ' + res.data)
+                localStorage.setItem('userMoney', res.data)
+            }
+        })
+    }, [result])
 
     const handleClose1 = () => {
         setOpen1(false)
@@ -147,30 +182,41 @@ const QRCodeSend2 = (props) => {
         setOpen1(false)
         console.log('取消交易1')
     }
-
     const handleClose2 = () => {
         setOpen2(false)
     }
     const handleYes2 = () => {
-        setOpen2(false)
-        console.log('確認交易！！！')
+        if (localStorage.getItem('role') == 'buyer') {
+            socket.on('search_user', function (payer_id) {
+                //確認是否為付款者
+                if (localStorage.getItem('username') == payer_id) {
+                    var msg = '1'
+                    socket.emit('get_chek_point', msg)
+                    initWebSocket()
+                    console.log('確認付款')
+                }
+            })
+        }
 
-        if (!trans) {
+        setOpen2(false)
+
+        if (!trans && seller) {
             const transaction = ['payer', 'receiver', 'money', 'roomNum', 'round']
-            transaction[0] = '234'
-            transaction[1] = '567'
-            transaction[2] = '20'
-            transaction[3] = '9487'
-            transaction[4] = '0'
+            transaction[0] = localStorage.getItem('tranUser')
+            transaction[1] = localStorage.getItem('username')
+            transaction[2] = localStorage.getItem('tranMoney')
+            transaction[3] = localStorage.getItem('roomNum')
+            transaction[4] = localStorage.getItem('roundNum')
 
             // 2.
             // const transaction = {
-            //     payer: '234',
-            //     receiver: '567',
-            //     money: '20',
-            //     roomNum: '9487',
-            //     round: '1',
+            //     payer: localStorage.getItem('tranUser'),
+            //     receiver: localStorage.getItem('username'),
+            //     money: localStorage.getItem('tranMoney'),
+            //     roomNum: localStorage.getItem('roomNum'),
+            //     round: localStorage.getItem('roundNum'),
             // }
+            console.log('確認開始交易！！！')
             console.log('tran: ' + transaction)
 
             const params2 = new URLSearchParams()
@@ -190,11 +236,22 @@ const QRCodeSend2 = (props) => {
                 setTrans(true) //設定每局交易過後便無法再進行第二次交易
                 console.log('交易結束: ' + res.data)
             })
-
-            //setTrans(true) //for test 之後刪掉
         }
     }
+
     const handleNo2 = () => {
+        if (localStorage.getItem('role') == 'buyer') {
+            socket.on('search_user', function (payer_id) {
+                //確認是否為付款者
+                if (localStorage.getItem('username') == payer_id) {
+                    var msg = '0'
+                    socket.emit('get_chek_point', msg)
+                    initWebSocket()
+                    console.log('取消付款')
+                }
+            })
+        }
+
         setOpen2(false)
         console.log('取消交易QQ')
     }
@@ -225,71 +282,26 @@ const QRCodeSend2 = (props) => {
         setTrans(false)
     }, [roundNum])
 
-    // useEffect(()=>{
-    //     if(socket){
-    //         //連線成功在 console 中打印訊息
-    //         console.log('success connect!')
-    //         //設定監聽
-    //         initWebSocket()
-    //     }
-    // },[socket]);
-
-    // const initWebSocket = () => {
-    //     //對 getMessage 設定監聽，如果 server 有透過 getMessage 傳送訊息，將會在此被捕捉
-    //     socket.on('get_chek_point', msg => {
-    //         console.log(msg);
-    //     })
-    // };
-
-    // function get_chek_point() {
-    //     socket.on('search_user',  (payer_id)=> {
-
-    //         if(localStorage.getItem('user_id') == payer_id){
-
-    //             if(id=="yes"){
-    //                 var msg = '1';
-    //                 socket.emit('get_chek_point', msg);
-    //             }
-    //             if(id=="no"){
-    //                 var msg = '0';
-    //                 socket.emit('get_chek_point', msg);
-    //             }
-    //         }
-    //     });
-    // }
+    //const connectWebSocket = () => {
+    //開啟
+    //setWs(webSocket('http://localhost:3000'))
+    //}
 
     useEffect(() => {
-        // for test 設定player (之後改成role)
-        // seller receiver 賣方 收款方
-        // buyer payer     買方 付款方
-
-        if (localStorage.getItem('role') == 'seller') {
-            setSeller(true) //先設為收款方
-        } else {
-            setSeller(false)
+        if (socket) {
+            //連線成功在 console 中打印訊息
+            console.log('success connect!')
+            //設定監聽
+            initWebSocket()
         }
+    }, [socket])
 
-        const params = new URLSearchParams()
-        params.append('user_id', localStorage.getItem('username'))
-        params.append('roomNum', localStorage.getItem('roomNum'))
-
-        UserService.postScanQrcode(params).then((res) => {
-            new Noty({
-                type: 'success',
-                layout: 'topRight',
-                theme: 'nest',
-                text: `成功: ${res}`,
-                timeout: '4000',
-                progressBar: true,
-                closeWith: ['click'],
-            }).show()
-
-            if (res) {
-                //console.log('當前金額: ' + res.data)
-                localStorage.setItem('userMoney', res.data)
-            }
+    const initWebSocket = () => {
+        //對 getMessage 設定監聽，如果 server 有透過 getMessage 傳送訊息，將會在此被捕捉
+        socket.on('get_chek_point', (msg) => {
+            console.log(msg)
         })
-    }, [result])
+    }
 
     const handleOnChange = (event) => {
         setMoney(event.target.value)
@@ -468,6 +480,7 @@ const QRCodeSend2 = (props) => {
                 </DialogContent>
                 <DialogActions>
                     <Button
+                        id="yes"
                         onClick={handleYes2}
                         className="sure"
                         style={{
