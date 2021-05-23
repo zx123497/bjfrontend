@@ -56,6 +56,7 @@ const GameLobby = (props) => {
             const role = data.get(localStorage.getItem('username'))
             setPlayer({ money: role.money, price: role.price, role: role.role })
         })
+        localStorage.setItem('money', player.money) //for Qrcode
     }, [])
 
     const classes = useStyles()

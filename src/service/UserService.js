@@ -33,22 +33,6 @@ const UserService = {
             throw error
         }
     },
-    postScanQrcode: async(body) => {
-        try {
-            const response = await axios.post('/scanQRcode', body)
-            return response
-        } catch (error) {
-            throw error
-        }
-    },
-    postCheckQrcode: async(body) => {
-        try {
-            const response = await axios.post('/checkQRcode', body)
-            return response
-        } catch (error) {
-            throw error
-        }
-    },
     postEnterRoom: async(body) => {
         try {
             const response = await axios.post('/enterRoom', body)

@@ -1,24 +1,17 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { makeStyles, Button, Grid, TextField, Typography } from '@material-ui/core'
-import { Link, withRouter } from 'react-router-dom'
+import { Link, useHistory, withRouter } from 'react-router-dom'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import WarningIcon from '@material-ui/icons/Warning'
 import BackPage from '../../components/BackPage/BackPage'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
-import ErrorIcon from '@material-ui/icons/Error'
-import InputAdornment from '@material-ui/core/InputAdornment'
 import QrReader from 'react-qr-reader'
 import QRCode from 'react-qr-code'
-import UserService from '../../service/UserService'
-import Noty from 'noty'
 // import QRCodeScanner from 'react-native-qrcode-scanner';
 // import { RNCamera } from 'react-native-camera';
-import { NextWeek, PanoramaWideAngleTwoTone } from '@material-ui/icons'
 import { socket } from '../../service/socket'
-import ReactDom from 'react-dom'
-import webSocket from 'socket.io-client'
 import io from 'socket.io-client'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -102,14 +95,17 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const QRCodeSend2 = (props) => {
+const QRCodeSend2 = ({ history }) => {
     const classes = useStyles()
+    history.listen(() => {
+        socket.on('disconnect', function () {
+            console.log('disconnect' + this.id)
+        })
+    })
 
-    //const [ws, setWs] = useState(webSocket('http://localhost:3000'))
-    var socket = io()
-    const [money, setMoney] = useState('')
+    const [money, setMoney] = useState('') // 付款金額
     const [showQR, setShowQR] = useState(false)
-    const [result, setResult] = useState('No result')
+    const [errorMessage, setError] = useState('')
     const [state, setState] = React.useState({
         checked: true,
     })
@@ -132,14 +128,37 @@ const QRCodeSend2 = (props) => {
     }
 
     const [seller, setSeller] = React.useState(false)
-    const [haveScan, sethaveScan] = React.useState(false)
     const [open1, setOpen1] = React.useState(false)
-    const [open2, setOpen2] = React.useState(true)
+    const [open2, setOpen2] = React.useState(false)
     const [open3, setOpen3] = React.useState(false)
     const [trans, setTrans] = React.useState(false)
     const [roundNum, setRoundNum] = React.useState('0')
+    const [receiver_id, setReceiver_id] = React.useState('')
 
     useEffect(() => {
+        /*
+       // 最後送get_chek_point的時候，他會自己再set一次id所以這邊讓他只能set一次
+       // 若沒刪掉is_socketid user就不能再交易了
+       */
+        if (localStorage.getItem('is_socketid') == null && !trans) {
+            socket.emit('setSocket', {
+                roomNum: localStorage.getItem('roomNum'),
+                user_id: localStorage.getItem('username'),
+            })
+            localStorage.setItem('is_socketid', true)
+        }
+
+        //確認setSocketid成功與否
+        socket.on('testsocket', function (data) {
+            console.log(data)
+            localStorage.setItem('socketid', data.s)
+        })
+
+        //每次setsocket 都會傳送訊息給 user 234
+        //user 234 要先建立過連線
+        socket.on('testbroadcast', function (data) {
+            console.log(data.msg)
+        })
         // seller receiver 賣方 收款方
         // buyer payer     買方 付款方
         if (localStorage.getItem('role') == 'seller') {
@@ -147,28 +166,7 @@ const QRCodeSend2 = (props) => {
         } else {
             setSeller(false)
         }
-
-        const params = new URLSearchParams()
-        params.append('user_id', localStorage.getItem('username'))
-        params.append('roomNum', localStorage.getItem('roomNum'))
-
-        UserService.postScanQrcode(params).then((res) => {
-            new Noty({
-                type: 'success',
-                layout: 'topRight',
-                theme: 'nest',
-                text: `成功: ${res}`,
-                timeout: '4000',
-                progressBar: true,
-                closeWith: ['click'],
-            }).show()
-
-            if (res) {
-                //console.log('當前金額: ' + res.data)
-                localStorage.setItem('userMoney', res.data)
-            }
-        })
-    }, [result])
+    }, [localStorage.getItem('role')])
 
     const handleClose1 = () => {
         setOpen1(false)
@@ -176,84 +174,95 @@ const QRCodeSend2 = (props) => {
     const handleYes1 = () => {
         setOpen1(false)
         setOpen2(true)
-        console.log(' 確認交易1')
+        console.log(localStorage.getItem('role') + ' 確認交易1')
     }
+
     const handleNo1 = () => {
         setOpen1(false)
-        console.log('取消交易1')
+        localStorage.removeItem('is_socketid')
+        localStorage.removeItem('socketid')
+        if (seller) {
+            console.log('seller 取消交易1')
+        } else {
+            console.log('buyer 取消交易1')
+            socket.emit('get_chek_point', {
+                roomNum: localStorage.getItem('roomNum'),
+                round: localStorage.getItem('roundNum'),
+                money: money,
+                //money: localStorage.getItem('tranMoney'),
+                payer_id: localStorage.getItem('username'),
+                receiver_id: localStorage.getItem('receiver_id'),
+                chek_point: '0',
+            })
+        }
     }
     const handleClose2 = () => {
         setOpen2(false)
     }
     const handleYes2 = () => {
-        if (localStorage.getItem('role') == 'buyer') {
-            socket.on('search_user', function (payer_id) {
-                //確認是否為付款者
-                if (localStorage.getItem('username') == payer_id) {
-                    var msg = '1'
-                    socket.emit('get_chek_point', msg)
-                    initWebSocket()
-                    console.log('確認付款')
-                }
-            })
-        }
-
         setOpen2(false)
 
-        if (!trans && seller) {
-            const transaction = ['payer', 'receiver', 'money', 'roomNum', 'round']
-            transaction[0] = localStorage.getItem('tranUser')
-            transaction[1] = localStorage.getItem('username')
-            transaction[2] = localStorage.getItem('tranMoney')
-            transaction[3] = localStorage.getItem('roomNum')
-            transaction[4] = localStorage.getItem('roundNum')
-
-            // 2.
-            // const transaction = {
-            //     payer: localStorage.getItem('tranUser'),
-            //     receiver: localStorage.getItem('username'),
-            //     money: localStorage.getItem('tranMoney'),
-            //     roomNum: localStorage.getItem('roomNum'),
-            //     round: localStorage.getItem('roundNum'),
-            // }
-            console.log('確認開始交易！！！')
-            console.log('tran: ' + transaction)
-
-            const params2 = new URLSearchParams()
-            params2.append('transaction', transaction)
-
-            UserService.postCheckQrcode(params2).then((res) => {
-                new Noty({
-                    type: 'success',
-                    layout: 'topRight',
-                    theme: 'nest',
-                    text: `成功: ${res}`,
-                    timeout: '4000',
-                    progressBar: true,
-                    closeWith: ['click'],
-                }).show()
-
-                setTrans(true) //設定每局交易過後便無法再進行第二次交易
-                console.log('交易結束: ' + res.data)
+        // 收款方確認要交易
+        if (seller) {
+            socket.emit('checkQRcode', {
+                roomNum: localStorage.getItem('roomNum'),
+                payer_id: localStorage.getItem('tranUser'),
+                receiver_id: localStorage.getItem('username'),
             })
+
+            // 收款方等待接收 付款方是否確認交易之 socket
+            console.log('seller確認交易 等待buyer付款')
+            socket.on('transcResp', function (data) {
+                //data = chek_point
+                if (data == '1') {
+                    setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                    setError('恭喜您完成交易')
+                    setOpen3(true)
+                } else if (data == '0') {
+                    setError('交易失敗\n 付款方不想付款')
+                    setOpen3(true)
+                } else {
+                    setError('交易失敗\n 付款方無回應')
+                    setOpen3(true)
+                }
+            })
+            localStorage.removeItem('is_socketid')
+            localStorage.removeItem('socketid')
+        }
+
+        if (!seller) {
+            console.log('buyer 確定要交易')
+            socket.emit('get_chek_point', {
+                roomNum: localStorage.getItem('roomNum'),
+                round: localStorage.getItem('roundNum'),
+                money: money,
+                payer_id: localStorage.getItem('username'),
+                receiver_id: localStorage.getItem('receiver_id'),
+                chek_point: '1',
+            })
+            setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+            localStorage.removeItem('is_socketid')
+            localStorage.removeItem('socketid')
         }
     }
 
     const handleNo2 = () => {
-        if (localStorage.getItem('role') == 'buyer') {
-            socket.on('search_user', function (payer_id) {
-                //確認是否為付款者
-                if (localStorage.getItem('username') == payer_id) {
-                    var msg = '0'
-                    socket.emit('get_chek_point', msg)
-                    initWebSocket()
-                    console.log('取消付款')
-                }
+        setOpen2(false)
+        localStorage.removeItem('is_socketid')
+        localStorage.removeItem('socketid')
+
+        if (seller) console.log('seller 取消交易2')
+        else {
+            console.log('buyer 取消交易2')
+            socket.emit('get_chek_point', {
+                roomNum: localStorage.getItem('roomNum'),
+                round: localStorage.getItem('roundNum'),
+                money: money,
+                payer_id: localStorage.getItem('username'),
+                receiver_id: localStorage.getItem('receiver_id'),
+                chek_point: '0',
             })
         }
-
-        setOpen2(false)
-        console.log('取消交易QQ')
     }
     const handleClose = () => {
         setOpen3(false)
@@ -264,17 +273,12 @@ const QRCodeSend2 = (props) => {
 
         if (trans && data != null) {
             console.log('此回合已進行過交易')
+            setError('此回合已進行過交易 \n無法再次交易')
             setOpen3(true)
         } else if (data != null) {
-            setResult(data)
             localStorage.setItem('tranMoney', data.match(/money=([^&]+)/)[1].split('/')[0]) //test 字母
             localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1]) //test 字母
             setOpen1(true)
-            sethaveScan(true)
-            console.log(localStorage.getItem('tranMoney'))
-            console.log(localStorage.getItem('tranUser'))
-            console.log('scan: ' + haveScan)
-            console.log('result: ' + result)
         }
     }
 
@@ -282,38 +286,34 @@ const QRCodeSend2 = (props) => {
         setTrans(false)
     }, [roundNum])
 
-    //const connectWebSocket = () => {
-    //開啟
-    //setWs(webSocket('http://localhost:3000'))
-    //}
-
-    useEffect(() => {
-        if (socket) {
-            //連線成功在 console 中打印訊息
-            console.log('success connect!')
-            //設定監聽
-            initWebSocket()
-        }
-    }, [socket])
-
-    const initWebSocket = () => {
-        //對 getMessage 設定監聽，如果 server 有透過 getMessage 傳送訊息，將會在此被捕捉
-        socket.on('get_chek_point', (msg) => {
-            console.log(msg)
-        })
-    }
-
     const handleOnChange = (event) => {
         setMoney(event.target.value)
+        localStorage.setItem('userMoney', event.target.value)
     }
 
     const handleQRShow = () => {
-        setShowQR(true)
+        if (money <= 0) {
+            setError('付款金額需大於 0 元')
+            setOpen3(true)
+        } else if (money >= localStorage.getItem('money')) {
+            setError('超出您的餘額')
+            setOpen3(true)
+        } else {
+            setShowQR(true)
+        }
+
+        if (!seller) {
+            socket.on('transCheckReq', function (data) {
+                setReceiver_id(data)
+                //測試的時候發現network裡面receiver_id，socket.emit一直會是空的所以先寫了這個，確保有存到
+                localStorage.setItem('receiver_id', data)
+                setOpen1(true)
+            })
+        }
     }
     const handleQRHide = () => {
         setShowQR(false)
     }
-
     return (
         <div className={classes.QRCodeSend2}>
             <BackPage refs="login"></BackPage>
@@ -386,6 +386,7 @@ const QRCodeSend2 = (props) => {
                     >
                         確定
                     </Button>
+
                     <Button
                         onClick={handleNo1}
                         className="cancel"
@@ -515,7 +516,7 @@ const QRCodeSend2 = (props) => {
                 </DialogActions>
             </Dialog>
 
-            {/* 已交易 */}
+            {/* ErrorMessage */}
             <Dialog
                 PaperProps={{
                     style: {
@@ -538,9 +539,8 @@ const QRCodeSend2 = (props) => {
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
-                    <Typography align="center" style={{ fontSize: '120%', marginTop: '4%' }}>
-                        此回合已進行過交易
-                        <br></br>無法再次交易
+                    <Typography align="center" style={{ whiteSpace: 'pre-line', fontSize: '120%', marginTop: '4%' }}>
+                        {errorMessage}
                     </Typography>
                 </DialogContent>
                 <DialogActions>
@@ -623,22 +623,14 @@ const QRCodeSend2 = (props) => {
                         </form>
                     </Grid>
                 </Grid>
-                <div className="sub_title">提醒目前餘額為 ${localStorage.getItem('userMoney')}</div>
-                {/* <Button id="yes" onClick={() => setId("yes")} >Yes</Button>
-            <Button id="no" onClick={() => setId("no")} >No</Button> */}
+                <div className="sub_title">提醒目前餘額為 ${localStorage.getItem('money')}</div>
                 <div className="bottom">
                     <div>
-                        {/* <QRCode
-                            className={`${showQR ? 'QRshow' : 'QRhide'}`}
-                            value={{ money: money, userId: userId }}
-                        /> */}
                         <QRCode
                             className={`${showQR ? 'QRshow' : 'QRhide'}`}
                             value={'money=' + money + '/userId=' + localStorage.getItem('username')}
                         />
-                        {/* <QRCode className={`${showQR ? 'QRshow' : 'QRhide'}`} value={money} /> */}
                     </div>
-
                     <Link
                         component={Button}
                         style={{
@@ -687,7 +679,6 @@ const QRCodeSend2 = (props) => {
                     className="switch"
                     label="收款"
                 />
-                {/* <h4>交易金額：{haveScan ? localStorage.getItem('tranMoney') : '?'}</h4> */}
                 <h4>請掃描付款者 QRCode</h4>
                 <QrReader
                     className="scan"
