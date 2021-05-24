@@ -22,30 +22,48 @@ const useStyles = makeStyles((theme) => ({
 
 const GameLobby = (props) => {
 
-    //////////////////////////////
-    //        sockect try       //
-    //////////////////////////////
+    const [room, setRoom] = useState({
+        pincode: '9487',
+        totalMemNum: '',
+        roundTime: '',
+    })
 
-    // const [connected, setConnected] = useState(false);
+    const [annoucement, setAnnouncement] = useState({
+        roomAnnoucement: '',
+    })
 
-    // useEffect(() => {
-    //     socket.emit('test');
-    //     socket.on('testResponse', obj => {
-    //         console.log(obj);
-    //     });
-    //     // unsubscribe from event for preventing memory leaks
-    // }, []);
 
-    // console.log(socket);
+    // 這兩個emit會讓後端爆掉
 
-    //////////////////////////////
+    // socket.emit('sendsysmsg', {
+    //     msg: 'testtesttesttesttesttesttesttesttesttesttesttest',
+    //     roomNum: 9487
+    // });
+
+    // socket.emit('sendRecordRequest', {roomNum: 9487, round: 0});
+
+    // socket.disconnect();
+
+    useEffect(() => {
+        // 這個function裡面的socket會讓後端爆掉
+
+        // socket.on('sys', sysMsg => {
+        //     setAnnouncement({roomAnnoucement: sysMsg});
+        //     console.log(sysMsg);
+        // });
+
+        // socket.on('getRecordRequest', obj => {
+        //     console.log("records");
+        //     console.log(obj.record);
+        // });
+    }, [])
 
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
-            <UpperBar />
-            <AnnouncementLine />
+            <UpperBar data={room} />
+            <AnnouncementLine data={annoucement}/>
             <div className={classes.componenet}>
                 <GameChart />
                 <TransRecord />

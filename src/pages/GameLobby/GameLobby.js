@@ -49,13 +49,17 @@ const GameLobby = (props) => {
         params.append('roomNum', roomNum)
         params.append('roundNum', roundNum)
 
-        UserService.postAssignRole(params).then((res) => {
-            const data = new Map(res.data.data)
-            setRoom({ totalMemNum: data.size, pincode: roomNum, roundTime: localStorage.getItem('countdown') })
+        // UserService.postAssignRole(params).then((res) => {
+        //     const data = new Map(res.data.data)
+        //     setRoom({ totalMemNum: data.size, pincode: roomNum, roundTime: localStorage.getItem('countdown') })
 
-            const role = data.get(localStorage.getItem('username'))
-            setPlayer({ money: role.money, price: role.price, role: role.role })
-        })
+        //     const role = data.get(localStorage.getItem('username'))
+        //     setPlayer({ money: role.money, price: role.price, role: role.role })
+        // })
+
+        socket.on('sys', function(sysMsg) {
+            setAnnouncement({roomAnnoucement: sysMsg});
+        });
     }, [])
 
     const classes = useStyles()

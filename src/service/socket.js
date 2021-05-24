@@ -11,8 +11,8 @@ export const socket = io(URL, {
 // const [connected, setConnected] = useState(false);
 
 // useEffect(() => {
-//     socket.emit('test');
-//     socket.on('testResponse', obj => {
-//         console.log(obj);
-//     });
+    // socket.emit('test');
+    // socket.on('testResponse', obj => {
+    //     console.log(obj);
+    // });
 // }, []);
