@@ -57,9 +57,9 @@ const GameLobby = (props) => {
         //     setPlayer({ money: role.money, price: role.price, role: role.role })
         // })
 
-        socket.on('sys', function(sysMsg) {
-            setAnnouncement({roomAnnoucement: sysMsg});
-        });
+        // socket.on('sys', function(sysMsg) {
+        //     setAnnouncement({roomAnnoucement: sysMsg});
+        // });
     }, [])
 
     const classes = useStyles()
