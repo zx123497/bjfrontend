@@ -33,29 +33,44 @@ const GameLobby = (props) => {
     })
 
 
-    // 這兩個emit會讓後端爆掉
 
-    // socket.emit('sendsysmsg', {
-    //     msg: 'testtesttesttesttesttesttesttesttesttesttesttest',
-    //     roomNum: 9487
-    // });
+    // 因為他好像會一直emit，所以我先寫一個localStorage把她停下來的方法
+    if (localStorage.getItem('is_emit') == null) {
 
-    // socket.emit('sendRecordRequest', {roomNum: 9487, round: 0});
+        socket.emit('sendRecordRequest', { roomNum: '9487', round: 0 });
+        socket.emit('enterRoom', { roomNum: '9487' });
 
-    // socket.disconnect();
+        socket.emit('sendsysmsg', {
+            msg: 'testtesttesttesttesttesttesttesttesttesttesttest',
+            roomNum: '9487'
+        });
+
+        localStorage.setItem('is_emit', true)
+    }
+
+    // 這個function裡面的socket會讓後端爆掉
+    socket.on('sys', function (sysMsg) {
+        setAnnouncement({ roomAnnoucement: sysMsg });
+        console.log("sysMsg");
+    });
+
+
+    console.log("d");
 
     useEffect(() => {
-        // 這個function裡面的socket會讓後端爆掉
 
-        // socket.on('sys', sysMsg => {
-        //     setAnnouncement({roomAnnoucement: sysMsg});
-        //     console.log(sysMsg);
-        // });
+        socket.on('testjoin', function (msg) {
+            console.log(msg);
+        });
 
-        // socket.on('getRecordRequest', obj => {
-        //     console.log("records");
-        //     console.log(obj.record);
-        // });
+
+
+
+        socket.on('getRecordRequest', function (obj) {
+            console.log("records");
+            console.log(obj.record);
+        });
+
     }, [])
 
     const classes = useStyles();
@@ -63,7 +78,7 @@ const GameLobby = (props) => {
     return (
         <div className={classes.root}>
             <UpperBar data={room} />
-            <AnnouncementLine data={annoucement}/>
+            <AnnouncementLine data={annoucement} />
             <div className={classes.componenet}>
                 <GameChart />
                 <TransRecord />
