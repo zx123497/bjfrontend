@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import SVG from './wait.svg'
 import PersonIcon from '@material-ui/icons/Person'
+import { Link, withRouter } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
     waiting: {
         height: '100vh',
@@ -54,8 +55,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-function Waitingroom() {
+const Waitingroom = (props) => {
     const classes = useStyles()
+    const id = props.match.params.id
     return (
         <div className={classes.waiting}>
             <div className="card">
@@ -67,7 +69,9 @@ function Waitingroom() {
                     <PersonIcon />
                     等待人數：1000 人
                 </div>
-                <Button className="start">開始遊戲</Button>
+                <Link to={`/admin/gamelobby/${id}`}>
+                    <Button className="start">開始遊戲</Button>
+                </Link>
             </div>
         </div>
     )

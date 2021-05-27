@@ -191,7 +191,7 @@ const Lobby = () => {
                     </Link>
                 </div>
                 <div className="roomArea">
-                    <Roomcard title="週一經濟" player="2" round="2" status="未開始" id={1} />
+                    <Roomcard title="週一經濟" player="2" round="2" status="未開始" id={9487} />
                     <Roomcard title="週二經濟" player="2" round="2" status="未開始" id={2} />
                     <Roomcard title="週三經濟" player="2" round="2" status="未開始" id={3} />
                     <Roomcard title="週一經濟" player="2" round="2" status="未開始" id={4} />
