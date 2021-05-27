@@ -4,9 +4,10 @@ import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit'
 import Button from '@material-ui/core/Button'
 import Roomcard from './Roomcard'
+import { Link, withRouter } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
     Lobby: {
-        margin: '40px 10px 10px 10px',
+        margin: '40px 10px 0px 10px',
         padding: '15px 10px 15px 10px',
         //display: 'flex',
         backgroundColor: theme.palette.primary.main,
@@ -185,15 +186,17 @@ const Lobby = () => {
             <div className="rooms">
                 <div className="roomTitle">
                     <h2 className="roomtext">已建立房間</h2>
-                    <Button className="roombtn">+建立房間</Button>
+                    <Link to="roomsettings">
+                        <Button className="roombtn">+建立房間</Button>
+                    </Link>
                 </div>
                 <div className="roomArea">
-                    <Roomcard title="週一經濟" player="2" round="2" status="未開始" />
-                    <Roomcard title="週二經濟" player="2" round="2" status="未開始" />
-                    <Roomcard title="週三經濟" player="2" round="2" status="未開始" />
-                    <Roomcard title="週一經濟" player="2" round="2" status="未開始" />
-                    <Roomcard title="週二經濟" player="2" round="2" status="未開始" />
-                    <Roomcard title="週三經濟" player="2" round="2" status="未開始" />
+                    <Roomcard title="週一經濟" player="2" round="2" status="未開始" id={1} />
+                    <Roomcard title="週二經濟" player="2" round="2" status="未開始" id={2} />
+                    <Roomcard title="週三經濟" player="2" round="2" status="未開始" id={3} />
+                    <Roomcard title="週一經濟" player="2" round="2" status="未開始" id={4} />
+                    <Roomcard title="週二經濟" player="2" round="2" status="未開始" id={5} />
+                    <Roomcard title="週三經濟" player="2" round="2" status="未開始" id={6} />
                 </div>
             </div>
         </div>
