@@ -30,12 +30,13 @@ const useStyles = makeStyles((theme) => ({
         minHeight: 'calc(100vh - 48px)',
         backgroundColor: '#FFF06B',
         '& .App': {
-            height: 'calc(100vh - 48px)',
+            minHeight: 'calc(100vh - 48px)',
         },
         '& .Container': {
-            height: 'calc(100vh - 48px)',
+            minHeight: 'calc(100vh - 48px)',
+            height: 'max-content',
             margin: '3rem 0 0 0',
-            padding: '1rem',
+            padding: '10px',
         },
     },
 }))

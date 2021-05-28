@@ -73,7 +73,7 @@ const UpperBar = (props) => {
                         PIN CODE
                     </Typography>
                     <Typography variant="body2">
-                        {props.data.pincode}
+                        {/* {props.data.pincode} */}
                     </Typography>
                 </Grid>
                 <Grid container xs={6} justify="flex-end">

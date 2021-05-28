@@ -46,7 +46,7 @@ const Roomcard = (props) => {
     const classes = useStyles()
     return (
         <div className={classes.Card}>
-            <Button className="card" component={Link} to="/admin/gamein">
+            <Button className="card" component={Link} to={`/admin/gamein/${props.id}`}>
                 <div className="cardtitle">
                     <div>房間名稱</div>
                     <div>{props.title}</div>

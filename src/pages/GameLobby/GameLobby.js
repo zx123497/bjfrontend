@@ -39,6 +39,15 @@ const GameLobby = (props) => {
     }
 
     useEffect(() => {
+        //因為重新連接，所以要再進一次房間後端才能找到他
+        socket.emit('enterRoom', { roomNum: '9487' })
+
+        // 這個function裡面的socket會讓後端爆掉
+        socket.on('sys', function (sysMsg) {
+            setAnnouncement({ roomAnnoucement: sysMsg })
+            console.log('sysMsg')
+        })
+
         localStorage.setItem('username', '123')
         const roomNum = props.match.params.roomNum.substr(1)
         const roundNum = props.match.params.round.substr(1)
@@ -49,14 +58,17 @@ const GameLobby = (props) => {
         params.append('roomNum', roomNum)
         params.append('roundNum', roundNum)
 
-        UserService.postAssignRole(params).then((res) => {
-            const data = new Map(res.data.data)
-            setRoom({ totalMemNum: data.size, pincode: roomNum, roundTime: localStorage.getItem('countdown') })
+        // UserService.postAssignRole(params).then((res) => {
+        //     const data = new Map(res.data.data)
+        //     setRoom({ totalMemNum: data.size, pincode: roomNum, roundTime: localStorage.getItem('countdown') })
 
-            const role = data.get(localStorage.getItem('username'))
-            setPlayer({ money: role.money, price: role.price, role: role.role })
-            localStorage.setItem('money', role.money) //for Qrcode
-        })
+        //     const role = data.get(localStorage.getItem('username'))
+        //     setPlayer({ money: role.money, price: role.price, role: role.role })
+        // })
+
+        // socket.on('sys', function(sysMsg) {
+        //     setAnnouncement({roomAnnoucement: sysMsg});
+        // });
     }, [])
 
     const classes = useStyles()
