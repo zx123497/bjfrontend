@@ -58,6 +58,7 @@ function App() {
                                         <main>
                                             <Switch>
                                                 <Route path="/" exact component={LogIn} />
+                                                <Route path="/user/edit/password" exact component={ForgetPassword} />
                                                 <Route
                                                     path="/.well-known/pki-validation/F60DB5A60B3334BAE1AE87D845C2698E.txt"
                                                     exact

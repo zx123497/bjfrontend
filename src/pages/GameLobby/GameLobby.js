@@ -39,16 +39,14 @@ const GameLobby = (props) => {
     }
 
     useEffect(() => {
-
         //因為重新連接，所以要再進一次房間後端才能找到他
-        socket.emit('enterRoom', { roomNum: '9487' });
+        socket.emit('enterRoom', { roomNum: '9487' })
 
         // 這個function裡面的socket會讓後端爆掉
         socket.on('sys', function (sysMsg) {
-            setAnnouncement({ roomAnnoucement: sysMsg });
-            console.log("sysMsg");
-        });
-
+            setAnnouncement({ roomAnnoucement: sysMsg })
+            console.log('sysMsg')
+        })
 
         localStorage.setItem('username', '123')
         const roomNum = props.match.params.roomNum.substr(1)
