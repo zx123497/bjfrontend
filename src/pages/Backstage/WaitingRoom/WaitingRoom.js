@@ -64,7 +64,7 @@ const Waitingroom = (props) => {
                 <h2 className="title">等待入場...</h2>
                 <img src={SVG} style={{ width: '100%', height: 'auto' }} />
                 <h3 className="title">房間PIN Code</h3>
-                <h4 className="code">ABC1233</h4>
+                <h4 className="code">9487</h4>
                 <div className="status">
                     <PersonIcon />
                     等待人數：1000 人

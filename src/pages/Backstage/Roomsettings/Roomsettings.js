@@ -12,7 +12,6 @@ import Book from './RoundCard'
 import useTheme from '@material-ui/core/styles/useTheme'
 import 'swiper/swiper.scss'
 import { ArrowForward, ArrowBack } from '@material-ui/icons'
-
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 const useStyles = makeStyles((theme) => ({
