@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
             margin: '1rem auto',
             width: '100%',
             backgroundColor: theme.palette.background.paper,
-            boxShadow: '0 0 10px rgba(0,0,0,0.2)',
+            boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
             borderRadius: '10px',
             padding: '5px 15px',
         },

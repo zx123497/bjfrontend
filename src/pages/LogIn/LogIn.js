@@ -1,5 +1,5 @@
-import React from 'react'
-import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core'
+import React, { useState } from 'react'
+import { makeStyles, Typography, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
 import { Link, withRouter, useHistory } from 'react-router-dom'
 import BackPage from '../../components/BackPage/BackPage'
@@ -13,6 +13,12 @@ import InputLabel from '@material-ui/core/InputLabel'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import WarningIcon from '@material-ui/icons/Warning'
 
 const useStyles = makeStyles((theme) => ({
     LogIn: {
@@ -131,6 +137,12 @@ const LogIn = (props) => {
     const history = useHistory()
     const classes = useStyles()
 
+    const [errorMessage, setErrorMessage] = useState('')
+    const [open, setOpen] = useState(false)
+    const handleClose = () => {
+        setOpen(false)
+    }
+
     const [values, setValues] = React.useState({
         account: '',
         password: '',
@@ -142,44 +154,42 @@ const LogIn = (props) => {
 
     const handleSubmit = (event) => {
         if (values.account == '' && values.password == '') {
-            alert('請輸入帳號和密碼')
+            //alert('請輸入帳號和密碼')
+            setErrorMessage('請輸入帳號和密碼')
+            setOpen(true)
         } else if (values.account == '') {
-            alert('請輸入帳號')
+            //alert('請輸入帳號')
+            setErrorMessage('請輸入帳號')
+            setOpen(true)
         } else if (values.password == '') {
-            alert('請輸入密碼')
+            //alert('請輸入密碼')
+            setErrorMessage('請輸入密碼')
+            setOpen(true)
         } else {
             localStorage.setItem('username', values.account)
             const params = new URLSearchParams()
             params.append('username', values.account)
             params.append('password', values.password)
 
-            UserService.postLogin(params).then((res) => {
-                new Noty({
-                    type: 'success',
-                    layout: 'topRight',
-                    theme: 'nest',
-                    text: `成功: ${res}`,
-                    timeout: '4000',
-                    progressBar: true,
-                    closeWith: ['click'],
-                }).show()
-                if (res.status == '200') {
-                    // UserService.getLogin().then((res) => {
-                    //   new Noty({
-                    //     type: "success",
-                    //     layout: "topRight",
-                    //     theme: "nest",
-                    //     text: `成功: ${res}`,
-                    //     timeout: "4000",
-                    //     progressBar: true,
-                    //     closeWith: ["click"],
-                    //   }).show();
-                    //   console.log(res);
-                    // });
-                }
-            })
-
-            //history.push('./lobby');
+            UserService.postLogin(params)
+                .then((res) => {
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        theme: 'nest',
+                        text: `成功: ${res}`,
+                        timeout: '4000',
+                        progressBar: true,
+                        closeWith: ['click'],
+                    }).show()
+                    if (res.status == '200') {
+                        //history.push('./lobby');
+                    }
+                })
+                .catch((e) => {
+                    setErrorMessage('登入失敗\n 請重新輸入帳號密碼')
+                    setOpen(true)
+                })
         }
         event.preventDefault()
     }
@@ -232,15 +242,6 @@ const LogIn = (props) => {
                                 labelWidth={35}
                             />
                         </FormControl>
-                        {/* <PasswordInput2
-              field="密碼"
-              id="password"
-              onChange={handleChange("password")}
-            >
-              value={values.password}
-              pw={values.password}
-            </PasswordInput2> */}
-                        {/* <TextField id="password" value={values.password} onChange={handleChange('password')} label="密碼" type="search" variant="outlined"  size="small" />   */}
                     </form>
                     <Link component={Button} className="btn2" to={'/ForgetPassword'}>
                         忘記密碼
@@ -258,6 +259,61 @@ const LogIn = (props) => {
                     </div>
                 </CardActions>
             </Card>
+            {/* ErrorMessage */}
+            <Dialog
+                PaperProps={{
+                    style: {
+                        marginTop: '90px',
+                        borderRadius: 30,
+                        height: '28%',
+                        width: '300px',
+                        padding: '28px 20px 28px 20px',
+                        backgroundColor: '#EAEAEA',
+                    },
+                }}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    <Typography className="title" variant="h5" align="center">
+                        <WarningIcon color="disabled"></WarningIcon> &nbsp;提醒
+                    </Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <Typography
+                        align="center"
+                        justifyContent="center"
+                        style={{
+                            whiteSpace: 'pre-line',
+                            fontSize: '120%',
+                            marginTop: '3px',
+                        }}
+                    >
+                        {errorMessage}
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleClose}
+                        className="sure"
+                        style={{
+                            margin: 'auto',
+                            fontSize: '90%',
+                            fontWeight: '500',
+                            borderRadius: '20px',
+                            boxShadow: 'none',
+                            width: '40%',
+                            height: '110%',
+                            backgroundColor: '#00AAA4',
+                            color: '#FFFFFF',
+                        }}
+                    >
+                        確定
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }

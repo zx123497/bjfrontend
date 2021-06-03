@@ -43,10 +43,9 @@ const GameLobby = (props) => {
         socket.emit('enterRoom', { roomNum: '9487' });
 
         socket.on('sys', function (sysMsg) {
-            setAnnouncement({ roomAnnoucement: sysMsg });
-            console.log("sysMsg");
-        });
-
+            setAnnouncement({ roomAnnoucement: sysMsg })
+            console.log('sysMsg')
+        })
 
         localStorage.setItem('username', '123')
         const roomNum = props.match.params.roomNum.substr(1)
