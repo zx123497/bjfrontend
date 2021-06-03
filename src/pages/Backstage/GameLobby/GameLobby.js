@@ -6,6 +6,8 @@ import UpperBar from '../../../components/ForGameLobby/UpperBar'
 import GameChart from '../../../components/ForGameLobby/GameChart'
 import TransRecord from '../../../components/ForGameLobby/TransRecord'
 import { socket } from '../../../service/socket'
+import UserService from '../../../service/UserService'
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const GameLobby = (props) => {
     const [room, setRoom] = useState({
-        pincode: `${props.match.params.id}`,
+        pincode: '',
         totalMemNum: '',
         roundTime: '',
     })
@@ -35,29 +37,42 @@ const GameLobby = (props) => {
 
     // 因為他好像會一直emit，所以我先寫一個localStorage把她停下來的方法
     if (localStorage.getItem('is_emit') == null) {
-        socket.emit('sendRecordRequest', { roomNum: `${props.match.params.id}`, round: 0 })
-        socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
+        // socket.emit('sendRecordRequest', { roomNum: `${props.match.params.id}`, round: 0 })
+        socket.emit('sendRecordRequest', { roomNum: '9487', round: 1 })
+
+        // socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
+        socket.emit('enterRoom', { roomNum: '9487' })
 
         socket.emit('sendsysmsg', {
             msg: 'testtesttesttesttesttesttesttesttesttesttesttest',
-            roomNum: `${props.match.params.id}`,
+            // roomNum: `${props.match.params.id}`,
+            roomNum: '9487',
         })
+
 
         localStorage.setItem('is_emit', true)
     }
 
     // 這個function裡面的socket會讓後端爆掉
-    socket.on('sys', function (sysMsg) {
-        setAnnouncement({ roomAnnoucement: sysMsg })
-        console.log('sysMsg')
-    })
-
-    console.log('d')
 
     useEffect(() => {
-        socket.on('testjoin', function (msg) {
-            console.log(msg);
-        });
+        const params = new URLSearchParams()
+        params.append('roomNum', 9487)
+        params.append("ID", localStorage.getItem('username'));
+        params.append("schoolname", 'NCU');
+        params.append("username", localStorage.getItem('username'));
+
+        UserService.postEnterRoom(params).then((res) => {
+            if(res.status == "200") {
+                setRoom({
+                    // pincode: props.match.params.id,
+                    pincode: '9487',
+                    totalMemNum: res.data.allUsers.length,
+                    round: res.data.roomDetail.nowRound,
+                    roundTime: res.data.roomDetail.roundTime
+                })
+            }
+        })
 
         socket.on('getRecordRequest', function (obj) {
             console.log("records");
@@ -66,6 +81,9 @@ const GameLobby = (props) => {
             console.log(records);
         });
 
+        socket.on('sys', function (sysMsg) {
+            setAnnouncement({ roomAnnoucement: sysMsg })
+        })
     }, [])
 
     const classes = useStyles()
