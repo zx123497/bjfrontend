@@ -30,12 +30,9 @@ const GameLobby = (props) => {
         roomAnnoucement: '',
     })
 
-<<<<<<< HEAD
     const [records, setRecord] = useState({
     });
 
-=======
->>>>>>> b66d77a28565f802de7ae0b74533ac340138bb34
     // 因為他好像會一直emit，所以我先寫一個localStorage把她停下來的方法
     if (localStorage.getItem('is_emit') == null) {
         socket.emit('sendRecordRequest', { roomNum: `${props.match.params.id}`, round: 0 })
