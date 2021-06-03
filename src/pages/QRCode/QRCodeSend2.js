@@ -220,8 +220,8 @@ const QRCodeSend2 = ({ history }) => {
                     setOpen3(true)
                     const result = {
                         round: localStorage.getItem('roundNum'),
-                        payer: localStorage.getItem('tranUser'),
-                        receiver: localStorage.getItem('username'),
+                        buyer: localStorage.getItem('tranUser'),
+                        seller: localStorage.getItem('username'),
                         money: localStorage.getItem('tranMoney'),
                     }
                     localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
@@ -252,8 +252,8 @@ const QRCodeSend2 = ({ history }) => {
             localStorage.removeItem('socketid')
             const result = {
                 round: localStorage.getItem('roundNum'),
-                payer: localStorage.getItem('username'),
-                receiver: localStorage.getItem('receiver_id'),
+                buyer: localStorage.getItem('username'),
+                seller: localStorage.getItem('receiver_id'),
                 money: money,
             }
             localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
