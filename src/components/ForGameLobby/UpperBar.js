@@ -22,7 +22,10 @@ const useStyles = makeStyles((theme) => ({
             display: "inline-block"
         },
         "& .round": {
-            marginRight: "1rem"
+            marginRight: "1rem",
+            "& .MuiTypography-body1": {
+                fontSize: "3rem",
+            }
         },
         "& .timer": {
             width: "6rem",
@@ -65,6 +68,8 @@ const UpperBar = (props) => {
 
     const classes = useStyles();
 
+    const numMap = new Map([[1, '一'], [2, '二'], [3, '三'], [4, '四'], [5, '五'], [6, '六'], [7, '七'], [8, '八'], [9, '九'], [10, '十']])
+
     return (
         <div className={classes.root}>
             <Grid container>
@@ -73,7 +78,7 @@ const UpperBar = (props) => {
                         PIN CODE
                     </Typography>
                     <Typography variant="body2">
-                        {/* {props.data.pincode} */}
+                        {props.data.pincode}
                     </Typography>
                 </Grid>
                 <Grid container xs={6} justify="flex-end">
@@ -84,7 +89,13 @@ const UpperBar = (props) => {
             </Grid>
             <div className={classes.RoundNTime} container>
                 <Box className="box round" fontWeight="fontWeightBold" fontSize="h3.fontSize">
-                    第二回合
+                    {numMap.get(props.data.round) && (
+                        <Typography>第{numMap.get(props.data.round)}回合</Typography>
+                    )}
+
+                    {!(numMap.get(props.data.round)) && (
+                        <Typography>第{props.data.round}回合</Typography>
+                    )}
                 </Box>
                 <div className="box timer">
                     <Grid container>

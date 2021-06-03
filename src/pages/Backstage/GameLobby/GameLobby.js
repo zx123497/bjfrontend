@@ -32,7 +32,8 @@ const GameLobby = (props) => {
         roomAnnoucement: '',
     })
 
-
+    const [records, setRecord] = useState({
+    });
 
     // 因為他好像會一直emit，所以我先寫一個localStorage把她停下來的方法
     if (localStorage.getItem('is_emit') == null) {
@@ -63,12 +64,11 @@ const GameLobby = (props) => {
             console.log(msg);
         });
 
-
-
-
         socket.on('getRecordRequest', function (obj) {
             console.log("records");
             console.log(obj.record);
+            setRecord(obj.record);
+            console.log(records);
         });
 
     }, [])
@@ -81,7 +81,7 @@ const GameLobby = (props) => {
             <AnnouncementLine data={annoucement} />
             <div className={classes.componenet}>
                 <GameChart />
-                <TransRecord />
+                <TransRecord data={records} />
             </div>
         </div>
     )

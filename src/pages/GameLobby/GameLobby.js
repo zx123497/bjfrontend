@@ -18,32 +18,30 @@ const GameLobby = (props) => {
     const [room, setRoom] = useState({
         pincode: '',
         totalMemNum: '',
+        round: '',
         roundTime: '',
     })
 
     const [player, setPlayer] = useState({
+        item: '',
         money: '',
         price: '',
         role: '',
+        score: '',
+        totalScore: 0,
+        transPartner: '456',
+        tranAmount: 0
     })
 
     const [annoucement, setAnnouncement] = useState({
         roomAnnoucement: '',
     })
 
-    // set annoucement
-    function announce() {
-        socket.on('sys', (sysMsg) => {
-            setAnnouncement(sysMsg)
-        })
-    }
 
     useEffect(() => {
 
-        //因為重新連接，所以要再進一次房間後端才能找到他
         socket.emit('enterRoom', { roomNum: '9487' });
 
-        // 這個function裡面的socket會讓後端爆掉
         socket.on('sys', function (sysMsg) {
             setAnnouncement({ roomAnnoucement: sysMsg });
             console.log("sysMsg");
@@ -60,17 +58,30 @@ const GameLobby = (props) => {
         params.append('roomNum', roomNum)
         params.append('roundNum', roundNum)
 
-        // UserService.postAssignRole(params).then((res) => {
-        //     const data = new Map(res.data.data)
-        //     setRoom({ totalMemNum: data.size, pincode: roomNum, roundTime: localStorage.getItem('countdown') })
+        UserService.postEnterRoom(params).then((res) => {
+            if(res.status == "200") {
+                setRoom({
+                    pincode: roomNum,
+                    totalMemNum: res.data.allUsers.length,
+                    round: roundNum,
+                    roundTime: res.data.roomDetail.roundTime
+                })
 
-        //     const role = data.get(localStorage.getItem('username'))
-        //     setPlayer({ money: role.money, price: role.price, role: role.role })
-        // })
-
-        // socket.on('sys', function(sysMsg) {
-        //     setAnnouncement({roomAnnoucement: sysMsg});
-        // });
+                const users = new Map(res.data.allUsers)
+                const role = users.get('123')
+                setPlayer({
+                    item: role.item,
+                    money: role.money,
+                    price: role.price,
+                    role: role.role,
+                    score: role.score,
+                    totalScore: 0,
+                    transPartner: '456',
+                    tranAmount: 0
+                })
+            }
+            
+        })
     }, [])
 
     const classes = useStyles()
@@ -80,7 +91,7 @@ const GameLobby = (props) => {
             <UpperBar data={room} />
             <AnnouncementLine data={annoucement} />
             <UserInfo data={player} />
-            <PersonalTransaction />
+            <PersonalTransaction data={player}/>
         </div>
     )
 }

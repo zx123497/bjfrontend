@@ -32,6 +32,8 @@ const TransRecord = (props) => {
 
     const classes = useStyles();
 
+    // console.log(props.data.records);
+
     return (
         <div className={classes.root}>
             <Grid container className="row">
