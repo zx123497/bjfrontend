@@ -9,6 +9,14 @@ const AdminService = {
             throw error
         }
     },
+    postChartData: async(body) => {
+        try {
+            const response = await axios.post('/chartData', body)
+            return response
+        } catch (error) {
+            throw error
+        }
+    },
     postChangeSingleMoney: async(body) => {
         try {
             const response = await axios.post('/changeSingleMoney', body)

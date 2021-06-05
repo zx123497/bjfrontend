@@ -7,6 +7,7 @@ import GameChart from '../../../components/ForGameLobby/GameChart'
 import TransRecord from '../../../components/ForGameLobby/TransRecord'
 import { socket } from '../../../service/socket'
 import UserService from '../../../service/UserService'
+import AdminService from '../../../service/AdminService'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +26,7 @@ const GameLobby = (props) => {
     const [room, setRoom] = useState({
         pincode: '',
         totalMemNum: '',
+        round: '',
         roundTime: '',
     })
 
@@ -32,16 +34,16 @@ const GameLobby = (props) => {
         roomAnnoucement: '',
     })
 
-    const [records, setRecord] = useState({
-    });
+    const [chartData, setChartData] = useState({
+        chartData: {buyer: [], seller: []}
+    })
 
     const roomNum = props.match.params.id
 
     // 因為他好像會一直emit，所以我先寫一個localStorage把她停下來的方法
     if (localStorage.getItem('is_emit') == null) {
-        // socket.emit('sendRecordRequest', { roomNum: `${props.match.params.id}`, round: 1 })
-        socket.emit('faketransc', { roomNum: `${roomNum}`, round: 0 })
-        
+        socket.emit('startTime', {roomNum: '9487'})
+
         socket.emit('enterRoom', { roomNum: `${roomNum}`, round: 1 })
         
         socket.emit('sendsysmsg', {
@@ -73,9 +75,22 @@ const GameLobby = (props) => {
             }
         })
 
-        socket.on('getRecordRequest', function (obj) {
-            setRecord(obj);
-        });
+        const params2 = new URLSearchParams()
+        params2.append('roomNum', `${roomNum}`) 
+        params2.append('roundNum', '0')
+        AdminService.postAssignRole(params2).then((res) => {
+            
+        })
+
+        socket.on('startTimeResponse', (data) => {
+            console.log(data)
+        })
+
+        const params3 = new URLSearchParams()
+        params3.append('roomNum', `${roomNum}`)
+        AdminService.postChartData(params3).then((response) => {
+            setChartData({chartData: response.data.chartData})
+        })
 
         socket.on('sys', function (sysMsg) {
             setAnnouncement({ roomAnnoucement: sysMsg })
@@ -89,8 +104,8 @@ const GameLobby = (props) => {
             <UpperBar data={room} />
             <AnnouncementLine data={annoucement} />
             <div className={classes.componenet}>
-                <GameChart />
-                <TransRecord data={records} />
+                <GameChart data={chartData}/>
+                <TransRecord />
             </div>
         </div>
     )
