@@ -19,7 +19,7 @@ const AdminService = {
     },
     postTotalChartData: async(body) => {
         try {
-            const response = await axios.post('/startGameTime', body)
+            const response = await axios.post('/totalChartData', body)
             return response
         } catch (error) {
             throw error
