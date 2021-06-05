@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles, Typography, Grid, Button, Card } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import RecordCard from './RecordCard';
+import AdminService from '../../../service/AdminService'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -71,6 +72,17 @@ const GameSum = (props) => {
 
     const classes = useStyles();
 
+    const roomNum = props.match.params.id
+
+    const params = new URLSearchParams()
+    params.append('roomNum', roomNum)
+
+    AdminService.postTotalChartData(params).then((res) => {
+        if(res.status == "200") {
+            console.log(res)
+        }
+    })
+
     return (
         <div className={classes.root}>
             <div className={classes.upper}>
@@ -82,7 +94,7 @@ const GameSum = (props) => {
                                 PIN CODE
                             </Typography>
                             <Typography variant="subtitle2">
-                                ABC1234
+                                {roomNum}
                             </Typography>
                         </Grid>
                         <Grid item xs={4}>

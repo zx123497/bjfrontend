@@ -35,16 +35,18 @@ const GameLobby = (props) => {
     const [records, setRecord] = useState({
     });
 
+    const roomNum = props.match.params.id
+
     // 因為他好像會一直emit，所以我先寫一個localStorage把她停下來的方法
     if (localStorage.getItem('is_emit') == null) {
         // socket.emit('sendRecordRequest', { roomNum: `${props.match.params.id}`, round: 1 })
-        socket.emit('faketransc', { roomNum: '9487', round: 0 })
+        socket.emit('faketransc', { roomNum: `${roomNum}`, round: 0 })
         
-        socket.emit('enterRoom', { roomNum: `${props.match.params.id}`, round: 1 })
+        socket.emit('enterRoom', { roomNum: `${roomNum}`, round: 1 })
         
         socket.emit('sendsysmsg', {
             msg: 'testtesttesttesttesttesttesttesttesttesttesttest',
-            roomNum: `${props.match.params.id}`
+            roomNum: `${roomNum}`
         })
 
 
@@ -55,7 +57,7 @@ const GameLobby = (props) => {
 
     useEffect(() => {
         const params = new URLSearchParams()
-        params.append('roomNum', 9487)
+        params.append('roomNum', roomNum)
         params.append("ID", localStorage.getItem('username'));
         params.append("schoolname", 'NCU');
         params.append("username", localStorage.getItem('username'));

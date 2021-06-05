@@ -1,17 +1,9 @@
 import axios from './axios'
 
-const UserService = {
+const AdminService = {
     postAssignRole: async(body) => {
         try {
             const response = await axios.post('/assignRole', body)
-            return response
-        } catch (error) {
-            throw error
-        }
-    },
-    postStartGameTime: async(body) => {
-        try {
-            const response = await axios.post('/startGameTime', body)
             return response
         } catch (error) {
             throw error
