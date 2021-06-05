@@ -37,16 +37,14 @@ const GameLobby = (props) => {
 
     // 因為他好像會一直emit，所以我先寫一個localStorage把她停下來的方法
     if (localStorage.getItem('is_emit') == null) {
-        // socket.emit('sendRecordRequest', { roomNum: `${props.match.params.id}`, round: 0 })
-        socket.emit('sendRecordRequest', { roomNum: '9487', round: 1 })
-
-        // socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
-        socket.emit('enterRoom', { roomNum: '9487' })
-
+        // socket.emit('sendRecordRequest', { roomNum: `${props.match.params.id}`, round: 1 })
+        socket.emit('faketransc', { roomNum: '9487', round: 0 })
+        
+        socket.emit('enterRoom', { roomNum: `${props.match.params.id}`, round: 1 })
+        
         socket.emit('sendsysmsg', {
             msg: 'testtesttesttesttesttesttesttesttesttesttesttest',
-            // roomNum: `${props.match.params.id}`,
-            roomNum: '9487',
+            roomNum: `${props.match.params.id}`
         })
 
 
@@ -65,8 +63,7 @@ const GameLobby = (props) => {
         UserService.postEnterRoom(params).then((res) => {
             if(res.status == "200") {
                 setRoom({
-                    // pincode: props.match.params.id,
-                    pincode: '9487',
+                    pincode: props.match.params.id,
                     totalMemNum: res.data.allUsers.length,
                     round: res.data.roomDetail.nowRound,
                     roundTime: res.data.roomDetail.roundTime
@@ -75,10 +72,7 @@ const GameLobby = (props) => {
         })
 
         socket.on('getRecordRequest', function (obj) {
-            console.log("records");
-            console.log(obj.record);
-            setRecord(obj.record);
-            console.log(records);
+            setRecord(obj);
         });
 
         socket.on('sys', function (sysMsg) {
