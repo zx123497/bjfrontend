@@ -6,12 +6,47 @@ import Chart from "react-google-charts";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: "100%",
-        height: "100%"
+        width: "70%",
+        height: "100%",
+        marginLeft: "13%"
     }
 }));
 
 const FinalChart = (props) => {
+    const rawChartData = props.data.chartData
+    const selected = props.data.selected
+
+    const lengthSurvey = []
+    for(let element of rawChartData) {
+        lengthSurvey.push(element[0].seller.length)
+        lengthSurvey.push(element[0].buyer.length)
+    }
+    const limit = Math.max(...lengthSurvey)
+
+    const selectedRound = []
+    for(let element of selected) {
+        selectedRound.push({round: element.title, data: rawChartData[element.value]})
+    }
+
+    const chartLegend = ['x']
+    for(let element of selectedRound) {
+        chartLegend.push(`${element.round} Seller`)
+        chartLegend.push(`${element.round} Buyer`)
+    }
+
+    const data= []
+    data.push(chartLegend)
+
+    for(let i=0;i<limit;i++) {
+        let temp = []
+        temp.push(i)
+        for(let element of selectedRound) {
+            temp.push(element.data[0].seller[i])
+            temp.push(element.data[0].buyer[i])
+        }
+        data.push(temp)
+    }
+
 
     const classes = useStyles();
 
@@ -23,29 +58,20 @@ const FinalChart = (props) => {
                 width="100%"
                 height="100%"
                 loader={<div>Loading Chart</div>}
-                data={[
-                    ['x', 'dogs', 'cats'],
-                    [0, 0, 0],
-                    [1, 10, 5],
-                    [2, 23, 15],
-                    [3, 17, 9],
-                    [4, 18, 10],
-                    [5, 9, 5],
-                    [6, 11, 3],
-                    [7, 27, 19],
-                ]}
+                data={data}
                 options={{
                     hAxis: {
-                        title: 'Time',
+                        title: '玩家',
                     },
                     vAxis: {
-                        title: 'Popularity',
+                        title: '商品價值',
                     },
                     series: {
-                        1: { curveType: 'function' },
+                        0: { color: '#000000' }
                     },
                 }}
-                rootProps={{ 'data-testid': '2' }}
+                // rootProps={{ 'data-testid': '2' }}
+                
             />
         </Paper>
     )

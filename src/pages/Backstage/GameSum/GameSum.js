@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles, Typography, Grid, Button, Card } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import RecordCard from './RecordCard';
@@ -74,14 +74,21 @@ const GameSum = (props) => {
 
     const roomNum = props.match.params.id
 
-    const params = new URLSearchParams()
-    params.append('roomNum', roomNum)
-
-    AdminService.postTotalChartData(params).then((res) => {
-        if(res.status == "200") {
-            console.log(res)
-        }
+    const [chartData, setChartData] = useState({
+        chartData: []
     })
+
+    useEffect(() => {
+        const params = new URLSearchParams()
+        params.append('roomNum', roomNum)
+
+        AdminService.postTotalChartData(params).then((res) => {
+            if(res.status == "200") {
+                setChartData({chartData: res.data.data});
+            }
+        })
+    },[])
+    
 
     return (
         <div className={classes.root}>
@@ -105,7 +112,7 @@ const GameSum = (props) => {
                     </Grid>
                 </div>
 
-                <div className={classes.gameResult}>
+                {/* <div className={classes.gameResult}>
                     <Typography variant="h5">遊戲結算</Typography>
                     <Typography variant="subtitle2">GAME RESULT</Typography>
                 </div>
@@ -123,13 +130,13 @@ const GameSum = (props) => {
                             <Typography variant="h6">10:00</Typography>
                         </Card>
                     </Grid>
-                </Grid>
+                </Grid> */}
 
                 <div className={classes.recordCard}>
                     <Typography variant="h6">交易紀錄</Typography>
                 </div>
 
-                <RecordCard />
+                <RecordCard data={chartData.chartData} />
             </div>
         </div>
     )

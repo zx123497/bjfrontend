@@ -42,9 +42,6 @@ const GameChart = (props) => {
                     vAxis: {
                         title: '商品價值',
                     },
-                    series: {
-                        1: { curveType: 'function' },
-                    },
                     enableInteractivity: true,
                     tooltip: {
                         trigger: 'selection'
