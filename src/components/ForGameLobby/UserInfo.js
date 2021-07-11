@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
             height: '2.5rem',
             borderRadius: '1rem',
             marginLeft: '10%',
-            backgroundColor: 'red',
+            backgroundColor: 'black',
             color: 'white',
             paddingTop: '0.5rem',
         },
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
             height: '2.5rem',
             borderRadius: '1rem',
             marginLeft: '10%',
-            backgroundColor: 'black',
+            backgroundColor: 'red',
             color: 'white',
             paddingTop: '0.5rem',
         },
@@ -59,10 +59,10 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     Below_sell: {
-        color: 'red',
+        color: 'black',
     },
     Below_buy: {
-        color: 'black',
+        color: 'red',
     },
 }))
 

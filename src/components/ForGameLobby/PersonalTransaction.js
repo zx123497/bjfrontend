@@ -34,16 +34,8 @@ const useStyles = makeStyles((theme) => ({
             display: "flex",
             justifyContent: "center"
         },
-        "& .avatarContainer": {
-            width: "4rem",
-            height: "4rem",
-            borderRadius: "50%",
-            overflow: "hidden",
-            "& img": {
-                width: "100%"
-            }
-        },
         "& .nameContainer": {
+            fontSize:"1.3rem",
             height: "4rem",
             lineHeight: "4rem",
             marginLeft: theme.spacing(2)
@@ -68,9 +60,17 @@ const PersonalTransaction = (props) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={8} className="cell">
-                        <Typography variant="h4">
-                            + $1,000
-                        </Typography>
+                        {props.data.totalScore >= 0 && (
+                            <Typography variant="h4">
+                                +${props.data.totalScore}
+                            </Typography>
+                        )}
+
+                        {props.data.totalScore < 0 && (
+                            <Typography variant="h4">
+                                -${Math.abs(props.data.totalScore)}
+                            </Typography>
+                        )}
                     </Grid>
                 </Grid>
 
@@ -82,11 +82,8 @@ const PersonalTransaction = (props) => {
                     </Grid>
                     <Grid item xs={8} className="cell">
                         <div className="partnerInfo">
-                            <div className="avatarContainer">
-                                <img className="avatar" src="https://pbs.twimg.com/media/EowLHEDXMAUvE4c.jpg" />
-                            </div>
                             <div className="nameContainer">
-                                王俊123
+                                {props.data.transPartner}
                             </div>
                         </div>
                     </Grid>
@@ -99,9 +96,17 @@ const PersonalTransaction = (props) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={8} className="cell">
-                        <Typography variant="h5">
-                            - $1,000
-                        </Typography>
+                        {props.data.tranAmount >= 0 && (
+                            <Typography variant="h5">
+                                + ${props.data.tranAmount}
+                            </Typography>
+                        )}
+
+                        {props.data.tranAmount < 0 && (
+                            <Typography variant="h5">
+                                - ${Math.abs(props.data.tranAmount)}
+                            </Typography>
+                        )}
                     </Grid>
                 </Grid>
 

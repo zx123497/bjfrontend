@@ -6,6 +6,9 @@ import UpperBar from '../../../components/ForGameLobby/UpperBar'
 import GameChart from '../../../components/ForGameLobby/GameChart'
 import TransRecord from '../../../components/ForGameLobby/TransRecord'
 import { socket } from '../../../service/socket'
+import UserService from '../../../service/UserService'
+import AdminService from '../../../service/AdminService'
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,8 +24,9 @@ const useStyles = makeStyles((theme) => ({
 
 const GameLobby = (props) => {
     const [room, setRoom] = useState({
-        pincode: `${props.match.params.id}`,
+        pincode: '',
         totalMemNum: '',
+        round: '',
         roundTime: '',
     })
 
@@ -30,35 +34,66 @@ const GameLobby = (props) => {
         roomAnnoucement: '',
     })
 
+    const [chartData, setChartData] = useState({
+        chartData: {buyer: [], seller: []}
+    })
+
+    const roomNum = props.match.params.id
+
     // 因為他好像會一直emit，所以我先寫一個localStorage把她停下來的方法
     if (localStorage.getItem('is_emit') == null) {
-        socket.emit('sendRecordRequest', { roomNum: `${props.match.params.id}`, round: 0 })
-        socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
+        socket.emit('startTime', {roomNum: '9487'})
 
+        socket.emit('enterRoom', { roomNum: `${roomNum}`, round: 1 })
+        
         socket.emit('sendsysmsg', {
             msg: 'testtesttesttesttesttesttesttesttesttesttesttest',
-            roomNum: `${props.match.params.id}`,
+            roomNum: `${roomNum}`
         })
+
 
         localStorage.setItem('is_emit', true)
     }
 
     // 這個function裡面的socket會讓後端爆掉
-    socket.on('sys', function (sysMsg) {
-        setAnnouncement({ roomAnnoucement: sysMsg })
-        console.log('sysMsg')
-    })
-
-    console.log('d')
 
     useEffect(() => {
-        socket.on('testjoin', function (msg) {
-            console.log(msg)
+        const params = new URLSearchParams()
+        params.append('roomNum', roomNum)
+        params.append("ID", localStorage.getItem('username'));
+        params.append("schoolname", 'NCU');
+        params.append("username", localStorage.getItem('username'));
+
+        UserService.postEnterRoom(params).then((res) => {
+            if(res.status == "200") {
+                setRoom({
+                    pincode: props.match.params.id,
+                    totalMemNum: res.data.allUsers.length,
+                    round: res.data.roomDetail.nowRound,
+                    roundTime: res.data.roomDetail.roundTime
+                })
+            }
         })
 
-        socket.on('getRecordRequest', function (obj) {
-            console.log('records')
-            console.log(obj.record)
+        const params2 = new URLSearchParams()
+        params2.append('roomNum', `${roomNum}`) 
+        params2.append('roundNum', '0')
+        AdminService.postAssignRole(params2).then((res) => {
+            
+        })
+
+        socket.on('startTimeResponse', (data) => {
+            console.log(data)
+        })
+
+        const params3 = new URLSearchParams()
+        params3.append('roomNum', `${roomNum}`)
+        AdminService.postChartData(params3).then((response) => {
+            setChartData({chartData: response.data.chartData})
+        })
+
+        socket.on('sys', function (sysMsg) {
+            setAnnouncement({ roomAnnoucement: sysMsg })
         })
     }, [])
 
@@ -69,7 +104,7 @@ const GameLobby = (props) => {
             <UpperBar data={room} />
             <AnnouncementLine data={annoucement} />
             <div className={classes.componenet}>
-                <GameChart />
+                <GameChart data={chartData}/>
                 <TransRecord />
             </div>
         </div>
