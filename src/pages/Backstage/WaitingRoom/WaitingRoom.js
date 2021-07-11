@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
         '& .title': {
             flexGrow: 1,
             color: theme.palette.primary.dark,
-            marginBottom: '0px',
         },
         '& .code': {
             flexGrow: 2,
@@ -45,12 +44,46 @@ const useStyles = makeStyles((theme) => ({
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: '10px',
+            fontSize: '50px',
         },
         '& .status': {
             flexGrow: 3,
             display: 'flex',
             alignItems: 'center',
             color: theme.palette.secondary.main,
+        },
+        '& .img': {
+            width: '100%',
+            height: 'auto',
+        },
+        [theme.breakpoints.up('md')]: {
+            marginTop: '3rem',
+            '& .img': {
+                width: '40%',
+                height: 'auto',
+            },
+            '& .start': {
+                margin: '2rem',
+                border: `2px ${theme.palette.ultimate.main} solid`,
+                color: '#FFF',
+                boxShadow: '0 0 6px rgba(0,0,0,0.3)',
+                borderRadius: '10px',
+                width: '50%',
+                backgroundColor: theme.palette.ultimate.main,
+                fontSize: '25px',
+            },
+            '& .code': {
+                flexGrow: 2,
+                display: 'flex',
+                // backgroundColor: theme.palette.primary.main,
+                width: '70%',
+                height: '1rem',
+                color: theme.palette.ultimate.main,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '10px',
+                fontSize: '50px',
+            },
         },
     },
 }))
@@ -62,16 +95,16 @@ const Waitingroom = (props) => {
         <div className={classes.waiting}>
             <div className="card">
                 <h2 className="title">等待入場...</h2>
-                <img src={SVG} style={{ width: '100%', height: 'auto' }} />
-                <h3 className="title">房間PIN Code</h3>
+                <img src={SVG} className="App-logo img" />
                 <h4 className="code">9487</h4>
-                <div className="status">
+                {/* <div className="status">
                     <PersonIcon />
                     等待人數：1000 人
-                </div>
-                <Link to={`/admin/gamelobby/${id}`}>
-                    <Button className="start">開始遊戲</Button>
-                </Link>
+                </div> */}
+
+                <Button className="start" component={Link} to={`/admin/gamelobby/${id}`}>
+                    開始遊戲 !
+                </Button>
             </div>
         </div>
     )
