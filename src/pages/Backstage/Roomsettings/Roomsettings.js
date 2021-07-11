@@ -13,7 +13,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import 'swiper/swiper.scss'
 import { ArrowForward, ArrowBack } from '@material-ui/icons'
 import { Swiper, SwiperSlide } from 'swiper/react'
-
+import RoomService from '../../../service/RoomService'
 const useStyles = makeStyles((theme) => ({
     Setting: {
         backgroundColor: theme.palette.primary.main,
@@ -52,6 +52,7 @@ const NewRoom = (props) => {
                 items: '',
                 saleMax: 0,
                 saleMin: 0,
+                interval: 1,
                 buyMax: 0,
                 buyMin: 0,
             },
@@ -64,7 +65,7 @@ const NewRoom = (props) => {
             round_id: id,
             buyratio: 50,
             sellratio: 50,
-
+            interval: 1,
             items: '',
             saleMax: 0,
             saleMin: 0,
@@ -72,6 +73,33 @@ const NewRoom = (props) => {
             buyMin: 0,
         })
         setForm({ ...form, rounds: new_rounds, roundNum: id + 1 })
+    }
+    const handleCreateRoom = () => {
+        let apply_round = form.rounds
+        let new_arr = []
+        apply_round.forEach((row) => {
+            new_arr.push({
+                ratio: row.buyratio,
+                saleMin: row.saleMin,
+                saleMax: row.saleMax,
+                buyMin: row.buyMin,
+                buyMax: row.buyMax,
+                initMoney: null,
+                interval: row.interval,
+                item: null,
+            })
+        })
+        let data = {
+            email: 'chocolate@gmail.com',
+            roundInfo: new_arr,
+            gameType: 1,
+            // initMoney: form.initMoney,
+            roomName: form.roomName,
+            roundTime: 100,
+        }
+        RoomService.postCreateRoom(data).then((res) => {
+            console.log(res)
+        })
     }
 
     const handleTitleChange = async (id, value) => {
@@ -289,7 +317,7 @@ const NewRoom = (props) => {
                 新增回合
             </Button>
             <Button
-                onClick={() => {}}
+                onClick={() => handleCreateRoom()}
                 style={{
                     width: '90%',
                     margin: '1rem',
