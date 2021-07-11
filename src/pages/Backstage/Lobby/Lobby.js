@@ -53,7 +53,8 @@ const useStyles = makeStyles((theme) => ({
         },
         '& .roombtn': {
             height: '2.3rem',
-            backgroundColor: theme.palette.secondary.dark,
+            backgroundColor: theme.palette.secondary.main,
+            color: theme.palette.background.paper,
             boxShadow: '0 0 10px rgba(0,0,0,0.2)',
             borderRadius: '10px',
         },
