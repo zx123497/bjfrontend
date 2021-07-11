@@ -12,9 +12,8 @@ import Book from './RoundCard'
 import useTheme from '@material-ui/core/styles/useTheme'
 import 'swiper/swiper.scss'
 import { ArrowForward, ArrowBack } from '@material-ui/icons'
-
 import { Swiper, SwiperSlide } from 'swiper/react'
-
+import RoomService from '../../../service/RoomService'
 const useStyles = makeStyles((theme) => ({
     Setting: {
         backgroundColor: theme.palette.primary.main,
@@ -28,9 +27,50 @@ const useStyles = makeStyles((theme) => ({
             borderRadius: '10px',
             boxShadow: '0 3px 6px rgba(0,0,0,0.2)',
         },
+        '& .basic_round': {
+            padding: '1rem',
+            backgroundColor: theme.palette.background.paper,
+            margin: '1rem',
+            borderRadius: '10px',
+            boxShadow: '0 3px 6px rgba(0,0,0,0.2)',
+        },
         '& .ratio': {
             marginRight: '10px',
             marginLeft: '10px',
+        },
+        [theme.breakpoints.up('md')]: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            '& .basic': {
+                display: 'flex',
+                padding: '1.5rem',
+                minWidth: 'max-content',
+                width: '60%',
+                justifyContent: 'center',
+            },
+            '& .basic_round': {
+                padding: '1rem',
+                backgroundColor: theme.palette.background.paper,
+                margin: '1rem',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                borderRadius: '10px',
+                minWidth: 'max-content',
+                width: '60%',
+                boxShadow: '0 3px 6px rgba(0,0,0,0.2)',
+            },
+            '& .title': {
+                marginRight: '5rem',
+            },
+            '& .test': {
+                marginRight: '5rem',
+            },
+            '& .init': {
+                marginRight: '5rem',
+            },
         },
     },
 }))
@@ -45,6 +85,7 @@ const NewRoom = (props) => {
         gametype: 0,
         userName: '',
         initMoney: 0,
+        interval: 1,
         rounds: [
             {
                 round_id: 0,
@@ -53,6 +94,7 @@ const NewRoom = (props) => {
                 items: '',
                 saleMax: 0,
                 saleMin: 0,
+
                 buyMax: 0,
                 buyMin: 0,
             },
@@ -65,7 +107,6 @@ const NewRoom = (props) => {
             round_id: id,
             buyratio: 50,
             sellratio: 50,
-
             items: '',
             saleMax: 0,
             saleMin: 0,
@@ -74,9 +115,38 @@ const NewRoom = (props) => {
         })
         setForm({ ...form, rounds: new_rounds, roundNum: id + 1 })
     }
+    const handleCreateRoom = () => {
+        let apply_round = form.rounds
+        let new_arr = []
+        apply_round.forEach((row) => {
+            new_arr.push({
+                ratio: row.buyratio,
+                saleMin: row.saleMin,
+                saleMax: row.saleMax,
+                buyMin: row.buyMin,
+                buyMax: row.buyMax,
+                initMoney: null,
+                item: null,
+            })
+        })
+        let data = {
+            email: 'chocolate@gmail.com',
+            roundInfo: new_arr,
+            gameType: 1,
+            // initMoney: form.initMoney,
+            roomName: form.roomName,
+            roundTime: 100,
+        }
+        RoomService.postCreateRoom(data).then((res) => {
+            console.log(res)
+        })
+    }
 
     const handleTitleChange = async (id, value) => {
         setForm({ ...form, roomName: value })
+    }
+    const handleIntervalChange = async (id, value) => {
+        setForm({ ...form, interval: value })
     }
     const handleInitChange = async (id, value) => {
         setForm({ ...form, initMoney: value })
@@ -183,10 +253,23 @@ const NewRoom = (props) => {
                     onChange={handleInitChange}
                     label="初始金額"
                 />
+                <Input
+                    className="interval"
+                    key="interval"
+                    id="interval"
+                    elementType="input"
+                    elementConfig={{
+                        type: 'text',
+                        placeholder: '輸入單位金額(區間)',
+                    }}
+                    value={form.interval}
+                    onChange={handleIntervalChange}
+                    label="單位金額(區間)"
+                />
             </div>
             <h2 style={{ marginLeft: '1rem' }}>回合設定</h2>
             {form.rounds.map((round) => (
-                <div className="basic">
+                <div className="basic_round">
                     <h3 style={{ margin: 'auto', textAlign: 'center' }}>第{round.round_id + 1}回合</h3>
                     <h4 style={{ marginBottom: '5px' }}>買賣家比例(%)</h4>
                     <div style={{ display: 'flex' }}>
@@ -281,7 +364,7 @@ const NewRoom = (props) => {
             <Button
                 onClick={() => handleAddRound()}
                 style={{
-                    width: '90%',
+                    width: '60%',
                     margin: '5px 1rem',
                     backgroundColor: theme.palette.primary.dark,
                     color: '#FFF',
@@ -290,9 +373,9 @@ const NewRoom = (props) => {
                 新增回合
             </Button>
             <Button
-                onClick={() => {}}
+                onClick={() => handleCreateRoom()}
                 style={{
-                    width: '90%',
+                    width: '60%',
                     margin: '1rem',
                     backgroundColor: theme.palette.secondary.main,
                     color: '#FFF',
