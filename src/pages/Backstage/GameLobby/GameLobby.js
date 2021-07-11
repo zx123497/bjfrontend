@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: theme.spacing(1),
+        overflow: 'hidden'
     },
 }))
 
@@ -34,9 +35,9 @@ const GameLobby = (props) => {
         roomAnnoucement: '',
     })
 
-    const [chartData, setChartData] = useState({
-        chartData: {buyer: [], seller: []}
-    })
+    // const [chartData, setChartData] = useState({
+    //     chartData: {buyer: [], seller: []}
+    // })
 
     const roomNum = props.match.params.id
 
@@ -86,11 +87,11 @@ const GameLobby = (props) => {
             console.log(data)
         })
 
-        const params3 = new URLSearchParams()
-        params3.append('roomNum', `${roomNum}`)
-        AdminService.postChartData(params3).then((response) => {
-            setChartData({chartData: response.data.chartData})
-        })
+        // const params3 = new URLSearchParams()
+        // params3.append('roomNum', `${roomNum}`)
+        // AdminService.postChartData(params3).then((response) => {
+        //     setChartData({chartData: response.data.chartData})
+        // })
 
         socket.on('sys', function (sysMsg) {
             setAnnouncement({ roomAnnoucement: sysMsg })
@@ -104,7 +105,7 @@ const GameLobby = (props) => {
             <UpperBar data={room} />
             <AnnouncementLine data={annoucement} />
             <div className={classes.componenet}>
-                <GameChart data={chartData}/>
+                <GameChart />
                 <TransRecord />
             </div>
         </div>
