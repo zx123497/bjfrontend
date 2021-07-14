@@ -2,6 +2,9 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import { Link, withRouter } from 'react-router-dom'
+import IconButton from '@material-ui/core/IconButton'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
+import SettingsIcon from '@material-ui/icons/Settings'
 const useStyles = makeStyles((theme) => ({
     Card: {
         '& .card': {
@@ -40,15 +43,19 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: 'center',
         },
         [theme.breakpoints.up('md')]: {
+            boxShadow: '0 0 10px rgba(0,0,0,0.2)',
+            backgroundColor: theme.palette.primary.light,
+            margin: theme.spacing(1),
+            borderRadius: '10px',
             '& .card': {
                 display: 'block',
                 height: 'max-content',
                 margin: theme.spacing(1),
                 width: '15rem',
-                backgroundColor: theme.palette.background.paper,
+                backgroundColor: theme.palette.primary.main,
                 boxShadow: '0px 0px 6px 0 rgba(0,0,0,0.2)',
                 borderRadius: '10px',
-                padding: '0',
+                padding: '5px',
             },
 
             '& .card:hover': {
@@ -90,16 +97,20 @@ const Roomcard = (props) => {
         <div className={classes.Card}>
             <Button className="card" component={Link} to={`/admin/gamein/${props.id}`}>
                 <div className="cardtitle">
-                    <h3>{props.title}</h3>
+                    <h2>{props.title}</h2>
                 </div>
                 <div className="cardcontent">
-                    <div>玩家人數 {props.player}人</div>
-                    <div>回合數 {props.round}回合</div>
-                </div>
-                <div className="status">
-                    <div>{props.status}</div>
+                    <div style={{ marginBottom: '1rem' }}>回合數 {props.round}回合</div>
                 </div>
             </Button>
+            <div>
+                <IconButton onClick={() => props.deleteFunc()}>
+                    <DeleteForeverIcon />
+                </IconButton>
+                <IconButton component={Link} to={`/admin/roomedit/${props.id}`}>
+                    <SettingsIcon />
+                </IconButton>
+            </div>
         </div>
     )
 }

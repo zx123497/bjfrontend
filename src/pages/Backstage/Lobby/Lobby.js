@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles, Card, CardContent, Grid, Typography } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit'
@@ -8,6 +8,8 @@ import cat from '../../../pic/cat.jpg'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import { Link } from 'react-router-dom'
 import Admin_lobby from './admin_lobby.svg'
+import RoomService from '../../../service/RoomService'
+import qs from 'qs'
 
 const useStyles = makeStyles((theme) => ({
     Lobby: {
@@ -284,6 +286,30 @@ const useStyles = makeStyles((theme) => ({
 }))
 const Lobby = () => {
     const classes = useStyles()
+
+    const [rooms, setRooms] = useState([])
+
+    useEffect(() => {
+        let params = new URLSearchParams()
+        params.append('email', 'leo000111444@gmail.com')
+        RoomService.getRooms(params).then((res) => {
+            console.log(res)
+            setRooms(res.data)
+        })
+    }, [])
+
+    const handleDelete = (id) => {
+        RoomService.deleteRoom(id).then((res) => {
+            console.log(res)
+            let params = new URLSearchParams()
+            params.append('email', 'leo000111444@gmail.com')
+            RoomService.getRooms(params).then((res2) => {
+                console.log(res2)
+                setRooms(res2.data)
+            })
+        })
+    }
+
     return (
         <div className={classes.Lobby}>
             <div className="profileArea">
@@ -349,12 +375,14 @@ const Lobby = () => {
                     </Button>
                 </div>
                 <div className="roomArea">
-                    <Roomcard title="週一經濟" player="2" round="2" status="未開始" id="9487" />
-                    <Roomcard title="週二經濟" player="2" round="2" status="未開始" id="9487" />
-                    <Roomcard title="週三經濟" player="2" round="2" status="未開始" id="9487" />
-                    <Roomcard title="週一經濟" player="2" round="2" status="未開始" id="9487" />
-                    <Roomcard title="週二經濟" player="2" round="2" status="未開始" id="9487" />
-                    <Roomcard title="週三經濟" player="2" round="2" status="未開始" id="9487" />
+                    {rooms.map((row) => (
+                        <Roomcard
+                            title={row[0] ? row[0] : '未命名房間'}
+                            round={row[1]}
+                            id={row[2]}
+                            deleteFunc={() => handleDelete(row[2])}
+                        />
+                    ))}
                 </div>
             </div>
         </div>

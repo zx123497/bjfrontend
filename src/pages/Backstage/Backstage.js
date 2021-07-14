@@ -6,7 +6,7 @@ import GameIn from './GameIn/GameIn'
 import Lobby from './Lobby/Lobby'
 import GameLobby from './GameLobby/GameLobby'
 import GameSum from './GameSum/GameSum'
-
+import RoomEdit from './Roomsettings/RoomEdit'
 import Roomsettings from './Roomsettings/Roomsettings'
 import WaitingRoom from './WaitingRoom/WaitingRoom'
 import ValueSetting from './ValueSetting/ValueSetting'
@@ -25,6 +25,7 @@ const BackStage = (props) => {
                     <Route path={`${path}/roomsettings`} component={Roomsettings} />
                     <Route path={`${path}/waitingroom/:id`} component={WaitingRoom} />
                     <Route path={`${path}/valuesetting/:id`} component={ValueSetting} />
+                    <Route path={`${path}/roomedit/:id`} component={RoomEdit} />
                 </Switch>
             </div>
         </div>

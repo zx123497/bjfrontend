@@ -78,7 +78,7 @@ const NewRoom = (props) => {
         <div className={classes.Register}>
             <Card className="card">
                 <p className="title">周一經濟</p>
-                <Link style={{ textDecoration: 'none' }} to={`/admin/valuesetting/${id}`}>
+                <Link style={{ textDecoration: 'none' }} to={`/admin/waitingroom/${id}`}>
                     <Button className="in">進入房間</Button>
                 </Link>
             </Card>
