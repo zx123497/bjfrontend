@@ -110,6 +110,14 @@ const QRCodeSend2 = ({ history }) => {
         checked: true,
     })
 
+    const result = {
+        round: '1',
+        buyer: '123',
+        seller: '234',
+        money: '60',
+    }
+    localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
+
     const handleSwitchChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked })
     }
