@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import SVG from './wait.svg'
 import PersonIcon from '@material-ui/icons/Person'
 import { Link, withRouter } from 'react-router-dom'
+import RoomService from '../../../service/RoomService'
 const useStyles = makeStyles((theme) => ({
     waiting: {
         height: '100vh',
@@ -91,18 +92,29 @@ const useStyles = makeStyles((theme) => ({
 const Waitingroom = (props) => {
     const classes = useStyles()
     const id = props.match.params.id
+    const [pin, setPin] = useState()
+    useEffect(() => {
+        let param = new URLSearchParams()
+        param.append('ID', localStorage.id)
+        param.append('name', localStorage.name)
+        param.append('roomID', id)
+        RoomService.openRoom(param).then((res) => {
+            console.log(res)
+            setPin(res.data.pinCode)
+        })
+    }, [])
     return (
         <div className={classes.waiting}>
             <div className="card">
                 <h2 className="title">等待入場...</h2>
                 <img src={SVG} className="App-logo img" />
-                <h4 className="code">9487</h4>
+                <h4 className="code">{pin}</h4>
                 {/* <div className="status">
                     <PersonIcon />
                     等待人數：1000 人
                 </div> */}
 
-                <Button className="start" component={Link} to={`/admin/gamelobby/${id}`}>
+                <Button className="start" component={Link} to={`/admin/gamelobby/${pin}`}>
                     開始遊戲 !
                 </Button>
             </div>

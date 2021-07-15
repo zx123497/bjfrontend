@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden', //解決margin-top塌陷
         alienItems: 'center',
         marginTop: '2rem',
+        overflow: 'scroll',
         '& .image_lobby': {
             display: 'none',
         },
@@ -291,7 +292,7 @@ const Lobby = () => {
 
     useEffect(() => {
         let params = new URLSearchParams()
-        params.append('email', 'leo000111444@gmail.com')
+        params.append('email', localStorage.email)
         RoomService.getRooms(params).then((res) => {
             console.log(res)
             setRooms(res.data)
@@ -302,7 +303,7 @@ const Lobby = () => {
         RoomService.deleteRoom(id).then((res) => {
             console.log(res)
             let params = new URLSearchParams()
-            params.append('email', 'leo000111444@gmail.com')
+            params.append('email', localStorage.email)
             RoomService.getRooms(params).then((res2) => {
                 console.log(res2)
                 setRooms(res2.data)

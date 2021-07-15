@@ -41,6 +41,14 @@ const RoomService = {
             throw error
         }
     },
+    openRoom: async (data) => {
+        try {
+            const response = await axios.post('/openRoom', data)
+            return response
+        } catch (error) {
+            throw error
+        }
+    },
 }
 
 export default RoomService

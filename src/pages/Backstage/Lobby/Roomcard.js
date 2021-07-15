@@ -7,13 +7,17 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import SettingsIcon from '@material-ui/icons/Settings'
 const useStyles = makeStyles((theme) => ({
     Card: {
+        boxShadow: '0 0 10px rgba(0,0,0,0.2)',
+        backgroundColor: theme.palette.primary.light,
+        margin: theme.spacing(1),
+        borderRadius: '10px',
         '& .card': {
             display: 'flex',
             height: '6rem',
             margin: '1rem auto',
             width: '100%',
             backgroundColor: theme.palette.background.paper,
-            boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
+
             borderRadius: '10px',
             padding: '5px 15px',
         },
