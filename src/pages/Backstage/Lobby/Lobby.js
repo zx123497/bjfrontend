@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 import Admin_lobby from './admin_lobby.svg'
 import RoomService from '../../../service/RoomService'
 import qs from 'qs'
-
+import Noty from 'noty'
 const useStyles = makeStyles((theme) => ({
     Lobby: {
         padding: '43px 1rem 1rem 1rem',
@@ -307,6 +307,15 @@ const Lobby = () => {
             RoomService.getRooms(params).then((res2) => {
                 console.log(res2)
                 setRooms(res2.data)
+                new Noty({
+                    type: 'success',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '成功刪除房間',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
             })
         })
     }

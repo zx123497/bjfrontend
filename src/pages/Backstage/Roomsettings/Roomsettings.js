@@ -15,6 +15,7 @@ import { ArrowForward, ArrowBack } from '@material-ui/icons'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import RoomService from '../../../service/RoomService'
 import { useHistory } from 'react-router-dom'
+import Noty from 'noty'
 import qs from 'qs'
 const useStyles = makeStyles((theme) => ({
     Setting: {
@@ -145,6 +146,15 @@ const NewRoom = (props) => {
         console.log(data)
         RoomService.postCreateRoom(data).then((res) => {
             console.log(res)
+            new Noty({
+                type: 'success',
+                layout: 'topRight',
+                theme: 'mint',
+                text: '成功建立房間',
+                timeout: '4000',
+                progressBar: true,
+                closeWith: ['click'],
+            }).show()
             history.push('/admin/lobby')
         })
     }

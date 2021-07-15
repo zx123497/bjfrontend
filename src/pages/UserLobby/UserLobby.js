@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
         overflow: 'hidden', //解決margin-top塌陷
         alienItems: 'center',
+        justifyContent: 'center',
         marginTop: '2rem',
         '& .image_lobby': {
             display: 'none',
@@ -48,6 +49,8 @@ const useStyles = makeStyles((theme) => ({
             borderRadius: '10px',
             alignItems: 'center',
             margin: 'auto',
+            width: '100%',
+            marginTop: '2rem',
         },
         [theme.breakpoints.up('md')]: {
             padding: '5rem 1rem 1rem 1rem',
@@ -80,21 +83,24 @@ const useStyles = makeStyles((theme) => ({
             },
             '& .roombtn': {
                 height: '2.3rem',
+                width: '50%',
                 backgroundColor: theme.palette.secondary.main,
                 color: '#FFF',
                 boxShadow: '0 0 10px rgba(0,0,0,0.2)',
                 borderRadius: '10px',
                 padding: '1rem',
                 fontWeight: 'bold',
-                marginLeft: '0',
-                marginTop: '-20vh',
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '1rem',
             },
         },
     },
     profile: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start',
+        alignItems: 'center',
+        justifyContent: 'center',
         marginBottom: '30px',
 
         //overflow: 'hidden',
@@ -175,12 +181,13 @@ const useStyles = makeStyles((theme) => ({
             display: 'flex',
             height: '70%',
             alignItems: 'center',
+            justifyContent: 'center',
             marginBottom: '30px',
             //overflow: 'hidden',
             '& .card': {
                 backgroundColor: theme.palette.background.paper,
                 color: theme.palette.ultimate.dark,
-                width: '70%',
+                width: '100%',
                 height: 'max-content',
 
                 alienItems: 'center',
@@ -318,26 +325,29 @@ const UserLobby = () => {
                                     <div className="nameArea">
                                         <Typography>{localStorage.getItem('email')}</Typography>
                                     </div>
-                                    <Button className="pwEdit" component={Link} to="/ForgetPassword">
-                                        修改密碼
-                                    </Button>
+                                    <div>
+                                        <Button className="pwEdit" component={Link} to="/ForgetPassword">
+                                            修改密碼
+                                        </Button>
+                                    </div>
                                 </Grid>
                             </Grid>
                         </CardContent>
                     </Card>
+
                     <img
                         src={Admin_lobby}
                         className="image_lobby"
                         alt="logo"
                         style={{ width: '70%', marginTop: '2rem' }}
                     />
+                    <Button className="roombtn" component={Link} to="/gamein">
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <AddCircleIcon style={{ marginRight: '.5rem' }} />
+                            <p className="roomtext">進入房間</p>
+                        </div>
+                    </Button>
                 </div>
-            </div>
-            <div className="rooms">
-                <Button className="roombtn" component={Link} to="/gamein">
-                    <AddCircleIcon style={{ marginRight: '.5rem' }} />
-                    <p className="roomtext">進入房間</p>
-                </Button>
             </div>
         </div>
     )
