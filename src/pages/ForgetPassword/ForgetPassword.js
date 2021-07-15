@@ -81,8 +81,7 @@ const ForgetPassword = (props) => {
 
         if (values.email == '') {
             alert('請輸入電子信箱')
-        }
-        if (values.email != localStorage.getItem('username')) {
+        } else if (values.email != localStorage.getItem('username')) {
             alert('請輸入跟註冊時相同的電子信箱')
         } else {
             const params = new URLSearchParams()

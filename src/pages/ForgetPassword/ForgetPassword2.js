@@ -89,13 +89,14 @@ const ForgetPassword2 = (props) => {
     //console.log(token);
     const history = useHistory()
     const location = useLocation()
-    console.log(location)
+    //console.log(location)
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search)
+    }, [location])
 
-    const searchParams = new URLSearchParams(location.search)
     const raw_token = location.search
     const token = raw_token.match(/token=([^&]+)/)[1]
     console.log('token:' + token)
-
     // const url = new URL('http://http://localhost:3000/forgetpassword2?token=');
     // const token2 = new URLSearchParams(url.search);
     // console.log(token2);
