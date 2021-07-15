@@ -166,7 +166,6 @@ const LogIn = (props) => {
             setErrorMessage('請輸入密碼')
             setOpen(true)
         } else {
-            localStorage.setItem('username', values.account)
             const params = new URLSearchParams()
             params.append('username', values.account)
             params.append('password', values.password)
@@ -184,6 +183,7 @@ const LogIn = (props) => {
                     }).show()
                     if (res.status == '200') {
                         //history.push('./lobby');
+                        localStorage.setItem('username', values.account)
                     }
                 })
                 .catch((e) => {
