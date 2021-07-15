@@ -182,8 +182,10 @@ const LogIn = (props) => {
                         closeWith: ['click'],
                     }).show()
                     if (res.status == '200') {
-                        // history.push('/user/lobby')
-                        if (!res.data.user.isManager) localStorage.setItem('stu', '1')
+                        if (!res.data.user.isManager) {
+                            localStorage.setItem('stu', '1')
+                            history.push('/user/lobby')
+                        } else history.push('/admin/lobby')
                         localStorage.setItem('username', values.account)
                         localStorage.setItem('name', res.data.user.username)
                         localStorage.setItem('id', res.data.user.ID)
