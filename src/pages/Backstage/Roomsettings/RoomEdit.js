@@ -16,6 +16,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import RoomService from '../../../service/RoomService'
 import { useHistory } from 'react-router-dom'
 import qs from 'qs'
+import Noty from 'noty'
 const useStyles = makeStyles((theme) => ({
     Setting: {
         backgroundColor: theme.palette.primary.main,
@@ -167,6 +168,15 @@ const NewRoom = (props) => {
         console.log(data)
         RoomService.postEditRoom(data, id).then((res) => {
             console.log(res)
+            new Noty({
+                type: 'success',
+                layout: 'topRight',
+                theme: 'mint',
+                text: '成功修改房間資訊',
+                timeout: '4000',
+                progressBar: true,
+                closeWith: ['click'],
+            }).show()
             history.push('/admin/lobby')
         })
     }

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom'
 import BackPage from '../../../components/BackPage/BackPage'
+import RoomService from '../../../service/RoomService'
 const useStyles = makeStyles((theme) => ({
     Register: {
         display: 'flex',
@@ -73,11 +74,19 @@ const useStyles = makeStyles((theme) => ({
 
 const NewRoom = (props) => {
     const classes = useStyles()
+    const [name, setName] = useState('')
     const id = props.match.params.id
+    useEffect(() => {
+        RoomService.showRoom(id).then((res) => {
+            console.log(res.data)
+            setName(res.data.roomName)
+        })
+    }, [])
+
     return (
         <div className={classes.Register}>
             <Card className="card">
-                <p className="title">周一經濟</p>
+                <p className="title">{name}</p>
                 <Link style={{ textDecoration: 'none' }} to={`/admin/waitingroom/${id}`}>
                     <Button className="in">進入房間</Button>
                 </Link>
