@@ -156,7 +156,7 @@ const NewRoom = (props) => {
         })
         const qs = require('qs')
         let data = qs.stringify({
-            email: 'leo000111444@gmail.com',
+            email: localStorage.email,
             roundInfo: new_arr,
             initMoney: form.initMoney,
             roomName: form.roomName,
