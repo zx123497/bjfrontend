@@ -129,10 +129,6 @@ const content = [
         id: 'admin',
         items: [
             {
-                title: '建立房間',
-                id: 'newroom',
-            },
-            {
                 title: '管理者專區',
                 id: 'lobby',
             },
