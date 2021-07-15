@@ -150,7 +150,9 @@ const QRCodeSend2 = ({ history }) => {
        */
         if (localStorage.getItem('is_socketid') == null && !trans) {
             socket.emit('setSocket', {
-                roomNum: localStorage.getItem('roomNum'),
+                //for test之後改掉9487
+                roomNum: '9487',
+                // roomNum: localStorage.getItem('roomNum'),
                 user_id: localStorage.getItem('username'),
             })
             localStorage.setItem('is_socketid', true)
@@ -176,13 +178,76 @@ const QRCodeSend2 = ({ history }) => {
         }
     }, [localStorage.getItem('role')])
 
+    useEffect(() => {
+        // 與老師交易時的setSocket
+        if (localStorage.getItem('tranTeacher') == '1') {
+            if (localStorage.getItem('is_socketid') == null) {
+                socket.emit('setSocket', {
+                    //for test之後改掉9487
+                    roomNum: '9487',
+                    user_id: localStorage.getItem('username'),
+                })
+                localStorage.setItem('is_socketid', true)
+            }
+
+            //確認setSocketid成功與否
+            socket.on('testsocket', function (data) {
+                console.log(data)
+                localStorage.setItem('socketid', data.s)
+            })
+        }
+    }, [localStorage.getItem('tranTeacher')])
+
     const handleClose1 = () => {
         setOpen1(false)
     }
     const handleYes1 = () => {
         setOpen1(false)
-        setOpen2(true)
-        console.log(localStorage.getItem('role') + ' 確認交易1')
+        if (localStorage.getItem('tranTeacher') == '1') {
+            console.log('與老師交易')
+
+            //確認接受老師轉入
+            socket.emit('set_admin_transc_req', {
+                //for test之後改掉9487
+                // roomNum: localStorage.getItem('roomNum'),
+                roomNum: '9487',
+                round: localStorage.getItem('roundNum'),
+                limit_times: localStorage.getItem('tranLimit'),
+                payer_id: localStorage.getItem('tranUser'),
+                receiver_id: localStorage.getItem('username'),
+                money: localStorage.getItem('tranMoney'),
+            })
+
+            // 收款方等待接收 與老師交易是否成功之 socket
+            socket.on('get_admin_transc_rsp', function (data) {
+                if (data == '1') {
+                    console.log('get_admin_transc_rsp=1')
+                    setError('恭喜您完成交易')
+                    setOpen3(true)
+                    localStorage.removeItem('is_socketid')
+                    localStorage.removeItem('socketid')
+                    const result = {
+                        round: localStorage.getItem('roundNum'),
+                        buyer: localStorage.getItem('tranUser'),
+                        seller: localStorage.getItem('username'),
+                        money: localStorage.getItem('tranMoney'),
+                    }
+                    localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
+                } else if (data == '0') {
+                    console.log('get_admin_transc_rsp=0')
+                    setError('交易失敗，請再試一次')
+                    setOpen3(true)
+                } else {
+                    console.log('get_admin_transc_rsp=-1')
+                    setError('交易次數已超過限制')
+                    setOpen3(true)
+                }
+            })
+        } else {
+            setOpen2(true)
+            console.log(localStorage.getItem('role') + ' 確認交易1')
+        }
+        localStorage.setItem('tranTeacher', '0')
     }
 
     const handleNo1 = () => {
@@ -298,8 +363,16 @@ const QRCodeSend2 = ({ history }) => {
             setError('此回合已進行過交易 \n無法再次交易')
             setOpen3(true)
         } else if (data != null) {
-            localStorage.setItem('tranMoney', data.match(/money=([^&]+)/)[1].split('/')[0]) //test 字母
-            localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1]) //test 字母
+            if (data.match(/teacher=([^&]+)/)[1].split('/')[0] == '1') {
+                //console.log('1:' + data.match(/teacher=([^&]+)/)[1].split('/')[0])
+                localStorage.setItem('tranMoney', data.match(/money=([^&]+)/)[1].split('/')[0])
+                localStorage.setItem('tranTeacher', '1')
+                localStorage.setItem('tranLimit', data.match(/limit=([^&]+)/)[1].split('/')[0])
+                localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1])
+            } else {
+                localStorage.setItem('tranMoney', data.match(/money=([^&]+)/)[1].split('/')[0])
+                localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1])
+            }
             setOpen1(true)
         }
     }
@@ -380,10 +453,12 @@ const QRCodeSend2 = ({ history }) => {
                         ></img>
                     </div>
                     <Typography align="center" style={{ fontSize: '90%', fontWeight: '600', marginBottom: '8%' }}>
-                        you are {localStorage.getItem('player')}
+                        you are {localStorage.getItem('role')}
                     </Typography>
                     <Typography align="center" style={{ fontSize: '140%' }}>
                         {seller ? (
+                            <div>即將收取 ${localStorage.getItem('tranMoney')}</div>
+                        ) : localStorage.getItem('tranTeacher') == '1' ? (
                             <div>即將收取 ${localStorage.getItem('tranMoney')}</div>
                         ) : (
                             <div>即將轉出 ${localStorage.getItem('tranMoney')}</div>
@@ -650,7 +725,7 @@ const QRCodeSend2 = ({ history }) => {
                     <div>
                         <QRCode
                             className={`${showQR ? 'QRshow' : 'QRhide'}`}
-                            value={'money=' + money + '/userId=' + localStorage.getItem('username')}
+                            value={'teacher=0/' + 'money=' + money + '/userId=' + localStorage.getItem('username')}
                         />
                     </div>
                     <Link
