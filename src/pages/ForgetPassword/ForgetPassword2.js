@@ -12,8 +12,6 @@ import InputLabel from '@material-ui/core/InputLabel'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
-
 const useStyles = makeStyles((theme) => ({
     ForgetPassword2: {
         display: 'flex',
@@ -24,11 +22,6 @@ const useStyles = makeStyles((theme) => ({
         alienItems: 'center',
         justifyContent: 'center',
 
-        '& .btn': {
-            position: 'fixed',
-            top: '75px',
-            left: '12px',
-        },
         '& .card': {
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.ultimate.dark,
