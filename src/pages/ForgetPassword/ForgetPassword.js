@@ -77,12 +77,12 @@ const ForgetPassword = (props) => {
     }
 
     const handleSubmit = (event) => {
-        //alert('email: ' + values.email);
-
-        if (values.email == '') {
-            alert('請輸入電子信箱')
-        } else if (values.email != localStorage.getItem('username')) {
+        //已登入
+        if (localStorage.getItem('email') && values.email != localStorage.getItem('email')) {
             alert('請輸入跟註冊時相同的電子信箱')
+        } else if (values.email == '') {
+            //未登入
+            alert('請輸入電子信箱')
         } else {
             const params = new URLSearchParams()
             params.append('email', values.email)
@@ -99,6 +99,8 @@ const ForgetPassword = (props) => {
                 }).show()
                 console.log(res.data)
                 alert('修改密碼連結已成功發送至 ' + values.email)
+                localStorage.clear()
+                history.push('/login')
             })
         }
         event.preventDefault()
@@ -106,10 +108,15 @@ const ForgetPassword = (props) => {
 
     return (
         <div className={classes.ForgetPassword}>
-            <BackPage refs="/LogIn"></BackPage>
+            {localStorage.getItem('email') ? <BackPage refs="/LogIn"></BackPage> : <BackPage refs="/LogIn"></BackPage>}
             <Card className="card">
                 <CardContent>
-                    <p className="title">忘記密碼</p>
+                    {localStorage.getItem('email') ? (
+                        <p className="title">重設密碼</p>
+                    ) : (
+                        <p className="title">忘記密碼</p>
+                    )}
+
                     <div className="detail">請至電子信箱收取信件以重新設定密碼</div>
                     <form onSubmit={handleSubmit} className="input" noValidate autoComplete="off">
                         <TextField

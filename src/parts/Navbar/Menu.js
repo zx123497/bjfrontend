@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles'
-import { useTheme } from '@material-ui/core'
-import { Icon } from '@material-ui/core'
+import { makeStyles, Typography, useTheme, Icon } from '@material-ui/core'
 import List from '@material-ui/core/List'
 import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
@@ -15,6 +13,13 @@ import Button from '@material-ui/core/Button'
 import ListItemText from '@material-ui/core/ListItemText'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import WarningIcon from '@material-ui/icons/Warning'
+
 const useStyles = makeStyles((theme) => ({
     PersonalMenu: {
         width: '300px',
@@ -140,13 +145,23 @@ const Menu = (props) => {
     const classes = useStyles(theme)
     const [currentPage, setCurrentPage] = useState(null)
     const [open, setOpen] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+    const [errorOpen, setErrorOpen] = useState(false)
+
     const [subMenuOpen, setSubMenuOpen] = useState({
         hours: false,
         activities: false,
     })
 
     const handleDrawerOpen = () => {
-        setOpen(true)
+        if (!localStorage.getItem('name')) {
+            setErrorMessage('請先登入')
+            setErrorOpen(true)
+        } else setOpen(true)
+    }
+
+    const handleClose = () => {
+        setErrorOpen(false)
     }
 
     const handleDrawerClose = () => {
@@ -234,6 +249,61 @@ const Menu = (props) => {
                     <div className="menuFooter"></div>
                 </div>
             </Drawer>
+            {/* ErrorMessage */}
+            <Dialog
+                PaperProps={{
+                    style: {
+                        marginTop: '90px',
+                        borderRadius: 30,
+                        height: '28%',
+                        width: '300px',
+                        padding: '28px 20px 28px 20px',
+                        backgroundColor: '#EAEAEA',
+                    },
+                }}
+                open={errorOpen}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    <Typography className="title" variant="h5" align="center">
+                        <WarningIcon color="disabled"></WarningIcon> &nbsp;提醒
+                    </Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <Typography
+                        align="center"
+                        justifyContent="center"
+                        style={{
+                            whiteSpace: 'pre-line',
+                            fontSize: '120%',
+                            marginTop: '3px',
+                        }}
+                    >
+                        {errorMessage}
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleClose}
+                        className="sure"
+                        style={{
+                            margin: 'auto',
+                            fontSize: '90%',
+                            fontWeight: '500',
+                            borderRadius: '20px',
+                            boxShadow: 'none',
+                            width: '40%',
+                            height: '110%',
+                            backgroundColor: '#00AAA4',
+                            color: '#FFFFFF',
+                        }}
+                    >
+                        確定
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </>
     )
 }

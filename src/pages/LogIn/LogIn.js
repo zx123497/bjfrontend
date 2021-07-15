@@ -182,8 +182,12 @@ const LogIn = (props) => {
                         closeWith: ['click'],
                     }).show()
                     if (res.status == '200') {
-                        //history.push('./lobby');
+                        history.push('/user/lobby')
+                        //console.log(res.locals.user)
                         localStorage.setItem('username', values.account)
+                        localStorage.setItem('name', res.data.user.username)
+                        localStorage.setItem('id', res.data.user.ID)
+                        localStorage.setItem('email', values.account)
                     }
                 })
                 .catch((e) => {
@@ -204,7 +208,6 @@ const LogIn = (props) => {
 
     return (
         <div className={classes.LogIn}>
-            <BackPage></BackPage>
             <Card className="card">
                 <CardContent>
                     <div className="title">會員登入</div>

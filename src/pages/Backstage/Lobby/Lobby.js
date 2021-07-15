@@ -344,15 +344,14 @@ const Lobby = () => {
 
                                 <Grid item className="rightCard">
                                     <div className="detailName">管理者 ID</div>
-                                    <div className="nameArea">巧克力</div>
+                                    <div className="nameArea">{localStorage.getItem('name')}</div>
                                     <div className="detailName">帳號 E-mail</div>
                                     <div className="nameArea">
-                                        <Typography>chocolate@g.ncu.edu.tw</Typography>
+                                        <Typography>{localStorage.getItem('email')}</Typography>
                                     </div>
-                                    <Button className="pwEdit" component={Link} to="">
+                                    <Button className="pwEdit" component={Link} to="/ForgetPassword">
                                         修改密碼
                                     </Button>
-                                    {/*edit  password link */}
                                 </Grid>
                             </Grid>
                         </CardContent>
