@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles, Typography, Grid, Button, Card } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import RecordCard from './RecordCard';
+import AdminService from '../../../service/AdminService'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -71,6 +72,24 @@ const GameSum = (props) => {
 
     const classes = useStyles();
 
+    const roomNum = props.match.params.id
+
+    const [chartData, setChartData] = useState({
+        chartData: []
+    })
+
+    useEffect(() => {
+        const params = new URLSearchParams()
+        params.append('roomNum', roomNum)
+
+        AdminService.postTotalChartData(params).then((res) => {
+            if(res.status == "200") {
+                setChartData({chartData: res.data.data});
+            }
+        })
+    },[])
+    
+
     return (
         <div className={classes.root}>
             <div className={classes.upper}>
@@ -82,7 +101,7 @@ const GameSum = (props) => {
                                 PIN CODE
                             </Typography>
                             <Typography variant="subtitle2">
-                                ABC1234
+                                {roomNum}
                             </Typography>
                         </Grid>
                         <Grid item xs={4}>
@@ -93,7 +112,7 @@ const GameSum = (props) => {
                     </Grid>
                 </div>
 
-                <div className={classes.gameResult}>
+                {/* <div className={classes.gameResult}>
                     <Typography variant="h5">遊戲結算</Typography>
                     <Typography variant="subtitle2">GAME RESULT</Typography>
                 </div>
@@ -111,13 +130,13 @@ const GameSum = (props) => {
                             <Typography variant="h6">10:00</Typography>
                         </Card>
                     </Grid>
-                </Grid>
+                </Grid> */}
 
                 <div className={classes.recordCard}>
                     <Typography variant="h6">交易紀錄</Typography>
                 </div>
 
-                <RecordCard />
+                <RecordCard data={chartData.chartData} />
             </div>
         </div>
     )

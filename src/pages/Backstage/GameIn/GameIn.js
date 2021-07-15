@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
             boxShadow: '0 0px 12px 0 rgba(0,0,0,0.3)',
         },
         '& .title': {
-            color: theme.palette.primary.main,
+            color: theme.palette.text.primary,
             fontSize: 30,
             fontWeight: 900,
         },
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
         '& .in': {
             marginTop: '25px',
             color: theme.palette.background.paper,
-            backgroundColor: 'red',
+            backgroundColor: theme.palette.secondary.main,
             borderRadius: '20px',
             width: '10rem',
         },
@@ -76,14 +76,11 @@ const NewRoom = (props) => {
     const id = props.match.params.id
     return (
         <div className={classes.Register}>
-            <BackPage></BackPage>
             <Card className="card">
                 <p className="title">周一經濟</p>
-                <Link style={{ textDecoration: 'none' }} to={`/admin/valuesetting/${id}`}>
+                <Link style={{ textDecoration: 'none' }} to={`/admin/waitingroom/${id}`}>
                     <Button className="in">進入房間</Button>
                 </Link>
-
-                <Button className="next">設定房間</Button>
             </Card>
         </div>
     )

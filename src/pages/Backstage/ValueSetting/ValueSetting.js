@@ -75,7 +75,7 @@ const ValueSetting = (props) => {
     return (
         <div className={classes.valuesetting}>
             <div className="card">
-                <h2 className="title">每回合金額設定</h2>
+                <h2 className="title">每回合金額調整</h2>
                 <div className="list">
                     {list.map((item) => (
                         <Accordion>

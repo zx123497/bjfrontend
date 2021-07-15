@@ -1,7 +1,8 @@
 // https://react-google-charts.com/line-chart
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, makeStyles, Icon } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
+import { socket } from '../../service/socket'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,164 +31,44 @@ const useStyles = makeStyles((theme) => ({
 
 const TransRecord = (props) => {
 
+    const [records, setRecord] = useState({
+        records: []
+    });
+
+    if (localStorage.getItem('faketransc') == null) {
+        socket.emit('faketransc', { roomNum: `${props.match.params.id}`, round: 0 })
+        localStorage.setItem('faketransc', true)
+    }
+
     const classes = useStyles();
 
-    // console.log(props.data.records);
-
+    useEffect(() => {
+        socket.on('getRecordRequest', function (obj) {
+            let temp = []
+            let i = 0
+            for(let element of obj) {
+                // console.log(element.buyer)
+                temp.push(
+                    <Grid container className="row" key={i}>
+                        <Grid item className="element buyer" xs={3}>{element.buyer}</Grid>
+                        <Grid item className="element icon" xs={1}>
+                            <Icon fontSize="large"><NavigateNextIcon /></Icon>
+                        </Grid>
+                        <Grid item className="element seller" xs={3}>{element.seller}</Grid>
+                        <Grid item className="element amount" xs={5}>$ {element.price}</Grid>
+                    </Grid>
+                )
+                i++
+            }
+            console.log(temp)
+            setRecord({records: temp});
+            // console.log(records)
+        });
+    }, [])
+    
     return (
         <div className={classes.root}>
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
-
-            <Grid container className="row">
-                <Grid item className="element buyer" xs={3}>王俊123</Grid>
-                <Grid item className="element icon" xs={1}>
-                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
-                </Grid>
-                <Grid item className="element seller" xs={3}>陳明How</Grid>
-                <Grid item className="element amount" xs={5}>$ 1,000</Grid>
-            </Grid>
+            {records.records}
         </div>
     )
 }

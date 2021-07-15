@@ -58,15 +58,14 @@ const useStyles = makeStyles((theme) => ({
 
 const GameIn = (props) => {
 
-    // for testing
-    localStorage.clear();
-    localStorage.setItem("username", '123')
-    // remember to delete
+    ////////////// for testing //////////////
+    localStorage.setItem('username', '234')
+    /////////////////////////////////////////
 
     const classes = useStyles();
+
     const [values, setValues] = React.useState({
-        pincode: null,
-        username: ''
+        pincode: null
     });
 
     const handleChange = (prop) => (event) => {
@@ -74,17 +73,17 @@ const GameIn = (props) => {
     };
 
     const handleSubmit = (event) => {
+        const username = localStorage.getItem('username')
+
         if ((values.pincode == "")) {
             alert("請輸入PIN CODE");
         }
         else {
-            localStorage.getItem("username", values.username)
-
             const params = new URLSearchParams();
             params.append("roomNum", values.pincode);
-            params.append("ID", values.username);
+            params.append("ID", username);
             params.append("schoolname", 'NCU');
-            params.append("username", values.username);
+            params.append("username", username);
             
             UserService.postEnterRoom(params).then((res) => {
                 if(res.status == "200") {

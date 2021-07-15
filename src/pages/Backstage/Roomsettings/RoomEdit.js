@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom'
 import BackPage from '../../../components/BackPage/BackPage'
@@ -79,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NewRoom = (props) => {
     const classes = useStyles()
+    const id = props.match.params.id
     const history = useHistory()
     const theme = useTheme()
     const [form, setForm] = useState({
@@ -103,6 +104,27 @@ const NewRoom = (props) => {
             },
         ],
     })
+
+    useEffect(() => {
+        RoomService.showRoom(id).then((res) => {
+            console.log(res.data)
+            let roundCount = 0
+            let temp = []
+            res.data.roundInfo.forEach((row) => {
+                temp.push({ ...row, round_id: roundCount, buyratio: row.ratio, sellratio: 100 - row.ratio })
+                roundCount++
+            })
+            setForm({
+                ...form,
+                rounds: temp,
+                roundNum: roundCount,
+                roomName: res.data.roomName,
+                roundTime: res.data.roundTime,
+                initMoney: res.data.initMoney,
+            })
+        })
+    }, [])
+
     const handleAddRound = () => {
         let new_rounds = form.rounds
         let id = form.roundNum
@@ -143,7 +165,7 @@ const NewRoom = (props) => {
         })
 
         console.log(data)
-        RoomService.postCreateRoom(data).then((res) => {
+        RoomService.postEditRoom(data, id).then((res) => {
             console.log(res)
             history.push('/admin/lobby')
         })
@@ -388,7 +410,7 @@ const NewRoom = (props) => {
                     color: '#FFF',
                 }}
             >
-                建立房間
+                完成修改
             </Button>
         </div>
     )
