@@ -28,7 +28,7 @@ const GameChart = (props) => {
         if(props.data.chartData.length != 0) {
             setData({chartData: processData(props.data.chartData), hTicks: hTicks})
         }
-    }, [props])
+    }, [props.data])
 
     function processData(rawData) {
         let chartData = [['玩家排序', '賣家', '買家']];
@@ -92,8 +92,13 @@ const GameChart = (props) => {
                                         console.log(inputValue)
                                         AdminService.postChangeSingleMoney(params).then((res) => {
                                             if (res.status == '200') {
-                                                setData({chartData: processData(res.data.chartData)})
-                                                console.log(res)
+                                                const params3 = new URLSearchParams()
+                                                params3.append('roomNum', `${props.match.params.id}`)
+                                                AdminService.postChartData(params3).then((response) => {
+                                                    setData({chartData: processData(response.data.chartData)})
+                                                })
+                                                // setData({chartData: processData(res.data.chartData)})
+                                                // console.log(res)
                                             }
                                         })
                                     }

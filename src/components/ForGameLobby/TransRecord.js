@@ -1,9 +1,10 @@
 // https://react-google-charts.com/line-chart
 import React, { useState, useEffect } from 'react';
-import { Grid, makeStyles, Icon } from '@material-ui/core';
+import { Grid, makeStyles, Icon, IconButton, Button } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { socket } from '../../service/socket'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import AutorenewIcon from '@material-ui/icons/Autorenew'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -13,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: "0",
         overflow: "scroll",
         overflowX: "hidden",
+        textAlign: "center",
         "& .row": {
             display: "flex",
             alignItems: "center",
@@ -26,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
             fontSize: "2rem",
             fontWeight: "bold"
         }
+    },
+    button: {
+        marginBottom: "5%"
     }
 }));
 
@@ -35,15 +40,16 @@ const TransRecord = (props) => {
         records: []
     });
 
-    if (localStorage.getItem('faketransc') == null) {
+    const rerender = () => {
         socket.emit('faketransc', { roomNum: `${props.match.params.id}`, round: 0 })
-        localStorage.setItem('faketransc', true)
+        console.log("rerendered")
     }
 
     const classes = useStyles();
 
     useEffect(() => {
         socket.on('getRecordRequest', function (obj) {
+            console.log('rerender')
             let temp = []
             let i = 0
             for(let element of obj) {
@@ -68,7 +74,18 @@ const TransRecord = (props) => {
     
     return (
         <div className={classes.root}>
-            {records.records}
+            <Button
+                variant="contained"
+                color="default"
+                className={classes.button}
+                startIcon={<AutorenewIcon />}
+                onClick={rerender}
+            >
+                Re-render
+            </Button>
+            <div>
+                {records.records}
+            </div>
         </div>
     )
 }

@@ -47,6 +47,7 @@ const GameLobby = (props) => {
         {
             // end game
             icon: <TimerOffIcon />,
+            title: "結束遊戲",
             func: () => {
                 console.log('Hi')
             },
@@ -54,6 +55,7 @@ const GameLobby = (props) => {
         {
             // start game
             icon: <TimerIcon />,
+            title: "開始遊戲",
             func: () => {
                 socket.emit('enterRoom', { roomNum: `${props.match.params.id}`, round: 1 })
                 socket.emit('startTime', { roomNum: `${props.match.params.id}` })
@@ -62,6 +64,7 @@ const GameLobby = (props) => {
         {
             // announce
             icon: <VolumeUpIcon />,
+            title: "發公告",
             func: () => {
                 console.log(`${props.match.params.id}`)
                 try {
@@ -80,6 +83,7 @@ const GameLobby = (props) => {
         {
             // new chart
             icon: <AutorenewIcon />,
+            title: "重新分配",
             func: () => {
                 const params2 = new URLSearchParams()
                 params2.append('roomNum', `${roomNum}`)
@@ -130,13 +134,6 @@ const GameLobby = (props) => {
 
         socket.on('startTimeResponse', (data) => {
             console.log(data)
-        })
-
-        const params3 = new URLSearchParams()
-        params3.append('roomNum', `${roomNum}`)
-        AdminService.postChartData(params3).then((response) => {
-            setChartData({chartData: response.data.chartData})
-            console.log(chartData)
         })
 
         socket.on('sys', function (sysMsg) {
