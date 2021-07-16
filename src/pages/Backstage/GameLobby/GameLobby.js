@@ -12,6 +12,7 @@ import IconMenu from '../../../components/IconMenu/IconMenu'
 import AutorenewIcon from '@material-ui/icons/Autorenew'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import TimerIcon from '@material-ui/icons/Timer'
+import FastForwardIcon from '@material-ui/icons/FastForward';
 import TimerOffIcon from '@material-ui/icons/TimerOff'
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -50,6 +51,14 @@ const GameLobby = (props) => {
             title: "結束遊戲",
             func: () => {
                 console.log('Hi')
+            },
+        },
+        {
+            // next round
+            icon: <FastForwardIcon />,
+            title: "下一回合",
+            func: () => {
+                console.log("next round")
             },
         },
         {
