@@ -16,34 +16,32 @@ const useStyles = makeStyles((theme) => ({
 const GameChart = (props) => {
 
     const[data, setData] = useState({
-        chartData: []
+        chartData: [],
+        hTicks: null
     })
 
     const classes = useStyles();
+    var hTicks = [];
 
     useEffect(() => {
-        const params3 = new URLSearchParams()
-        params3.append('roomNum', `${props.match.params.id}`)
-        AdminService.postChartData(params3).then((res) => {
-            setData({chartData: processData(res.data.chartData)})
-            console.log(data.chartData)
-        })
-        // setData({chartData: processData(props.data.chartData)})
-    }, [])
+        console.log(props.data.chartData)
+        if(props.data.chartData.length != 0) {
+            setData({chartData: processData(props.data.chartData), hTicks: hTicks})
+        }
+    }, [props.data])
 
     function processData(rawData) {
         let chartData = [['玩家排序', '賣家', '買家']];
 
         const limit = Math.max(rawData.seller.length, rawData.buyer.length)
         for(let i=0;i<limit;i++) {
-            let temp = [i, rawData.seller[i], rawData.buyer[i]]
+            let temp = [i+1, rawData.seller[i], rawData.buyer[i]]
             chartData.push(temp)
+            hTicks.push(i+1)
         }
-
         return chartData
     }
     
-
     return (
         <Paper className={classes.root}>
             <Chart
@@ -56,6 +54,7 @@ const GameChart = (props) => {
                 options={{
                     hAxis: {
                         title: '玩家',
+                        ticks: data.hTicks
                     },
                     vAxis: {
                         title: '商品價值',
@@ -92,8 +91,15 @@ const GameChart = (props) => {
                                         console.log(chartWrapper.getChart().getSelection()[0].row)
                                         console.log(inputValue)
                                         AdminService.postChangeSingleMoney(params).then((res) => {
-                                            setData({chartData: processData(res.data.chartData)})
-                                            console.log(res)
+                                            if (res.status == '200') {
+                                                const params3 = new URLSearchParams()
+                                                params3.append('roomNum', `${props.match.params.id}`)
+                                                AdminService.postChartData(params3).then((response) => {
+                                                    setData({chartData: processData(response.data.chartData)})
+                                                })
+                                                // setData({chartData: processData(res.data.chartData)})
+                                                // console.log(res)
+                                            }
                                         })
                                     }
                                 }

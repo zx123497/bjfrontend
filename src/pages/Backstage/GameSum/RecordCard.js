@@ -42,12 +42,14 @@ const RecordCard = (props) => {
 
 
     const round = [];
-    for(let i=0;i<props.data.length;i++) {
-        let temp = {title: `Round${i+1}`, value: i}
-        round.push(temp)
+
+    if(props.data != null) {
+        for(let i=0;i<props.data.length;i++) {
+            let temp = {title: `Round${i+1}`, value: i}
+            round.push(temp)
+        }
     }
 
-    console.log(props.data)
     const [selected, setSelected] = useState({
         selected: []
     })

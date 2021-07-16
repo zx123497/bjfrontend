@@ -57,7 +57,7 @@ const ButtonAppBar = (props) => {
             <AppBar className="bar">
                 <Toolbar className="tool">
                     <Menu className="menu" />
-                    <h4 className="logo">LBD Game</h4>
+                    <h4 className="logo">跟寶治學經濟LOGO</h4>
                     {localStorage.getItem('name') ? (
                         <Button className="isLogin" color="inherit" component={Link} to="/login">
                             <PersonIcon />

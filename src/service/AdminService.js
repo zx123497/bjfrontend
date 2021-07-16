@@ -3,7 +3,7 @@ import axios from './axios'
 const AdminService = {
     postAssignRole: async(body) => {
         try {
-            const response = await axios.post('/assignRole', body)
+            const response = await axios.post('/shuffle', body)
             return response
         } catch (error) {
             throw error
@@ -30,6 +30,14 @@ const AdminService = {
             const response = await axios.post('/totalChartData', body)
             return response
         } catch (error) {
+            throw error
+        }
+    },
+    postPromotion: async(body) => {
+        try {
+            const response = await axios.post('/promotion', body)
+            return response
+        } catch(error) {
             throw error
         }
     }

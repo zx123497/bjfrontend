@@ -15,36 +15,39 @@ const useStyles = makeStyles((theme) => ({
 const FinalChart = (props) => {
     const rawChartData = props.data.chartData
     const selected = props.data.selected
-
-    const lengthSurvey = []
-    for(let element of rawChartData) {
-        lengthSurvey.push(element[0].seller.length)
-        lengthSurvey.push(element[0].buyer.length)
-    }
-    const limit = Math.max(...lengthSurvey)
-
-    const selectedRound = []
-    for(let element of selected) {
-        selectedRound.push({round: element.title, data: rawChartData[element.value]})
-    }
-
-    const chartLegend = ['x']
-    for(let element of selectedRound) {
-        chartLegend.push(`${element.round} Seller`)
-        chartLegend.push(`${element.round} Buyer`)
-    }
-
     const data= []
-    data.push(chartLegend)
 
-    for(let i=0;i<limit;i++) {
-        let temp = []
-        temp.push(i)
-        for(let element of selectedRound) {
-            temp.push(element.data[0].seller[i])
-            temp.push(element.data[0].buyer[i])
+    if(props.data.chartData != null) {
+        const lengthSurvey = []
+        for(let element of rawChartData) {
+            lengthSurvey.push(element[0].seller.length)
+            lengthSurvey.push(element[0].buyer.length)
         }
-        data.push(temp)
+        const limit = Math.max(...lengthSurvey)
+
+        const selectedRound = []
+        for(let element of selected) {
+            selectedRound.push({round: element.title, data: rawChartData[element.value]})
+        }
+
+        const chartLegend = ['x']
+        for(let element of selectedRound) {
+            chartLegend.push(`${element.round} Seller`)
+            chartLegend.push(`${element.round} Buyer`)
+        }
+
+        
+        data.push(chartLegend)
+
+        for(let i=0;i<limit;i++) {
+            let temp = []
+            temp.push(i)
+            for(let element of selectedRound) {
+                temp.push(element.data[0].seller[i])
+                temp.push(element.data[0].buyer[i])
+            }
+            data.push(temp)
+        }
     }
 
 

@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 const GameIn = (props) => {
     ////////////// for testing //////////////
-    localStorage.setItem('username', '234')
+    // localStorage.setItem('username', '234')
     /////////////////////////////////////////
 
     const classes = useStyles()
@@ -84,10 +84,11 @@ const GameIn = (props) => {
             params.append('username', username)
 
             UserService.postEnterRoom(params).then((res) => {
-                if (res.status == '200') {
-                    const roomDetail = res.data.roomDetail
-                    localStorage.setItem('countdown', roomDetail.roundTime)
-                    props.history.push(`/gamelobby/:${values.pincode}/:${roomDetail.nowRound}`)
+                if(res.status == "200") {
+                    const roomDetail = res.data.roomDetail;
+                    localStorage.setItem("countdown", roomDetail.roundTime)
+                    // props.history.push(`/gamelobby/:${values.pincode}/:${roomDetail.nowRound}`)
+                    props.history.push(`/loading`)
                 }
             })
         }
@@ -112,9 +113,7 @@ const GameIn = (props) => {
                     </form>
                 </CardContent>
                 <CardActions>
-                    <Link component={Button} onClick={handleSubmit} className="next" to={'/ForgetPassword2'}>
-                        開始遊戲
-                    </Link>
+                    <Link component={Button} onClick={handleSubmit} className="next">開始遊戲</Link>
                 </CardActions>
             </Card>
         </div>
