@@ -9,9 +9,11 @@ import { socket } from '../../../service/socket'
 import UserService from '../../../service/UserService'
 import AdminService from '../../../service/AdminService'
 import IconMenu from '../../../components/IconMenu/IconMenu'
-import AccessAlarmIcon from '@material-ui/icons/AccessAlarm'
-import AppleIcon from '@material-ui/icons/Apple'
 import AutorenewIcon from '@material-ui/icons/Autorenew'
+import VolumeUpIcon from '@material-ui/icons/VolumeUp'
+import TimerIcon from '@material-ui/icons/Timer'
+import FastForwardIcon from '@material-ui/icons/FastForward';
+import TimerOffIcon from '@material-ui/icons/TimerOff'
 const useStyles = makeStyles((theme) => ({
     root: {
         marginTop: '40px',
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: theme.spacing(1),
-        overflow: 'hidden'
+        overflow: 'hidden',
     },
 }))
 
@@ -38,48 +40,76 @@ const GameLobby = (props) => {
         roomAnnoucement: '',
     })
 
-    // const [chartData, setChartData] = useState({
-    //     chartData: {buyer: [], seller: []}
-    // })
+    const [chartData, setChartData] = useState({
+        chartData: []
+    })
 
     const icons = [
         {
-            icon: <AccessAlarmIcon />,
+            // end game
+            icon: <TimerOffIcon />,
+            title: "結束遊戲",
             func: () => {
                 console.log('Hi')
             },
         },
         {
-            icon: <AppleIcon />,
+            // next round
+            icon: <FastForwardIcon />,
+            title: "下一回合",
             func: () => {
-                console.log('apple')
+                console.log("next round")
             },
         },
         {
-            icon: <AutorenewIcon />,
+            // start game
+            icon: <TimerIcon />,
+            title: "開始遊戲",
             func: () => {
-                console.log('gobackgoback')
+                socket.emit('enterRoom', { roomNum: `${props.match.params.id}`, round: 1 })
+                socket.emit('startTime', { roomNum: `${props.match.params.id}` })
+            },
+        },
+        {
+            // announce
+            icon: <VolumeUpIcon />,
+            title: "發公告",
+            func: () => {
+                console.log(`${props.match.params.id}`)
+                try {
+                    socket.emit('enterRoom', { roomNum: `${props.match.params.id}`, round: 1 })
+
+                    socket.emit('sendsysmsg', {
+                        msg: 'testtesttesttesttesttesttesttesttesttesttesttest',
+                        roomNum: `${props.match.params.id}`,
+                    })
+                } catch(error) {
+                    console.log(error)
+                }
+                
+            },
+        },
+        {
+            // new chart
+            icon: <AutorenewIcon />,
+            title: "重新分配",
+            func: () => {
+                const params2 = new URLSearchParams()
+                params2.append('roomNum', `${roomNum}`)
+                params2.append('roundNum', '0')
+                AdminService.postAssignRole(params2).then((res) => {
+                    const params3 = new URLSearchParams()
+                    params3.append('roomNum', `${roomNum}`)
+                    AdminService.postChartData(params3).then((response) => {
+                        setChartData({chartData: response.data.chartData})
+                        console.log(chartData)
+                    })
+                })
             },
         },
     ]
 
     const roomNum = props.match.params.id
-
-    // 因為他好像會一直emit，所以我先寫一個localStorage把她停下來的方法
-    if (localStorage.getItem('is_emit') == null) {
-        socket.emit('startTime', { roomNum: '9487' })
-
-        socket.emit('enterRoom', { roomNum: `${roomNum}`, round: 1 })
-
-        socket.emit('sendsysmsg', {
-            msg: 'testtesttesttesttesttesttesttesttesttesttesttest',
-            roomNum: `${roomNum}`,
-        })
-
-        localStorage.setItem('is_emit', true)
-    }
-
-    // 這個function裡面的socket會讓後端爆掉
 
     useEffect(() => {
         const params = new URLSearchParams()
@@ -102,19 +132,21 @@ const GameLobby = (props) => {
         const params2 = new URLSearchParams()
         params2.append('roomNum', `${roomNum}`)
         params2.append('roundNum', '0')
-        AdminService.postAssignRole(params2).then((res) => {})
+        AdminService.postAssignRole(params2).then((res) => {
+            const params3 = new URLSearchParams()
+            params3.append('roomNum', `${roomNum}`)
+            AdminService.postChartData(params3).then((response) => {
+                setChartData({chartData: response.data.chartData})
+                console.log(chartData)
+            })
+        })
 
         socket.on('startTimeResponse', (data) => {
             console.log(data)
         })
 
-        // const params3 = new URLSearchParams()
-        // params3.append('roomNum', `${roomNum}`)
-        // AdminService.postChartData(params3).then((response) => {
-        //     setChartData({chartData: response.data.chartData})
-        // })
-
         socket.on('sys', function (sysMsg) {
+            console.log(sysMsg)
             setAnnouncement({ roomAnnoucement: sysMsg })
         })
     }, [])
@@ -126,7 +158,7 @@ const GameLobby = (props) => {
             <UpperBar data={room} />
             <AnnouncementLine data={annoucement} />
             <div className={classes.componenet}>
-                <GameChart />
+                <GameChart data={chartData}/>
                 <TransRecord />
             </div>
             <IconMenu icons={icons} />
