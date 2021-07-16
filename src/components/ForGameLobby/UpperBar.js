@@ -102,7 +102,7 @@ const UpperBar = (props) => {
                         <Grid item xs={8} spacing={3}>
                             <Card className="timeCard minCard">
                                 <Box className="timeNum minNum">
-                                    {props.data.roundTime / 60}
+                                    {Math.floor(props.data.roundTime / 60)}
                                 </Box>
                             </Card>
                         </Grid>

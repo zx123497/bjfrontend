@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 const GameIn = (props) => {
     ////////////// for testing //////////////
-    localStorage.setItem('username', '234')
+    // localStorage.setItem('username', '234')
     /////////////////////////////////////////
 
     const classes = useStyles()
