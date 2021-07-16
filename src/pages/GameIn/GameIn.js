@@ -84,18 +84,11 @@ const GameIn = (props) => {
             params.append('username', username)
 
             UserService.postEnterRoom(params).then((res) => {
-<<<<<<< HEAD
                 if(res.status == "200") {
                     const roomDetail = res.data.roomDetail;
                     localStorage.setItem("countdown", roomDetail.roundTime)
                     // props.history.push(`/gamelobby/:${values.pincode}/:${roomDetail.nowRound}`)
                     props.history.push(`/loading`)
-=======
-                if (res.status == '200') {
-                    const roomDetail = res.data.roomDetail
-                    localStorage.setItem('countdown', roomDetail.roundTime)
-                    props.history.push(`/gamelobby/:${values.pincode}/:${roomDetail.nowRound}`)
->>>>>>> 0c826581c6d8d8fa33f9bf24b6f4c149fb301c26
                 }
             })
         }
@@ -120,13 +113,7 @@ const GameIn = (props) => {
                     </form>
                 </CardContent>
                 <CardActions>
-<<<<<<< HEAD
                     <Link component={Button} onClick={handleSubmit} className="next">開始遊戲</Link>
-=======
-                    <Link component={Button} onClick={handleSubmit} className="next" to={'/ForgetPassword2'}>
-                        開始遊戲
-                    </Link>
->>>>>>> 0c826581c6d8d8fa33f9bf24b6f4c149fb301c26
                 </CardActions>
             </Card>
         </div>
