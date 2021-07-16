@@ -16,17 +16,20 @@ const useStyles = makeStyles((theme) => ({
 const GameChart = (props) => {
 
     const[data, setData] = useState({
-        chartData: []
+        chartData: [],
+        hTicks: null
     })
 
     const classes = useStyles();
+    var hTicks = [];
 
     useEffect(() => {
         const params3 = new URLSearchParams()
         params3.append('roomNum', `${props.match.params.id}`)
         AdminService.postChartData(params3).then((res) => {
-            setData({chartData: processData(res.data.chartData)})
-            console.log(data.chartData)
+            console.log(res.data.chartData)
+            setData({chartData: processData(res.data.chartData), hTicks: hTicks})
+            console.log('chart: ' + data.chartData)
         })
         // setData({chartData: processData(props.data.chartData)})
     }, [])
@@ -36,14 +39,15 @@ const GameChart = (props) => {
 
         const limit = Math.max(rawData.seller.length, rawData.buyer.length)
         for(let i=0;i<limit;i++) {
-            let temp = [i, rawData.seller[i], rawData.buyer[i]]
+            let temp = [i+1, rawData.seller[i], rawData.buyer[i]]
             chartData.push(temp)
+            hTicks.push(i+1)
         }
-
+        console.log(chartData)
+        console.log(hTicks)
         return chartData
     }
     
-
     return (
         <Paper className={classes.root}>
             <Chart
@@ -56,6 +60,7 @@ const GameChart = (props) => {
                 options={{
                     hAxis: {
                         title: '玩家',
+                        ticks: data.hTicks
                     },
                     vAxis: {
                         title: '商品價值',
