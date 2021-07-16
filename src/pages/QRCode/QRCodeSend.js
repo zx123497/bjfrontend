@@ -9,7 +9,12 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import QrReader from 'react-qr-reader'
 import QRCode from 'react-qr-code'
-import { NextWeek } from '@material-ui/icons'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import WarningIcon from '@material-ui/icons/Warning'
 
 const useStyles = makeStyles((theme) => ({
     QRCodeSend: {
@@ -120,9 +125,10 @@ const QRCodeSend2 = (props) => {
     const classes = useStyles()
     const [showQR, setShowQR] = useState(false)
     const [result, setResult] = useState('No result')
-
+    const [open, setOpen] = React.useState(false)
+    const [errorMessage, setError] = useState('')
     const [state, setState] = React.useState({
-        checked: true,
+        checked: true, //開啟人數限制
     })
 
     const handleSwitchChange = (event) => {
@@ -140,6 +146,7 @@ const QRCodeSend2 = (props) => {
 
     const handleSubmit = (event) => {
         //alert('money: ' + values.money);
+
         event.preventDefault()
     }
 
@@ -162,15 +169,41 @@ const QRCodeSend2 = (props) => {
     //    console.log(event.target.value);
     //}
     const handleQRShow = () => {
-        setShowQR(true)
+        console.log('checked:' + state.checked)
+        if (state.checked) {
+            if (values.money <= 0 && values.numpeople <= 0) {
+                setError('付款金額與人數上限皆需大於 0 ')
+                setOpen(true)
+            } else if (values.money <= 0) {
+                setError('付款金額需大於 0 元')
+                setOpen(true)
+            } else if (values.numpeople <= 0) {
+                setError('人數上限需大於0')
+                setOpen(true)
+            } else {
+                setShowQR(true)
+            }
+        } else {
+            if (values.money <= 0) {
+                setError('付款金額需大於 0 元')
+                setOpen(true)
+            } else {
+                setShowQR(true)
+            }
+        }
     }
     const handleQRHide = () => {
         setShowQR(false)
     }
 
+    const handleClose = () => {
+        setOpen(false)
+    }
+
     return (
         <div className={classes.QRCodeSend}>
             <BackPage refs="/admin/lobby"></BackPage>
+            {/* 付款 */}
             <div className="grid-container">
                 <div className="grid-item">
                     <Grid className="input" container spacing={1} alignItems="flex-end">
@@ -319,7 +352,32 @@ const QRCodeSend2 = (props) => {
                 <div className="grid-item">
                     <div className="bottom">
                         <div>
-                            <QRCode className={`${showQR ? 'QRshow' : 'QRhide'}`} value={`${values.money}`} />
+                            {state.checked ? (
+                                <QRCode
+                                    className={`${showQR ? 'QRshow' : 'QRhide'}`}
+                                    value={
+                                        'teacher=1/' +
+                                        'money=' +
+                                        values.money +
+                                        '/limit=' +
+                                        values.numpeople +
+                                        '/userId=' +
+                                        localStorage.getItem('name')
+                                    }
+                                />
+                            ) : (
+                                <QRCode
+                                    className={`${showQR ? 'QRshow' : 'QRhide'}`}
+                                    value={
+                                        'teacher=1/' +
+                                        'money=' +
+                                        values.money +
+                                        '/limit=-1' +
+                                        '/userId=' +
+                                        localStorage.getItem('name')
+                                    }
+                                />
+                            )}
                         </div>
                         <Link
                             component={Button}
@@ -354,6 +412,54 @@ const QRCodeSend2 = (props) => {
                     </div>
                 </div>
             </div>
+
+            {/* ErrorMessage */}
+            <Dialog
+                PaperProps={{
+                    style: {
+                        marginTop: '90px',
+                        borderRadius: 30,
+                        height: '30%',
+                        width: '300px',
+                        padding: '28px 20px 28px 20px',
+                        backgroundColor: '#EAEAEA',
+                    },
+                }}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    <Typography className="title" variant="h5" align="center">
+                        <WarningIcon color="disabled"></WarningIcon> &nbsp;提醒
+                    </Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <Typography align="center" style={{ whiteSpace: 'pre-line', fontSize: '120%', marginTop: '4%' }}>
+                        {errorMessage}
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleClose}
+                        className="sure"
+                        style={{
+                            margin: 'auto',
+                            fontSize: '90%',
+                            fontWeight: '500',
+                            borderRadius: '20px',
+                            boxShadow: 'none',
+                            width: '40%',
+                            height: '110%',
+                            backgroundColor: '#00AAA4',
+                            color: '#FFFFFF',
+                        }}
+                    >
+                        確定
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }

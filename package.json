@@ -17,6 +17,7 @@
         "@tinymce/tinymce-react": "^3.12.1",
         "axios": "^0.21.1",
         "noty": "^3.2.0-beta-deprecated",
+        "qs": "^6.10.1",
         "react": "^17.0.1",
         "react-bootstrap": "^1.5.2",
         "react-dom": "^17.0.1",

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles, Card, CardContent, Grid, Typography } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit'
@@ -8,7 +8,9 @@ import cat from '../../../pic/cat.jpg'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import { Link } from 'react-router-dom'
 import Admin_lobby from './admin_lobby.svg'
-
+import RoomService from '../../../service/RoomService'
+import qs from 'qs'
+import Noty from 'noty'
 const useStyles = makeStyles((theme) => ({
     Lobby: {
         padding: '43px 1rem 1rem 1rem',
@@ -17,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden', //解決margin-top塌陷
         alienItems: 'center',
         marginTop: '2rem',
+        overflow: 'scroll',
         '& .image_lobby': {
             display: 'none',
         },
@@ -284,6 +287,39 @@ const useStyles = makeStyles((theme) => ({
 }))
 const Lobby = () => {
     const classes = useStyles()
+
+    const [rooms, setRooms] = useState([])
+
+    useEffect(() => {
+        let params = new URLSearchParams()
+        params.append('email', localStorage.email)
+        RoomService.getRooms(params).then((res) => {
+            console.log(res)
+            setRooms(res.data)
+        })
+    }, [])
+
+    const handleDelete = (id) => {
+        RoomService.deleteRoom(id).then((res) => {
+            console.log(res)
+            let params = new URLSearchParams()
+            params.append('email', localStorage.email)
+            RoomService.getRooms(params).then((res2) => {
+                console.log(res2)
+                setRooms(res2.data)
+                new Noty({
+                    type: 'success',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '成功刪除房間',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
+            })
+        })
+    }
+
     return (
         <div className={classes.Lobby}>
             <div className="profileArea">
@@ -318,15 +354,14 @@ const Lobby = () => {
 
                                 <Grid item className="rightCard">
                                     <div className="detailName">管理者 ID</div>
-                                    <div className="nameArea">巧克力</div>
+                                    <div className="nameArea">{localStorage.getItem('name')}</div>
                                     <div className="detailName">帳號 E-mail</div>
                                     <div className="nameArea">
-                                        <Typography>chocolate@g.ncu.edu.tw</Typography>
+                                        <Typography>{localStorage.getItem('email')}</Typography>
                                     </div>
-                                    <Button className="pwEdit" component={Link} to="">
+                                    <Button className="pwEdit" component={Link} to="/ForgetPassword">
                                         修改密碼
                                     </Button>
-                                    {/*edit  password link */}
                                 </Grid>
                             </Grid>
                         </CardContent>
@@ -349,12 +384,14 @@ const Lobby = () => {
                     </Button>
                 </div>
                 <div className="roomArea">
-                    <Roomcard title="週一經濟" player="2" round="2" status="未開始" id="9487" />
-                    <Roomcard title="週二經濟" player="2" round="2" status="未開始" id="9487" />
-                    <Roomcard title="週三經濟" player="2" round="2" status="未開始" id="9487" />
-                    <Roomcard title="週一經濟" player="2" round="2" status="未開始" id="9487" />
-                    <Roomcard title="週二經濟" player="2" round="2" status="未開始" id="9487" />
-                    <Roomcard title="週三經濟" player="2" round="2" status="未開始" id="9487" />
+                    {rooms.map((row) => (
+                        <Roomcard
+                            title={row[0] ? row[0] : '未命名房間'}
+                            round={row[1]}
+                            id={row[2]}
+                            deleteFunc={() => handleDelete(row[2])}
+                        />
+                    ))}
                 </div>
             </div>
         </div>

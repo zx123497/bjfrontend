@@ -4,11 +4,11 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import Theme from './themes/theme'
 import { makeStyles } from '@material-ui/core/styles'
 import './App.css'
-import Home from './pages/Home/Home'
 import LogIn from './pages/LogIn/LogIn'
 import Register from './pages/Register/Register'
 import Register2 from './pages/Register/Register2'
 import ForgetPassword from './pages/ForgetPassword/ForgetPassword'
+import UserLobby from './pages/UserLobby/UserLobby'
 import ForgetPassword2 from './pages/ForgetPassword/ForgetPassword2'
 import ResetPassword from './pages/ResetPassword/ResetPassword'
 import Loading from './pages/Loading/Loading'
@@ -58,7 +58,9 @@ function App() {
                                         <main>
                                             <Switch>
                                                 <Route path="/" exact component={LogIn} />
+                                                <Route path="/user/lobby" exact component={UserLobby} />
                                                 <Route path="/user/edit/password" exact component={ForgetPassword} />
+
                                                 <Route
                                                     path="/.well-known/pki-validation/F60DB5A60B3334BAE1AE87D845C2698E.txt"
                                                     exact

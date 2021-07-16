@@ -166,7 +166,6 @@ const LogIn = (props) => {
             setErrorMessage('請輸入密碼')
             setOpen(true)
         } else {
-            localStorage.setItem('username', values.account)
             const params = new URLSearchParams()
             params.append('username', values.account)
             params.append('password', values.password)
@@ -183,7 +182,14 @@ const LogIn = (props) => {
                         closeWith: ['click'],
                     }).show()
                     if (res.status == '200') {
-                        //history.push('./lobby');
+                        if (!res.data.user.isManager) {
+                            localStorage.setItem('stu', '1')
+                            history.push('/user/lobby')
+                        } else history.push('/admin/lobby')
+                        localStorage.setItem('username', values.account)
+                        localStorage.setItem('name', res.data.user.username)
+                        localStorage.setItem('id', res.data.user.ID)
+                        localStorage.setItem('email', values.account)
                     }
                 })
                 .catch((e) => {
@@ -204,7 +210,6 @@ const LogIn = (props) => {
 
     return (
         <div className={classes.LogIn}>
-            <BackPage></BackPage>
             <Card className="card">
                 <CardContent>
                     <div className="title">會員登入</div>

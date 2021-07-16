@@ -12,7 +12,6 @@ import InputLabel from '@material-ui/core/InputLabel'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-
 const useStyles = makeStyles((theme) => ({
     ForgetPassword2: {
         display: 'flex',
@@ -84,32 +83,15 @@ const useStyles = makeStyles((theme) => ({
 
 const ForgetPassword2 = (props) => {
     const classes = useStyles()
-
-    //let { token } = useParams()
-    //console.log(token);
-    const history = useHistory()
     const location = useLocation()
-    console.log(location)
 
-    const searchParams = new URLSearchParams(location.search)
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search)
+    }, [location])
+
     const raw_token = location.search
     const token = raw_token.match(/token=([^&]+)/)[1]
     console.log('token:' + token)
-
-    // const url = new URL('http://http://localhost:3000/forgetpassword2?token=');
-    // const token2 = new URLSearchParams(url.search);
-    // console.log(token2);
-
-    // useEffect(() => {
-    //     // const currentPath = location.pathname;
-    //     // const searchParams = new URLSearchParams(location.search);
-    //     // const token = (searchParams.match(/token=([^&]+)/)||[])[1];
-
-    //     // fetch('http://lbdgame.mgt.ncu.edu.tw:8000/forgetpassword2?token='+ token2).then(data =>{
-    //     //     console.log(data);
-    //     //   });
-    //     // console.log(token2);
-    // }, [location]);
 
     const [values, setValues] = React.useState({
         password: '',
@@ -150,6 +132,7 @@ const ForgetPassword2 = (props) => {
                 console.log(res.data)
                 if (res.status == 200) {
                     //history.push('./login');
+                    alert('成功重設密碼！')
                 }
             })
         }

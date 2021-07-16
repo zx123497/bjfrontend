@@ -1,203 +1,356 @@
-import React from 'react'
-import {  makeStyles } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
-import Button from '@material-ui/core/Button';
-import Roomcard from './Roomcard';
-const useStyles = makeStyles((theme) => ({
-    Lobby: {
-        padding:"15px 10px 15px 10px",
-        '& .account':{
-            display:"flex",
-            alignItems:"center",
-            justifyContent:"center",
-            
-        },
-        '& .name':{
-            flexGrow:1,
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"start",
+import React, { useEffect, useState } from 'react'
+import { makeStyles, Card, CardContent, Grid, Typography } from '@material-ui/core'
+import IconButton from '@material-ui/core/IconButton'
+import EditIcon from '@material-ui/icons/Edit'
+import Button from '@material-ui/core/Button'
+import cat from '../../pic/cat.jpg'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
+import { Link } from 'react-router-dom'
+import Admin_lobby from './admin_lobby.svg'
+import RoomService from '../../service/RoomService'
 
-            borderRadius:"10px",
-            margin:theme.spacing(2,1),
-            padding:theme.spacing(1,3),
-            backgroundColor:theme.palette.background.paper,
-            height:"4rem",
-            width:"40%",
+const useStyles = makeStyles((theme) => ({
+    UserLobby: {
+        padding: '43px 1rem 1rem 1rem',
+        backgroundColor: theme.palette.primary.main,
+        height: '100vh',
+        overflow: 'hidden', //解決margin-top塌陷
+        alienItems: 'center',
+        justifyContent: 'center',
+        marginTop: '2rem',
+        '& .image_lobby': {
+            display: 'none',
         },
-        '& .nameArea':{
-            marginTop:"7px",
-            fontSize:"16px",
-            width:"100%",
-            display:"flex",
-            alignItems:"center",
-            justifyContent:"center",
+        '& .pwEdit': {
+            width: '100%',
+            minWidth: 'max-content',
+            backgroundColor: theme.palette.secondary.main,
+            color: theme.palette.background.paper,
+            margin: '1rem 0',
+            display: 'flex',
+            alignItems: 'center',
         },
-        '& .room':{
-            width:"100%",
-            height:"7em",
-            borderRadius:"10px",
-            margin:"1.2em 0 0px 0",
-            boxShadow:"0 0 10px rgba(0,0,0,0.2)",
-            backgroundColor:theme.palette.background.paper,
+        '& .rooms': {
+            width: '100%',
+            margin: 'auto',
+            display: 'flex',
+            //alignItems: 'center',
         },
-        '& .pwEdit':{
-            width:"100%",
-            backgroundColor:theme.palette.secondary.main,
-            color:theme.palette.background.paper,
-            margin:"0 auto",
+        '& .roomtext': {
+            flexGrow: 1,
+            fontWeight: 500,
+            fontSize: '130%',
         },
-        '& .roomTitle':{
-            display:"flex",
-            alignItems:"center",
+        '& .roombtn': {
+            height: '2.3rem',
+            backgroundColor: theme.palette.secondary.main,
+            color: theme.palette.background.paper,
+            boxShadow: '0 0 10px rgba(0,0,0,0.2)',
+            borderRadius: '10px',
+            alignItems: 'center',
+            margin: 'auto',
+            width: '100%',
+            marginTop: '2rem',
         },
-        '& .rooms':{
-            
-            width:"100%",
-            marginTop:"2rem",
-            
-        },
-        "& .roomArea":{
-            height:"22rem",
-            overflow:"scroll",
-        },
-        "& .roomtext":{
-            flexGrow:1,
-        },
-        "& .roombtn":{
-            height:"2.5rem",
-            
-            backgroundColor:theme.palette.background.paper,
-            boxShadow:"0 0 10px rgba(0,0,0,0.2)",
-            borderRadius:"10px"
-        },
-        [theme.breakpoints.up("md")]: {
-           
+        [theme.breakpoints.up('md')]: {
+            padding: '5rem 1rem 1rem 1rem',
+            backgroundColor: theme.palette.primary.main,
+            height: '100vh',
+            overflow: 'hidden', //解決margin-top塌陷
+            alignItems: 'flex-start',
+            display: 'flex',
+            '& .image_lobby': {
+                display: 'block',
+                marginTop: '2rem',
+            },
+            '& .pwEdit': {
+                width: '50%',
+                backgroundColor: theme.palette.secondary.main,
+                color: theme.palette.background.paper,
+                display: 'flex',
+                alignItems: 'center',
+            },
+            '& .profileArea': {
+                width: '50%',
+            },
+            '& .rooms': {
+                width: '50%',
+                alignItems: 'center',
+            },
+            '& .roomtext': {
+                fontSize: '130%',
+                fontWeight: 600,
+            },
+            '& .roombtn': {
+                height: '2.3rem',
+                width: '50%',
+                backgroundColor: theme.palette.secondary.main,
+                color: '#FFF',
+                boxShadow: '0 0 10px rgba(0,0,0,0.2)',
+                borderRadius: '10px',
+                padding: '1rem',
+                fontWeight: 'bold',
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '1rem',
+            },
         },
     },
-    profile:{
-        display:"flex",
-        alignItems:"center",
-        
-        "& .photo":{
+    profile: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: '30px',
+
+        //overflow: 'hidden',
+        '& .card': {
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.ultimate.dark,
+            width: '100%',
+            height: 'max-content',
+            minWidth: 'max-content',
+            alienItems: 'center',
+            borderRadius: 12,
+            boxShadow: '0 8px 16px 0 rgba(0,0,0,.3)',
+        },
+        '& .container': {
+            display: 'grid',
+            marginTop: '-12px',
+            gridTemplateColumns: '30% 5% 65%',
+        },
+        '& .leftCard': {
+            marginLeft: '5px',
+        },
+        '& .rightCard': {
+            marginLeft: '10px',
+        },
+        '& .hello': {
+            letterSpacing: '2px',
+        },
+        '& .detailName': {
+            color: theme.palette.ultimate.main,
+            marginTop: '15px',
+        },
+        '& .nameArea': {
+            marginTop: '7px',
+            fontSize: '25px',
+            fontWeight: '600',
+            color: '#736F72',
+            width: '110%',
+            display: 'flex',
+        },
+        '& .photo': {
+            marginTop: '-5px',
             position: 'relative',
-            width:"8rem",
-            height:"8rem",
-            borderRadius:"50%",
-
+            width: '6rem',
+            height: '6rem',
+            borderRadius: '50%',
         },
-        
-        "& .image ":{
+        '& .image ': {
             display: 'block',
-            
-            height:"100%",
-            width:"100%",
-            borderRadius:"50%",
-            backfaceVisibility: "hidden"
+            height: '100%',
+            width: '100%',
+            borderRadius: '50%',
+            backfaceVisibility: 'hidden',
         },
-        "& .photo:hover .image":{
-            transition:"0.3s ease",
-            opacity:"0.5",
+        '& .photo:hover .image': {
+            transition: '0.3s ease',
+            opacity: '0.5',
         },
-        "& .edit":{
-            
-            width:"100%",
-            transition:' .5s ease',
+        '& .edit': {
+            width: '100%',
+            transition: ' .5s ease',
             opacity: 0,
-            position:"absolute",
-            top:"50%",
-            left:"50%",
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
             transform: 'translate(-50%, -50%)',
-            msTransform:"translate(-50%, -50%);",
+            msTransform: 'translate(-50%, -50%);',
             textAlign: 'center',
-            
         },
-        "& .photo:hover .edit":{
-            transition:"0.3s ease",
-            opacity:"1",
+        '& .photo:hover .edit': {
+            transition: '0.3s ease',
+            opacity: '1',
         },
-        "& .icon":{
-            backgroundColor:theme.palette.background.paper,
-            color:theme.palette.secondary.main,
+        '& .icon': {
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.secondary.main,
         },
-        '& .name':{
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"start",
-            flexGrow:1,
-            borderRadius:"10px",
-            margin:theme.spacing(2,1,2,3),
-            padding:theme.spacing(1,3),
-            backgroundColor:theme.palette.background.paper,
-            height:"4rem",
-            width:"40%",
-        },
-        '& .nameArea':{
-            fontSize:"20px",
-            width:"100%",
-            display:"flex",
-            justifyContent:"center",
-        },
-        
-        
+        [theme.breakpoints.up('md')]: {
+            display: 'flex',
+            height: '70%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: '30px',
+            //overflow: 'hidden',
+            '& .card': {
+                backgroundColor: theme.palette.background.paper,
+                color: theme.palette.ultimate.dark,
+                width: '100%',
+                height: 'max-content',
 
-        
+                alienItems: 'center',
+                borderRadius: 12,
+                boxShadow: '0 8px 16px 0 rgba(0,0,0,.3)',
+            },
+            '& .container': {
+                display: 'grid',
+                marginTop: '-12px',
+                gridTemplateColumns: '30% 5% 65%',
+            },
+            '& .leftCard': {
+                marginLeft: '5px',
+            },
+            '& .rightCard': {
+                marginLeft: '10px',
+            },
+            '& .hello': {
+                letterSpacing: '2px',
+            },
+            '& .detailName': {
+                color: theme.palette.ultimate.main,
+                marginTop: '15px',
+            },
+            '& .nameArea': {
+                marginTop: '7px',
+                fontSize: '25px',
+                fontWeight: '600',
+                color: '#736F72',
+                width: '110%',
+                display: 'flex',
+            },
+            '& .photo': {
+                marginTop: '-5px',
+                position: 'relative',
+                width: '6rem',
+                height: '6rem',
+                borderRadius: '50%',
+            },
+            '& .image ': {
+                display: 'block',
+                height: '100%',
+                width: '100%',
+                borderRadius: '50%',
+                backfaceVisibility: 'hidden',
+            },
+            '& .photo:hover .image': {
+                transition: '0.3s ease',
+                opacity: '0.5',
+            },
+            '& .edit': {
+                width: '100%',
+                transition: ' .5s ease',
+                opacity: 0,
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                msTransform: 'translate(-50%, -50%);',
+                textAlign: 'center',
+            },
+            '& .photo:hover .edit': {
+                transition: '0.3s ease',
+                opacity: '1',
+            },
+            '& .icon': {
+                backgroundColor: theme.palette.background.paper,
+                color: theme.palette.secondary.main,
+            },
+        },
+    },
+}))
+const UserLobby = () => {
+    const classes = useStyles()
+
+    const [rooms, setRooms] = useState([])
+
+    useEffect(() => {
+        let params = new URLSearchParams()
+        params.append('email', 'leo000111444@gmail.com')
+        RoomService.getRooms(params).then((res) => {
+            console.log(res)
+            setRooms(res.data)
+        })
+    }, [])
+
+    const handleDelete = (id) => {
+        RoomService.deleteRoom(id).then((res) => {
+            console.log(res)
+            let params = new URLSearchParams()
+            params.append('email', 'leo000111444@gmail.com')
+            RoomService.getRooms(params).then((res2) => {
+                console.log(res2)
+                setRooms(res2.data)
+            })
+        })
     }
-}));
-const Lobby=()=> {
-    const classes=useStyles();
+
     return (
-        <div className={classes.Lobby}>
-           <h1>個人專區</h1> 
-           <div className={classes.profile}>
-                <div className="photo">
-                
-                    <img className="image" src="https://www.harleytherapy.co.uk/counselling/wp-content/uploads/16297800391_5c6e812832.jpg">
-                    </img>
-                    <span className="edit">
-                             <IconButton className="icon" aria-label="add an alarm">
-                                <EditIcon />
-                            </IconButton> 
-                    </span>
-                    
-               </div>
-                <div className="name">
-                <div >姓名</div>
-                <div className="nameArea">HELLY YU</div>
-                   
+        <div className={classes.UserLobby}>
+            <div className="profileArea">
+                <div className={classes.profile}>
+                    <div style={{ width: '70%' }}>
+                        <h2 className="roomtext">個人資訊</h2>
+                    </div>
+
+                    <Card className="card">
+                        <CardContent>
+                            <Grid
+                                className="container"
+                                container
+                                direction="row"
+                                justify="flex-start"
+                                alignItems="center"
+                            >
+                                <Grid item className="leftCard">
+                                    <div className="hello">
+                                        <h1>Hello!</h1>
+                                    </div>
+                                    <div className="photo">
+                                        <img className="image" src={cat}></img>
+                                        <span className="edit">
+                                            <IconButton className="icon" aria-label="add an alarm">
+                                                <EditIcon />
+                                            </IconButton>
+                                        </span>
+                                    </div>
+                                </Grid>
+                                <Grid item></Grid>
+
+                                <Grid item className="rightCard">
+                                    <div className="detailName">使用者 ID</div>
+                                    <div className="nameArea">{localStorage.getItem('name')}</div>
+                                    <div className="detailName">帳號 E-mail</div>
+                                    <div className="nameArea">
+                                        <Typography>{localStorage.getItem('email')}</Typography>
+                                    </div>
+                                    <div>
+                                        <Button className="pwEdit" component={Link} to="/ForgetPassword">
+                                            修改密碼
+                                        </Button>
+                                    </div>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                    </Card>
+
+                    <img
+                        src={Admin_lobby}
+                        className="image_lobby"
+                        alt="logo"
+                        style={{ width: '70%', marginTop: '2rem' }}
+                    />
+                    <Button className="roombtn" component={Link} to="/gamein">
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <AddCircleIcon style={{ marginRight: '.5rem' }} />
+                            <p className="roomtext">進入房間</p>
+                        </div>
+                    </Button>
                 </div>
-           </div>
-           <div className="account">
-           <div className="name">
-                <div >帳號</div>
-                <div className="nameArea">HELLY@hmail.vmo</div>
-                   
             </div>
-            <div className="name">
-                <div >密碼</div>
-                <div className="nameArea">************</div>
-                   
-            </div>
-           </div>
-           <Button className="pwEdit">修改密碼</Button>
-           <div className="rooms">
-               <div className="roomTitle">
-                   <h2 className="roomtext">已建立房間</h2>
-               <Button className="roombtn">+建立房間</Button>
-            </div>
-            <div className="roomArea">
-                <Roomcard title="週一經濟" player="2" round="2" status="未開始"/>
-               <Roomcard title="週二經濟" player="2" round="2" status="未開始"/>
-               <Roomcard title="週三經濟" player="2" round="2" status="未開始"/>
-               <Roomcard title="週一經濟" player="2" round="2" status="未開始"/>
-               <Roomcard title="週二經濟" player="2" round="2" status="未開始"/>
-               <Roomcard title="週三經濟" player="2" round="2" status="未開始"/>
-            </div>
-               
-           </div>
         </div>
     )
 }
 
-export default Lobby
+export default UserLobby
