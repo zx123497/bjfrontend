@@ -42,6 +42,18 @@ const useStyles = makeStyles((theme) => ({
             borderRadius: 12,
             boxShadow: '0 8px 16px 0 rgba(0,0,0,.3)',
         },
+        '& .card2': {
+            backgroundColor: theme.palette.background.paper,
+            color: theme.palette.ultimate.dark,
+            width: '300px',
+            height: '270px',
+            display: 'flex',
+            flexDirection: 'column',
+            margin: 'auto',
+            alienItems: 'center',
+            borderRadius: 12,
+            boxShadow: '0 8px 16px 0 rgba(0,0,0,.3)',
+        },
         '& .title': {
             margin: '25px',
             display: 'flex',
@@ -50,6 +62,23 @@ const useStyles = makeStyles((theme) => ({
             color: theme.palette.primary.main,
             fontSize: 30,
             fontWeight: 900,
+        },
+        '& .logout': {
+            margin: '30px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            fontSize: 28,
+            fontWeight: 700,
+        },
+        '& .detail': {
+            marginTop: '-20px',
+            margin: '25px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            fontSize: 18,
+            fontWeight: 400,
         },
         '& .input': {
             marginTop: '8px',
@@ -89,6 +118,18 @@ const useStyles = makeStyles((theme) => ({
             boxShadow: 'none',
             width: '50%',
             backgroundColor: theme.palette.ultimate.main,
+            color: theme.palette.background.paper,
+        },
+        '& .next2': {
+            margin: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginTop: '30px',
+            borderRadius: '20px',
+            boxShadow: 'none',
+            width: '50%',
+            backgroundColor: theme.palette.secondary.main,
             color: theme.palette.background.paper,
         },
         '& .btn2': {
@@ -152,6 +193,11 @@ const LogIn = (props) => {
         setValues({ ...values, [prop]: event.target.value })
     }
 
+    const handleLogout = (event) => {
+        localStorage.clear()
+        history.push('login')
+    }
+
     const handleSubmit = (event) => {
         if (values.account == '' && values.password == '') {
             //alert('請輸入帳號和密碼')
@@ -210,60 +256,75 @@ const LogIn = (props) => {
 
     return (
         <div className={classes.LogIn}>
-            <Card className="card">
-                <CardContent>
-                    <div className="title">會員登入</div>
-                    <form onSubmit={handleSubmit} className="input" autoComplete="off">
-                        <TextField
-                            id="account"
-                            value={values.account}
-                            onChange={handleChange('account')}
-                            label="帳號"
-                            type="search"
-                            variant="outlined"
-                            size="small"
-                        />
-                        <FormControl className="pw" variant="outlined" size="small">
-                            <InputLabel htmlFor="outlined-adornment-password">密碼</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-password"
-                                type={values.showPassword ? 'text' : 'password'}
-                                value={values.password}
-                                onChange={handleChange('password')}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            style={classes.pwButton}
-                                            iconstyle={classes.pwIcon}
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                        >
-                                            {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                labelWidth={35}
-                            />
-                        </FormControl>
-                    </form>
-                    <Link component={Button} className="btn2" to={'/ForgetPassword'}>
-                        忘記密碼
-                    </Link>
-                    <Link onClick={handleSubmit} component={Button} className="next">
-                        登入
-                    </Link>
-                </CardContent>
-                <CardActions>
-                    <div className="bottom">
-                        還沒有會員嗎?
-                        <Link component={Button} className="btn3" to={'/Register'}>
-                            立即註冊
+            {localStorage.getItem('name') ? (
+                <Card className="card2">
+                    <CardContent>
+                        <div className="logout">Hi, {localStorage.getItem('name')}！</div>
+                        <br></br>
+                        <div className="detail">
+                            目前登入帳號:<br></br> {localStorage.getItem('email')}
+                        </div>
+                        <Link onClick={handleLogout} component={Button} className="next2">
+                            登出
                         </Link>
-                    </div>
-                </CardActions>
-            </Card>
+                    </CardContent>
+                </Card>
+            ) : (
+                <Card className="card">
+                    <CardContent>
+                        <div className="title">會員登入</div>
+                        <form onSubmit={handleSubmit} className="input" autoComplete="off">
+                            <TextField
+                                id="account"
+                                value={values.account}
+                                onChange={handleChange('account')}
+                                label="帳號"
+                                type="search"
+                                variant="outlined"
+                                size="small"
+                            />
+                            <FormControl className="pw" variant="outlined" size="small">
+                                <InputLabel htmlFor="outlined-adornment-password">密碼</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-password"
+                                    type={values.showPassword ? 'text' : 'password'}
+                                    value={values.password}
+                                    onChange={handleChange('password')}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                style={classes.pwButton}
+                                                iconstyle={classes.pwIcon}
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge="end"
+                                            >
+                                                {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    labelWidth={35}
+                                />
+                            </FormControl>
+                        </form>
+                        <Link component={Button} className="btn2" to={'/ForgetPassword'}>
+                            忘記密碼
+                        </Link>
+                        <Link onClick={handleSubmit} component={Button} className="next">
+                            登入
+                        </Link>
+                    </CardContent>
+                    <CardActions>
+                        <div className="bottom">
+                            還沒有會員嗎?
+                            <Link component={Button} className="btn3" to={'/Register'}>
+                                立即註冊
+                            </Link>
+                        </div>
+                    </CardActions>
+                </Card>
+            )}
             {/* ErrorMessage */}
             <Dialog
                 PaperProps={{
