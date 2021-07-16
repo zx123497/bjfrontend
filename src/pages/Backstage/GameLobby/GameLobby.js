@@ -116,6 +116,18 @@ const GameLobby = (props) => {
             }
         })
 
+        const params2 = new URLSearchParams()
+        params2.append('roomNum', `${roomNum}`)
+        params2.append('roundNum', '0')
+        AdminService.postAssignRole(params2).then((res) => {
+            const params3 = new URLSearchParams()
+            params3.append('roomNum', `${roomNum}`)
+            AdminService.postChartData(params3).then((response) => {
+                setChartData({chartData: response.data.chartData})
+                console.log(chartData)
+            })
+        })
+
         socket.on('startTimeResponse', (data) => {
             console.log(data)
         })

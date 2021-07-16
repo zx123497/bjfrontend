@@ -3,7 +3,7 @@ import axios from './axios'
 const AdminService = {
     postAssignRole: async(body) => {
         try {
-            const response = await axios.post('/assignRole', body)
+            const response = await axios.post('/shuffle', body)
             return response
         } catch (error) {
             throw error
