@@ -84,7 +84,13 @@ const GameSum = (props) => {
 
         AdminService.postTotalChartData(params).then((res) => {
             if(res.status == "200") {
-                setChartData({chartData: res.data.data});
+                if(res.data.data != null) {
+                    setChartData({chartData: res.data.data});
+                }
+                else {
+                    alert("No Game Record")
+                    props.history.push("/user/lobby")
+                }
             }
         })
     },[])

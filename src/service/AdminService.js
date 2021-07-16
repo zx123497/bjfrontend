@@ -32,6 +32,14 @@ const AdminService = {
         } catch (error) {
             throw error
         }
+    },
+    postPromotion: async(body) => {
+        try {
+            const response = await axios.post('/promotion', body)
+            return response
+        } catch(error) {
+            throw error
+        }
     }
 }
 
