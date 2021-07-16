@@ -9,9 +9,10 @@ import { socket } from '../../../service/socket'
 import UserService from '../../../service/UserService'
 import AdminService from '../../../service/AdminService'
 import IconMenu from '../../../components/IconMenu/IconMenu'
-import AccessAlarmIcon from '@material-ui/icons/AccessAlarm'
-import AppleIcon from '@material-ui/icons/Apple'
 import AutorenewIcon from '@material-ui/icons/Autorenew'
+import VolumeUpIcon from '@material-ui/icons/VolumeUp'
+import TimerIcon from '@material-ui/icons/Timer'
+import TimerOffIcon from '@material-ui/icons/TimerOff'
 const useStyles = makeStyles((theme) => ({
     root: {
         marginTop: '40px',
@@ -38,48 +39,64 @@ const GameLobby = (props) => {
         roomAnnoucement: '',
     })
 
-    // const [chartData, setChartData] = useState({
-    //     chartData: {buyer: [], seller: []}
-    // })
+    const [chartData, setChartData] = useState({
+        chartData: []
+    })
 
     const icons = [
         {
-            icon: <AccessAlarmIcon />,
+            // end game
+            icon: <TimerOffIcon />,
             func: () => {
                 console.log('Hi')
             },
         },
         {
-            icon: <AppleIcon />,
+            // start game
+            icon: <TimerIcon />,
             func: () => {
-                console.log('apple')
+                socket.emit('enterRoom', { roomNum: `${props.match.params.id}`, round: 1 })
+                socket.emit('startTime', { roomNum: `${props.match.params.id}` })
             },
         },
         {
+            // announce
+            icon: <VolumeUpIcon />,
+            func: () => {
+                console.log(`${props.match.params.id}`)
+                try {
+                    socket.emit('enterRoom', { roomNum: `${props.match.params.id}`, round: 1 })
+
+                    socket.emit('sendsysmsg', {
+                        msg: 'testtesttesttesttesttesttesttesttesttesttesttest',
+                        roomNum: `${props.match.params.id}`,
+                    })
+                } catch(error) {
+                    console.log(error)
+                }
+                
+            },
+        },
+        {
+            // new chart
             icon: <AutorenewIcon />,
             func: () => {
-                console.log('gobackgoback')
+                const params2 = new URLSearchParams()
+                params2.append('roomNum', `${roomNum}`)
+                params2.append('roundNum', '0')
+                AdminService.postAssignRole(params2).then((res) => {
+                    const params3 = new URLSearchParams()
+                    params3.append('roomNum', `${roomNum}`)
+                    AdminService.postChartData(params3).then((response) => {
+                        setChartData({chartData: response.data.chartData})
+                        console.log(chartData)
+                    })
+                })
             },
         },
     ]
 
     const roomNum = props.match.params.id
-
-    // 因為他好像會一直emit，所以我先寫一個localStorage把她停下來的方法
-    if (localStorage.getItem('is_emit') == null) {
-        socket.emit('startTime', { roomNum: '9487' })
-
-        socket.emit('enterRoom', { roomNum: `${roomNum}`, round: 1 })
-
-        socket.emit('sendsysmsg', {
-            msg: 'testtesttesttesttesttesttesttesttesttesttesttest',
-            roomNum: `${roomNum}`,
-        })
-
-        localStorage.setItem('is_emit', true)
-    }
-
-    // 這個function裡面的socket會讓後端爆掉
 
     useEffect(() => {
         const params = new URLSearchParams()
@@ -99,22 +116,19 @@ const GameLobby = (props) => {
             }
         })
 
-        const params2 = new URLSearchParams()
-        params2.append('roomNum', `${roomNum}`)
-        params2.append('roundNum', '0')
-        AdminService.postAssignRole(params2).then((res) => {})
-
         socket.on('startTimeResponse', (data) => {
             console.log(data)
         })
 
-        // const params3 = new URLSearchParams()
-        // params3.append('roomNum', `${roomNum}`)
-        // AdminService.postChartData(params3).then((response) => {
-        //     setChartData({chartData: response.data.chartData})
-        // })
+        const params3 = new URLSearchParams()
+        params3.append('roomNum', `${roomNum}`)
+        AdminService.postChartData(params3).then((response) => {
+            setChartData({chartData: response.data.chartData})
+            console.log(chartData)
+        })
 
         socket.on('sys', function (sysMsg) {
+            console.log(sysMsg)
             setAnnouncement({ roomAnnoucement: sysMsg })
         })
     }, [])
@@ -126,7 +140,7 @@ const GameLobby = (props) => {
             <UpperBar data={room} />
             <AnnouncementLine data={annoucement} />
             <div className={classes.componenet}>
-                <GameChart />
+                <GameChart data={chartData}/>
                 <TransRecord />
             </div>
             <IconMenu icons={icons} />

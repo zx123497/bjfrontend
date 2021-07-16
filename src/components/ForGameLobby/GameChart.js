@@ -24,15 +24,11 @@ const GameChart = (props) => {
     var hTicks = [];
 
     useEffect(() => {
-        const params3 = new URLSearchParams()
-        params3.append('roomNum', `${props.match.params.id}`)
-        AdminService.postChartData(params3).then((res) => {
-            console.log(res.data.chartData)
-            setData({chartData: processData(res.data.chartData), hTicks: hTicks})
-            console.log('chart: ' + data.chartData)
-        })
-        // setData({chartData: processData(props.data.chartData)})
-    }, [])
+        console.log(props.data.chartData)
+        if(props.data.chartData.length != 0) {
+            setData({chartData: processData(props.data.chartData), hTicks: hTicks})
+        }
+    }, [props])
 
     function processData(rawData) {
         let chartData = [['玩家排序', '賣家', '買家']];
@@ -43,8 +39,6 @@ const GameChart = (props) => {
             chartData.push(temp)
             hTicks.push(i+1)
         }
-        console.log(chartData)
-        console.log(hTicks)
         return chartData
     }
     
@@ -97,8 +91,10 @@ const GameChart = (props) => {
                                         console.log(chartWrapper.getChart().getSelection()[0].row)
                                         console.log(inputValue)
                                         AdminService.postChangeSingleMoney(params).then((res) => {
-                                            setData({chartData: processData(res.data.chartData)})
-                                            console.log(res)
+                                            if (res.status == '200') {
+                                                setData({chartData: processData(res.data.chartData)})
+                                                console.log(res)
+                                            }
                                         })
                                     }
                                 }
