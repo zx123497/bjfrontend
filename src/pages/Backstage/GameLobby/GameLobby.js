@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: theme.spacing(1),
-        overflow: 'hidden'
+        overflow: 'hidden',
     },
 }))
 
