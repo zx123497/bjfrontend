@@ -86,9 +86,9 @@ const GameIn = (props) => {
             UserService.postEnterRoom(params).then((res) => {
                 if(res.status == "200") {
                     const roomDetail = res.data.roomDetail;
-                    localStorage.setItem("countdown", roomDetail.roundTime)
+                    // localStorage.setItem("countdown", roomDetail.roundTime)
                     // props.history.push(`/gamelobby/:${values.pincode}/:${roomDetail.nowRound}`)
-                    props.history.push(`/loading`)
+                    props.history.push(`/loading/${values.pincode}`)
                 }
             })
         }

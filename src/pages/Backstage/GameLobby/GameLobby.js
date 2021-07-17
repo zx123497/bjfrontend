@@ -162,7 +162,7 @@ const GameLobby = (props) => {
         })
 
         socket.on('sys', function (sysMsg) {
-            console.log(sysMsg)
+            // console.log(sysMsg)
             setAnnouncement({ roomAnnoucement: sysMsg })
         })
     }, [])

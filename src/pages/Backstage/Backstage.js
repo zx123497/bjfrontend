@@ -18,7 +18,7 @@ const BackStage = (props) => {
                 <Switch>
                     <Route exact path={path} render={() => <h1>BackStage</h1>} />
                     <Route path={`${path}/newroom`} component={NewRoom} />
-                    <Route path={`${path}/gamein`} component={GameIn} />
+                    <Route path={`${path}/gamein/:id`} component={GameIn} />
                     <Route path={`${path}/lobby`} component={Lobby} />
                     <Route path={`${path}/gamelobby/:id`} component={GameLobby} />
                     <Route path={`${path}/gamesum/:id`} component={GameSum} />
