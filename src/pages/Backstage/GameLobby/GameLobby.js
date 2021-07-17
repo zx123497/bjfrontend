@@ -58,7 +58,7 @@ const GameLobby = (props) => {
             icon: <FastForwardIcon />,
             title: "下一回合",
             func: () => {
-                console.log("next round")
+                socket.emit('endRound', { roomNum: `${props.match.params.id}`})
             },
         },
         {
@@ -66,8 +66,24 @@ const GameLobby = (props) => {
             icon: <TimerIcon />,
             title: "開始遊戲",
             func: () => {
-                socket.emit('enterRoom', { roomNum: `${props.match.params.id}`, round: 1 })
+                socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
                 socket.emit('startTime', { roomNum: `${props.match.params.id}` })
+                const params = new URLSearchParams()
+                params.append('roomNum', roomNum)
+                params.append('ID', localStorage.getItem('username'))
+                params.append('schoolname', 'NCU')
+                params.append('username', localStorage.getItem('username'))
+
+                UserService.postEnterRoom(params).then((res) => {
+                    if (res.status == '200') {
+                        setRoom({
+                            pincode: props.match.params.id,
+                            totalMemNum: res.data.allUsers.length,
+                            round: res.data.roomDetail.nowRound,
+                            roundTime: res.data.roomDetail.roundTime,
+                        })
+                    }
+                })
             },
         },
         {
@@ -77,7 +93,7 @@ const GameLobby = (props) => {
             func: () => {
                 console.log(`${props.match.params.id}`)
                 try {
-                    socket.emit('enterRoom', { roomNum: `${props.match.params.id}`, round: 1 })
+                    socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
 
                     socket.emit('sendsysmsg', {
                         msg: 'testtesttesttesttesttesttesttesttesttesttesttest',
@@ -102,7 +118,7 @@ const GameLobby = (props) => {
                     params3.append('roomNum', `${roomNum}`)
                     AdminService.postChartData(params3).then((response) => {
                         setChartData({chartData: response.data.chartData})
-                        console.log(chartData)
+                        // console.log(chartData)
                     })
                 })
             },
