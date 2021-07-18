@@ -97,10 +97,16 @@ const ForgetPassword = (props) => {
                     progressBar: true,
                     closeWith: ['click'],
                 }).show()
-                console.log(res.data)
-                alert('修改密碼連結已成功發送至 ' + values.email)
-                localStorage.clear()
-                history.push('/login')
+                if (res.status == '200') {
+                    alert('修改密碼連結已成功發送至 ' + values.email)
+                    if (!localStorage.getItem('email')) {
+                        localStorage.clear()
+                        history.push('/login')
+                    } else {
+                        if (localStorage.getItem('stu') == '1') history.push('/user/lobby')
+                        else history.push('/admin/lobby')
+                    }
+                }
             })
         }
         event.preventDefault()

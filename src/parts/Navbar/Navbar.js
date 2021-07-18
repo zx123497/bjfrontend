@@ -1,5 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { useEffect } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -57,7 +58,7 @@ const ButtonAppBar = (props) => {
             <AppBar className="bar">
                 <Toolbar className="tool">
                     <Menu className="menu" />
-                    <h4 className="logo">跟寶治學經濟LOGO</h4>
+                    <h4 className="logo">LBD Game</h4>
                     {localStorage.getItem('name') ? (
                         <Button className="isLogin" color="inherit" component={Link} to="/login">
                             <PersonIcon />
