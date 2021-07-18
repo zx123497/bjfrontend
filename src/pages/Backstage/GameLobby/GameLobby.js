@@ -12,8 +12,13 @@ import IconMenu from '../../../components/IconMenu/IconMenu'
 import AutorenewIcon from '@material-ui/icons/Autorenew'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import TimerIcon from '@material-ui/icons/Timer'
-import FastForwardIcon from '@material-ui/icons/FastForward';
+import FastForwardIcon from '@material-ui/icons/FastForward'
+import Input from '../../../components/Input/Input'
+import Modal from '../../../components/Modal/Modal'
 import TimerOffIcon from '@material-ui/icons/TimerOff'
+import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet'
+import Button from '@material-ui/core/Button'
+import useTheme from '@material-ui/core/styles/useTheme'
 const useStyles = makeStyles((theme) => ({
     root: {
         marginTop: '40px',
@@ -26,9 +31,16 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
         overflow: 'hidden',
     },
+    button: {
+        backgroundColor: theme.palette.ultimate.main,
+        '&:hover': {
+            backgroundColor: theme.palette.ultimate.dark,
+        },
+    },
 }))
 
 const GameLobby = (props) => {
+    const theme = useTheme()
     const [room, setRoom] = useState({
         pincode: '',
         totalMemNum: '',
@@ -36,19 +48,21 @@ const GameLobby = (props) => {
         roundTime: '',
     })
 
+    const [interval, setInterval] = useState()
+
     const [annoucement, setAnnouncement] = useState({
         roomAnnoucement: '',
     })
 
     const [chartData, setChartData] = useState({
-        chartData: []
+        chartData: [],
     })
 
     const icons = [
         {
             // end game
             icon: <TimerOffIcon />,
-            title: "結束遊戲",
+            title: '結束遊戲',
             func: () => {
                 console.log('Hi')
             },
@@ -56,15 +70,15 @@ const GameLobby = (props) => {
         {
             // next round
             icon: <FastForwardIcon />,
-            title: "下一回合",
+            title: '下一回合',
             func: () => {
-                console.log("next round")
+                console.log('next round')
             },
         },
         {
             // start game
             icon: <TimerIcon />,
-            title: "開始遊戲",
+            title: '開始遊戲',
             func: () => {
                 socket.emit('enterRoom', { roomNum: `${props.match.params.id}`, round: 1 })
                 socket.emit('startTime', { roomNum: `${props.match.params.id}` })
@@ -73,7 +87,7 @@ const GameLobby = (props) => {
         {
             // announce
             icon: <VolumeUpIcon />,
-            title: "發公告",
+            title: '發公告',
             func: () => {
                 console.log(`${props.match.params.id}`)
                 try {
@@ -83,16 +97,15 @@ const GameLobby = (props) => {
                         msg: 'testtesttesttesttesttesttesttesttesttesttesttest',
                         roomNum: `${props.match.params.id}`,
                     })
-                } catch(error) {
+                } catch (error) {
                     console.log(error)
                 }
-                
             },
         },
         {
             // new chart
             icon: <AutorenewIcon />,
-            title: "重新分配",
+            title: '重新分配',
             func: () => {
                 const params2 = new URLSearchParams()
                 params2.append('roomNum', `${roomNum}`)
@@ -101,10 +114,18 @@ const GameLobby = (props) => {
                     const params3 = new URLSearchParams()
                     params3.append('roomNum', `${roomNum}`)
                     AdminService.postChartData(params3).then((response) => {
-                        setChartData({chartData: response.data.chartData})
+                        setChartData({ chartData: response.data.chartData })
                         console.log(chartData)
                     })
                 })
+            },
+        },
+        {
+            // end game
+            icon: <SettingsEthernetIcon />,
+            title: '調整區間',
+            func: () => {
+                handleModalOpen()
             },
         },
     ]
@@ -136,7 +157,7 @@ const GameLobby = (props) => {
             const params3 = new URLSearchParams()
             params3.append('roomNum', `${roomNum}`)
             AdminService.postChartData(params3).then((response) => {
-                setChartData({chartData: response.data.chartData})
+                setChartData({ chartData: response.data.chartData })
                 console.log(chartData)
             })
         })
@@ -153,15 +174,68 @@ const GameLobby = (props) => {
 
     const classes = useStyles()
 
+    const [modalOpenState, setModalOpenState] = useState({
+        interval: null,
+        open: false,
+    })
+
+    const handleModalClose = () => {
+        setModalOpenState({
+            interval: null,
+            open: false,
+        })
+    }
+
+    const handleModalOpen = () => {
+        setModalOpenState({
+            ...modalOpenState,
+            open: true,
+        })
+    }
+    const handleIntervalChanged = async (id, value) => {
+        setModalOpenState({ ...modalOpenState, interval: value })
+    }
+
+    const handleChangeInterval = () => {
+        const data = modalOpenState.interval
+        // call changeInterval API \(= U =)/
+    }
+
     return (
         <div className={classes.root}>
             <UpperBar data={room} />
             <AnnouncementLine data={annoucement} />
             <div className={classes.componenet}>
-                <GameChart data={chartData}/>
+                <GameChart data={chartData} />
                 <TransRecord />
             </div>
             <IconMenu icons={icons} />
+
+            <Modal opened={modalOpenState.open} handleClose={handleModalClose}>
+                <h2>調整區間</h2>
+                <Input
+                    className="interval"
+                    key="interval"
+                    id="interval"
+                    elementType="input"
+                    elementConfig={{ type: 'text', placeholder: '輸入區間數值' }}
+                    value={modalOpenState.interval}
+                    onChange={handleIntervalChanged}
+                    label="區間 Interval"
+                />
+                <Button
+                    className={classes.button}
+                    style={{
+                        color: '#FFF',
+                        margin: '1rem 0 0 0',
+                        width: '100%',
+                        // boxShadow: '0px 0px 6px rgba(0,0,0,0.2)',
+                    }}
+                    onClick={handleChangeInterval}
+                >
+                    確認調整
+                </Button>
+            </Modal>
         </div>
     )
 }
