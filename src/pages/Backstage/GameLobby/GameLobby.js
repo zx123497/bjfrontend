@@ -48,8 +48,6 @@ const GameLobby = (props) => {
         roundTime: '',
     })
 
-    const [interval, setInterval] = useState()
-
     const [annoucement, setAnnouncement] = useState({
         roomAnnoucement: '',
     })
@@ -215,6 +213,7 @@ const GameLobby = (props) => {
     const handleChangeInterval = () => {
         const data = modalOpenState.interval
         // call changeInterval API \(= U =)/
+        handleModalClose()
     }
 
     return (
