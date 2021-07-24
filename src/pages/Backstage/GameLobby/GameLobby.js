@@ -89,7 +89,7 @@ const GameLobby = (props) => {
         {
             // announce
             icon: <VolumeUpIcon />,
-            title: "發公告",
+            title: "公告調整",
             func: () => {
                 console.log(`${props.match.params.id}`)
                 try {
@@ -108,7 +108,7 @@ const GameLobby = (props) => {
         {
             // new chart
             icon: <AutorenewIcon />,
-            title: "重新分配",
+            title: "分配身分",
             func: () => {
                 const params2 = new URLSearchParams()
                 params2.append('roomNum', `${roomNum}`)
