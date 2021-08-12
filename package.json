@@ -19,7 +19,10 @@
         "@testing-library/user-event": "^12.1.10",
         "@tinymce/tinymce-react": "^3.12.1",
         "axios": "^0.21.1",
+        "express": "^4.17.1",
+        "express-favicon": "^2.0.1",
         "noty": "^3.2.0-beta-deprecated",
+        "path": "^0.12.7",
         "qs": "^6.10.1",
         "react": "^17.0.1",
         "react-bootstrap": "^1.5.2",
@@ -37,7 +40,7 @@
         "web-vitals": "^1.0.1"
     },
     "scripts": {
-        "start": "react-scripts start",
+        "start": "node server.js",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
