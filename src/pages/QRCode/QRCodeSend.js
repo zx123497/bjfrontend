@@ -171,23 +171,25 @@ const QRCodeSend2 = (props) => {
     const handleQRShow = () => {
         console.log('checked:' + state.checked)
         if (state.checked) {
-            if (values.money <= 0 && values.numpeople <= 0) {
-                setError('付款金額與人數上限皆需大於 0 ')
-                setOpen(true)
-            } else if (values.money <= 0) {
-                setError('付款金額需大於 0 元')
-                setOpen(true)
-            } else if (values.numpeople <= 0) {
+            // if (values.money <= 0 && values.numpeople <= 0) {
+            //     setError('付款金額與人數上限皆需大於 0 ')
+            //     setOpen(true)
+            // } else if (values.money <= 0) {
+            //     setError('付款金額需大於 0 元')
+            //     setOpen(true)
+            // } else 
+            if (values.numpeople <= 0) {
                 setError('人數上限需大於0')
                 setOpen(true)
             } else {
                 setShowQR(true)
             }
         } else {
-            if (values.money <= 0) {
-                setError('付款金額需大於 0 元')
-                setOpen(true)
-            } else {
+            // if (values.money <= 0) {
+            //     setError('付款金額需大於 0 元')
+            //     setOpen(true)
+            // } else 
+            {
                 setShowQR(true)
             }
         }
