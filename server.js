@@ -1,6 +1,14 @@
 const express = require('express')
 const favicon = require('express-favicon')
 const path = require('path')
+const https = require('https')
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/lbdgame.mgt.ncu.edu.tw/privkey.pem', 'utf8')
+const certificate = fs.readFileSync('/etc/letsencrypt/live/lbdgame.mgt.ncu.edu.tw/fullchain.pem', 'utf8')
+const credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: certificate,
+}
 const port = process.env.PORT || 8000
 const app = express()
 app.use(favicon(__dirname + '/build/favicon.ico'))
@@ -13,4 +21,6 @@ app.get('/ping', function (req, res) {
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
-app.listen(port)
+
+var httpsServer = https.createServer(credentials, app)
+httpsServer.listen(port)
