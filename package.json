@@ -26,6 +26,7 @@
         "https": "^1.0.0",
         "noty": "^3.2.0-beta-deprecated",
         "path": "^0.12.7",
+        "pm2": "^5.1.0",
         "qs": "^6.10.1",
         "react": "^17.0.1",
         "react-bootstrap": "^1.5.2",

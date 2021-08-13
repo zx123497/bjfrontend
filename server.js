@@ -3,6 +3,7 @@ const fs = require('fs')
 const favicon = require('express-favicon')
 const path = require('path')
 const https = require('https')
+const cors = require('cors')
 const privateKey = fs.readFileSync('/etc/letsencrypt/live/lbdgame.mgt.ncu.edu.tw/privkey.pem', 'utf8')
 const certificate = fs.readFileSync('/etc/letsencrypt/live/lbdgame.mgt.ncu.edu.tw/fullchain.pem', 'utf8')
 const credentials = {
@@ -12,7 +13,6 @@ const credentials = {
 }
 const port = process.env.PORT || 8000
 const app = express()
-const cors = require("cors");
 app.use(cors());
 app.use(favicon(__dirname + '/build/favicon.ico'))
 // the __dirname is the current directory from where the script is running
