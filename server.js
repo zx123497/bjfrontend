@@ -24,4 +24,4 @@ app.get('/*', function (req, res) {
 })
 
 var httpsServer = https.createServer(credentials, app)
-httpsServer.listen(port)
+httpsServer.listen(443)
