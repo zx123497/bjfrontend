@@ -1,26 +1,26 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles'
 
 const theme = createMuiTheme({
     palette: {
         background: {
-            default: "#F5F5F5",
+            default: '#F5F5F5',
             paper: '#FFFFFF', //white
-            glare: "#BBBBBB"
+            glare: '#BBBBBB',
         },
         primary: {
-            main: "#FFF06B",
-            light: "#fefbe7",
-            dark: "#d9be0d",
+            main: '#FFF06B',
+            light: '#fefbe7',
+            dark: '#d9be0d',
         },
         secondary: {
-            main: "#00AAA4", //blue
-            light: "#4dbeff",
+            main: '#00AAA4', //blue
+            light: '#4dbeff',
         },
         ultimate: {
-            main: "#848484", //gray
-            dark: "#7d8082",
-            light:"#cbcccd"
-        }
+            main: '#848484', //gray
+            dark: '#616466',
+            light: '#cbcccd',
+        },
     },
     breakpoints: {
         values: {
@@ -29,9 +29,9 @@ const theme = createMuiTheme({
             md: 768,
             lg: 992,
             xl: 1200,
-            xxl: 1400
-        }
-    }
-});
+            xxl: 1400,
+        },
+    },
+})
 
-export default theme;
+export default theme

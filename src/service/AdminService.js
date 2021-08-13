@@ -1,6 +1,14 @@
 import axios from './axios'
 
 const AdminService = {
+    postGetRoom: async(body) => {
+        try {
+            const response = await axios.post('/getRoom', body)
+            return response
+        } catch (error) {
+            throw error
+        }
+    },
     postAssignRole: async(body) => {
         try {
             const response = await axios.post('/shuffle', body)
@@ -12,6 +20,14 @@ const AdminService = {
     postChartData: async(body) => {
         try {
             const response = await axios.post('/chartData', body)
+            return response
+        } catch (error) {
+            throw error
+        }
+    },
+    postChangeRoleMoney: async(body) => {
+        try {
+            const response = await axios.post('/changeRoleMoney', body)
             return response
         } catch (error) {
             throw error

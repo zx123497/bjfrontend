@@ -87,9 +87,9 @@ const GameChart = (props) => {
                                         } else {
                                             params.append('role', 'buyer')
                                         }
-                                        console.log(chartWrapper.getChart().getSelection()[0].column)
-                                        console.log(chartWrapper.getChart().getSelection()[0].row)
-                                        console.log(inputValue)
+                                        // console.log(chartWrapper.getChart().getSelection()[0].column)
+                                        // console.log(chartWrapper.getChart().getSelection()[0].row)
+                                        // console.log(inputValue)
                                         AdminService.postChangeSingleMoney(params).then((res) => {
                                             if (res.status == '200') {
                                                 const params3 = new URLSearchParams()

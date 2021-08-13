@@ -73,8 +73,8 @@ function App() {
                                                 <Route path="/forgetpassword" exact component={ForgetPassword} />
                                                 <Route path="/forgetpassword2" exact component={ForgetPassword2} />
                                                 <Route path="/resetpassword" exact component={ResetPassword} />
-                                                <Route path="/loading" exact component={Loading} />
-                                                <Route path="/gamelobby/:roomNum/:round" exact component={GameLobby} />
+                                                <Route path="/loading/:id" exact component={Loading} />
+                                                <Route path="/gamelobby/:id" exact component={GameLobby} />
                                                 <Route path="/gamein" exact component={GameIn} />
                                                 <Route path="/qrcode" exact component={QRCodeSend2} />
                                                 <Route path="/teacherqrcode" exact component={QRCodeSend} />

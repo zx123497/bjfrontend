@@ -1,5 +1,5 @@
 // including PIN CODE, member sum, timer, round reminder
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Card, Grid, makeStyles, Typography } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import '../../index.css';
@@ -68,6 +68,22 @@ const UpperBar = (props) => {
 
     const classes = useStyles();
 
+    const [room, setRoom] = useState({
+        pincode: '',
+        totalMemNum: '',
+        round: '',
+        roundTime: '',
+    })
+
+    useEffect(() => {
+        setRoom({
+            pincode: props.data.pincode,
+            totalMemNum: props.data.totalMemNum,
+            round: props.data.round,
+            roundTime: props.data.roundTime
+        })
+    }, [props.data])
+
     const numMap = new Map([[1, '一'], [2, '二'], [3, '三'], [4, '四'], [5, '五'], [6, '六'], [7, '七'], [8, '八'], [9, '九'], [10, '十']])
 
     return (
@@ -78,23 +94,23 @@ const UpperBar = (props) => {
                         PIN CODE
                     </Typography>
                     <Typography variant="body2">
-                        {props.data.pincode}
+                        {room.pincode}
                     </Typography>
                 </Grid>
                 <Grid container xs={6} justify="flex-end">
                     <Typography variant="body2">
-                        目前房間人數 <b> {props.data.totalMemNum} </b> 人
+                        目前房間人數 <b> {room.totalMemNum} </b> 人
                     </Typography>
                 </Grid>
             </Grid>
             <div className={classes.RoundNTime} container>
                 <Box className="box round" fontWeight="fontWeightBold" fontSize="h3.fontSize">
-                    {numMap.get(props.data.round) && (
-                        <Typography>第{numMap.get(props.data.round)}回合</Typography>
+                    {numMap.get(room.round) && (
+                        <Typography>第{numMap.get(room.round)}回合</Typography>
                     )}
 
-                    {!(numMap.get(props.data.round)) && (
-                        <Typography>第{props.data.round}回合</Typography>
+                    {!(numMap.get(room.round)) && (
+                        <Typography>第{room.round}回合</Typography>
                     )}
                 </Box>
                 <div className="box timer">
@@ -102,14 +118,14 @@ const UpperBar = (props) => {
                         <Grid item xs={8} spacing={3}>
                             <Card className="timeCard minCard">
                                 <Box className="timeNum minNum">
-                                    {Math.floor(props.data.roundTime / 60)}
+                                    {Math.floor(room.roundTime / 60)}
                                 </Box>
                             </Card>
                         </Grid>
                         <Grid item xs={4} spacing={3}>
                             <Card className="timeCard secCard">
                                 <Box className="timeNum secNum">
-                                    {props.data.roundTime % 60}
+                                    {room.roundTime % 60}
                                 </Box>
                             </Card>
                         </Grid>
