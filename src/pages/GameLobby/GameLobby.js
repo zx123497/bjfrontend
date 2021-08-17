@@ -46,20 +46,18 @@ const GameLobby = (props) => {
         })
         
         // 取得url param放localStorage
-        const roomNum = props.match.params.roomNum.substr(1)
-        const roundNum = props.match.params.round.substr(1)
+        const roomNum = props.match.params.id
         localStorage.setItem('roomNum', roomNum) //for Qrcode
-        localStorage.setItem('roundNum', roundNum) //for Qrcode
 
         ////////////// for testing //////////////
         // localStorage.setItem('trans_-1', '{round: "1", buyer: "123", seller: "234", money: "60"}');
-        const result = {
-            round: '1',
-            buyer: '123',
-            seller: '234',
-            money: '60',
-        }
-        localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
+        // const result = {
+        //     round: '1',
+        //     buyer: '123',
+        //     seller: '234',
+        //     money: '60',
+        // }
+        // localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
         /////////////////////////////////////////
 
         // 增加param傳axios
@@ -74,7 +72,7 @@ const GameLobby = (props) => {
                 setRoom({
                     pincode: roomNum,
                     totalMemNum: res.data.allUsers.length,
-                    round: roundNum,
+                    round: res.data.nowRound,
                     roundTime: res.data.roomDetail.roundTime
                 })
 
@@ -95,32 +93,32 @@ const GameLobby = (props) => {
                 })
 
                 // 有交易紀錄後update player state
-                const recordJSON = JSON.parse(localStorage.getItem(`trans_${roundNum}`));
-                if(recordJSON != null) {
-                    if(role.role == 'buyer') {
-                        setPlayer({
-                            item: role.item,
-                            money: role.money,
-                            price: role.price,
-                            role: role.role,
-                            score: role.score,
-                            totalScore: (role.price-recordJSON.money),
-                            transPartner: recordJSON.seller,
-                            tranAmount: (0-recordJSON.money)
-                        })
-                    } else {
-                        setPlayer({
-                            item: role.item,
-                            money: role.money,
-                            price: role.price,
-                            role: role.role,
-                            score: role.score,
-                            totalScore: (recordJSON.money-role.price),
-                            transPartner: recordJSON.buyer,
-                            tranAmount: recordJSON.money
-                        })
-                    }
-                }
+                // const recordJSON = JSON.parse(localStorage.getItem(`trans_${roundNum}`));
+                // if(recordJSON != null) {
+                //     if(role.role == 'buyer') {
+                //         setPlayer({
+                //             item: role.item,
+                //             money: role.money,
+                //             price: role.price,
+                //             role: role.role,
+                //             score: role.score,
+                //             totalScore: (role.price-recordJSON.money),
+                //             transPartner: recordJSON.seller,
+                //             tranAmount: (0-recordJSON.money)
+                //         })
+                //     } else {
+                //         setPlayer({
+                //             item: role.item,
+                //             money: role.money,
+                //             price: role.price,
+                //             role: role.role,
+                //             score: role.score,
+                //             totalScore: (recordJSON.money-role.price),
+                //             transPartner: recordJSON.buyer,
+                //             tranAmount: recordJSON.money
+                //         })
+                //     }
+                // }
             }
         })
     }, [])

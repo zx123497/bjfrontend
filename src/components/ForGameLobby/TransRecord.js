@@ -42,32 +42,32 @@ const TransRecord = (props) => {
 
     const rerender = () => {
         socket.emit('faketransc', { roomNum: `${props.match.params.id}`, round: 0 })
-        console.log("rerendered")
     }
 
     const classes = useStyles();
 
     useEffect(() => {
         socket.on('getRecordRequest', function (obj) {
-            console.log('rerender')
-            let temp = []
-            let i = 0
-            for(let element of obj) {
-                // console.log(element.buyer)
-                temp.push(
-                    <Grid container className="row" key={i}>
-                        <Grid item className="element buyer" xs={3}>{element.buyer}</Grid>
-                        <Grid item className="element icon" xs={1}>
-                            <Icon fontSize="large"><NavigateNextIcon /></Icon>
+            if(obj) {
+                let temp = []
+                let i = 0
+                for(let element of obj) {
+                    // console.log(element.buyer)
+                    temp.push(
+                        <Grid container className="row" key={i}>
+                            <Grid item className="element buyer" xs={3}>{element.buyer}</Grid>
+                            <Grid item className="element icon" xs={1}>
+                                <Icon fontSize="large"><NavigateNextIcon /></Icon>
+                            </Grid>
+                            <Grid item className="element seller" xs={3}>{element.seller}</Grid>
+                            <Grid item className="element amount" xs={5}>$ {element.price}</Grid>
                         </Grid>
-                        <Grid item className="element seller" xs={3}>{element.seller}</Grid>
-                        <Grid item className="element amount" xs={5}>$ {element.price}</Grid>
-                    </Grid>
-                )
-                i++
+                    )
+                    i++
+                }
+                console.log(temp)
+                setRecord({records: temp});
             }
-            console.log(temp)
-            setRecord({records: temp});
             // console.log(records)
         });
     }, [])

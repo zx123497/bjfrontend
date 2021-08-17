@@ -3,6 +3,7 @@ import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@
 import { Link, withRouter } from 'react-router-dom'
 import BackPage from '../../components/BackPage/BackPage'
 import UserService from '../../service/UserService'
+import { socket } from '../../service/socket'
 
 const useStyles = makeStyles((theme) => ({
     GameIn: {
