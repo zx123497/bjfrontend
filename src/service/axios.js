@@ -2,7 +2,7 @@ import axios from 'axios'
 import Noty from 'noty'
 
 const instance = axios.create({
-    baseURL: 'http://140.115.83.113:8080',
+    baseURL: 'https://lbdgame.mgt.ncu.edu.tw:8080',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         Accept: '*/*',
