@@ -236,6 +236,7 @@ const LogIn = (props) => {
                         localStorage.setItem('name', res.data.user.username)
                         localStorage.setItem('id', res.data.user.ID)
                         localStorage.setItem('email', values.account)
+                        localStorage.setItem('token', res.data.jwt)
                     }
                 })
                 .catch((e) => {
