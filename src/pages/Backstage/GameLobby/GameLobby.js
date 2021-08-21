@@ -139,26 +139,44 @@ const GameLobby = (props) => {
 
         AdminService.postGetRoom(params).then((res) => {
             if (res.status == '200') {
-                setRoom({
-                    pincode: props.match.params.id,
-                    totalMemNum: res.data.allUsers.length,
-                    round: res.data.roomDetail.nowRound,
-                    roundTime: res.data.roomDetail.roundTime,
-                })
+                console.log(res)
+                if(res.data.allUsers == null) {
+                    console.log("no user")
+                    // setRoom({
+                    //     pincode: props.match.params.id,
+                    //     totalMemNum: 0,
+                    //     round: res.data.roomDetail.nowRound,
+                    //     roundTime: res.data.roomDetail.roundTime,
+                    // })
+                }
+                else {
+                    setRoom({
+                        pincode: props.match.params.id,
+                        totalMemNum: res.data.allUsers.length,
+                        round: res.data.roomDetail.nowRound,
+                        roundTime: res.data.roomDetail.roundTime,
+                    })
+                    const params3 = new URLSearchParams()
+                    params3.append('roomNum', `${roomNum}`)
+                    AdminService.postChartData(params3).then((response) => {
+                        setChartData({ chartData: response.data.chartData })
+                        // console.log(chartData)
+                    })
+                }
             }
         })
 
         const params2 = new URLSearchParams()
         params2.append('roomNum', `${roomNum}`)
         params2.append('roundNum', '0')
-        AdminService.postAssignRole(params2).then((res) => {
-            const params3 = new URLSearchParams()
-            params3.append('roomNum', `${roomNum}`)
-            AdminService.postChartData(params3).then((response) => {
-                setChartData({ chartData: response.data.chartData })
-                console.log(chartData)
-            })
-        })
+        // AdminService.postAssignRole(params2).then((res) => {
+        // const params3 = new URLSearchParams()
+        // params3.append('roomNum', `${roomNum}`)
+        // AdminService.postChartData(params3).then((response) => {
+        //     setChartData({ chartData: response.data.chartData })
+        //     console.log(chartData)
+        // })
+        // })
 
         socket.on('startTimeResponse', (data) => {
             if(data == "error") {
@@ -174,7 +192,7 @@ const GameLobby = (props) => {
             // console.log(sysMsg)
             setAnnouncement({ roomAnnoucement: sysMsg })
         })
-    }, [])
+    }, [room.totalMemNum])
 
     const classes = useStyles()
 

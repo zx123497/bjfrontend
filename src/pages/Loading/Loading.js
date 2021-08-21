@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
 import { useLoading, Audio } from '@agney/react-loading';
 import {BallTriangle,Bars,Circles,Grid,Hearts,Oval,Puff,Rings,SpinningCircles,TailSpin,ThreeDots,} from '@agney/react-loading';
+import { socket } from '../../service/socket';
 
 const useStyles = makeStyles((theme) => ({
     Loading: {
@@ -43,6 +44,14 @@ const Loading = (props) => {
         loading: true,
         indicator: <Hearts width="300" />,
       });
+
+    useEffect(() => {
+        socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
+        socket.on('startTimeResponse', function (obj) {
+            console.log(obj)
+            props.history.push(`/gamelobby/${props.match.params.id}`)
+        })
+    },[])
     
     return ( 
     <div className = { classes.Loading } >
