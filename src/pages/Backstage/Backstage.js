@@ -21,7 +21,7 @@ const BackStage = (props) => {
                     <Route path={`${path}/gamein/:id`} component={GameIn} />
                     <Route path={`${path}/lobby`} component={Lobby} />
                     <Route path={`${path}/gamelobby/:id`} component={GameLobby} />
-                    <Route path={`${path}/gamesum/:id`} component={GameSum} />
+                    <Route path={`${path}/gamesum`} component={GameSum} />
                     <Route path={`${path}/roomsettings`} component={Roomsettings} />
                     <Route path={`${path}/waitingroom/:id`} component={WaitingRoom} />
                     <Route path={`${path}/valuesetting/:id`} component={ValueSetting} />
