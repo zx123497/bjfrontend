@@ -87,12 +87,12 @@ const RecordCard = (props) => {
         records: []
     })
 
+
     useEffect(() => {
-        socket.on('getRecordRequest', function (obj) {
-            console.log("socket")
-            if(obj) {
+        socket.on('getmultiRecordsResponse', function (obj) {
+            console.log(obj)
+            if(obj && (!obj.s)) {
                 let temp = []
-                temp.push(record.records)
                 let i = 0
                 for(let element of obj) {
                     // console.log(element.buyer)
@@ -108,7 +108,6 @@ const RecordCard = (props) => {
                     )
                     i++
                 }
-                console.log(temp)
                 setRecord({records: temp});
             }
             // console.log(records)
@@ -119,9 +118,18 @@ const RecordCard = (props) => {
         console.log(selected)
         socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
         setRecord({records: []})
+        let temp = []
         selected.selected.forEach((element) => {
-            socket.emit('faketransc', { roomNum: `${props.match.params.id}`, round: element.value })
+            temp.push(element.value)
         })
+
+        if(temp == []) {
+            setRecord({record: []})
+        } else {
+            console.log(props.match.params.id)
+            console.log(temp)
+            socket.emit('send_multiRecords_req', { roomNum: `${props.match.params.id}`, round: temp })
+        }
     }, [selected])    
 
     return (

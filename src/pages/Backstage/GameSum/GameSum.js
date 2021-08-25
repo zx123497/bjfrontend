@@ -82,17 +82,17 @@ const GameSum = (props) => {
         const params = new URLSearchParams()
         params.append('roomNum', roomNum)
 
-        AdminService.postTotalChartData(params).then((res) => {
-            if(res.status == "200") {
-                if(res.data.data != null) {
-                    setChartData({chartData: res.data.data});
-                }
-                else {
-                    alert("No Game Record")
-                    props.history.push("/user/lobby")
-                }
-            }
-        })
+        // AdminService.postTotalChartData(params).then((res) => {
+        //     if(res.status == "200") {
+        //         if(res.data.data != null) {
+        //             setChartData({chartData: res.data.data});
+        //         }
+        //         else {
+        //             alert("No Game Record")
+        //             props.history.push("/user/lobby")
+        //         }
+        //     }
+        // })
     },[])
     
 
