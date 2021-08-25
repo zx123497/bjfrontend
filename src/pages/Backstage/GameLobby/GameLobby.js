@@ -227,17 +227,17 @@ const GameLobby = (props) => {
         var msg = ""
 
         if(seller > 0) {
-            msg += `買家商品價值+$${seller}  `
+            msg += `賣家商品成本+$${seller}  `
         }
         else if(seller < 0) {
-            msg += `買家商品價值-$${Math.abs(seller)}  `
+            msg += `賣家商品成本-$${Math.abs(seller)}  `
         }
 
         if(buyer > 0) {
-            msg += `賣家商品成本+$${buyer}`
+            msg += `買家商品價值+$${buyer}`
         }
         else if(buyer < 0) {
-            msg += `賣家商品成本-$${Math.abs(buyer)}`
+            msg += `買家商品價值-$${Math.abs(buyer)}`
         }
 
         // call changeInterval API \(= U =)/

@@ -143,6 +143,7 @@ const GameSum = (props) => {
                 </div>
 
                 <RecordCard data={chartData.chartData} />
+                
             </div>
         </div>
     )
