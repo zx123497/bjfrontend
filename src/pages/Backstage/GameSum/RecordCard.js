@@ -70,7 +70,7 @@ const RecordCard = (props) => {
     const classes = useStyles();
 
 
-    const round = [{label: "Round 0", value: 0}, {label: "Round 1", value: 1}];
+    const round = [];
 
     if(props.data != null) {
         for(let i=0;i<props.data.length;i++) {
@@ -90,24 +90,26 @@ const RecordCard = (props) => {
 
     useEffect(() => {
         socket.on('getmultiRecordsResponse', function (obj) {
-            console.log(obj)
             if(obj && (!obj.s)) {
+                console.log(obj)
                 let temp = []
                 let i = 0
-                for(let element of obj) {
-                    // console.log(element.buyer)
-                    temp.push(
-                        <Grid container className="row" key={i}>
-                            <Grid item className="element buyer" xs={3}>{element.buyer}</Grid>
-                            <Grid item className="element icon" xs={1}>
-                                <Icon fontSize="large"><NavigateNextIcon /></Icon>
+                obj.forEach((round) => {
+                    round.forEach((element) => {
+                        console.log(element)
+                        temp.push(
+                            <Grid container className="row" key={i}>
+                                <Grid item className="element buyer" xs={3}>{element.buyer}</Grid>
+                                <Grid item className="element icon" xs={1}>
+                                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
+                                </Grid>
+                                <Grid item className="element seller" xs={3}>{element.seller}</Grid>
+                                <Grid item className="element amount" xs={5}>$ {element.price}</Grid>
                             </Grid>
-                            <Grid item className="element seller" xs={3}>{element.seller}</Grid>
-                            <Grid item className="element amount" xs={5}>$ {element.price}</Grid>
-                        </Grid>
-                    )
-                    i++
-                }
+                        )
+                        i++
+                    })
+                })
                 setRecord({records: temp});
             }
             // console.log(records)

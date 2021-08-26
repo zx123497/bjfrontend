@@ -5,6 +5,7 @@ import BackPage from '../../components/BackPage/BackPage'
 import { useLoading, Audio } from '@agney/react-loading';
 import {BallTriangle,Bars,Circles,Grid,Hearts,Oval,Puff,Rings,SpinningCircles,TailSpin,ThreeDots,} from '@agney/react-loading';
 import { socket } from '../../service/socket';
+import UserService from '../../service/UserService';
 
 const useStyles = makeStyles((theme) => ({
     Loading: {
@@ -47,6 +48,16 @@ const Loading = (props) => {
 
     useEffect(() => {
         socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
+        
+        const param = new URLSearchParams();
+        param.append("roomNum", props.match.params.id)
+        param.append("ID", localStorage.getItem("username"))
+        param.append("schoolname", "NCU")
+        param.append("username", localStorage.getItem("id"))
+        UserService.postEnterRoom(param).then((res) => {
+            console.log(res.data.allUsers)
+        })
+
         socket.on('startTimeResponse', function (obj) {
             console.log(obj)
             props.history.push(`/gamelobby/${props.match.params.id}`)
