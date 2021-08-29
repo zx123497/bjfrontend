@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
     Register: {
         display: 'flex',
         color: theme.palette.ultimate.main,
-
+        backgroundColor: theme.palette.ultimate.dark,
         height: '100vh',
         overflow: 'hidden', //解決margin-top塌陷
         alienItems: 'center',
@@ -18,17 +18,17 @@ const useStyles = makeStyles((theme) => ({
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.ultimate.main,
             color: theme.palette.ultimate.dark,
             width: '85%',
             height: '470px',
             margin: 'auto',
 
             borderRadius: 12,
-            boxShadow: '0 0px 12px 0 rgba(0,0,0,0.3)',
+            boxShadow: '0 3px 6px 0 rgba(0,0,0,0.3)',
         },
         '& .title': {
-            color: theme.palette.text.primary,
+            color: theme.palette.primary.main,
             fontSize: 30,
             fontWeight: 900,
         },
@@ -59,10 +59,14 @@ const useStyles = makeStyles((theme) => ({
         },
         '& .in': {
             marginTop: '25px',
-            color: theme.palette.background.paper,
-            backgroundColor: theme.palette.secondary.main,
+            color: '#FFF',
+            background: theme.palette.secondary.main,
+            fontWeight: 'bold',
+            fontSize: '1rem',
             borderRadius: '20px',
+            boxShadow: '0 3px 6px 0 rgba(0,0,0,0.3)',
             width: '10rem',
+            height: '3rem',
         },
         [theme.breakpoints.up('md')]: {
             '& .card': {

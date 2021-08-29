@@ -1,91 +1,91 @@
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import Checkbox from '@material-ui/core/Checkbox';
-import Select from '@material-ui/core/Select';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { Editor } from '@tinymce/tinymce-react';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
-import { makeStyles } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem'
+import FormHelperText from '@material-ui/core/FormHelperText'
+import Radio from '@material-ui/core/Radio'
+import RadioGroup from '@material-ui/core/RadioGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormControl from '@material-ui/core/FormControl'
+import FormGroup from '@material-ui/core/FormGroup'
+import Checkbox from '@material-ui/core/Checkbox'
+import Select from '@material-ui/core/Select'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import { Editor } from '@tinymce/tinymce-react'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers'
+import { makeStyles } from '@material-ui/core'
 import React from 'react'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     Input: {
         padding: 0,
-        "&.invalid": {
-            "& h5, & .MuiFormHelperText-root": {  
-                color: "red"
+        '&.invalid': {
+            '& h5, & .MuiFormHelperText-root': {
+                color: 'red',
             },
             '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                    color: theme.palette.text.primary,
-                    borderColor: "red",
+                    color: '#FFF',
+                    borderColor: 'red',
                 },
                 '&:hover fieldset': {
-                    borderColor: "red",
+                    borderColor: 'red',
                 },
                 '&.Mui-focused fieldset': {
-                    borderColor: "red",
+                    borderColor: 'red',
                 },
-            }
+            },
         },
-        "&.hide": {
-            display: "none"
+        '&.hide': {
+            display: 'none',
         },
         "& label.label input[type='file']": {
-            position: "absolute",
-            display: "none"
+            position: 'absolute',
+            display: 'none',
         },
-        "& .fileUpload": {
-            display: "flex",
-            alignItems: "center",
-            "& .fileName": {
-                color: theme.palette.text.primary
-            }
+        '& .fileUpload': {
+            display: 'flex',
+            alignItems: 'center',
+            '& .fileName': {
+                color: '#FFF',
+            },
         },
-        "& .uploadBtn": {
+        '& .uploadBtn': {
             padding: 0,
-            marginRight: 10
+            marginRight: 10,
         },
-        "& .label": {
-            cursor: "pointer",    
-            padding: "10px 20px",
-            boxSizing: "border-box",
-            "& span": {
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "#FFF",
-                "& .text": {
-                    marginLeft: "5px"
-                }
-            }
+        '& .label': {
+            cursor: 'pointer',
+            padding: '10px 20px',
+            boxSizing: 'border-box',
+            '& span': {
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#FFF',
+                '& .text': {
+                    marginLeft: '5px',
+                },
+            },
         },
-        "& .MuiFormHelperText-root": {
+        '& .MuiFormHelperText-root': {
             color: theme.palette.text.secondary,
-            fontSize: 14
+            fontSize: 14,
         },
-        "& .MuiSelect-outlined, & .MuiOutlinedInput-input": {
-            paddingTop: "10px",
-            paddingBottom: "10px"
+        '& .MuiSelect-outlined, & .MuiOutlinedInput-input': {
+            paddingTop: '10px',
+            paddingBottom: '10px',
         },
-        "& .MuiOutlinedInput-inputMultiline": {
-            padding: 0
+        '& .MuiOutlinedInput-inputMultiline': {
+            padding: 0,
         },
         '& h5, & .MuiInputBase-input, & label': {
-            color: theme.palette.text.primary,
+            color: '#FFF',
         },
-        "& .MuiRadio-root, & .MuiCheckbox-root": {
+        '& .MuiRadio-root, & .MuiCheckbox-root': {
             color: theme.palette.text.secondary,
-            "&.Mui-checked": {
-                color: theme.palette.primary.main
-            }
+            '&.Mui-checked': {
+                color: theme.palette.primary.main,
+            },
         },
         '& .MuiInput-underline': {
             '&:before': {
@@ -95,7 +95,7 @@ const useStyles = makeStyles(theme => ({
                 borderBottomColor: theme.palette.primary.main,
             },
             '&:hover:before': {
-                borderBottomColor: theme.palette.text.primary
+                borderBottomColor: theme.palette.text.primary,
             },
         },
         '& .MuiOutlinedInput-root': {
@@ -104,31 +104,31 @@ const useStyles = makeStyles(theme => ({
                 borderColor: theme.palette.action.disabled,
             },
             '&:hover fieldset': {
-                borderColor: theme.palette.text.primary
+                borderColor: theme.palette.text.primary,
             },
             '&.Mui-focused fieldset': {
                 borderColor: theme.palette.primary.main,
             },
-        }
-    }
-}));
+        },
+    },
+}))
 
-const Input = props => {
-    const classes = useStyles();
-    let inputElement = null;
-    let isError = props.invalid && props.touched;
+const Input = (props) => {
+    const classes = useStyles()
+    let inputElement = null
+    let isError = props.invalid && props.touched
     const inputClasses = [classes.Input, props.className]
 
-    if(props.hide){
-        inputClasses.push("hide")
+    if (props.hide) {
+        inputClasses.push('hide')
     }
 
-    if(props.invalid && props.shouldValidate && props.touched){
-        inputClasses.push("invalid")
+    if (props.invalid && props.shouldValidate && props.touched) {
+        inputClasses.push('invalid')
     }
 
-    switch(props.elementType){
-        case ('input'):
+    switch (props.elementType) {
+        case 'input':
             inputElement = (
                 <TextField
                     id={props.domId ? props.domId : props.id}
@@ -136,12 +136,12 @@ const Input = props => {
                     InputProps={props.elementConfig}
                     disabled={props.disabled}
                     value={props.value}
-                    onChange={evt => props.onChange(props.id, evt.target.value)}
+                    onChange={(evt) => props.onChange(props.id, evt.target.value)}
                     variant="outlined"
                 />
-            );
-            break;
-        case ('textarea'):
+            )
+            break
+        case 'textarea':
             inputElement = (
                 <TextField
                     error={isError}
@@ -151,67 +151,79 @@ const Input = props => {
                     multiline
                     rows={6}
                     value={props.value}
-                    onChange={evt => props.onChange(props.id, evt.target.value)}
+                    onChange={(evt) => props.onChange(props.id, evt.target.value)}
                     variant="outlined"
                 />
-            );
-            break;
-        case ('select'):
+            )
+            break
+        case 'select':
             inputElement = (
                 <FormControl error={isError} disabled={props.disabled}>
                     <Select
                         value={props.value}
-                        onChange={evt => props.onChange(props.id, evt.target.value)}
+                        onChange={(evt) => props.onChange(props.id, evt.target.value)}
                         variant="outlined"
                     >
-                        {props.elementConfig.options.map(option => {
-                            return <MenuItem disabled={option.disabled} key={option.value} value={option.value}>
-                                {option.displayValue}
-                            </MenuItem>
+                        {props.elementConfig.options.map((option) => {
+                            return (
+                                <MenuItem disabled={option.disabled} key={option.value} value={option.value}>
+                                    {option.displayValue}
+                                </MenuItem>
+                            )
                         })}
                     </Select>
                 </FormControl>
-            );
-            break;
-        case ('radio'): 
+            )
+            break
+        case 'radio':
             inputElement = (
                 <FormControl error={isError} component="fieldset" disabled={props.disabled}>
-                    <RadioGroup 
-                        value={props.value} 
-                        onChange={evt => props.onChange(props.id, evt.target.value)}
-                    >
-                        {props.elementConfig.options.map(option => {
-                            return <FormControlLabel key={option.value} value={option.value} control={<Radio color="primary"/>} label={option.displayValue} />
+                    <RadioGroup value={props.value} onChange={(evt) => props.onChange(props.id, evt.target.value)}>
+                        {props.elementConfig.options.map((option) => {
+                            return (
+                                <FormControlLabel
+                                    key={option.value}
+                                    value={option.value}
+                                    control={<Radio color="primary" />}
+                                    label={option.displayValue}
+                                />
+                            )
                         })}
                     </RadioGroup>
                 </FormControl>
-            );
-            break;
-        case ('checkbox'):
+            )
+            break
+        case 'checkbox':
             inputElement = (
                 <FormControl required error={isError} component="fieldset" disabled={props.disabled}>
                     <FormGroup>
                         {props.elementConfig.options.map((option, index) => (
                             <FormControlLabel
                                 control={
-                                    <Checkbox 
+                                    <Checkbox
                                         key={index}
                                         value={index}
-                                        color="primary" 
-                                        checked={props.value[index]} 
-                                        onChange={evt => props.onChange(props.id, props.value.map((item, index) => {
-                                            return index === parseInt(evt.target.value) ? !item : item
-                                        }))}
-                                    />}
+                                        color="primary"
+                                        checked={props.value[index]}
+                                        onChange={(evt) =>
+                                            props.onChange(
+                                                props.id,
+                                                props.value.map((item, index) => {
+                                                    return index === parseInt(evt.target.value) ? !item : item
+                                                })
+                                            )
+                                        }
+                                    />
+                                }
                                 label={option}
                             />
                         ))}
                     </FormGroup>
                 </FormControl>
             )
-            break;
-        
-        case ('editor'):
+            break
+
+        case 'editor':
             console.log(props.value)
             inputElement = (
                 <Editor
@@ -220,28 +232,28 @@ const Input = props => {
                     init={{
                         height: 500,
                         plugins: [
-                        'advlist autolink lists link image charmap print preview anchor',
-                        'searchreplace visualblocks code fullscreen imagetools',
-                        'insertdatetime media table paste code help wordcount'
+                            'advlist autolink lists link image charmap print preview anchor',
+                            'searchreplace visualblocks code fullscreen imagetools',
+                            'insertdatetime media table paste code help wordcount',
                         ],
                         toolbar:
-                        'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | image | help'
+                            'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | image | help',
                     }}
-                    onEditorChange={content => props.onChange(props.id, content)}
+                    onEditorChange={(content) => props.onChange(props.id, content)}
                 />
             )
-            break;
-        case ('file'):
+            break
+        case 'file':
             inputElement = (
                 <div className="fileUpload">
                     <Button className="uploadBtn" variant="contained" color="primary" disabled={props.disabled}>
                         <label className="label">
-                            <input 
+                            <input
                                 disabled={props.disabled}
-                                onChange={evt => props.onChange(props.id, evt.target.files[0])}
-                                name={props.className} 
-                                type="file" 
-                                {...props.elementConfig} 
+                                onChange={(evt) => props.onChange(props.id, evt.target.files[0])}
+                                name={props.className}
+                                type="file"
+                                {...props.elementConfig}
                             />
                             <span>
                                 <CloudUploadIcon />
@@ -249,23 +261,28 @@ const Input = props => {
                             </span>
                         </label>
                     </Button>
-                    {props.value ? 
-                        <a href={props.value.url} download>{props.value.name}</a>: 
+                    {props.value ? (
+                        <a href={props.value.url} download>
+                            {props.value.name}
+                        </a>
+                    ) : (
                         <div className="fileName">還沒有上傳檔案</div>
-                    }
+                    )}
                 </div>
             )
-            break;
+            break
         default:
-            inputElement = <input {...props.elementConfig} disabled={props.disabled} error={isError} value={props.value} />
+            inputElement = (
+                <input {...props.elementConfig} disabled={props.disabled} error={isError} value={props.value} />
+            )
     }
     return (
         <div className={`${props.id} ${inputClasses.join(' ')}`}>
-            {props.label ? <p>{props.label}</p> : ""}
+            {props.label ? <p>{props.label}</p> : ''}
             {inputElement}
             <FormHelperText>{isError ? props.invalidText : props.helperText}</FormHelperText>
         </div>
     )
 }
 
-export default Input;
+export default Input

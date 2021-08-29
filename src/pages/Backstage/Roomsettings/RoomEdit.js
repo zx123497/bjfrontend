@@ -19,20 +19,21 @@ import qs from 'qs'
 import Noty from 'noty'
 const useStyles = makeStyles((theme) => ({
     Setting: {
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: '#555',
         paddingTop: '5rem',
         minHeight: '100vh',
+        color: '#FFF',
         height: 'max-content',
         '& .basic': {
             padding: '1rem',
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.ultimate.dark,
             margin: '1rem',
             borderRadius: '10px',
             boxShadow: '0 3px 6px rgba(0,0,0,0.2)',
         },
         '& .basic_round': {
             padding: '1rem',
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.ultimate.dark,
             margin: '1rem',
             borderRadius: '10px',
             boxShadow: '0 3px 6px rgba(0,0,0,0.2)',
@@ -55,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
             },
             '& .basic_round': {
                 padding: '1rem',
-                backgroundColor: theme.palette.background.paper,
+                backgroundColor: theme.palette.ultimate.dark,
                 margin: '1rem',
                 display: 'flex',
                 flexDirection: 'column',
@@ -400,28 +401,35 @@ const NewRoom = (props) => {
                     </div>
                 </div>
             ))}
-            <Button
-                onClick={() => handleAddRound()}
-                style={{
-                    width: '60%',
-                    margin: '5px 1rem',
-                    backgroundColor: theme.palette.primary.dark,
-                    color: '#FFF',
-                }}
-            >
-                新增回合
-            </Button>
-            <Button
-                onClick={() => handleCreateRoom()}
-                style={{
-                    width: '60%',
-                    margin: '1rem',
-                    backgroundColor: theme.palette.secondary.main,
-                    color: '#FFF',
-                }}
-            >
-                完成修改
-            </Button>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'stretch' }}>
+                <Button
+                    onClick={() => handleAddRound()}
+                    style={{
+                        flex: 1,
+                        width: '15rem',
+                        margin: '5px 1rem',
+                        backgroundColor: theme.palette.primary.dark,
+                        color: '#FFF',
+                        fontWeight: 'bold',
+                        boxShadow: '0 3px 6px rgba(0,0,0,0.3)',
+                    }}
+                >
+                    新增回合
+                </Button>
+                <Button
+                    onClick={() => handleCreateRoom()}
+                    style={{
+                        flex: 1,
+                        margin: '1rem',
+                        backgroundColor: theme.palette.secondary.main,
+                        color: '#FFF',
+                        fontWeight: 'bold',
+                        boxShadow: '0 3px 6px rgba(0,0,0,0.3)',
+                    }}
+                >
+                    完成修改
+                </Button>
+            </div>
         </div>
     )
 }
