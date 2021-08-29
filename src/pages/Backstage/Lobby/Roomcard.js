@@ -47,23 +47,23 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: 'center',
         },
         [theme.breakpoints.up('md')]: {
-            boxShadow: '0 0 10px rgba(0,0,0,0.2)',
-            backgroundColor: theme.palette.primary.light,
-            margin: theme.spacing(1),
+            boxShadow: '0 3px 6px rgba(0,0,0,0.3)',
+            backgroundColor: theme.palette.ultimate.main,
             borderRadius: '10px',
+            width: '15rem',
             '& .card': {
                 display: 'block',
                 height: 'max-content',
-                margin: theme.spacing(1),
-                width: '15rem',
-                backgroundColor: theme.palette.primary.main,
-                boxShadow: '0px 0px 6px 0 rgba(0,0,0,0.2)',
-                borderRadius: '10px',
+                margin: '0',
+                width: '100%',
+                backgroundColor: theme.palette.ultimate.dark,
+                // boxShadow: '0px 0px 6px 0 rgba(0,0,0,0.2)',
+                borderRadius: '10px 10px 0 0px',
                 padding: '5px',
             },
 
             '& .card:hover': {
-                backgroundColor: theme.palette.background.default,
+                backgroundColor: theme.palette.ultimate.main,
             },
             '& .cardtitle': {
                 flexGrow: 1,
@@ -91,6 +91,10 @@ const useStyles = makeStyles((theme) => ({
                 borderRadius: '0 0px 10px 10px',
                 color: '#FFF',
             },
+            '& .title': {
+                color: '#FFF',
+            },
+            '& .icon': { color: theme.palette.primary.main },
         },
     },
 }))
@@ -98,22 +102,24 @@ const useStyles = makeStyles((theme) => ({
 const Roomcard = (props) => {
     const classes = useStyles()
     return (
-        <div className={classes.Card}>
-            <Button className="card" component={Link} to={`/admin/gamein/${props.id}`}>
-                <div className="cardtitle">
-                    <h2>{props.title}</h2>
+        <div style={{ padding: '.5rem' }}>
+            <div className={classes.Card}>
+                <Button className="card" component={Link} to={`/admin/gamein/${props.id}`}>
+                    <div className="cardtitle">
+                        <h2 className="title">{props.title}</h2>
+                    </div>
+                    <div className="cardcontent">
+                        <div style={{ marginBottom: '1rem', color: '#ccc' }}>回合數 {props.round}回合</div>
+                    </div>
+                </Button>
+                <div>
+                    <IconButton onClick={() => props.deleteFunc()}>
+                        <DeleteForeverIcon className="icon" />
+                    </IconButton>
+                    <IconButton component={Link} to={`/admin/roomedit/${props.id}`}>
+                        <SettingsIcon className="icon" />
+                    </IconButton>
                 </div>
-                <div className="cardcontent">
-                    <div style={{ marginBottom: '1rem' }}>回合數 {props.round}回合</div>
-                </div>
-            </Button>
-            <div>
-                <IconButton onClick={() => props.deleteFunc()}>
-                    <DeleteForeverIcon />
-                </IconButton>
-                <IconButton component={Link} to={`/admin/roomedit/${props.id}`}>
-                    <SettingsIcon />
-                </IconButton>
             </div>
         </div>
     )
