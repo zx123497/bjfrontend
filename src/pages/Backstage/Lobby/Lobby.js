@@ -18,7 +18,7 @@ import Noty from 'noty'
 const useStyles = makeStyles((theme) => ({
     Lobby: {
         padding: '43px 1rem 1rem 1rem',
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: '#555',
         height: '100vh',
         overflow: 'hidden', //解決margin-top塌陷
         alienItems: 'center',
@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
             margin: '1rem 0',
             display: 'flex',
             alignItems: 'center',
+        },
+        '& .card': {
+            width: '100%',
         },
         '& .rooms': {
             width: '100%',
@@ -57,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
             fontWeight: 550,
             fontSize: '130%',
             marginRight: '1rem',
+            color: '#FFF',
         },
         '& .roombtn': {
             height: '2.3rem',
@@ -75,6 +79,9 @@ const useStyles = makeStyles((theme) => ({
             '& .image_lobby': {
                 display: 'block',
                 marginTop: '2rem',
+            },
+            '& .card': {
+                width: 'auto',
             },
             '& .pwEdit': {
                 width: '50%',
@@ -135,7 +142,7 @@ const useStyles = makeStyles((theme) => ({
 
         //overflow: 'hidden',
         '& .card': {
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.ultimate.dark,
             color: theme.palette.ultimate.dark,
             width: '100%',
             height: 'max-content',
@@ -325,7 +332,20 @@ const Lobby = () => {
     }
 
     return (
-        <div className={classes.Lobby}>
+        <motion.div
+            key="lobby"
+            className={classes.Lobby}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            exit={{
+                opacity: 0,
+                y: -20,
+                transition: {
+                    ease: 'easeIn',
+                },
+            }}
+        >
             <div className="profileArea">
                 <div className={classes.profile}>
                     <div style={{ width: '70%' }}>
@@ -380,8 +400,8 @@ const Lobby = () => {
                                     }}
                                 />
                                 <div>
-                                    <div style={{ color: '#ccc' }}>帳號 E-mai</div>
-                                    <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#FFF' }}>
+                                    <div style={{ color: '#ccc' }}>帳號 E-mail</div>
+                                    <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#FFF' }}>
                                         {localStorage.getItem('email')}
                                     </div>
                                 </div>
@@ -438,11 +458,13 @@ const Lobby = () => {
                             rooms.map((row, key) => (
                                 <motion.div
                                     key={key}
+                                    className="card"
                                     variants={{
                                         hidden: { opacity: 0, scale: 0 },
                                         show: {
                                             opacity: 1,
                                             scale: 1,
+
                                             transition: { duration: 0.5, delay: key * 0.1 },
                                         },
                                     }}
@@ -461,7 +483,7 @@ const Lobby = () => {
                     </motion.div>
                 </Container>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

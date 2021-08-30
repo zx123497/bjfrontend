@@ -15,7 +15,6 @@ import Menu from './Menu'
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        backgroundColor: theme.palette.ultimate.main,
 
         '& .bar': {
             backgroundColor: theme.palette.ultimate.main,
