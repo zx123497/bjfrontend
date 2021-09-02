@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
         overflow: "scroll",
         overflowX: "hidden",
         textAlign: "center",
+        color: theme.palette.ultimate.light,
         "& .row": {
             display: "flex",
             alignItems: "center",
@@ -26,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
         },
         "& .amount": {
             fontSize: "2rem",
-            fontWeight: "bold"
+            fontWeight: "bold",
+            color: "white"
         }
     },
     button: {

@@ -21,6 +21,8 @@ import Button from '@material-ui/core/Button'
 import useTheme from '@material-ui/core/styles/useTheme'
 const useStyles = makeStyles((theme) => ({
     root: {
+        backgroundColor: theme.palette.ultimate.dark,
+        height: "100vh",
         marginTop: '40px',
         position: 'relative',
     },
@@ -46,6 +48,7 @@ const GameLobby = (props) => {
         totalMemNum: '',
         round: '',
         roundTime: '',
+        isGaming: false
     })
 
     const [annoucement, setAnnouncement] = useState({
@@ -94,6 +97,7 @@ const GameLobby = (props) => {
                             totalMemNum: res.data.allUsers.length,
                             round: res.data.roomDetail.nowRound,
                             roundTime: res.data.roomDetail.roundTime,
+                            isGaming: res.data.roomDetail.isGaming
                         })
                     }
                 })
@@ -153,8 +157,9 @@ const GameLobby = (props) => {
                     setRoom({
                         pincode: props.match.params.id,
                         totalMemNum: res.data.allUsers.length,
-                        round: res.data.roomDetail.nowRound,
+                        round: res.data.roomDetail.nowRound + 1,
                         roundTime: res.data.roomDetail.roundTime,
+                        isGaming: res.data.roomDetail.isGaming
                     })
                     const params3 = new URLSearchParams()
                     params3.append('roomNum', `${roomNum}`)
@@ -166,18 +171,6 @@ const GameLobby = (props) => {
             }
         })
 
-        const params2 = new URLSearchParams()
-        params2.append('roomNum', `${roomNum}`)
-        params2.append('roundNum', '0')
-        // AdminService.postAssignRole(params2).then((res) => {
-        // const params3 = new URLSearchParams()
-        // params3.append('roomNum', `${roomNum}`)
-        // AdminService.postChartData(params3).then((response) => {
-        //     setChartData({ chartData: response.data.chartData })
-        //     console.log(chartData)
-        // })
-        // })
-
         socket.on('startTimeResponse', (data) => {
             if(data == "error") {
                 alert("進行中的遊戲點擊開始按鈕無效")
@@ -185,7 +178,16 @@ const GameLobby = (props) => {
         })
 
         socket.on('endRoundResponse', (data) => {
-            console.log(data)
+            if(data == "error") {
+                alert("請先開始遊戲再執行結束回合")
+            }
+            else if(data == "error(no next round)") {
+                alert("已達設定回合上限，請回到管理者專區更改設定增加回合數")
+            }
+            else if(data == "endRoundMessage") {
+                setAnnouncement({roomAnnoucement: ''})
+                alert("回合結束")
+            }
         })
 
         socket.on('sys', function (sysMsg) {
