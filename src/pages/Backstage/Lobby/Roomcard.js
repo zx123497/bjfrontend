@@ -7,23 +7,24 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import SettingsIcon from '@material-ui/icons/Settings'
 const useStyles = makeStyles((theme) => ({
     Card: {
-        boxShadow: '0 0 10px rgba(0,0,0,0.2)',
-        backgroundColor: theme.palette.primary.light,
-        margin: theme.spacing(1),
+        boxShadow: '0 3px 6px rgba(0,0,0,0.3)',
+        backgroundColor: theme.palette.ultimate.main,
+        width: '100%',
         borderRadius: '10px',
         '& .card': {
             display: 'flex',
             height: '6rem',
+            margin: '0',
             margin: '1rem auto',
             width: '100%',
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.ultimate.dark,
 
             borderRadius: '10px',
             padding: '5px 15px',
         },
 
         '& .card:hover': {
-            backgroundColor: theme.palette.background.default,
+            backgroundColor: theme.palette.ultimate.main,
         },
         '& .cardtitle': {
             flexGrow: 1,
@@ -46,24 +47,29 @@ const useStyles = makeStyles((theme) => ({
             alignItems: 'center',
             justifyContent: 'center',
         },
+        '& .title': {
+            color: '#FFF',
+        },
+        '& .icon': { color: theme.palette.primary.main },
         [theme.breakpoints.up('md')]: {
-            boxShadow: '0 0 10px rgba(0,0,0,0.2)',
-            backgroundColor: theme.palette.primary.light,
-            margin: theme.spacing(1),
+            boxShadow: '0 3px 6px rgba(0,0,0,0.3)',
+            backgroundColor: theme.palette.ultimate.main,
             borderRadius: '10px',
+            width: '15rem',
+            margin: '1rem',
             '& .card': {
                 display: 'block',
                 height: 'max-content',
-                margin: theme.spacing(1),
-                width: '15rem',
-                backgroundColor: theme.palette.primary.main,
-                boxShadow: '0px 0px 6px 0 rgba(0,0,0,0.2)',
-                borderRadius: '10px',
+                margin: '0',
+                width: '100%',
+                backgroundColor: theme.palette.ultimate.dark,
+                // boxShadow: '0px 0px 6px 0 rgba(0,0,0,0.2)',
+                borderRadius: '10px 10px 0 0px',
                 padding: '5px',
             },
 
             '& .card:hover': {
-                backgroundColor: theme.palette.background.default,
+                backgroundColor: theme.palette.ultimate.main,
             },
             '& .cardtitle': {
                 flexGrow: 1,
@@ -91,6 +97,10 @@ const useStyles = makeStyles((theme) => ({
                 borderRadius: '0 0px 10px 10px',
                 color: '#FFF',
             },
+            '& .title': {
+                color: '#FFF',
+            },
+            '& .icon': { color: theme.palette.primary.main },
         },
     },
 }))
@@ -101,18 +111,18 @@ const Roomcard = (props) => {
         <div className={classes.Card}>
             <Button className="card" component={Link} to={`/admin/gamein/${props.id}`}>
                 <div className="cardtitle">
-                    <h2>{props.title}</h2>
+                    <h2 className="title">{props.title}</h2>
                 </div>
                 <div className="cardcontent">
-                    <div style={{ marginBottom: '1rem' }}>回合數 {props.round}回合</div>
+                    <div style={{ color: '#ccc' }}>回合數 {props.round}回合</div>
                 </div>
             </Button>
             <div>
                 <IconButton onClick={() => props.deleteFunc()}>
-                    <DeleteForeverIcon />
+                    <DeleteForeverIcon className="icon" />
                 </IconButton>
                 <IconButton component={Link} to={`/admin/roomedit/${props.id}`}>
-                    <SettingsIcon />
+                    <SettingsIcon className="icon" />
                 </IconButton>
             </div>
         </div>

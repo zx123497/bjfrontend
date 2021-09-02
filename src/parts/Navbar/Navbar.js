@@ -9,6 +9,8 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import { Link, withRouter } from 'react-router-dom'
 import PersonIcon from '@material-ui/icons/Person'
+import { useTheme } from '@material-ui/styles'
+import LOGO from '../../assets/LOGO.png'
 import Menu from './Menu'
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
             textAlign: 'center',
             color: theme.palette.background.paper,
         },
+        '@media (max-width: 768px)': {
+            '& .title': { display: 'none' },
+        },
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -52,13 +57,26 @@ const useStyles = makeStyles((theme) => ({
 
 const ButtonAppBar = (props) => {
     const classes = useStyles()
-
+    const theme = useTheme()
     return (
         <div className={classes.root}>
             <AppBar className="bar">
                 <Toolbar className="tool">
                     <Menu className="menu" />
-                    <h4 className="logo">LBD Game</h4>
+                    <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <img src={LOGO} alt="logo" style={{ height: '3rem', width: 'auto', margin: '1rem 0' }} />
+                        <h1
+                            className="title"
+                            style={{
+                                marginLeft: '1rem',
+                                color: '#FFF',
+                                margin: '1rem 1rem',
+                            }}
+                        >
+                            玩遊戲學經濟
+                        </h1>
+                    </div>
+
                     {localStorage.getItem('name') ? (
                         <Button className="isLogin" color="inherit" component={Link} to="/login">
                             <PersonIcon />

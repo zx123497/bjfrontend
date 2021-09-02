@@ -16,23 +16,25 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import RoomService from '../../../service/RoomService'
 import { useHistory } from 'react-router-dom'
 import Noty from 'noty'
+import { motion } from 'framer-motion'
 import qs from 'qs'
 const useStyles = makeStyles((theme) => ({
     Setting: {
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: '#555',
         paddingTop: '5rem',
         minHeight: '100vh',
+        color: '#FFF',
         height: 'max-content',
         '& .basic': {
             padding: '1rem',
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.ultimate.dark,
             margin: '1rem',
             borderRadius: '10px',
             boxShadow: '0 3px 6px rgba(0,0,0,0.2)',
         },
         '& .basic_round': {
             padding: '1rem',
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.ultimate.dark,
             margin: '1rem',
             borderRadius: '10px',
             boxShadow: '0 3px 6px rgba(0,0,0,0.2)',
@@ -55,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
             },
             '& .basic_round': {
                 padding: '1rem',
-                backgroundColor: theme.palette.background.paper,
+                backgroundColor: theme.palette.ultimate.dark,
                 margin: '1rem',
                 display: 'flex',
                 flexDirection: 'column',
@@ -220,7 +222,20 @@ const NewRoom = (props) => {
     }
 
     return (
-        <div className={classes.Setting}>
+        <motion.div
+            key="setting"
+            className={classes.Setting}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            exit={{
+                opacity: 0,
+                y: -20,
+                transition: {
+                    ease: 'easeIn',
+                },
+            }}
+        >
             <h2 style={{ marginLeft: '1rem' }}>房間設定</h2>
             <div className="basic">
                 <Input
@@ -378,29 +393,36 @@ const NewRoom = (props) => {
                     </div>
                 </div>
             ))}
-            <Button
-                onClick={() => handleAddRound()}
-                style={{
-                    width: '60%',
-                    margin: '5px 1rem',
-                    backgroundColor: theme.palette.primary.dark,
-                    color: '#FFF',
-                }}
-            >
-                新增回合
-            </Button>
-            <Button
-                onClick={() => handleCreateRoom()}
-                style={{
-                    width: '60%',
-                    margin: '1rem',
-                    backgroundColor: theme.palette.secondary.main,
-                    color: '#FFF',
-                }}
-            >
-                建立房間
-            </Button>
-        </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'stretch' }}>
+                <Button
+                    onClick={() => handleAddRound()}
+                    style={{
+                        flex: 1,
+                        width: '15rem',
+                        margin: '5px 1rem',
+                        backgroundColor: theme.palette.primary.dark,
+                        color: '#FFF',
+                        fontWeight: 'bold',
+                        boxShadow: '0 3px 6px rgba(0,0,0,0.3)',
+                    }}
+                >
+                    新增回合
+                </Button>
+                <Button
+                    onClick={() => handleCreateRoom()}
+                    style={{
+                        flex: 1,
+                        margin: '1rem',
+                        backgroundColor: theme.palette.secondary.main,
+                        color: '#FFF',
+                        fontWeight: 'bold',
+                        boxShadow: '0 3px 6px rgba(0,0,0,0.3)',
+                    }}
+                >
+                    建立房間
+                </Button>
+            </div>
+        </motion.div>
     )
 }
 
