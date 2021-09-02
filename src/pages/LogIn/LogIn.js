@@ -278,7 +278,7 @@ const LogIn = (props) => {
                                 id="account"
                                 value={values.account}
                                 onChange={handleChange('account')}
-                                label="帳號"
+                                label="帳號 (e-mail)"
                                 type="search"
                                 variant="outlined"
                                 size="small"

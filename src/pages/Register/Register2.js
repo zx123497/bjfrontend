@@ -104,9 +104,9 @@ const Register2 = (props) => {
         if (values.password !== values.check_password) {
             message['diffPassword'] = '密碼不相同\n'
         }
-        if (values.email == '') message['email'] = '帳號 '
-        if (values.password == '') message['password'] = '密碼'
-        if (values.email == '' || values.password == '' || values.username == '')
+        if (values.email === '') message['email'] = '帳號 '
+        if (values.password === '') message['password'] = '密碼'
+        if (values.email === '' || values.password === '' || values.username == '')
             alert(message['diffPassword'] + '請輸入' + message['email'] + message['password'])
         else {
             const params = new URLSearchParams()
@@ -128,7 +128,7 @@ const Register2 = (props) => {
                     closeWith: ['click'],
                 }).show()
                 console.log(res.data)
-                if (res.status == 200) {
+                if (res.status === 200) {
                     alert(localStorage.getItem('username') + ' 您已成功註冊!')
                     history.push('./login')
                 }

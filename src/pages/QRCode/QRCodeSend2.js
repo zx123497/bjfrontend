@@ -780,7 +780,7 @@ const QRCodeSend2 = ({ history }) => {
                 <QrReader
                     className="scan"
                     delay={300}
-                    style={previewStyle}
+                    // style={previewStyle}
                     onError={handleError}
                     onScan={handleScan}
                     facingMode={'rear'}

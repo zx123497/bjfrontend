@@ -1,24 +1,24 @@
 import React from 'react';
-import {  makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
-import { Link,withRouter } from 'react-router-dom';
+import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core';
+import { Link, withRouter } from 'react-router-dom';
 import BackPage from '../../components/BackPage/BackPage'
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     Register: {
-        display:"flex",
+        display: "flex",
         alienItems: "center",
-        justifyContent:"center",
+        justifyContent: "center",
         color: theme.palette.ultimate.main,
         backgroundColor: theme.palette.primary.main,
-        height:"100vh",
-        overflow:"hidden",  //解決margin-top塌陷,
+        height: "100vh",
+        overflow: "hidden",  //解決margin-top塌陷,
 
-        "& .card":{
+        "& .card": {
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.ultimate.dark,
             width: "350px",
-            height:"430px",
+            height: "430px",
             margin: "auto",
             alienItems: "center",
             borderRadius: 12,
@@ -45,14 +45,14 @@ const useStyles = makeStyles((theme) => ({
                 color: theme.palette.ultimate.main,
             },
         },
-        "& .next":{
-            margin:"auto",
-            marginTop:"200px",
-            borderRadius:"20px",
-            boxShadow:"none",
-            width:"50%",
+        "& .next": {
+            margin: "auto",
+            marginTop: "200px",
+            borderRadius: "20px",
+            boxShadow: "none",
+            width: "50%",
             backgroundColor: theme.palette.ultimate.main,
-            color:theme.palette.background.paper,
+            color: theme.palette.background.paper,
         },
     }
 }));
@@ -63,31 +63,31 @@ const Register = (props) => {
 
     const [values, setValues] = React.useState({
         schoolname: '',
-        ID:'',
-        username:'',
+        ID: '',
+        username: '',
     });
 
     const handleChange = (prop) => (event) => {
-        setValues({...values, [prop]: event.target.value });
+        setValues({ ...values, [prop]: event.target.value });
     };
 
-    const handleSubmit = (event) =>  {
-        var message=[];
-        message["schoolname"]="";
-        message["ID"]="";
-        message["username"]="";
-        if(values.schoolname=="")
-            message["schoolname"]="學校 ";
-        if(values.ID=="")
-            message["ID"]="學號 ";
-        if(values.username=="")
-            message["username"]="使用者名稱";
-        if(values.schoolname==""||values.ID==""||values.username=="")
-            alert("請輸入"+message["schoolname"]+message["ID"]+message["username"]);
-        else{
-            localStorage.setItem('schoolname',values.schoolname);
-            localStorage.setItem('ID',values.ID);
-            localStorage.setItem('username',values.username);
+    const handleSubmit = (event) => {
+        var message = [];
+        message["schoolname"] = "";
+        message["ID"] = "";
+        message["username"] = "";
+        if (values.schoolname === "")
+            message["schoolname"] = "學校 ";
+        if (values.ID === "")
+            message["ID"] = "學號 ";
+        if (values.username === "")
+            message["username"] = "使用者名稱";
+        if (values.schoolname === "" || values.ID === "" || values.username === "")
+            alert("請輸入" + message["schoolname"] + message["ID"] + message["username"]);
+        else {
+            localStorage.setItem('schoolname', values.schoolname);
+            localStorage.setItem('ID', values.ID);
+            localStorage.setItem('username', values.username);
             history.push('./register2');
         }
         event.preventDefault();
@@ -95,24 +95,24 @@ const Register = (props) => {
 
 
 
-    return ( 
-    <div className = { classes.Register } >
-        <BackPage refs="/LogIn"></BackPage>
-        <Card className = "card">
-            <CardContent>
-                <p className = "title">會員註冊</p>
-                <form onSubmit={handleSubmit} className = "input" autoComplete="off">
-                    <TextField id="schoolname" value={values.schoolname} onChange={handleChange('schoolname')} label="學校" type="search" variant="outlined"  size="small" />
-                    <TextField id="ID" value={values.ID} onChange={handleChange('ID')} label="玩家ID" type="search" variant="outlined"  size="small" />
-                    <TextField id="name" value={values.username} onChange={handleChange('username')} label="姓名" type="search" variant="outlined"  size="small" />
-                </form>
-            </CardContent>
-            <CardActions>
-                <Link onClick={handleSubmit} component={Button} className="next">下一步</Link>
-            </CardActions>
-        </Card>
-    </div >
+    return (
+        <div className={classes.Register} >
+            <BackPage refs="/LogIn"></BackPage>
+            <Card className="card">
+                <CardContent>
+                    <p className="title">會員註冊</p>
+                    <form onSubmit={handleSubmit} className="input" autoComplete="off">
+                        <TextField id="schoolname" value={values.schoolname} onChange={handleChange('schoolname')} label="學校" type="search" variant="outlined" size="small" />
+                        <TextField id="ID" value={values.ID} onChange={handleChange('ID')} label="玩家ID" type="search" variant="outlined" size="small" />
+                        <TextField id="name" value={values.username} onChange={handleChange('username')} label="姓名" type="search" variant="outlined" size="small" />
+                    </form>
+                </CardContent>
+                <CardActions>
+                    <Link onClick={handleSubmit} component={Button} className="next">下一步</Link>
+                </CardActions>
+            </Card>
+        </div >
     )
 }
 
-export default withRouter(Register) 
+export default withRouter(Register)
