@@ -9,14 +9,16 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3),
         marginTop: theme.spacing(1.5),
         marginBottom: theme.spacing(1.5),
-        backgroundColor: "white",
+        backgroundColor: theme.palette.ultimate.main,
+        color: "white",
         borderRadius: "2rem",
         padding: "0.5rem 1.2rem",
         lineHeight: "20px",
         fontSize: "15px",
         display: "flex",
         "& .announcementIcon": {
-            padding: "0 3px"
+            padding: "0 3px",
+            color: "white"
         },
         "& .announcementBody": {
             height: "20px",
@@ -32,7 +34,7 @@ const AnnouncementLine = (props) => {
 
     return (
         <Box className={classes.root}>
-            <Icon className="announcementIcon" color="error">
+            <Icon className="announcementIcon">
                 <VolumeUpIcon />
             </Icon>
             <div className="announcementBody">

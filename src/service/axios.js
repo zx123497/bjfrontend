@@ -2,7 +2,7 @@ import axios from 'axios'
 import Noty from 'noty'
 
 const instance = axios.create({
-    baseURL: 'https://140.115.83.113:8080',
+    baseURL: 'https://lbdgame.mgt.ncu.edu.tw:8080',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         Accept: '*/*',
@@ -13,6 +13,8 @@ const instance = axios.create({
 instance.interceptors.request.use(
     (request) => {
         console.log(request)
+        const accessToken = `Bearer ${localStorage.getItem('token')}`
+        if (localStorage.getItem('token')) request.headers['Authorization'] = accessToken
         return request
     },
     (error) => {

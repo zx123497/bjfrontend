@@ -9,12 +9,16 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 import { Link } from 'react-router-dom'
 import Admin_lobby from './admin_lobby.svg'
 import RoomService from '../../../service/RoomService'
-import qs from 'qs'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import EmailIcon from '@material-ui/icons/Email'
+import { useTheme } from '@material-ui/styles'
+import Container from '../../../components/Container/Container'
+import { motion } from 'framer-motion'
 import Noty from 'noty'
 const useStyles = makeStyles((theme) => ({
     Lobby: {
         padding: '43px 1rem 1rem 1rem',
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: '#555',
         height: '100vh',
         overflow: 'hidden', //解決margin-top塌陷
         alienItems: 'center',
@@ -31,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
             margin: '1rem 0',
             display: 'flex',
             alignItems: 'center',
+        },
+        '& .card': {
+            width: '100%',
         },
         '& .rooms': {
             width: '100%',
@@ -50,9 +57,10 @@ const useStyles = makeStyles((theme) => ({
             width: '100%',
         },
         '& .roomtext': {
-            flexGrow: 1,
             fontWeight: 550,
             fontSize: '130%',
+            marginRight: '1rem',
+            color: '#FFF',
         },
         '& .roombtn': {
             height: '2.3rem',
@@ -63,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
         },
         [theme.breakpoints.up('md')]: {
             padding: '5rem 1rem 1rem 1rem',
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: '#555',
             height: '100vh',
             overflow: 'hidden', //解決margin-top塌陷
             alignItems: 'flex-start',
@@ -71,6 +79,9 @@ const useStyles = makeStyles((theme) => ({
             '& .image_lobby': {
                 display: 'block',
                 marginTop: '2rem',
+            },
+            '& .card': {
+                width: 'auto',
             },
             '& .pwEdit': {
                 width: '50%',
@@ -98,19 +109,19 @@ const useStyles = makeStyles((theme) => ({
                 height: '50vh',
                 overflow: 'auto',
                 width: '90%',
-                backgroundColor: theme.palette.background.paper,
+                backgroundColor: theme.palette.ultimate.dark,
                 padding: '2rem',
                 borderRadius: '10px',
-                boxShadow: '0 0 10px rgba(0,0,0,0.2)',
+                boxShadow: '0 3px 6px 0 rgba(0,0,0,.3)',
                 display: 'flex',
                 flexWrap: 'wrap',
                 alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent: 'start',
             },
             '& .roomtext': {
-                flexGrow: 1,
                 fontWeight: 550,
                 fontSize: '130%',
+                color: '#FFF',
             },
             '& .roombtn': {
                 height: '2.3rem',
@@ -131,14 +142,14 @@ const useStyles = makeStyles((theme) => ({
 
         //overflow: 'hidden',
         '& .card': {
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.ultimate.dark,
             color: theme.palette.ultimate.dark,
             width: '100%',
             height: 'max-content',
             minWidth: 'max-content',
             alienItems: 'center',
             borderRadius: 12,
-            boxShadow: '0 8px 16px 0 rgba(0,0,0,.3)',
+            boxShadow: '0 3px 6px 0 rgba(0,0,0,.3)',
         },
         '& .container': {
             display: 'grid',
@@ -210,14 +221,14 @@ const useStyles = makeStyles((theme) => ({
             marginBottom: '30px',
             //overflow: 'hidden',
             '& .card': {
-                backgroundColor: theme.palette.background.paper,
+                backgroundColor: theme.palette.ultimate.dark,
                 color: theme.palette.ultimate.dark,
                 width: '70%',
                 height: 'max-content',
 
                 alienItems: 'center',
                 borderRadius: 12,
-                boxShadow: '0 8px 16px 0 rgba(0,0,0,.3)',
+                boxShadow: '0 3px 6px 0 rgba(0,0,0,.3)',
             },
             '& .container': {
                 display: 'grid',
@@ -287,8 +298,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 const Lobby = () => {
     const classes = useStyles()
-
-    const [rooms, setRooms] = useState([])
+    const theme = useTheme()
+    const [rooms, setRooms] = useState(null)
 
     useEffect(() => {
         let params = new URLSearchParams()
@@ -321,7 +332,20 @@ const Lobby = () => {
     }
 
     return (
-        <div className={classes.Lobby}>
+        <motion.div
+            key="lobby"
+            className={classes.Lobby}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            exit={{
+                opacity: 0,
+                y: -20,
+                transition: {
+                    ease: 'easeIn',
+                },
+            }}
+        >
             <div className="profileArea">
                 <div className={classes.profile}>
                     <div style={{ width: '70%' }}>
@@ -330,40 +354,75 @@ const Lobby = () => {
 
                     <Card className="card">
                         <CardContent>
-                            <Grid
-                                className="container"
-                                container
-                                direction="row"
-                                justify="flex-start"
-                                alignItems="center"
+                            <div
+                                style={{
+                                    margin: '1.5rem',
+                                    display: 'flex',
+                                    // justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
                             >
-                                <Grid item className="leftCard">
-                                    <div className="hello">
-                                        <h1>Hello!</h1>
+                                <AccountCircleIcon
+                                    style={{
+                                        fontSize: '2.5rem',
+                                        color: theme.palette.primary.main,
+                                        marginRight: '1rem',
+                                    }}
+                                />
+                                <div style={{ width: '100%' }}>
+                                    <div style={{ color: '#ccc' }}>管理者 ID</div>
+                                    <div
+                                        style={{
+                                            fontSize: '1.5rem',
+                                            fontWeight: 'bold',
+                                            overflow: 'hidden',
+                                            color: '#FFF',
+                                        }}
+                                    >
+                                        {localStorage.getItem('name')}
                                     </div>
-                                    <div className="photo">
-                                        <img className="image" src={cat}></img>
-                                        <span className="edit">
-                                            <IconButton className="icon" aria-label="add an alarm">
-                                                <EditIcon />
-                                            </IconButton>
-                                        </span>
-                                    </div>
-                                </Grid>
-                                <Grid item></Grid>
+                                </div>
+                            </div>
 
-                                <Grid item className="rightCard">
-                                    <div className="detailName">管理者 ID</div>
-                                    <div className="nameArea">{localStorage.getItem('name')}</div>
-                                    <div className="detailName">帳號 E-mail</div>
-                                    <div className="nameArea">
-                                        <Typography>{localStorage.getItem('email')}</Typography>
+                            <div
+                                style={{
+                                    margin: '1.5rem',
+                                    display: 'flex',
+                                    // justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <EmailIcon
+                                    style={{
+                                        fontSize: '2.5rem',
+                                        color: theme.palette.primary.main,
+                                        marginRight: '1rem',
+                                    }}
+                                />
+                                <div>
+                                    <div style={{ color: '#ccc' }}>帳號 E-mail</div>
+                                    <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#FFF' }}>
+                                        {localStorage.getItem('email')}
                                     </div>
-                                    <Button className="pwEdit" component={Link} to="/ForgetPassword">
-                                        修改密碼
-                                    </Button>
-                                </Grid>
-                            </Grid>
+                                </div>
+                            </div>
+                            {/* 
+                            <div>帳號 E-mail</div>
+                            <div>{localStorage.getItem('email')}</div> */}
+                            <Button
+                                style={{
+                                    width: '100%',
+                                    border: `1px ${theme.palette.primary.main}  solid`,
+                                    color: theme.palette.primary.main,
+                                    fontWeight: 'bold',
+                                    fontSize: '1rem',
+                                    marginTop: '1rem',
+                                }}
+                                component={Link}
+                                to="/ForgetPassword"
+                            >
+                                修改密碼
+                            </Button>
                         </CardContent>
                     </Card>
                     <img
@@ -376,25 +435,55 @@ const Lobby = () => {
             </div>
 
             <div className="rooms">
-                <div className="roomTitle">
-                    <h2 className="roomtext">已建立房間</h2>
-                    <Button className="roombtn" component={Link} to="/admin/roomsettings">
-                        <AddCircleIcon style={{ marginRight: '.5rem' }} />
-                        建立房間
-                    </Button>
-                </div>
-                <div className="roomArea">
-                    {rooms.map((row) => (
-                        <Roomcard
-                            title={row[0] ? row[0] : '未命名房間'}
-                            round={row[1]}
-                            id={row[2]}
-                            deleteFunc={() => handleDelete(row[2])}
-                        />
-                    ))}
-                </div>
+                <Container>
+                    <div className="roomTitle">
+                        <h2 className="roomtext">已建立房間</h2>
+                        <Button className="roombtn" component={Link} to="/admin/roomsettings">
+                            <AddCircleIcon style={{ marginRight: '.5rem' }} />
+                            建立房間
+                        </Button>
+                    </div>
+                    <motion.div
+                        style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            width: '100%',
+                            margin: 'auto',
+                            justifyContent: 'flex-start',
+                        }}
+                        initial="hidden"
+                        animate="show"
+                    >
+                        {rooms !== null ? (
+                            rooms.map((row, key) => (
+                                <motion.div
+                                    key={key}
+                                    className="card"
+                                    variants={{
+                                        hidden: { opacity: 0, scale: 0 },
+                                        show: {
+                                            opacity: 1,
+                                            scale: 1,
+
+                                            transition: { duration: 0.5, delay: key * 0.1 },
+                                        },
+                                    }}
+                                >
+                                    <Roomcard
+                                        title={row[0] ? row[0] : '未命名房間'}
+                                        round={row[1]}
+                                        id={row[2]}
+                                        deleteFunc={() => handleDelete(row[2])}
+                                    />
+                                </motion.div>
+                            ))
+                        ) : (
+                            <></>
+                        )}
+                    </motion.div>
+                </Container>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

@@ -23,6 +23,8 @@ const GameChart = (props) => {
     const classes = useStyles();
     var hTicks = [];
 
+    var chartData = [['玩家排序', '賣家', '買家'],[0,0,0]];
+
     useEffect(() => {
         console.log(props.data.chartData)
         if(props.data.chartData.length != 0) {
@@ -31,8 +33,6 @@ const GameChart = (props) => {
     }, [props.data])
 
     function processData(rawData) {
-        let chartData = [['玩家排序', '賣家', '買家']];
-
         const limit = Math.max(rawData.seller.length, rawData.buyer.length)
         for(let i=0;i<limit;i++) {
             let temp = [i+1, rawData.seller[i], rawData.buyer[i]]
@@ -80,7 +80,7 @@ const GameChart = (props) => {
                                     if(inputValue != null) {
                                         const params = new URLSearchParams();
                                         params.append('roomNum', `${props.match.params.id}`)
-                                        params.append('index', chartWrapper.getChart().getSelection()[0].row)
+                                        params.append('index', chartWrapper.getChart().getSelection()[0].row-1)
                                         params.append('money', inputValue)
                                         if(chartWrapper.getChart().getSelection()[0].column == 1) {
                                             params.append('role', 'seller')

@@ -7,19 +7,27 @@ import UserInfo from '../../components/ForGameLobby/UserInfo'
 import PersonalTransaction from '../../components/ForGameLobby/PersonalTransaction'
 import { socket } from '../../service/socket'
 import UserService from '../../service/UserService'
+import AdminService from '../../service/AdminService'
+import { useTimer } from 'react-timer-hook'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        paddingTop: '35px',
+        backgroundColor: theme.palette.ultimate.dark,
+        height: "100vh",
+        marginTop: '35px',
     },
 }))
 
 const GameLobby = (props) => {
+
+    const roomNum = props.location.pathname.split("/")[2]
+
     const [room, setRoom] = useState({
         pincode: '',
         totalMemNum: '',
         round: '',
         roundTime: '',
+        isGaming: false
     })
 
     const [player, setPlayer] = useState({
@@ -39,89 +47,55 @@ const GameLobby = (props) => {
 
     useEffect(() => {
         // 先socket enterRoom才能fetch公告
+        console.log("socket")
+
         socket.emit('enterRoom', { roomNum: '9487' });
+
+        socket.on('resRole', (res) => {
+            console.log(res)
+            setPlayer({
+                item: '',
+                money: res.user.money,
+                price: res.user.price,
+                role: res.user.role,
+                score: 0,
+                totalScore: 0,
+                transPartner: '',
+                tranAmount: 0
+            })
+        })
+
         socket.on('sys', function (sysMsg) {
             setAnnouncement({ roomAnnoucement: sysMsg })
             console.log(`sysMsg: ${sysMsg}`)
         })
+
+        socket.on('endRoundResponse', function (res) {
+            if(res == "endRoundMessage") {
+                props.history.push(`/loading/${roomNum}`)
+            }
+        })
+
+        socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('username')})
         
         // 取得url param放localStorage
-        const roomNum = props.match.params.roomNum.substr(1)
-        const roundNum = props.match.params.round.substr(1)
         localStorage.setItem('roomNum', roomNum) //for Qrcode
-        localStorage.setItem('roundNum', roundNum) //for Qrcode
-
-        ////////////// for testing //////////////
-        // localStorage.setItem('trans_-1', '{round: "1", buyer: "123", seller: "234", money: "60"}');
-        const result = {
-            round: '1',
-            buyer: '123',
-            seller: '234',
-            money: '60',
-        }
-        localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
-        /////////////////////////////////////////
 
         // 增加param傳axios
+        console.log(roomNum)
+
         const params = new URLSearchParams()
         params.append('roomNum', roomNum)
-        params.append("ID", localStorage.getItem('username'));
-        params.append("schoolname", 'NCU');
-        params.append("username", localStorage.getItem('username'));
-
-        UserService.postEnterRoom(params).then((res) => {
-            if(res.status == "200") {
-                setRoom({
-                    pincode: roomNum,
-                    totalMemNum: res.data.allUsers.length,
-                    round: roundNum,
-                    roundTime: res.data.roomDetail.roundTime
-                })
-
-                const users = new Map(res.data.allUsers)
-                console.log(users)
-                const role = users.get(localStorage.getItem('username'))
-                console.log(role)
-                
-                setPlayer({
-                    item: role.item,
-                    money: role.money,
-                    price: role.price,
-                    role: role.role,
-                    score: role.score,
-                    totalScore: 0,
-                    transPartner: '無交易紀錄',
-                    tranAmount: 0
-                })
-
-                // 有交易紀錄後update player state
-                const recordJSON = JSON.parse(localStorage.getItem(`trans_${roundNum}`));
-                if(recordJSON != null) {
-                    if(role.role == 'buyer') {
-                        setPlayer({
-                            item: role.item,
-                            money: role.money,
-                            price: role.price,
-                            role: role.role,
-                            score: role.score,
-                            totalScore: (role.price-recordJSON.money),
-                            transPartner: recordJSON.seller,
-                            tranAmount: (0-recordJSON.money)
-                        })
-                    } else {
-                        setPlayer({
-                            item: role.item,
-                            money: role.money,
-                            price: role.price,
-                            role: role.role,
-                            score: role.score,
-                            totalScore: (recordJSON.money-role.price),
-                            transPartner: recordJSON.buyer,
-                            tranAmount: recordJSON.money
-                        })
-                    }
-                }
-            }
+        
+        AdminService.postGetRoom(params).then((res) => {
+            console.log(res.data)
+            setRoom({
+                pincode: roomNum,
+                totalMemNum: res.data.allUsers.length,
+                round: res.data.roomDetail.nowRound + 1,
+                roundTime: res.data.roomDetail.roundTime,
+                isGaming: res.data.roomDetail.isGaming
+            })
         })
     }, [])
 
