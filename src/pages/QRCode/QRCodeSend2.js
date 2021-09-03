@@ -22,7 +22,8 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
         display: 'flex',
-        backgroundColor: theme.palette.primary.main,
+        // backgroundColor: theme.palette.primary.main,
+        backgroundColor: '#555',
         height: '100vh',
         overflow: 'hidden',
         alienItems: 'center',
@@ -42,8 +43,12 @@ const useStyles = makeStyles((theme) => ({
         '& .switch': {
             position: 'fixed',
             right: '10%',
-            top: '10.5%',
-            color: theme.palette.ultimate.main,
+            top: '13%',
+            // color: theme.palette.ultimate.main,
+            color: 'white',
+        },
+        '& .icon': {
+            color: theme.palette.primary.main,
         },
         '& .input': {
             display: 'flex',
@@ -51,10 +56,11 @@ const useStyles = makeStyles((theme) => ({
             alignItems: 'center',
             justifyContent: 'center',
             textAlign: 'center',
-            marginTop: '-30px',
+            marginTop: '-20px',
         },
         '& .sub_title': {
-            color: theme.palette.ultimate.main,
+            color: 'white',
+            // color: theme.palette.ultimate.main,
             fontSize: 15,
             fontWeight: 400,
             display: 'flex',
@@ -78,11 +84,13 @@ const useStyles = makeStyles((theme) => ({
             display: 'none',
         },
         '& .Tshow': {
+            // color: 'white',
             display: 'block',
             marginTop: '10px',
             marginBottom: '10px',
         },
         '& .Thide': {
+            // color: 'white',
             display: 'none',
             marginTop: '10px',
             marginBottom: '10px',
@@ -691,10 +699,11 @@ const QRCodeSend2 = ({ history }) => {
                                 onChange={handleOnChange}
                                 type="number"
                                 label={
-                                    <Typography variant="headline" component="h3">
+                                    <Typography style={{ color: 'white' }} variant="headline" component="h3">
                                         轉出
                                     </Typography>
                                 }
+                                inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -708,10 +717,11 @@ const QRCodeSend2 = ({ history }) => {
                                 onChange={handleOnChange}
                                 type="number"
                                 label={
-                                    <Typography variant="headline" component="h3">
+                                    <Typography style={{ color: 'white' }} variant="headline" component="h3">
                                         轉出
                                     </Typography>
                                 }
+                                inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -736,7 +746,8 @@ const QRCodeSend2 = ({ history }) => {
                             boxShadow: 'none',
                             width: '20%',
                             backgroundColor: '#FFFFFF',
-                            color: '#939597',
+                            // color: '#939597',
+                            color: '#555',
                         }}
                         onClick={handleQRShow}
                         className={`${showQR ? 'QRhide' : 'QRshow'}`}
@@ -751,7 +762,8 @@ const QRCodeSend2 = ({ history }) => {
                             boxShadow: 'none',
                             width: '20%',
                             backgroundColor: '#FFFFFF',
-                            color: '#939597',
+                            // color: '#939597',
+                            color: '#555',
                         }}
                         onClick={handleQRHide}
                         className={`${showQR ? 'QRshow' : 'QRhide'}`}

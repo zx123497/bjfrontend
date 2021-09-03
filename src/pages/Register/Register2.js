@@ -11,12 +11,13 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import IconButton from '@material-ui/core/IconButton'
 import FormControl from '@material-ui/core/FormControl'
+import { createMuiTheme } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
     Register2: {
         display: 'flex',
         color: theme.palette.ultimate.main,
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: '#555',
         height: '100vh',
         overflow: 'hidden', //解決margin-top塌陷
         alienItems: 'center',
@@ -37,20 +38,29 @@ const useStyles = makeStyles((theme) => ({
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            color: theme.palette.primary.main,
+            color: theme.palette.ultimate.dark,
             fontSize: 30,
             fontWeight: 900,
         },
         '& .input': {
             marginTop: '-10px',
-            color: theme.palette.ultimate.main,
+            color: '#555',
             fontSize: 20,
             height: '15px',
             marginLeft: '17%',
             '& .MuiTextField-root': {
                 marginTop: '25px',
                 width: '80%',
-                color: theme.palette.ultimate.main,
+                color: '#555',
+            },
+        },
+        '& .input1': {
+            color: 'white !important',
+        },
+        '& .input2': {
+            color: '#555 !important',
+            '& .MuiTextField-root': {
+                color: '#555 !important',
             },
         },
         '& .pw': {
@@ -84,8 +94,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Register2 = (props) => {
     const history = useHistory()
-    const classes = useStyles()
 
+    const classes = useStyles()
     const [values, setValues] = React.useState({
         email: '',
         password: '',
@@ -165,6 +175,10 @@ const Register2 = (props) => {
                             id="email"
                             value={values.email}
                             onChange={handleChange('email')}
+                            InputProps={{
+                                className: 'input2',
+                            }}
+                            className="input1"
                             multiline
                             label="帳號 (E-mail)"
                             type="search"

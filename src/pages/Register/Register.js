@@ -10,7 +10,8 @@ const useStyles = makeStyles((theme) => ({
         alienItems: "center",
         justifyContent: "center",
         color: theme.palette.ultimate.main,
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: '#555',
+        // backgroundColor: theme.palette.primary.main,
         height: "100vh",
         overflow: "hidden",  //解決margin-top塌陷,
 
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            color: theme.palette.primary.main,
+            color: theme.palette.ultimate.dark,
             fontSize: 30,
             fontWeight: 900,
         },
