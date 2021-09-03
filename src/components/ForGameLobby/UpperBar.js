@@ -3,15 +3,18 @@ import React, { useState, useEffect } from 'react'
 import { Box, Card, Grid, makeStyles, Typography } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import '../../index.css';
+import { BorderColor } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         paddingLeft: theme.spacing(4),
         paddingRight: theme.spacing(4),
         paddingTop: theme.spacing(6),
+        color: "white",
         "& .caption": {
             marginRight: theme.spacing(1),
-            borderBottom: "1px solid black"
+            borderBottom: "1px solid",
+            BorderColor: theme.palette.ultimate.light
         }
     },
     RoundNTime: {
@@ -32,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
             display: "inline-block",
         },
         "& .timeCard": {
-            backgroundColor: "gray",
+            backgroundColor: theme.palette.ultimate.light,
             display: "flex",
             alignItems: "center"
         },
@@ -40,9 +43,7 @@ const useStyles = makeStyles((theme) => ({
             width: "100%",
             backgroundColor: "black",
             color: "white",
-            textAlign: "center",
-            fontFamily: 'Orbitron',
-            fontFamily: "DigitalNumbersRegular"
+            textAlign: "center"
         },
         "& .minCard": {
             width: "3.5rem",
@@ -73,6 +74,7 @@ const UpperBar = (props) => {
         totalMemNum: '',
         round: '',
         roundTime: '',
+        isGaming: false
     })
 
     useEffect(() => {
@@ -80,7 +82,8 @@ const UpperBar = (props) => {
             pincode: props.data.pincode,
             totalMemNum: props.data.totalMemNum,
             round: props.data.round,
-            roundTime: props.data.roundTime
+            roundTime: props.data.roundTime,
+            isGaming: props.data.isGaming
         })
     }, [props.data])
 
@@ -105,11 +108,15 @@ const UpperBar = (props) => {
             </Grid>
             <div className={classes.RoundNTime} container>
                 <Box className="box round" fontWeight="fontWeightBold" fontSize="h3.fontSize">
-                    {numMap.get(room.round) && (
+                    {!(room.isGaming) && (
+                        <Typography>準備開始</Typography>
+                    )}
+                    
+                    {(room.isGaming) && numMap.get(room.round) && (
                         <Typography>第{numMap.get(room.round)}回合</Typography>
                     )}
 
-                    {!(numMap.get(room.round)) && (
+                    {(room.isGaming) && !(numMap.get(room.round)) && (
                         <Typography>第{room.round}回合</Typography>
                     )}
                 </Box>

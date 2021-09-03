@@ -7,11 +7,10 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(3),
     },
     box: {
-        marginLeft: "10%",
         padding: theme.spacing(1),
         borderRadius: theme.spacing(3),
         textAlign: "center",
-        backgroundColor: "#056663",
+        backgroundColor: theme.palette.ultimate.main,
         color: "white"
     },
     container: {
@@ -22,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         },
         "& .cell": {
             textAlign: "center",
-            color: "#056663"
+            color: "white"
         },
         "& .caption": {
             display: "flex",

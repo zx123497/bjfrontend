@@ -8,19 +8,26 @@ import PersonalTransaction from '../../components/ForGameLobby/PersonalTransacti
 import { socket } from '../../service/socket'
 import UserService from '../../service/UserService'
 import AdminService from '../../service/AdminService'
+import { useTimer } from 'react-timer-hook'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        paddingTop: '35px',
+        backgroundColor: theme.palette.ultimate.dark,
+        height: "100vh",
+        marginTop: '35px',
     },
 }))
 
 const GameLobby = (props) => {
+
+    const roomNum = props.location.pathname.split("/")[2]
+
     const [room, setRoom] = useState({
         pincode: '',
         totalMemNum: '',
         round: '',
         roundTime: '',
+        isGaming: false
     })
 
     const [player, setPlayer] = useState({
@@ -40,15 +47,17 @@ const GameLobby = (props) => {
 
     useEffect(() => {
         // 先socket enterRoom才能fetch公告
+        console.log("socket")
 
         socket.emit('enterRoom', { roomNum: '9487' });
 
         socket.on('resRole', (res) => {
+            console.log(res)
             setPlayer({
                 item: '',
                 money: res.user.money,
                 price: res.user.price,
-                role: 'seller',
+                role: res.user.role,
                 score: 0,
                 totalScore: 0,
                 transPartner: '',
@@ -61,23 +70,31 @@ const GameLobby = (props) => {
             console.log(`sysMsg: ${sysMsg}`)
         })
 
-        socket.emit('reqRole', { roomNum: props.match.params.id, ID: localStorage.getItem('username')})
+        socket.on('endRoundResponse', function (res) {
+            if(res == "endRoundMessage") {
+                props.history.push(`/loading/${roomNum}`)
+            }
+        })
+
+        socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('username')})
         
         // 取得url param放localStorage
-        const roomNum = props.match.params.id
         localStorage.setItem('roomNum', roomNum) //for Qrcode
 
         // 增加param傳axios
+        console.log(roomNum)
+
         const params = new URLSearchParams()
         params.append('roomNum', roomNum)
         
         AdminService.postGetRoom(params).then((res) => {
             console.log(res.data)
             setRoom({
-                pincode: props.match.params.id,
+                pincode: roomNum,
                 totalMemNum: res.data.allUsers.length,
-                round: res.data.roomDetail.nowRound,
-                roundTime: res.data.roomDetail.roundTime
+                round: res.data.roomDetail.nowRound + 1,
+                roundTime: res.data.roomDetail.roundTime,
+                isGaming: res.data.roomDetail.isGaming
             })
         })
     }, [])

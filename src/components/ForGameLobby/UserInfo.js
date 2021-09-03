@@ -27,22 +27,29 @@ const useStyles = makeStyles((theme) => ({
             height: '2rem',
             lineHeight: '2rem',
             marginTop: '0.2rem',
+            color: 'white'
+        },
+        '& .sell': {
+            color: "#ccc"
+        },
+        "& .buy": {
+            color: "#ccc"
         },
         '& .identity_sell': {
             width: '80%',
             height: '2.5rem',
             borderRadius: '1rem',
             marginLeft: '10%',
-            backgroundColor: 'black',
-            color: 'white',
+            backgroundColor: '#333',
             paddingTop: '0.5rem',
+            color: 'white'
         },
         '& .identity_buy': {
             width: '80%',
             height: '2.5rem',
             borderRadius: '1rem',
             marginLeft: '10%',
-            backgroundColor: 'red',
+            backgroundColor: "#DC6161",
             color: 'white',
             paddingTop: '0.5rem',
         },
@@ -59,10 +66,10 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     Below_sell: {
-        color: 'black',
+        color: '#ccc',
     },
     Below_buy: {
-        color: 'red',
+        color: "#ccc"
     },
 }))
 
@@ -88,20 +95,28 @@ const UserInfo = (props) => {
                 </Grid>
                 <Grid container xs={9}>
                     <Grid item xs={9}>
-                        <Box className="box balance">
-                            <Typography variant="subtitle">目前餘額 ${props.data.money}</Typography>
-                        </Box>
+                        
 
                         {props.data.role == 'seller' && (
-                            <Box className="box identity_sell">
-                                <Typography variant="h5">賣方</Typography>
-                            </Box>
+                            <div>
+                                <Box className="box balance sell">
+                                    <Typography variant="subtitle">目前餘額 ${props.data.money}</Typography>
+                                </Box>
+                                <Box className="box identity_sell">
+                                    <Typography variant="h5">賣方</Typography>
+                                </Box>
+                            </div>
                         )}
 
                         {props.data.role == 'buyer' && (
-                            <Box className="box identity_buy">
-                                <Typography variant="h5">買方</Typography>
-                            </Box>
+                            <div>
+                                <Box className="box balance buy">
+                                    <Typography variant="subtitle">目前餘額 ${props.data.money}</Typography>
+                                </Box>
+                                <Box className="box identity_buy">
+                                    <Typography variant="h5">買方</Typography>
+                                </Box>
+                            </div>
                         )}
                     </Grid>
                     <Grid container xs={3} justify="flex-start">
