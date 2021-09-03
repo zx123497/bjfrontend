@@ -16,7 +16,6 @@ import MenuIcon from '@material-ui/icons/Menu'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import WarningIcon from '@material-ui/icons/Warning'
 
@@ -28,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: '60vw',
         boxSizing: 'border-box',
         overflow: 'hidden',
-        backgroundColor: theme.palette.background.paper,
-        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.ultimate.dark,
+        color: '#FFF',
         '& *': {
             fontSize: 'inherit',
         },
@@ -39,15 +38,16 @@ const useStyles = makeStyles((theme) => ({
             padding: '0 10px',
             '& .listTitle': {
                 color: theme.palette.primary.main,
-                backgroundImage: `linear-gradient(${theme.palette.background.paper} 70%, ${theme.palette.background.paper}00)`,
+                backgroundColor: theme.palette.ultimate.dark,
                 fontWeight: 'bold',
             },
             '& .MuiListItemText-root': {
-                color: theme.palette.text.primary,
+                color: '#ccc',
+                fontWeight: 'bold',
             },
             '& .nested': {
                 paddingLeft: '50px',
-                color: '#555',
+                color: '#ccc',
             },
             '& > *:last-child': {
                 paddingBottom: '100px',
@@ -58,7 +58,8 @@ const useStyles = makeStyles((theme) => ({
             padding: '0 20px',
             display: 'flex',
             alignItems: 'center',
-            fontWeight: '700',
+            color: '#FFF',
+            fontWeight: 'bold',
             justifyContent: 'space-between',
 
             '& .fas': {
@@ -67,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
             },
             '& .userName': {
                 fontSize: '30px',
-                color: theme.palette.text.hint,
+                color: '#FFF',
             },
         },
         '& .menuFooter': {
@@ -81,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
             display: 'flex',
             alignItems: 'flex-end',
             justifyContent: 'center',
-            backgroundImage: `linear-gradient(${theme.palette.background.paper}00 , ${theme.palette.background.paper} 60%)`,
+            backgroundColor: theme.palette.ultimate.dark,
             '& .button': {
                 width: '80%',
                 margin: '5px',

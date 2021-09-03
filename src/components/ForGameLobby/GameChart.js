@@ -80,7 +80,7 @@ const GameChart = (props) => {
                                     if(inputValue != null) {
                                         const params = new URLSearchParams();
                                         params.append('roomNum', `${props.match.params.id}`)
-                                        params.append('index', chartWrapper.getChart().getSelection()[0].row)
+                                        params.append('index', chartWrapper.getChart().getSelection()[0].row-1)
                                         params.append('money', inputValue)
                                         if(chartWrapper.getChart().getSelection()[0].column == 1) {
                                             params.append('role', 'seller')

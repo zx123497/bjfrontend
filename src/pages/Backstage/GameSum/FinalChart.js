@@ -6,9 +6,9 @@ import Chart from "react-google-charts";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: "70%",
+        width: "100%",
         height: "100%",
-        marginLeft: "13%"
+        marginLeft: "5%"
     }
 }));
 

@@ -8,11 +8,13 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 import { Link } from 'react-router-dom'
 import Admin_lobby from './admin_lobby.svg'
 import RoomService from '../../service/RoomService'
-
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import EmailIcon from '@material-ui/icons/Email'
+import { useTheme } from '@material-ui/styles'
 const useStyles = makeStyles((theme) => ({
     UserLobby: {
         padding: '43px 1rem 1rem 1rem',
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: '#555',
         height: '100vh',
         overflow: 'hidden', //解決margin-top塌陷
         alienItems: 'center',
@@ -40,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
             flexGrow: 1,
             fontWeight: 500,
             fontSize: '130%',
+            color: '#FFF',
         },
         '& .roombtn': {
             height: '2.3rem',
@@ -54,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
         },
         [theme.breakpoints.up('md')]: {
             padding: '5rem 1rem 1rem 1rem',
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: '#555',
             height: '100vh',
             overflow: 'hidden', //解決margin-top塌陷
             alignItems: 'flex-start',
@@ -104,8 +107,9 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: '30px',
 
         //overflow: 'hidden',
+
         '& .card': {
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.ultimate.dark,
             color: theme.palette.ultimate.dark,
             width: '100%',
             height: 'max-content',
@@ -177,6 +181,14 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.background.paper,
             color: theme.palette.secondary.main,
         },
+        '& .btnPW': {
+            width: '100%',
+            border: `1px ${theme.palette.primary.main}  solid`,
+            color: theme.palette.primary.main,
+            fontWeight: 'bold',
+            fontSize: '1rem',
+            marginTop: '1rem',
+        },
         [theme.breakpoints.up('md')]: {
             display: 'flex',
             height: '70%',
@@ -184,10 +196,14 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: 'center',
             marginBottom: '30px',
             //overflow: 'hidden',
+            '& .btnPW': {
+                width: '15rem',
+                alignSelf: 'center',
+            },
             '& .card': {
-                backgroundColor: theme.palette.background.paper,
+                backgroundColor: theme.palette.ultimate.dark,
                 color: theme.palette.ultimate.dark,
-                width: '100%',
+                width: '50%',
                 height: 'max-content',
 
                 alienItems: 'center',
@@ -262,7 +278,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 const UserLobby = () => {
     const classes = useStyles()
-
+    const theme = useTheme()
     const [rooms, setRooms] = useState([])
 
     useEffect(() => {
@@ -290,48 +306,79 @@ const UserLobby = () => {
         <div className={classes.UserLobby}>
             <div className="profileArea">
                 <div className={classes.profile}>
-                    <div style={{ width: '70%' }}>
+                    <div style={{ width: '50%' }}>
                         <h2 className="roomtext">個人資訊</h2>
                     </div>
 
                     <Card className="card">
                         <CardContent>
-                            <Grid
-                                className="container"
-                                container
-                                direction="row"
-                                justify="flex-start"
-                                alignItems="center"
+                            <div
+                                style={{
+                                    margin: '1.5rem',
+                                    display: 'flex',
+                                    // justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
                             >
-                                <Grid item className="leftCard">
-                                    <div className="hello">
-                                        <h1>Hello!</h1>
+                                <AccountCircleIcon
+                                    style={{
+                                        fontSize: '2.5rem',
+                                        color: theme.palette.primary.main,
+                                        marginRight: '1rem',
+                                    }}
+                                />
+                                <div>
+                                    <div style={{ color: '#ccc' }}>使用者 ID</div>
+                                    <div
+                                        style={{
+                                            fontSize: '1.5rem',
+                                            fontWeight: 'bold',
+                                            overflow: 'hidden',
+                                            color: '#FFF',
+                                        }}
+                                    >
+                                        {localStorage.getItem('name')}
                                     </div>
-                                    <div className="photo">
-                                        <img className="image" src={cat}></img>
-                                        <span className="edit">
-                                            <IconButton className="icon" aria-label="add an alarm">
-                                                <EditIcon />
-                                            </IconButton>
-                                        </span>
-                                    </div>
-                                </Grid>
-                                <Grid item></Grid>
+                                </div>
+                            </div>
 
-                                <Grid item className="rightCard">
-                                    <div className="detailName">使用者 ID</div>
-                                    <div className="nameArea">{localStorage.getItem('name')}</div>
-                                    <div className="detailName">帳號 E-mail</div>
-                                    <div className="nameArea">
-                                        <Typography>{localStorage.getItem('email')}</Typography>
+                            <div
+                                style={{
+                                    margin: '1.5rem',
+                                    display: 'flex',
+                                    // justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <EmailIcon
+                                    style={{
+                                        fontSize: '2.5rem',
+                                        color: theme.palette.primary.main,
+                                        marginRight: '1rem',
+                                    }}
+                                />
+                                <div>
+                                    <div style={{ color: '#ccc' }}>帳號 E-mail</div>
+                                    <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#FFF' }}>
+                                        {localStorage.getItem('email')}
                                     </div>
-                                    <div>
-                                        <Button className="pwEdit" component={Link} to="/ForgetPassword">
-                                            修改密碼
-                                        </Button>
-                                    </div>
-                                </Grid>
-                            </Grid>
+                                </div>
+                            </div>
+                            {/* 
+                            <div>帳號 E-mail</div>
+                            <div>{localStorage.getItem('email')}</div> */}
+                            <div
+                                style={{
+                                    width: '100%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <Button className="btnPW" style={{}} component={Link} to="/ForgetPassword">
+                                    修改密碼
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
 

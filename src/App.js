@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core/styles'
 import Theme from './themes/theme'
 import { makeStyles } from '@material-ui/core/styles'
@@ -24,11 +24,11 @@ import Modal3 from './pages/Modal/Modal3'
 import Modal4 from './pages/Modal/Modal4'
 import Modal5 from './pages/Modal/Modal5'
 import https from './service/F60DB5A60B3334BAE1AE87D845C2698E.txt'
-
+import { AnimatePresence } from 'framer-motion'
 const useStyles = makeStyles((theme) => ({
     root: {
         minHeight: 'calc(100vh - 48px)',
-        backgroundColor: '#FFF06B',
+        backgroundColor: '#555',
         '& .App': {
             minHeight: 'calc(100vh - 48px)',
         },
@@ -45,17 +45,17 @@ function App() {
     const appliedTheme = Theme
     return (
         <div className={classes.root}>
-            <BrowserRouter>
-                <ThemeProvider theme={appliedTheme}>
-                    <div className="App">
-                        <Navbar />
-                        <Switch>
-                            <Route path="/admin" component={BackStage} />
-                            <Route
-                                path="/"
-                                render={() => (
-                                    <>
-                                        <main>
+            <ThemeProvider theme={appliedTheme}>
+                <div className="App">
+                    <Navbar />
+                    <Switch>
+                        <Route path="/admin" component={BackStage} />
+                        <Route
+                            path="/"
+                            render={() => (
+                                <>
+                                    <main>
+                                        <AnimatePresence exitBeforeEnter>
                                             <Switch>
                                                 <Route path="/" exact component={LogIn} />
                                                 <Route path="/user/lobby" exact component={UserLobby} />
@@ -84,14 +84,14 @@ function App() {
                                                 <Route path="/modal4" exact component={Modal4} />
                                                 <Route path="/modal5" exact component={Modal5} />
                                             </Switch>
-                                        </main>
-                                    </>
-                                )}
-                            />
-                        </Switch>
-                    </div>
-                </ThemeProvider>
-            </BrowserRouter>
+                                        </AnimatePresence>
+                                    </main>
+                                </>
+                            )}
+                        />
+                    </Switch>
+                </div>
+            </ThemeProvider>
         </div>
     )
 }
