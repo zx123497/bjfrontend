@@ -83,14 +83,34 @@ const useStyles = makeStyles((theme) => ({
         },
         '& .input': {
             marginTop: '8px',
-            color: theme.palette.ultimate.main,
+            color: theme.palette.ultimate.dark,
+            // color: theme.palette.ultimate.main,
             fontSize: 20,
             height: '15px',
             marginLeft: '17%',
             '& .MuiTextField-root': {
                 marginTop: '25px',
                 width: '80%',
-                color: theme.palette.ultimate.main,
+                // color: theme.palette.ultimate.main,
+                color: theme.palette.ultimate.dark,
+            },
+            '& label.Mui-focused': {
+                color: theme.palette.ultimate.dark,
+            },
+            '& .input-underline:after': {
+                borderBottomColor: theme.palette.ultimate.dark,
+            },
+            '& .input-underline:before': {
+                borderBottomColor: theme.palette.ultimate.dark,
+            },
+            '&:hover fieldset': {
+                borderColor: theme.palette.ultimate.dark,
+            },
+            '&:after fieldset': {
+                borderColor: theme.palette.ultimate.dark,
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: theme.palette.ultimate.dark,
             },
         },
         '& .pw': {

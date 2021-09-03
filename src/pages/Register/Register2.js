@@ -51,7 +51,26 @@ const useStyles = makeStyles((theme) => ({
             '& .MuiTextField-root': {
                 marginTop: '25px',
                 width: '80%',
-                color: '#555',
+                // color: theme.palette.ultimate.main,
+                color: theme.palette.ultimate.dark,
+            },
+            '& label.Mui-focused': {
+                color: theme.palette.ultimate.dark,
+            },
+            '& .input-underline:after': {
+                borderBottomColor: theme.palette.ultimate.dark,
+            },
+            '& .input-underline:before': {
+                borderBottomColor: theme.palette.ultimate.dark,
+            },
+            '&:hover fieldset': {
+                borderColor: theme.palette.ultimate.dark,
+            },
+            '&:after fieldset': {
+                borderColor: theme.palette.ultimate.dark,
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: theme.palette.ultimate.dark,
             },
         },
         '& .input1': {
