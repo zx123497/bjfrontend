@@ -90,6 +90,7 @@ const NewRoom = (props) => {
         roundNum: 1,
         gametype: 0,
         userName: '',
+        roundTime: 0,
         initMoney: 0,
         interval: 1,
         rounds: [
@@ -162,7 +163,7 @@ const NewRoom = (props) => {
             roundInfo: new_arr,
             initMoney: form.initMoney,
             roomName: form.roomName,
-            roundTime: 100,
+            roundTime: form.roundTime,
             interval: form.interval,
         })
 
@@ -191,9 +192,9 @@ const NewRoom = (props) => {
     const handleInitChange = async (id, value) => {
         setForm({ ...form, initMoney: value })
     }
-    const handleTestChange = async (id, value) => {
+    const handleRoundTimeChange = async (id, value) => {
         console.log(value)
-        setForm({ ...form, test: value })
+        setForm({ ...form, roundTime: value })
     }
 
     const handleBuyChange = async (id, value) => {
@@ -263,22 +264,14 @@ const NewRoom = (props) => {
                     className="test"
                     key="test"
                     id="test"
-                    elementType="radio"
+                    elementType="input"
                     elementConfig={{
-                        options: [
-                            {
-                                value: '1',
-                                displayValue: '需要測試回合',
-                            },
-                            {
-                                value: '0',
-                                displayValue: '不需要測試回合',
-                            },
-                        ],
+                        type: 'text',
+                        placeholder: '輸入回合時間',
                     }}
-                    value={form.test}
-                    onChange={handleTestChange}
-                    label="測試回合"
+                    value={form.roundTime}
+                    onChange={handleRoundTimeChange}
+                    label="回合時間(秒)"
                 />
                 <Input
                     className="init"
