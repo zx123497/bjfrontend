@@ -88,6 +88,7 @@ const NewRoom = (props) => {
         roomName: '',
         test: '0',
         roundNum: 1,
+        roundTime: 0,
         gametype: 0,
         userName: '',
         initMoney: 0,
@@ -141,7 +142,7 @@ const NewRoom = (props) => {
             roundInfo: new_arr,
             initMoney: form.initMoney,
             roomName: form.roomName,
-            roundTime: 100,
+            roundTime: form.roundTime,
             interval: form.interval,
         })
 
@@ -170,9 +171,8 @@ const NewRoom = (props) => {
     const handleInitChange = async (id, value) => {
         setForm({ ...form, initMoney: value })
     }
-    const handleTestChange = async (id, value) => {
-        console.log(value)
-        setForm({ ...form, test: value })
+    const handleRoundTimeChange = async (id, value) => {
+        setForm({ ...form, roundTime: value })
     }
 
     const handleBuyChange = async (id, value) => {
@@ -255,22 +255,14 @@ const NewRoom = (props) => {
                     className="test"
                     key="test"
                     id="test"
-                    elementType="radio"
+                    elementType="input"
                     elementConfig={{
-                        options: [
-                            {
-                                value: '1',
-                                displayValue: '需要測試回合',
-                            },
-                            {
-                                value: '0',
-                                displayValue: '不需要測試回合',
-                            },
-                        ],
+                        type: 'text',
+                        placeholder: '請輸入回合秒數',
                     }}
-                    value={form.test}
-                    onChange={handleTestChange}
-                    label="測試回合"
+                    value={form.roundTime}
+                    onChange={handleRoundTimeChange}
+                    label="回合時間(秒)"
                 />
                 <Input
                     className="init"
