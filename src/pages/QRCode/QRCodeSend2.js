@@ -390,6 +390,8 @@ const QRCodeSend2 = ({ history }, props) => {
     // 設定轉出的金額
     const handleOnChange = (event) => {
         setMoney(event.target.value)
+        console.log('propppppp: ' + props.path)
+        console.log('propppppp: ' + props)
         console.log('propppppp: ' + props.data)
         localStorage.setItem('userMoney', event.target.value)
     }
