@@ -62,7 +62,7 @@ const GameLobby = (props) => {
                 totalScore: 0,
                 transPartner: '',
                 tranAmount: 0,
-                path: props.location.pathname, //for QRcode
+                path: props.location, //for QRcode
             })
         })
 
