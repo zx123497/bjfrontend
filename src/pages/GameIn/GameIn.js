@@ -1,22 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom'
-import BackPage from '../../components/BackPage/BackPage'
+
 import UserService from '../../service/UserService'
-import { socket } from '../../service/socket'
 
 const useStyles = makeStyles((theme) => ({
     GameIn: {
         display: 'flex',
         color: theme.palette.ultimate.main,
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: '#555',
         height: '100vh',
         overflow: 'hidden', //解決margin-top塌陷
         alienItems: 'center',
         justifyContent: 'center',
 
         '& .card': {
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.ultimate.main,
             color: theme.palette.ultimate.dark,
             width: '350px',
             height: '290px',
@@ -51,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
             borderRadius: '20px',
             boxShadow: 'none',
             width: '50%',
-            backgroundColor: '#B21A0F',
+            backgroundColor: theme.palette.secondary.main,
             color: theme.palette.background.paper,
         },
     },
@@ -85,8 +84,8 @@ const GameIn = (props) => {
             params.append('username', username)
 
             UserService.postEnterRoom(params).then((res) => {
-                if(res.status == "200") {
-                    const roomDetail = res.data.roomDetail;
+                if (res.status == '200') {
+                    const roomDetail = res.data.roomDetail
                     // localStorage.setItem("countdown", roomDetail.roundTime)
                     // props.history.push(`/gamelobby/:${values.pincode}/:${roomDetail.nowRound}`)
                     props.history.push(`/loading/${values.pincode}`)
@@ -98,7 +97,6 @@ const GameIn = (props) => {
 
     return (
         <div className={classes.GameIn}>
-            <BackPage refs="/user/lobby"></BackPage>
             <Card className="card">
                 <CardContent>
                     <p className="title">房間PIN Code</p>
@@ -114,7 +112,9 @@ const GameIn = (props) => {
                     </form>
                 </CardContent>
                 <CardActions>
-                    <Link component={Button} onClick={handleSubmit} className="next">開始遊戲</Link>
+                    <Link component={Button} onClick={handleSubmit} className="next">
+                        開始遊戲
+                    </Link>
                 </CardActions>
             </Card>
         </div>
