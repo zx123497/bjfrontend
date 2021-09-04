@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
     LogIn: {
         display: 'flex',
         color: theme.palette.ultimate.main,
-        backgroundColor: theme.palette.primary.main,
+        // backgroundColor: theme.palette.primary.main,
+        backgroundColor: '#555',
         height: '100vh',
         overflow: 'hidden', //解決margin-top塌陷
         alienItems: 'center',
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            color: theme.palette.primary.main,
+            color: theme.palette.ultimate.dark,
             fontSize: 30,
             fontWeight: 900,
         },
@@ -82,14 +83,34 @@ const useStyles = makeStyles((theme) => ({
         },
         '& .input': {
             marginTop: '8px',
-            color: theme.palette.ultimate.main,
+            color: theme.palette.ultimate.dark,
+            // color: theme.palette.ultimate.main,
             fontSize: 20,
             height: '15px',
             marginLeft: '17%',
             '& .MuiTextField-root': {
                 marginTop: '25px',
                 width: '80%',
-                color: theme.palette.ultimate.main,
+                // color: theme.palette.ultimate.main,
+                color: theme.palette.ultimate.dark,
+            },
+            '& label.Mui-focused': {
+                color: theme.palette.ultimate.dark,
+            },
+            '& .input-underline:after': {
+                borderBottomColor: theme.palette.ultimate.dark,
+            },
+            '& .input-underline:before': {
+                borderBottomColor: theme.palette.ultimate.dark,
+            },
+            '&:hover fieldset': {
+                borderColor: theme.palette.ultimate.dark,
+            },
+            '&:after fieldset': {
+                borderColor: theme.palette.ultimate.dark,
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: theme.palette.ultimate.dark,
             },
         },
         '& .pw': {
@@ -279,7 +300,7 @@ const LogIn = (props) => {
                                 id="account"
                                 value={values.account}
                                 onChange={handleChange('account')}
-                                label="帳號"
+                                label="帳號 (e-mail)"
                                 type="search"
                                 variant="outlined"
                                 size="small"

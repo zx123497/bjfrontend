@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     ForgetPassword2: {
         display: 'flex',
         color: theme.palette.ultimate.main,
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: '#555',
         height: '100vh',
         overflow: 'hidden',
         alienItems: 'center',
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            color: theme.palette.primary.main,
+            color: theme.palette.ultimate.dark,
             fontSize: 30,
             fontWeight: 900,
         },

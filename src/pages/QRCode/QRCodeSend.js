@@ -20,14 +20,19 @@ const useStyles = makeStyles((theme) => ({
     QRCodeSend: {
         display: 'flex',
         color: theme.palette.ultimate.main,
-        backgroundColor: theme.palette.primary.main,
+        // backgroundColor: theme.palette.primary.main,
+        backgroundColor: '#555',
         height: '100vh',
         overflow: 'hidden',
         alienItems: 'center',
         justifyContent: 'center',
 
         '& .switch': {
-            color: theme.palette.ultimate.main,
+            // color: theme.palette.ultimate.main,
+            color: 'white',
+        },
+        '& .icon': {
+            color: theme.palette.primary.main,
         },
         '& .input': {
             margin: 'auto',
@@ -46,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: 'center',
         },
         '& .num': {
+            color: 'white',
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
@@ -99,12 +105,14 @@ const useStyles = makeStyles((theme) => ({
             marginBottom: '10px',
         },
         '& .limit': {
+            color: 'white',
             display: 'block',
             alienItems: 'center',
             margin: 'auto',
             textAlign: 'center',
         },
         '& .unlimit': {
+            color: 'white',
             display: 'none',
         },
         '& .center-text': {
@@ -177,7 +185,7 @@ const QRCodeSend2 = (props) => {
             // } else if (values.money <= 0) {
             //     setError('付款金額需大於 0 元')
             //     setOpen(true)
-            // } else 
+            // } else
             if (values.numpeople <= 0) {
                 setError('人數上限需大於0')
                 setOpen(true)
@@ -188,7 +196,7 @@ const QRCodeSend2 = (props) => {
             // if (values.money <= 0) {
             //     setError('付款金額需大於 0 元')
             //     setOpen(true)
-            // } else 
+            // } else
             {
                 setShowQR(true)
             }
@@ -210,7 +218,7 @@ const QRCodeSend2 = (props) => {
                 <div className="grid-item">
                     <Grid className="input" container spacing={1} alignItems="flex-end">
                         <Grid item className="icon">
-                            <MonetizationOnIcon style={{ color: 'black' }} />
+                            <MonetizationOnIcon />
                         </Grid>
                         <Grid item>
                             <form onSubmit={handleSubmit} noValidate autoComplete="off">
@@ -222,10 +230,11 @@ const QRCodeSend2 = (props) => {
                                     onChange={handleChange('money')}
                                     type="number"
                                     label={
-                                        <Typography variant="headline" component="h3">
+                                        <Typography style={{ color: 'white' }} variant="headline" component="h3">
                                             轉出
                                         </Typography>
                                     }
+                                    inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -238,10 +247,11 @@ const QRCodeSend2 = (props) => {
                                     onChange={handleChange('money')}
                                     type="number"
                                     label={
-                                        <Typography variant="headline" component="h3">
+                                        <Typography style={{ color: 'white' }} variant="headline" component="h3">
                                             轉出
                                         </Typography>
                                     }
+                                    inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -297,6 +307,7 @@ const QRCodeSend2 = (props) => {
                                             onChange={handleChange('numpeople')}
                                             type="number"
                                             style={{ width: '32%' }}
+                                            inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
@@ -308,6 +319,7 @@ const QRCodeSend2 = (props) => {
                                             onChange={handleChange('numpeople')}
                                             type="number"
                                             style={{ width: '32%' }}
+                                            inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
@@ -389,7 +401,8 @@ const QRCodeSend2 = (props) => {
                                 boxShadow: 'none',
                                 width: '20%',
                                 backgroundColor: '#FFFFFF',
-                                color: '#939597',
+                                // color: '#939597',
+                                color: '#555',
                             }}
                             onClick={handleQRShow}
                             className={`${showQR ? 'QRhide' : 'QRshow'}`}
@@ -404,7 +417,8 @@ const QRCodeSend2 = (props) => {
                                 boxShadow: 'none',
                                 width: '20%',
                                 backgroundColor: '#FFFFFF',
-                                color: '#939597',
+                                // color: '#939597',
+                                color: '#555',
                             }}
                             onClick={handleQRHide}
                             className={`${showQR ? 'QRshow' : 'QRhide'}`}
