@@ -334,7 +334,8 @@ const QRCodeSend2 = (props) => {
                                         control={
                                             <Switch
                                                 checked={state.checked}
-                                                color="default"
+                                                // color="default"
+                                                color="ultimate"
                                                 onChange={handleSwitchChange}
                                                 name="checked"
                                                 edge="end"
@@ -349,7 +350,8 @@ const QRCodeSend2 = (props) => {
                                         control={
                                             <Switch
                                                 checked={state.checked}
-                                                color="default"
+                                                // color="default"
+                                                color="ultimate"
                                                 onChange={handleSwitchChange}
                                                 name="checked"
                                                 edge="end"

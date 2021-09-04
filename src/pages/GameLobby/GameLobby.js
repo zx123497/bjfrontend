@@ -48,6 +48,7 @@ const GameLobby = (props) => {
     useEffect(() => {
         // 先socket enterRoom才能fetch公告
         console.log("socket")
+        console.log(props.location.pathname)
 
         socket.emit('enterRoom', { roomNum: '9487' });
 

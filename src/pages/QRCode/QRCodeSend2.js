@@ -184,6 +184,7 @@ const QRCodeSend2 = ({ history }) => {
         }
     }, [localStorage.getItem('role')])
 
+    // 與老師交易時的setSocket
     useEffect(() => {
         // 與老師交易時的setSocket
         if (localStorage.getItem('tranTeacher') == '1') {
@@ -374,6 +375,7 @@ const QRCodeSend2 = ({ history }) => {
                 localStorage.setItem('tranLimit', data.match(/limit=([^&]+)/)[1].split('/')[0])
                 localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1])
             } else {
+                // localStorage.setItem('tranTeacher', '0')
                 localStorage.setItem('tranMoney', data.match(/money=([^&]+)/)[1].split('/')[0])
                 localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1])
             }
@@ -457,10 +459,16 @@ const QRCodeSend2 = ({ history }) => {
                         ></img>
                     </div>
                     <Typography align="center" style={{ fontSize: '90%', fontWeight: '600', marginBottom: '8%' }}>
-                        you are {localStorage.getItem('role')}
+                        {/* you are {localStorage.getItem('role')} */}
+                        {localStorage.getItem('tranTeacher') == '1' ? (
+                            <div>teacher</div>
+                        ) : (
+                            <div>{localStorage.getItem('tranUser')}</div>
+                        )}
                     </Typography>
                     <Typography align="center" style={{ fontSize: '140%' }}>
-                        {seller ? (
+                        {/* {seller ? ( */}
+                        {localStorage.getItem('role') == 'seller' ? (
                             <div>即將收取 ${localStorage.getItem('tranMoney')}</div>
                         ) : localStorage.getItem('tranTeacher') == '1' ? (
                             <div>即將收取 ${localStorage.getItem('tranMoney')}</div>
@@ -553,7 +561,12 @@ const QRCodeSend2 = ({ history }) => {
                         ></img>
                     </div>
                     <Typography align="center" style={{ fontSize: '90%', fontWeight: '600', marginBottom: '8%' }}>
-                        you are {localStorage.getItem('player')}
+                        {/* you are {localStorage.getItem('player')} */}
+                        {localStorage.getItem('tranTeacher') == '1' ? (
+                            <div>teacher</div>
+                        ) : (
+                            <div>{localStorage.getItem('tranUser')}</div>
+                        )}
                     </Typography>
                     <Typography align="center" style={{ fontSize: '140%' }}>
                         {seller ? (
