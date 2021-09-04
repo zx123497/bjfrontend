@@ -788,7 +788,7 @@ const QRCodeSend2 = ({ history }) => {
                     className="switch"
                     label="收款"
                 />
-                <h4>請掃描付款者 QRCode</h4>
+                <h4>請掃描付款者 QRCode11</h4>
                 <QrReader
                     className="scan"
                     delay={300}
