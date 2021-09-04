@@ -103,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const QRCodeSend2 = ({ history }) => {
+const QRCodeSend2 = ({ history }, props) => {
     const classes = useStyles()
     history.listen(() => {
         socket.on('disconnect', function () {
@@ -387,8 +387,10 @@ const QRCodeSend2 = ({ history }) => {
         setTrans(false)
     }, [roundNum])
 
+    // 設定轉出的金額
     const handleOnChange = (event) => {
         setMoney(event.target.value)
+        console.log('propppppp: ' + props.data)
         localStorage.setItem('userMoney', event.target.value)
     }
 

@@ -80,6 +80,7 @@ const UserInfo = (props) => {
     useEffect(() => {
         localStorage.setItem('role', props.data.role)
         localStorage.setItem('price', props.data.price)
+        localStorage.setItem('money', props.data.money)
     }, [props])
 
     return (
@@ -120,7 +121,7 @@ const UserInfo = (props) => {
                         )}
                     </Grid>
                     <Grid container xs={3} justify="flex-start">
-                        <Link component={Button} className={classes.button} to={'/qrcode'}>
+                        <Link data={props.data.path} component={Button} className={classes.button} to={'/qrcode'}>
                             <CropFreeIcon className="component" fontSize="large" />
                             <Typography className="component" variant="caption">
                                 {' '}
