@@ -118,13 +118,13 @@ const QRCodeSend2 = ({ history }) => {
         checked: true,
     })
 
-    const result = {
-        round: '1',
-        buyer: '123',
-        seller: '234',
-        money: '60',
-    }
-    localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
+    // const result = {
+    //     round: '1',
+    //     buyer: '123',
+    //     seller: '234',
+    //     money: '60',
+    // }
+    // localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
 
     const handleSwitchChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked })
@@ -158,9 +158,7 @@ const QRCodeSend2 = ({ history }) => {
        */
         if (localStorage.getItem('is_socketid') == null && !trans) {
             socket.emit('setSocket', {
-                //for test之後改掉9487
-                roomNum: '9487',
-                // roomNum: localStorage.getItem('roomNum'),
+                roomNum: localStorage.getItem('roomNum'),
                 user_id: localStorage.getItem('username'),
             })
             localStorage.setItem('is_socketid', true)
@@ -192,7 +190,7 @@ const QRCodeSend2 = ({ history }) => {
             if (localStorage.getItem('is_socketid') == null) {
                 socket.emit('setSocket', {
                     //for test之後改掉9487
-                    roomNum: '9487',
+                    roomNum: localStorage.getItem('roomNum'),
                     user_id: localStorage.getItem('username'),
                 })
                 localStorage.setItem('is_socketid', true)
@@ -216,9 +214,7 @@ const QRCodeSend2 = ({ history }) => {
 
             //確認接受老師轉入
             socket.emit('set_admin_transc_req', {
-                //for test之後改掉9487
-                // roomNum: localStorage.getItem('roomNum'),
-                roomNum: '9487',
+                roomNum: localStorage.getItem('roomNum'),
                 round: localStorage.getItem('roundNum'),
                 limit_times: localStorage.getItem('tranLimit'),
                 payer_id: localStorage.getItem('tranUser'),
@@ -408,7 +404,7 @@ const QRCodeSend2 = ({ history }) => {
         if (!seller) {
             socket.on('transCheckReq', function (data) {
                 setReceiver_id(data)
-                //測試的時候發現network裡面receiver_id，socket.emit一直會是空的所以先寫了這個，確保有存到
+                // 測試的時候發現network裡面receiver_id，socket.emit一直會是空的所以先寫了這個，確保有存到
                 localStorage.setItem('receiver_id', data)
                 setOpen1(true)
             })
@@ -788,7 +784,7 @@ const QRCodeSend2 = ({ history }) => {
                     className="switch"
                     label="收款"
                 />
-                <h4>請掃描付款者 QRCode22</h4>
+                <h4>請掃描付款者 QRCode</h4>
                 <QrReader
                     className="scan"
                     delay={300}
