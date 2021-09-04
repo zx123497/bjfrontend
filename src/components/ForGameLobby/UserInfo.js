@@ -122,7 +122,7 @@ const UserInfo = (props) => {
                         )}
                     </Grid>
                     <Grid container xs={3} justify="flex-start">
-                        <Link data={path} component={Button} className={classes.button} to={'/qrcode'}>
+                        <Link path={path} component={Button} className={classes.button} to={'/qrcode'}>
                             <CropFreeIcon className="component" fontSize="large" />
                             <Typography className="component" variant="caption">
                                 {' '}
