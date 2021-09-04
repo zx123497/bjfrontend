@@ -788,14 +788,14 @@ const QRCodeSend2 = ({ history }) => {
                     className="switch"
                     label="收款"
                 />
-                <h4>請掃描付款者 QRCode11</h4>
+                <h4>請掃描付款者 QRCode22</h4>
                 <QrReader
                     className="scan"
                     delay={300}
                     // style={previewStyle}
                     onError={handleError}
                     onScan={handleScan}
-                    facingMode={'rear'}
+                    facingMode={'environment'}
                 />
                 {/* <QRCodeScanner
                 className="scan"
