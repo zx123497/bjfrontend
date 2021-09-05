@@ -14,7 +14,10 @@ import EmailIcon from '@material-ui/icons/Email'
 import { useTheme } from '@material-ui/styles'
 import Container from '../../../components/Container/Container'
 import { motion } from 'framer-motion'
+import Modal from '../../../components/Modal/Modal'
+import Input from '../../../components/Input/Input'
 import Noty from 'noty'
+
 const useStyles = makeStyles((theme) => ({
     Lobby: {
         padding: '43px 1rem 1rem 1rem',
@@ -310,6 +313,39 @@ const Lobby = () => {
         })
     }, [])
 
+    const [modalOpenState, setModalOpenState] = useState({
+        email: null,
+
+        open: false,
+    })
+
+    const handleModalClose = () => {
+        setModalOpenState({
+            email: null,
+
+            open: false,
+        })
+    }
+
+    const handleModalOpen = () => {
+        setModalOpenState({
+            ...modalOpenState,
+            open: true,
+        })
+    }
+    const handleEmailChanged = async (id, value) => {
+        setModalOpenState({ ...modalOpenState, email: value })
+    }
+    const handleEmailSubmit = () => {
+        const submit_email = modalOpenState.email
+        const qs = require('qs')
+        const data = qs.stringify({ email: submit_email })
+        RoomService.addAdmin(data).then((res) => {
+            console.log(res)
+            handleModalClose()
+        })
+    }
+
     const handleDelete = (id) => {
         RoomService.deleteRoom(id).then((res) => {
             console.log(res)
@@ -409,20 +445,37 @@ const Lobby = () => {
                             {/* 
                             <div>帳號 E-mail</div>
                             <div>{localStorage.getItem('email')}</div> */}
-                            <Button
-                                style={{
-                                    width: '100%',
-                                    border: `1px ${theme.palette.primary.main}  solid`,
-                                    color: theme.palette.primary.main,
-                                    fontWeight: 'bold',
-                                    fontSize: '1rem',
-                                    marginTop: '1rem',
-                                }}
-                                component={Link}
-                                to="/ForgetPassword"
-                            >
-                                修改密碼
-                            </Button>
+                            <div style={{ display: 'flex' }}>
+                                <Button
+                                    style={{
+                                        width: '100%',
+                                        border: `1px ${theme.palette.primary.main}  solid`,
+                                        color: theme.palette.primary.main,
+                                        fontWeight: 'bold',
+                                        fontSize: '1rem',
+                                        marginTop: '1rem',
+                                        margin: '1rem 1rem',
+                                    }}
+                                    component={Link}
+                                    to="/ForgetPassword"
+                                >
+                                    修改密碼
+                                </Button>
+                                <Button
+                                    style={{
+                                        width: '100%',
+                                        border: `1px ${theme.palette.secondary.light}  solid`,
+                                        color: theme.palette.secondary.light,
+                                        fontWeight: 'bold',
+                                        fontSize: '1rem',
+                                        marginTop: '1rem',
+                                        margin: '1rem 1rem',
+                                    }}
+                                    onClick={handleModalOpen}
+                                >
+                                    新增管理員
+                                </Button>
+                            </div>
                         </CardContent>
                     </Card>
                     <img
@@ -483,6 +536,33 @@ const Lobby = () => {
                     </motion.div>
                 </Container>
             </div>
+            <Modal opened={modalOpenState.open} handleClose={handleModalClose}>
+                <h2 style={{ color: '#FFF' }}>新增管理員</h2>
+                <Input
+                    className="email"
+                    key="email"
+                    id="email"
+                    elementType="input"
+                    elementConfig={{ type: 'text', placeholder: '輸入email' }}
+                    value={modalOpenState.email}
+                    onChange={handleEmailChanged}
+                    label="欲新增管理者email"
+                />
+
+                <Button
+                    className={classes.button}
+                    style={{
+                        color: '#FFF',
+                        border: '1px #FFF solid',
+                        margin: '1rem 0 0 0',
+                        width: '100%',
+                        // boxShadow: '0px 0px 6px rgba(0,0,0,0.2)',
+                    }}
+                    onClick={handleEmailSubmit}
+                >
+                    確認新增
+                </Button>
+            </Modal>
         </motion.div>
     )
 }

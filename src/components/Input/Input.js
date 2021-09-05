@@ -17,6 +17,7 @@ import React from 'react'
 
 const useStyles = makeStyles((theme) => ({
     Input: {
+        color: '#FFF',
         padding: 0,
         '&.invalid': {
             '& h5, & .MuiFormHelperText-root': {
