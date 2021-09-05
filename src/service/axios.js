@@ -38,27 +38,29 @@ instance.interceptors.response.use(
         return response
     },
     (error) => {
-        if (error.response.status === 403) {
-            new Noty({
-                type: 'warning',
-                layout: 'topRight',
-                theme: 'mint',
-                text: `驗證過時，請重新登入!`,
-                timeout: '4000',
-                progressBar: true,
-                closeWith: ['click'],
-            }).show()
-            localStorage.clear()
-        } else {
-            new Noty({
-                type: 'error',
-                layout: 'topRight',
-                theme: 'mint',
-                text: `發生錯誤: ${error}`,
-                timeout: '4000',
-                progressBar: true,
-                closeWith: ['click'],
-            }).show()
+        if (error.response) {
+            if (error.response.status === 403) {
+                new Noty({
+                    type: 'warning',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: `驗證過時，請重新登入!`,
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
+                localStorage.clear()
+            } else {
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: `發生錯誤: ${error}`,
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
+            }
         }
 
         return Promise.reject(error)
