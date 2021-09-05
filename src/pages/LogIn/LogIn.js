@@ -241,10 +241,10 @@ const LogIn = (props) => {
                 .then((res) => {
                     if (res.status == '200') {
                         if (!res.data.user.isManager) {
-                            localStorage.setItem('isAdmin', '1')
+                            localStorage.setItem('isAdmin', '0')
                             history.push('/user/lobby')
                         } else {
-                            localStorage.setItem('isAdmin', '0')
+                            localStorage.setItem('isAdmin', '1')
                             history.push('/admin/lobby')
                         }
                         localStorage.setItem('username', values.account)
