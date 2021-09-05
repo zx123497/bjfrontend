@@ -49,6 +49,14 @@ const RoomService = {
             throw error
         }
     },
+    addAdmin: async (data) => {
+        try {
+            const response = await axios.post('/promotion', data)
+            return response
+        } catch (error) {
+            throw error
+        }
+    },
 }
 
 export default RoomService

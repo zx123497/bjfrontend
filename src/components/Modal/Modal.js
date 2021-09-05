@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         '& .modalBody': {
             position: 'relative',
-            background: theme.palette.background.paper,
+            background: theme.palette.ultimate.dark,
             outline: 0,
             color: theme.palette.text.primary,
             maxWidth: '90vw',
