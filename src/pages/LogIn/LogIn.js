@@ -239,25 +239,20 @@ const LogIn = (props) => {
 
             UserService.postLogin(params)
                 .then((res) => {
-                    new Noty({
-                        type: 'success',
-                        layout: 'topRight',
-                        theme: 'nest',
-                        text: `成功: ${res}`,
-                        timeout: '4000',
-                        progressBar: true,
-                        closeWith: ['click'],
-                    }).show()
                     if (res.status == '200') {
                         if (!res.data.user.isManager) {
                             localStorage.setItem('stu', '1')
                             history.push('/user/lobby')
-                        } else history.push('/admin/lobby')
+                        } else {
+                            localStorage.setItem('stu', '0')
+                            history.push('/admin/lobby')
+                        }
                         localStorage.setItem('username', values.account)
                         localStorage.setItem('name', res.data.user.username)
                         localStorage.setItem('id', res.data.user.ID)
                         localStorage.setItem('email', values.account)
                         localStorage.setItem('token', res.data.jwt)
+                        localStorage.setItem('expireTime', res.data.expiresIn)
                     }
                 })
                 .catch((e) => {

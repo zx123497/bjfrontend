@@ -1,9 +1,12 @@
+import '../node_modules/noty/lib/noty.css'
+import '../node_modules/noty/lib/themes/mint.css'
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core/styles'
 import Theme from './themes/theme'
 import { makeStyles } from '@material-ui/core/styles'
 import './App.css'
+
 import LogIn from './pages/LogIn/LogIn'
 import Register from './pages/Register/Register'
 import Register2 from './pages/Register/Register2'
@@ -42,6 +45,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 function App() {
     const classes = useStyles()
+    // const history = useHistory();
+    // useEffect(() => {
+    //     const currentTime = new Date().getTime()
+    //     const adjExpTime = new Date().getTime();
+    // })
+
     const appliedTheme = Theme
     return (
         <div className={classes.root}>
