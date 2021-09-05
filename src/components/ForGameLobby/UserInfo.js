@@ -76,11 +76,9 @@ const useStyles = makeStyles((theme) => ({
 
 const UserInfo = (props) => {
     const classes = useStyles()
-    const [path, setPath] = useState('') //for Qrcode
 
     //for Qrcode
     useEffect(() => {
-        setPath(props.data.path)
         localStorage.setItem('role', props.data.role)
         localStorage.setItem('price', props.data.price)
         localStorage.setItem('money', props.data.money)
@@ -122,7 +120,7 @@ const UserInfo = (props) => {
                         )}
                     </Grid>
                     <Grid container xs={3} justify="flex-start">
-                        <Link path={path} component={Button} className={classes.button} to={'/qrcode'}>
+                        <Link component={Button} className={classes.button} to={'/qrcode'}>
                             <CropFreeIcon className="component" fontSize="large" />
                             <Typography className="component" variant="caption">
                                 {' '}

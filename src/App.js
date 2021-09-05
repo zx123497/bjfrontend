@@ -6,7 +6,6 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import Theme from './themes/theme'
 import { makeStyles } from '@material-ui/core/styles'
 import './App.css'
-
 import LogIn from './pages/LogIn/LogIn'
 import Register from './pages/Register/Register'
 import Register2 from './pages/Register/Register2'
@@ -28,6 +27,7 @@ import Modal4 from './pages/Modal/Modal4'
 import Modal5 from './pages/Modal/Modal5'
 import https from './service/F60DB5A60B3334BAE1AE87D845C2698E.txt'
 import { AnimatePresence } from 'framer-motion'
+
 const useStyles = makeStyles((theme) => ({
     root: {
         minHeight: 'calc(100vh - 48px)',
@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }))
+
 function App() {
     const classes = useStyles()
     // const history = useHistory();
@@ -52,6 +53,7 @@ function App() {
     // })
 
     const appliedTheme = Theme
+
     return (
         <div className={classes.root}>
             <ThemeProvider theme={appliedTheme}>
@@ -87,11 +89,6 @@ function App() {
                                                 <Route path="/gamein" exact component={GameIn} />
                                                 <Route path="/qrcode" exact component={QRCodeSend2} />
                                                 <Route path="/teacherqrcode" exact component={QRCodeSend} />
-                                                <Route path="/modal1" exact component={Modal1} />
-                                                <Route path="/modal2" exact component={Modal2} />
-                                                <Route path="/modal3" exact component={Modal3} />
-                                                <Route path="/modal4" exact component={Modal4} />
-                                                <Route path="/modal5" exact component={Modal5} />
                                             </Switch>
                                         </AnimatePresence>
                                     </main>
