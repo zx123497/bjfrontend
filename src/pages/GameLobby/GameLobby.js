@@ -94,6 +94,7 @@ const GameLobby = (props) => {
                 roundTime: res.data.roomDetail.roundTime,
                 isGaming: res.data.roomDetail.isGaming,
             })
+            localStorage.setItem("round", res.data.roomDetail.nowRound + 1)
         })
     }, [])
 

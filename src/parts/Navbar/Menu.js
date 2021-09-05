@@ -134,7 +134,7 @@ const Menu = (props) => {
             ],
         },
     ]
-    if (localStorage.getItem('isAdmin') === '0') {
+    if (localStorage.getItem('isAdmin') === '1') {
         admin = true
         content = [
             {
