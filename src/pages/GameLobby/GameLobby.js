@@ -8,7 +8,6 @@ import PersonalTransaction from '../../components/ForGameLobby/PersonalTransacti
 import { socket } from '../../service/socket'
 import UserService from '../../service/UserService'
 import AdminService from '../../service/AdminService'
-import { useTimer } from 'react-timer-hook'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,7 +47,7 @@ const GameLobby = (props) => {
         // 先socket enterRoom才能fetch公告
         console.log('socket')
 
-        socket.emit('enterRoom', { roomNum: '9487' })
+        socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
 
         socket.on('resRole', (res) => {
             console.log(res)
