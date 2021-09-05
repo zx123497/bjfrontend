@@ -109,41 +109,61 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const content = [
-    {
-        title: '學生',
-        id: 'user',
-        items: [
-            {
-                title: '個人專區',
-                id: 'lobby',
-            },
-            {
-                title: '帳戶管理',
-                id: 'edit',
-                subList: [{ title: '修改密碼', id: 'password' }],
-            },
-        ],
-    },
-    {
-        title: '管理者',
-        id: 'admin',
-        items: [
-            {
-                title: '管理者專區',
-                id: 'lobby',
-            },
-        ],
-    },
-]
-
 const Menu = (props) => {
     const theme = useTheme()
     const classes = useStyles(theme)
     const [currentPage, setCurrentPage] = useState(null)
+    let admin = false
     const [open, setOpen] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [errorOpen, setErrorOpen] = useState(false)
+    let content = [
+        {
+            title: '學生',
+            id: 'user',
+            items: [
+                {
+                    title: '個人專區',
+                    id: 'lobby',
+                },
+                {
+                    title: '帳戶管理',
+                    id: 'edit',
+                    subList: [{ title: '修改密碼', id: 'password' }],
+                },
+            ],
+        },
+    ]
+    if (localStorage.getItem('stu') === '0') {
+        admin = true
+        content = [
+            {
+                title: '學生',
+                id: 'user',
+                items: [
+                    {
+                        title: '個人專區',
+                        id: 'lobby',
+                    },
+                    {
+                        title: '帳戶管理',
+                        id: 'edit',
+                        subList: [{ title: '修改密碼', id: 'password' }],
+                    },
+                ],
+            },
+            {
+                title: '管理者',
+                id: 'admin',
+                items: [
+                    {
+                        title: '管理者專區',
+                        id: 'lobby',
+                    },
+                ],
+            },
+        ]
+    }
 
     const [subMenuOpen, setSubMenuOpen] = useState({
         hours: false,
