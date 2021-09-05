@@ -6,6 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import WarningIcon from '@material-ui/icons/Warning'
 import BackPage from '../../components/BackPage/BackPage'
+import Back from '../../components/BackPage/Back'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import QrReader from 'react-qr-reader'
 import QRCode from 'react-qr-code'
@@ -103,7 +104,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const QRCodeSend2 = ({ history }) => {
+const QRCodeSend2 = ({ history }, props) => {
     const classes = useStyles()
     history.listen(() => {
         socket.on('disconnect', function () {
@@ -118,13 +119,13 @@ const QRCodeSend2 = ({ history }) => {
         checked: true,
     })
 
-    const result = {
-        round: '1',
-        buyer: '123',
-        seller: '234',
-        money: '60',
-    }
-    localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
+    // const result = {
+    //     round: '1',
+    //     buyer: '123',
+    //     seller: '234',
+    //     money: '60',
+    // }
+    // localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
 
     const handleSwitchChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked })
@@ -158,9 +159,7 @@ const QRCodeSend2 = ({ history }) => {
        */
         if (localStorage.getItem('is_socketid') == null && !trans) {
             socket.emit('setSocket', {
-                //for test之後改掉9487
-                roomNum: '9487',
-                // roomNum: localStorage.getItem('roomNum'),
+                roomNum: localStorage.getItem('roomNum'),
                 user_id: localStorage.getItem('username'),
             })
             localStorage.setItem('is_socketid', true)
@@ -186,13 +185,14 @@ const QRCodeSend2 = ({ history }) => {
         }
     }, [localStorage.getItem('role')])
 
+    // 與老師交易時的setSocket
     useEffect(() => {
         // 與老師交易時的setSocket
         if (localStorage.getItem('tranTeacher') == '1') {
             if (localStorage.getItem('is_socketid') == null) {
                 socket.emit('setSocket', {
                     //for test之後改掉9487
-                    roomNum: '9487',
+                    roomNum: localStorage.getItem('roomNum'),
                     user_id: localStorage.getItem('username'),
                 })
                 localStorage.setItem('is_socketid', true)
@@ -216,9 +216,7 @@ const QRCodeSend2 = ({ history }) => {
 
             //確認接受老師轉入
             socket.emit('set_admin_transc_req', {
-                //for test之後改掉9487
-                // roomNum: localStorage.getItem('roomNum'),
-                roomNum: '9487',
+                roomNum: localStorage.getItem('roomNum'),
                 round: localStorage.getItem('roundNum'),
                 limit_times: localStorage.getItem('tranLimit'),
                 payer_id: localStorage.getItem('tranUser'),
@@ -378,6 +376,7 @@ const QRCodeSend2 = ({ history }) => {
                 localStorage.setItem('tranLimit', data.match(/limit=([^&]+)/)[1].split('/')[0])
                 localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1])
             } else {
+                // localStorage.setItem('tranTeacher', '0')
                 localStorage.setItem('tranMoney', data.match(/money=([^&]+)/)[1].split('/')[0])
                 localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1])
             }
@@ -389,8 +388,12 @@ const QRCodeSend2 = ({ history }) => {
         setTrans(false)
     }, [roundNum])
 
+    // 設定轉出的金額
     const handleOnChange = (event) => {
         setMoney(event.target.value)
+        console.log('propppppp: ' + props.path)
+        console.log('propppppp: ' + props)
+        console.log('propppppp: ' + props.data)
         localStorage.setItem('userMoney', event.target.value)
     }
 
@@ -408,7 +411,7 @@ const QRCodeSend2 = ({ history }) => {
         if (!seller) {
             socket.on('transCheckReq', function (data) {
                 setReceiver_id(data)
-                //測試的時候發現network裡面receiver_id，socket.emit一直會是空的所以先寫了這個，確保有存到
+                // 測試的時候發現network裡面receiver_id，socket.emit一直會是空的所以先寫了這個，確保有存到
                 localStorage.setItem('receiver_id', data)
                 setOpen1(true)
             })
@@ -417,9 +420,15 @@ const QRCodeSend2 = ({ history }) => {
     const handleQRHide = () => {
         setShowQR(false)
     }
+
+    const handleBack = () => {
+        history.back()
+    }
+
     return (
         <div className={classes.QRCodeSend2}>
-            <BackPage refs="login"></BackPage>
+            {/* <BackPage refs="login"></BackPage> */}
+            <Back onclick={handleBack}></Back>
 
             {/* 確認1 */}
             <Dialog
@@ -461,10 +470,16 @@ const QRCodeSend2 = ({ history }) => {
                         ></img>
                     </div>
                     <Typography align="center" style={{ fontSize: '90%', fontWeight: '600', marginBottom: '8%' }}>
-                        you are {localStorage.getItem('role')}
+                        {/* you are {localStorage.getItem('role')} */}
+                        {localStorage.getItem('tranTeacher') == '1' ? (
+                            <div>teacher</div>
+                        ) : (
+                            <div>{localStorage.getItem('tranUser')}</div>
+                        )}
                     </Typography>
                     <Typography align="center" style={{ fontSize: '140%' }}>
-                        {seller ? (
+                        {/* {seller ? ( */}
+                        {localStorage.getItem('role') == 'seller' ? (
                             <div>即將收取 ${localStorage.getItem('tranMoney')}</div>
                         ) : localStorage.getItem('tranTeacher') == '1' ? (
                             <div>即將收取 ${localStorage.getItem('tranMoney')}</div>
@@ -557,7 +572,12 @@ const QRCodeSend2 = ({ history }) => {
                         ></img>
                     </div>
                     <Typography align="center" style={{ fontSize: '90%', fontWeight: '600', marginBottom: '8%' }}>
-                        you are {localStorage.getItem('player')}
+                        {/* you are {localStorage.getItem('player')} */}
+                        {localStorage.getItem('tranTeacher') == '1' ? (
+                            <div>teacher</div>
+                        ) : (
+                            <div>{localStorage.getItem('tranUser')}</div>
+                        )}
                     </Typography>
                     <Typography align="center" style={{ fontSize: '140%' }}>
                         {seller ? (
@@ -795,7 +815,7 @@ const QRCodeSend2 = ({ history }) => {
                     // style={previewStyle}
                     onError={handleError}
                     onScan={handleScan}
-                    facingMode={'rear'}
+                    facingMode={'environment'}
                 />
                 {/* <QRCodeScanner
                 className="scan"

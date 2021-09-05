@@ -13,21 +13,20 @@ import { useTimer } from 'react-timer-hook'
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.ultimate.dark,
-        height: "100vh",
+        height: '100vh',
         marginTop: '35px',
     },
 }))
 
 const GameLobby = (props) => {
-
-    const roomNum = props.location.pathname.split("/")[2]
+    const roomNum = props.location.pathname.split('/')[2]
 
     const [room, setRoom] = useState({
         pincode: '',
         totalMemNum: '',
         round: '',
         roundTime: '',
-        isGaming: false
+        isGaming: false,
     })
 
     const [player, setPlayer] = useState({
@@ -38,7 +37,8 @@ const GameLobby = (props) => {
         score: '',
         totalScore: '',
         transPartner: '',
-        tranAmount: ''
+        tranAmount: '',
+        path: '', //for QRcode
     })
 
     const [annoucement, setAnnouncement] = useState({
@@ -47,9 +47,9 @@ const GameLobby = (props) => {
 
     useEffect(() => {
         // 先socket enterRoom才能fetch公告
-        console.log("socket")
+        console.log('socket')
 
-        socket.emit('enterRoom', { roomNum: '9487' });
+        socket.emit('enterRoom', { roomNum: '9487' })
 
         socket.on('resRole', (res) => {
             console.log(res)
@@ -61,7 +61,8 @@ const GameLobby = (props) => {
                 score: 0,
                 totalScore: 0,
                 transPartner: '',
-                tranAmount: 0
+                tranAmount: 0,
+                path: props.location, //for QRcode
             })
         })
 
@@ -71,13 +72,13 @@ const GameLobby = (props) => {
         })
 
         socket.on('endRoundResponse', function (res) {
-            if(res == "endRoundMessage") {
+            if (res == 'endRoundMessage') {
                 props.history.push(`/loading/${roomNum}`)
             }
         })
 
-        socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('username')})
-        
+        socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('username') })
+
         // 取得url param放localStorage
         localStorage.setItem('roomNum', roomNum) //for Qrcode
 
@@ -86,7 +87,7 @@ const GameLobby = (props) => {
 
         const params = new URLSearchParams()
         params.append('roomNum', roomNum)
-        
+
         AdminService.postGetRoom(params).then((res) => {
             console.log(res.data)
             setRoom({
@@ -94,7 +95,7 @@ const GameLobby = (props) => {
                 totalMemNum: res.data.allUsers.length,
                 round: res.data.roomDetail.nowRound + 1,
                 roundTime: res.data.roomDetail.roundTime,
-                isGaming: res.data.roomDetail.isGaming
+                isGaming: res.data.roomDetail.isGaming,
             })
         })
     }, [])
@@ -106,7 +107,7 @@ const GameLobby = (props) => {
             <UpperBar data={room} />
             <AnnouncementLine data={annoucement} />
             <UserInfo data={player} />
-            <PersonalTransaction data={player}/>
+            <PersonalTransaction data={player} />
         </div>
     )
 }

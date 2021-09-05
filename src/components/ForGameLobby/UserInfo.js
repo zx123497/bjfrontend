@@ -3,6 +3,7 @@ import { React, useState, useEffect } from 'react'
 import { Grid, Box, Button, Icon, makeStyles, Typography } from '@material-ui/core'
 import { withRouter, Link } from 'react-router-dom'
 import CropFreeIcon from '@material-ui/icons/CropFree'
+// import path from 'path/posix'
 
 const useStyles = makeStyles((theme) => ({
     Upper: {
@@ -27,13 +28,13 @@ const useStyles = makeStyles((theme) => ({
             height: '2rem',
             lineHeight: '2rem',
             marginTop: '0.2rem',
-            color: 'white'
+            color: 'white',
         },
         '& .sell': {
-            color: "#ccc"
+            color: '#ccc',
         },
-        "& .buy": {
-            color: "#ccc"
+        '& .buy': {
+            color: '#ccc',
         },
         '& .identity_sell': {
             width: '80%',
@@ -42,14 +43,14 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: '10%',
             backgroundColor: '#333',
             paddingTop: '0.5rem',
-            color: 'white'
+            color: 'white',
         },
         '& .identity_buy': {
             width: '80%',
             height: '2.5rem',
             borderRadius: '1rem',
             marginLeft: '10%',
-            backgroundColor: "#DC6161",
+            backgroundColor: '#DC6161',
             color: 'white',
             paddingTop: '0.5rem',
         },
@@ -69,17 +70,20 @@ const useStyles = makeStyles((theme) => ({
         color: '#ccc',
     },
     Below_buy: {
-        color: "#ccc"
+        color: '#ccc',
     },
 }))
 
 const UserInfo = (props) => {
     const classes = useStyles()
+    const [path, setPath] = useState('') //for Qrcode
 
     //for Qrcode
     useEffect(() => {
+        setPath(props.data.path)
         localStorage.setItem('role', props.data.role)
         localStorage.setItem('price', props.data.price)
+        localStorage.setItem('money', props.data.money)
     }, [props])
 
     return (
@@ -95,8 +99,6 @@ const UserInfo = (props) => {
                 </Grid>
                 <Grid container xs={9}>
                     <Grid item xs={9}>
-                        
-
                         {props.data.role == 'seller' && (
                             <div>
                                 <Box className="box balance sell">
@@ -120,7 +122,7 @@ const UserInfo = (props) => {
                         )}
                     </Grid>
                     <Grid container xs={3} justify="flex-start">
-                        <Link component={Button} className={classes.button} to={'/qrcode'}>
+                        <Link path={path} component={Button} className={classes.button} to={'/qrcode'}>
                             <CropFreeIcon className="component" fontSize="large" />
                             <Typography className="component" variant="caption">
                                 {' '}
