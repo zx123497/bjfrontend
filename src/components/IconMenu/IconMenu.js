@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
 import SettingsIcon from '@material-ui/icons/Settings'
 import CloseIcon from '@material-ui/icons/Close'
-
+import { motion } from 'framer-motion'
 const Roomcard = (props) => {
     const classes = useStyles()
     const [open, setOopen] = useState(false)
@@ -21,9 +21,20 @@ const Roomcard = (props) => {
             <IconButton className="btn" onClick={() => handleOpen()}>
                 {open ? <CloseIcon style={{ color: 'red' }} /> : <SettingsIcon />}
             </IconButton>
-            <div className={open ? 'icons' : 'invisible'}>
-                {props.icons.map((row) => (
-                    <div
+            <div
+                className="icons"
+                // initial={{ opacity: 0 }}
+                // animate={{ opacity: open ? 1 : 1, transition: { duration: 0.25 } }}
+            >
+                {props.icons.map((row, id) => (
+                    <motion.div
+                        key={id}
+                        initial={false}
+                        animate={{
+                            y: open ? 0 : 0,
+                            opacity: open ? 1 : 0,
+                            transition: { duration: 0.3, delay: id * 0.05, ease: 'easeOut' },
+                        }}
                         style={{
                             display: 'flex',
                             flexDirection: 'row-reverse',
@@ -31,7 +42,12 @@ const Roomcard = (props) => {
                             alignItems: 'center',
                         }}
                     >
-                        <IconButton className="btn" onClick={() => row.func()}>
+                        <IconButton
+                            className="btn"
+                            onClick={() => {
+                                if (open) row.func()
+                            }}
+                        >
                             {row.icon}
                         </IconButton>
                         <div
@@ -45,7 +61,7 @@ const Roomcard = (props) => {
                         >
                             <h5>{row.title}</h5>
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
         </div>
