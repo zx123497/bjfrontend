@@ -4,6 +4,9 @@ import { Box, Card, Grid, makeStyles, Typography } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import '../../index.css';
 import { BorderColor } from '@material-ui/icons';
+import { useTimer } from 'react-timer-hook'
+import { socket } from '../../service/socket';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -65,6 +68,35 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+function MyTimer({ expiryTimestamp }) {
+    const { seconds, minutes } = useTimer({
+        expiryTimestamp, onExpire: () => console.warn('onExpire called') 
+    });
+  
+    return(
+        <div style={{textAlign: 'center'}}>
+            <div className="box timer">
+                <Grid container>
+                    <Grid item xs={8} spacing={3}>
+                        <Card className="timeCard minCard">
+                            <Box className="timeNum minNum">
+                                {minutes}
+                            </Box>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={4} spacing={3}>
+                        <Card className="timeCard secCard">
+                            <Box className="timeNum secNum">
+                                {seconds}
+                            </Box>
+                        </Card>
+                    </Grid>
+                </Grid>
+            </div>
+        </div>
+    )
+}
+
 const UpperBar = (props) => {
 
     const classes = useStyles();
@@ -78,6 +110,16 @@ const UpperBar = (props) => {
     })
 
     useEffect(() => {
+        console.log('start')
+        socket.emit('enterRoom',{ roomNum: `${props.match.params.id}` })
+        socket.emit('startTime',{ roomNum: `${props.match.params.id}` })
+
+        socket.on('startTimeResponse', (data) => {
+            console.log(data)
+        })
+    }, [])
+
+    useEffect(() => {
         setRoom({
             pincode: props.data.pincode,
             totalMemNum: props.data.totalMemNum,
@@ -89,6 +131,10 @@ const UpperBar = (props) => {
     }, [props.data])
 
     const numMap = new Map([[1, '一'], [2, '二'], [3, '三'], [4, '四'], [5, '五'], [6, '六'], [7, '七'], [8, '八'], [9, '九'], [10, '十']])
+
+    const time = new Date()
+    time.setSeconds(time.getSeconds() + 10)
+    console.log(time)
 
     return (
         <div className={classes.root}>
@@ -121,24 +167,7 @@ const UpperBar = (props) => {
                         <Typography>第{room.round}回合</Typography>
                     )}
                 </Box>
-                <div className="box timer">
-                    <Grid container>
-                        <Grid item xs={8} spacing={3}>
-                            <Card className="timeCard minCard">
-                                <Box className="timeNum minNum">
-                                    {Math.floor(room.roundTime / 60)}
-                                </Box>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={4} spacing={3}>
-                            <Card className="timeCard secCard">
-                                <Box className="timeNum secNum">
-                                    {room.roundTime % 60}
-                                </Box>
-                            </Card>
-                        </Grid>
-                    </Grid>
-                </div>
+                <MyTimer expiryTimestamp={time} />
             </div>
         </div>
     )
