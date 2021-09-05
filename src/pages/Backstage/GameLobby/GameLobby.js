@@ -85,7 +85,7 @@ const GameLobby = (props) => {
             title: '開始遊戲',
             func: () => {
                 socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
-                socket.emit('startTime', { roomNum: `${props.match.params.id}` })
+                socket.emit('startGame', { roomNum: `${props.match.params.id}` })
                 
                 const params = new URLSearchParams()
                 params.append('roomNum', roomNum)

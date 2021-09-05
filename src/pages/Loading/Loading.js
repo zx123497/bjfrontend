@@ -60,7 +60,7 @@ const Loading = (props) => {
         indicator: <Hearts width="300" />,
       });
 
-    const [userlist, setUserList] = useState([])
+    const [userlist, setUserList] = useState('Loading members...')
 
     useEffect(() => {
         console.log(props)
