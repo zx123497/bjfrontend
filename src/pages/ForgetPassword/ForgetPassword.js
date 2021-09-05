@@ -103,7 +103,7 @@ const ForgetPassword = (props) => {
                         localStorage.clear()
                         history.push('/login')
                     } else {
-                        if (localStorage.getItem('isAdmin') == '1') history.push('/user/lobby')
+                        if (localStorage.getItem('isAdmin') == '0') history.push('/user/lobby')
                         else history.push('/admin/lobby')
                     }
                 }
@@ -117,9 +117,9 @@ const ForgetPassword = (props) => {
             {!localStorage.getItem('email') ? (
                 <BackPage refs="/LogIn"></BackPage>
             ) : localStorage.getItem('isAdmin') ? (
-                <BackPage refs="/user/lobby"></BackPage>
-            ) : (
                 <BackPage refs="/admin/lobby"></BackPage>
+            ) : (
+                <BackPage refs="/user/lobby"></BackPage>
             )}
             <Card className="card">
                 <CardContent>
