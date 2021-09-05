@@ -421,14 +421,9 @@ const QRCodeSend2 = ({ history }, props) => {
         setShowQR(false)
     }
 
-    const handleBack = () => {
-        history.back()
-    }
-
     return (
         <div className={classes.QRCodeSend2}>
-            {/* <BackPage refs="login"></BackPage> */}
-            <Back onclick={handleBack}></Back>
+            <BackPage refs={'gamelobby/' + localStorage.getItem('roomNum')}></BackPage>
 
             {/* 確認1 */}
             <Dialog
