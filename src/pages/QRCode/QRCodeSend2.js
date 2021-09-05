@@ -6,6 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import WarningIcon from '@material-ui/icons/Warning'
 import BackPage from '../../components/BackPage/BackPage'
+import Back from '../../components/BackPage/Back'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import QrReader from 'react-qr-reader'
 import QRCode from 'react-qr-code'
@@ -419,9 +420,15 @@ const QRCodeSend2 = ({ history }, props) => {
     const handleQRHide = () => {
         setShowQR(false)
     }
+
+    const handleBack = () => {
+        history.back()
+    }
+
     return (
         <div className={classes.QRCodeSend2}>
-            <BackPage refs="login"></BackPage>
+            {/* <BackPage refs="login"></BackPage> */}
+            <Back onclick={handleBack}></Back>
 
             {/* 確認1 */}
             <Dialog
