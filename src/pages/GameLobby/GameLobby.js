@@ -37,7 +37,6 @@ const GameLobby = (props) => {
         totalScore: '',
         transPartner: '',
         tranAmount: '',
-        path: '', //for QRcode
     })
 
     const [annoucement, setAnnouncement] = useState({
@@ -61,7 +60,6 @@ const GameLobby = (props) => {
                 totalScore: 0,
                 transPartner: '',
                 tranAmount: 0,
-                path: props.location, //for QRcode
             })
         })
 

@@ -111,8 +111,8 @@ const UpperBar = (props) => {
 
     useEffect(() => {
         console.log('start')
-        socket.emit('enterRoom',{ roomNum: `${props.match.params.id}` })
-        socket.emit('startTime',{ roomNum: `${props.match.params.id}` })
+        // socket.emit('enterRoom',{ roomNum: `${props.match.params.id}` })
+        // socket.emit('startTime',{ roomNum: `${props.match.params.id}` })
 
         socket.on('startTimeResponse', (data) => {
             console.log(data)

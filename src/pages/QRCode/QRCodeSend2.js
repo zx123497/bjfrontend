@@ -234,8 +234,8 @@ const QRCodeSend2 = ({ history }, props) => {
                     localStorage.removeItem('socketid')
                     const result = {
                         round: localStorage.getItem('roundNum'),
-                        buyer: localStorage.getItem('tranUser'),
-                        seller: localStorage.getItem('username'),
+                        tranUser: localStorage.getItem('tranUser'),
+                        // seller: localStorage.getItem('username'),
                         money: localStorage.getItem('tranMoney'),
                     }
                     localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
@@ -299,8 +299,8 @@ const QRCodeSend2 = ({ history }, props) => {
                     setOpen3(true)
                     const result = {
                         round: localStorage.getItem('roundNum'),
-                        buyer: localStorage.getItem('tranUser'),
-                        seller: localStorage.getItem('username'),
+                        tranUser: localStorage.getItem('tranUser'),
+                        // seller: localStorage.getItem('username'),
                         money: localStorage.getItem('tranMoney'),
                     }
                     localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
@@ -331,8 +331,8 @@ const QRCodeSend2 = ({ history }, props) => {
             localStorage.removeItem('socketid')
             const result = {
                 round: localStorage.getItem('roundNum'),
-                buyer: localStorage.getItem('username'),
-                seller: localStorage.getItem('receiver_id'),
+                // buyer: localStorage.getItem('username'),
+                tranUser: localStorage.getItem('receiver_id'),
                 money: money,
             }
             localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
@@ -391,9 +391,6 @@ const QRCodeSend2 = ({ history }, props) => {
     // 設定轉出的金額
     const handleOnChange = (event) => {
         setMoney(event.target.value)
-        console.log('propppppp: ' + props.path)
-        console.log('propppppp: ' + props)
-        console.log('propppppp: ' + props.data)
         localStorage.setItem('userMoney', event.target.value)
     }
 
