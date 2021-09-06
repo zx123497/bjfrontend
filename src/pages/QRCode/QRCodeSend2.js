@@ -152,6 +152,10 @@ const QRCodeSend2 = ({ history }, props) => {
     const [roundNum, setRoundNum] = React.useState('0')
     const [receiver_id, setReceiver_id] = React.useState('')
 
+    const handleClose1 = () => {
+        setOpen1(false)
+    }
+
     useEffect(() => {
         /*
        // 最後送get_chek_point的時候，他會自己再set一次id所以這邊讓他只能set一次
@@ -206,9 +210,6 @@ const QRCodeSend2 = ({ history }, props) => {
         }
     }, [localStorage.getItem('tranTeacher')])
 
-    const handleClose1 = () => {
-        setOpen1(false)
-    }
     const handleYes1 = () => {
         setOpen1(false)
         if (localStorage.getItem('tranTeacher') == '1') {
@@ -471,13 +472,24 @@ const QRCodeSend2 = ({ history }, props) => {
                     </Typography>
                     <Typography align="center" style={{ fontSize: '140%' }}>
                         {/* {seller ? ( */}
-                        {localStorage.getItem('role') == 'seller' ? (
+                        {/* {localStorage.getItem('role') == 'seller' ? (
                             <div>即將收取 ${localStorage.getItem('tranMoney')}</div>
                         ) : localStorage.getItem('tranTeacher') == '1' ? (
                             <div>即將收取 ${localStorage.getItem('tranMoney')}</div>
                         ) : (
                             <div>即將轉出 ${localStorage.getItem('tranMoney')}</div>
-                        )}
+                        )} */}
+                        {(() => {
+                            if (localStorage.getItem('tranTeacher') == '1') {
+                                if (localStorage.getItem('tranMoney') >= 0)
+                                    return <div>即將收取 ${localStorage.getItem('tranMoney')}</div>
+                                else return <div>即將扣款 ${localStorage.getItem('tranMoney')}</div>
+                            } else {
+                                if (localStorage.getItem('role') == 'seller')
+                                    return <div>即將收取 ${localStorage.getItem('tranMoney')}</div>
+                                else return <div>即將轉出 ${localStorage.getItem('tranMoney')}</div>
+                            }
+                        })()}
                     </Typography>
                 </DialogContent>
                 <DialogActions>
@@ -804,30 +816,10 @@ const QRCodeSend2 = ({ history }, props) => {
                 <QrReader
                     className="scan"
                     delay={300}
-                    // style={previewStyle}
                     onError={handleError}
                     onScan={handleScan}
                     facingMode={'environment'}
                 />
-                {/* <QRCodeScanner
-                className="scan"
-                onError={handleError}
-                onScan={handleScan}
-                onRead={this.onSuccess}
-                flashMode={RNCamera.Constants.FlashMode.torch}
-                topContent={
-                    <Text style={styles.centerText}>
-                        Go to{' '}
-                    <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
-                        your computer and scan the QR code.
-                    </Text>
-                }
-                bottomContent={
-                    <TouchableOpacity style={styles.buttonTouchable}>
-                    <Text style={styles.buttonText}>OK. Got it!</Text>
-                    </TouchableOpacity>
-                }
-            /> */}
             </div>
         </div>
     )

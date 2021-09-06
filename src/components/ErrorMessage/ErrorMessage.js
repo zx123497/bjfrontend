@@ -26,8 +26,6 @@ const ErrorMessage = (props) => {
                         backgroundColor: '#EAEAEA',
                     },
                 }}
-                // open={open3}
-                // onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
@@ -43,7 +41,6 @@ const ErrorMessage = (props) => {
                 </DialogContent>
                 <DialogActions>
                     <Button
-                        // onClick={handleClose}
                         className="sure"
                         style={{
                             margin: 'auto',

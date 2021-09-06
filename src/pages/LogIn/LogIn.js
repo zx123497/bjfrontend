@@ -24,10 +24,9 @@ const useStyles = makeStyles((theme) => ({
     LogIn: {
         display: 'flex',
         color: theme.palette.ultimate.main,
-        // backgroundColor: theme.palette.primary.main,
         backgroundColor: '#555',
         height: '100vh',
-        overflow: 'hidden', //解決margin-top塌陷
+        overflow: 'hidden', 
         alienItems: 'center',
         justifyContent: 'center',
 
@@ -84,14 +83,12 @@ const useStyles = makeStyles((theme) => ({
         '& .input': {
             marginTop: '8px',
             color: theme.palette.ultimate.dark,
-            // color: theme.palette.ultimate.main,
             fontSize: 20,
             height: '15px',
             marginLeft: '17%',
             '& .MuiTextField-root': {
                 marginTop: '25px',
                 width: '80%',
-                // color: theme.palette.ultimate.main,
                 color: theme.palette.ultimate.dark,
             },
             '& label.Mui-focused': {
@@ -221,15 +218,12 @@ const LogIn = (props) => {
 
     const handleSubmit = (event) => {
         if (values.account == '' && values.password == '') {
-            //alert('請輸入帳號和密碼')
             setErrorMessage('請輸入帳號和密碼')
             setOpen(true)
         } else if (values.account == '') {
-            //alert('請輸入帳號')
             setErrorMessage('請輸入帳號')
             setOpen(true)
         } else if (values.password == '') {
-            //alert('請輸入密碼')
             setErrorMessage('請輸入密碼')
             setOpen(true)
         } else {
