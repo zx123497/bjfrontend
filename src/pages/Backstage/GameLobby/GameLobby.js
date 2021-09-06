@@ -155,6 +155,7 @@ const GameLobby = (props) => {
 
         getRoom()
         getChartData()
+        socket.emit('currentTime', { roomNum: roomNum })
 
         // listen to endGame
         socket.on('get_out', (res) => {

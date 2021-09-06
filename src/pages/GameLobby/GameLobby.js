@@ -97,7 +97,7 @@ const GameLobby = (props) => {
         // listen to endRound
         socket.on('endRoundResponse', (res) => {
             console.log(res)
-            if (res == 'endRoundMessage') {
+            if ((res == 'endRoundMessage') || (res == 'error(no next round)')) {
                 props.history.push(`/loading/${roomNum}`)
             }
         })

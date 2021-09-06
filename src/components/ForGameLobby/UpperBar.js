@@ -117,8 +117,8 @@ const UpperBar = (props) => {
 
     useEffect(() => {
         socket.on('currentTimeResponse', (res) => {
-            console.log(res.remainSecond)
             expTime.setSeconds(expTime.getSeconds() + res.remainSecond)
+            console.log(expTime)
             setTime(expTime)
         })
     }, [])
