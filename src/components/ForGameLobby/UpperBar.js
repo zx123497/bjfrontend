@@ -99,6 +99,8 @@ function MyTimer({ expiryTimestamp }) {
 
 const UpperBar = (props) => {
 
+    const roomNum = props.match.params.id
+
     const classes = useStyles();
 
     const [room, setRoom] = useState({
@@ -109,13 +111,15 @@ const UpperBar = (props) => {
         isGaming: false
     })
 
-    useEffect(() => {
-        console.log('start')
-        // socket.emit('enterRoom',{ roomNum: `${props.match.params.id}` })
-        // socket.emit('startTime',{ roomNum: `${props.match.params.id}` })
+    const expTime = new Date()
 
-        socket.on('startTimeResponse', (data) => {
-            console.log(data)
+    const [time, setTime] = useState(expTime)
+
+    useEffect(() => {
+        socket.on('currentTimeResponse', (res) => {
+            expTime.setSeconds(expTime.getSeconds() + res.remainSecond)
+            console.log(expTime)
+            setTime(expTime)
         })
     }, [])
 
@@ -131,10 +135,6 @@ const UpperBar = (props) => {
     }, [props.data])
 
     const numMap = new Map([[1, '一'], [2, '二'], [3, '三'], [4, '四'], [5, '五'], [6, '六'], [7, '七'], [8, '八'], [9, '九'], [10, '十']])
-
-    const time = new Date()
-    time.setSeconds(time.getSeconds() + 10)
-    console.log(time)
 
     return (
         <div className={classes.root}>

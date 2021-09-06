@@ -19,6 +19,7 @@ import TimerOffIcon from '@material-ui/icons/TimerOff'
 import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet'
 import Button from '@material-ui/core/Button'
 import useTheme from '@material-ui/core/styles/useTheme'
+
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.ultimate.dark,
@@ -42,13 +43,17 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const GameLobby = (props) => {
+
+    const roomNum = props.location.pathname.split('/')[3]
+
     const theme = useTheme()
+
     const [room, setRoom] = useState({
         pincode: '',
         totalMemNum: '',
         round: '',
         roundTime: '',
-        isGaming: false
+        isGaming: ''
     })
 
     const [annoucement, setAnnouncement] = useState({
@@ -59,15 +64,41 @@ const GameLobby = (props) => {
         chartData: [],
     })
 
+    const getRoom = () => {
+        const getRoomParam = new URLSearchParams()
+        getRoomParam.append('roomNum', roomNum)
+
+        AdminService.postGetRoom(getRoomParam).then((res) => {
+            if (res.status == '200') {
+                setRoom({
+                    pincode: props.match.params.id,
+                    totalMemNum: res.data.allUsers.length,
+                    round: res.data.roomDetail.nowRound + 1,
+                    roundTime: res.data.roomDetail.roundTime,
+                    isGaming: res.data.roomDetail.isGaming
+                })
+            }
+        })
+    }
+
+    const getChartData = () => {
+        const chartdataParam = new URLSearchParams()
+        chartdataParam.append('roomNum', `${roomNum}`)
+
+        AdminService.postChartData(chartdataParam).then((res) => {
+            if(res.status == '200') {
+                setChartData({ chartData: res.data.chartData })
+            }
+        })
+    }
+
     const icons = [
         {
             // end game
             icon: <TimerOffIcon />,
             title: '結束遊戲',
             func: () => {
-                socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
                 socket.emit('closeRoom', { roomNum: `${props.match.params.id}` })
-                props.history.push(`/gamesum/${props.match.params.id}`)
             },
         },
         {
@@ -75,7 +106,6 @@ const GameLobby = (props) => {
             icon: <FastForwardIcon />,
             title: '下一回合',
             func: () => {
-                socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
                 socket.emit('endRound', { roomNum: `${props.match.params.id}` })
             },
         },
@@ -84,23 +114,8 @@ const GameLobby = (props) => {
             icon: <TimerIcon />,
             title: '開始遊戲',
             func: () => {
-                socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
-                socket.emit('startGame', { roomNum: `${props.match.params.id}` })
-                
-                const params = new URLSearchParams()
-                params.append('roomNum', roomNum)
-
-                AdminService.postGetRoom(params).then((res) => {
-                    if (res.status == '200') {
-                        setRoom({
-                            pincode: props.match.params.id,
-                            totalMemNum: res.data.allUsers.length,
-                            round: res.data.roomDetail.nowRound,
-                            roundTime: res.data.roomDetail.roundTime,
-                            isGaming: res.data.roomDetail.isGaming
-                        })
-                    }
-                })
+                socket.emit('startGame', { roomNum: roomNum })
+                socket.emit('currentTime', { roomNum: roomNum })
             },
         },
         {
@@ -108,16 +123,9 @@ const GameLobby = (props) => {
             icon: <AutorenewIcon />,
             title: "分配身分",
             func: () => {
-                const params2 = new URLSearchParams()
-                params2.append('roomNum', `${roomNum}`)
-                params2.append('roundNum', '0')
-                AdminService.postAssignRole(params2).then((res) => {
-                    const params3 = new URLSearchParams()
-                    params3.append('roomNum', `${roomNum}`)
-                    AdminService.postChartData(params3).then((response) => {
-                        setChartData({ chartData: response.data.chartData })
-                        // console.log(chartData)
-                    })
+                socket.emit('shuffle', {
+                    roomNum: `${roomNum}`,
+                    roundNum: `${room.round + 1}`
                 })
             },
         },
@@ -129,72 +137,74 @@ const GameLobby = (props) => {
                 try {
                     handleModalOpen()
                 } catch (error) {
-                    console.log(error)
+                    console.warn(error)
                 }
             },
         },
     ]
 
-    const roomNum = props.match.params.id
-
     useEffect(() => {
-        const params = new URLSearchParams()
-        params.append('roomNum', roomNum)
 
-        AdminService.postGetRoom(params).then((res) => {
-            if (res.status == '200') {
-                console.log(res)
-                if(res.data.allUsers == null) {
-                    console.log("no user")
-                    // setRoom({
-                    //     pincode: props.match.params.id,
-                    //     totalMemNum: 0,
-                    //     round: res.data.roomDetail.nowRound,
-                    //     roundTime: res.data.roomDetail.roundTime,
-                    // })
-                }
-                else {
-                    setRoom({
-                        pincode: props.match.params.id,
-                        totalMemNum: res.data.allUsers.length,
-                        round: res.data.roomDetail.nowRound + 1,
-                        roundTime: res.data.roomDetail.roundTime,
-                        isGaming: res.data.roomDetail.isGaming
-                    })
-                    const params3 = new URLSearchParams()
-                    params3.append('roomNum', `${roomNum}`)
-                    AdminService.postChartData(params3).then((response) => {
-                        setChartData({ chartData: response.data.chartData })
-                        // console.log(chartData)
-                    })
-                }
-            }
+        console.log(props)
+
+        socket.emit('enterRoom', {
+            roomNum: roomNum,
+            ID: localStorage.getItem('id'),
+            username: localStorage.getItem('username')
         })
 
-        socket.on('startTimeResponse', (data) => {
-            if(data == "error") {
+        getRoom()
+        getChartData()
+        socket.emit('currentTime', { roomNum: roomNum })
+
+        // listen to endGame
+        socket.on('get_out', (res) => {
+            // props.history.push(`/gamesum/${props.match.params.id}`)
+            console.log(res)
+        })
+
+        // listen to startGame
+        socket.on('startGameResponse', (res) => {
+            if(res == "error") {
                 alert("進行中的遊戲點擊開始按鈕無效")
+            } else {
+                getRoom()
             }
         })
 
-        socket.on('endRoundResponse', (data) => {
-            if(data == "error") {
+        // listen to endRound
+        socket.on('endRoundResponse', (res) => {
+            if(res == "error") {
                 alert("請先開始遊戲再執行結束回合")
             }
-            else if(data == "error(no next round)") {
+            else if(res == "error(no next round)") {
                 alert("已達設定回合上限，請回到管理者專區更改設定增加回合數")
             }
-            else if(data == "endRoundMessage") {
+            else if(res == "endRoundMessage") {
                 setAnnouncement({roomAnnoucement: ''})
-                alert("回合結束")
+                getRoom()
+                alert("此回合結束")
             }
         })
 
-        socket.on('sys', function (sysMsg) {
-            // console.log(sysMsg)
-            setAnnouncement({ roomAnnoucement: sysMsg })
+        // listen to shuffle
+        socket.on('shuffleResponse', (res) => {
+            console.log(res)
+            getChartData()
         })
-    }, [room.totalMemNum])
+        
+        // listen to sendsysmsg
+        socket.on('sys', (res) => {
+            console.log(res)
+            if(res == 'error') {
+                alert("請先開始遊戲")
+            } else {
+                setAnnouncement({ roomAnnoucement: res.message })
+                getChartData()
+            }
+        })
+
+    }, [])
 
     const classes = useStyles()
 
@@ -226,37 +236,29 @@ const GameLobby = (props) => {
         var seller = modalOpenState.seller
         var buyer = modalOpenState.buyer
 
-        var msg = ""
+        var sysmsg = ""
 
         if(seller > 0) {
-            msg += `賣家商品成本+$${seller}  `
+            sysmsg += `賣家商品成本+$${seller}  `
         }
         else if(seller < 0) {
-            msg += `賣家商品成本-$${Math.abs(seller)}  `
+            sysmsg += `賣家商品成本-$${Math.abs(seller)}  `
         }
 
         if(buyer > 0) {
-            msg += `買家商品價值+$${buyer}`
+            sysmsg += `買家商品價值+$${buyer}`
         }
         else if(buyer < 0) {
-            msg += `買家商品價值-$${Math.abs(buyer)}`
+            sysmsg += `買家商品價值-$${Math.abs(buyer)}`
         }
 
-        // call changeInterval API \(= U =)/
-
-        const changeRoleMoneyParam = new URLSearchParams()
-        changeRoleMoneyParam.append("roomNum", props.match.params.id)
-        changeRoleMoneyParam.append("bAdjustPrice", buyer)
-        changeRoleMoneyParam.append("sAdjustPrice", seller)
-        AdminService.postChangeRoleMoney(changeRoleMoneyParam).then((res) => {
-            if(res.status == 200) {
-                socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
-                socket.emit('sendsysmsg', {
-                    msg: msg,
-                    roomNum: `${props.match.params.id}`,
-                })
-            }
+        socket.emit('sendsysmsg', {
+            msg: sysmsg,
+            roomNum: roomNum,
+            bAdjustPrice: buyer,
+            sAdjustPrice: seller
         })
+        
         handleModalClose()
     }
 

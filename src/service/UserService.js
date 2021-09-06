@@ -33,16 +33,6 @@ const UserService = {
             throw error
         }
     },
-    postEnterRoom: async(body) => {
-        try {
-            const response = await axios.post('/enterRoom', body)
-            return response
-        } catch (error) {
-            console.log(error)
-            alert('PIN CODE 無效')
-            throw error
-        }
-    }
 }
 
 export default UserService

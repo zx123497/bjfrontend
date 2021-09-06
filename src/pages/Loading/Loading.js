@@ -32,9 +32,17 @@ const useStyles = makeStyles((theme) => ({
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            marginTop:"30px",
+            marginTop:"10px",
             fontSize:"25px",
             fontWeight:"800",
+            color: "white",
+        },
+        "& .subtitle":{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop:"20px",
+            fontSize:"16px",
             color: "white",
         },
         "& .userlist": {
@@ -62,36 +70,33 @@ const Loading = (props) => {
 
     const [userlist, setUserList] = useState('Loading members...')
 
+    const roomNum = props.location.pathname.split('/')[2]
+
     useEffect(() => {
+
         console.log(props)
-        
-        socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
-        
-        socket.on('startTimeResponse', function (obj) {
-            console.log(obj)
-            props.history.push(`/gamelobby/${props.match.params.id}`)
-        })
 
-        const getRoomParam = new URLSearchParams();
-        getRoomParam.append("roomNum", props.match.params.id)
-
-        AdminService.postGetRoom(getRoomParam).then((res) => {
-            if(res.status == 200) {
-                if(res.data.roomDetail.round < 1) {
-                    const param = new URLSearchParams();
-                    param.append("roomNum", props.match.params.id)
-                    param.append("ID", localStorage.getItem("username"))
-                    param.append("schoolname", "NCU")
-                    param.append("username", localStorage.getItem("id"))
-                    UserService.postEnterRoom(param)
-                }
-            }
+        // direct to gamelobby when the game start
+        socket.on('startGameResponse', function (obj) {
+            props.history.push(`/gamelobby/${roomNum}`)
         })
         
+        // enter room socket
+        socket.emit('enterRoom', {
+            roomNum: roomNum,
+            ID: localStorage.getItem('id'),
+            username: localStorage.getItem('username')
+        })
+
+        // request members list and render every 5 seconds
         const intervalID = setInterval(() => {
+            const getRoomParam = new URLSearchParams();
+            getRoomParam.append("roomNum", roomNum)
+
             AdminService.postGetRoom(getRoomParam).then((res) => {
                 if(res.status == 200) {
-                    if(res.data.allUsers.length > 0) {
+                    console.log(res)
+                    if(res.data.allUsers) {
                         var temp = []
                         res.data.allUsers.forEach(element => {
                             temp.push(<Typography>{element[0]}</Typography>)
@@ -113,6 +118,7 @@ const Loading = (props) => {
             {indicatorEl}
             </section>
         </div>
+        <div className="subtitle">ROOM {roomNum}</div>
         <div className="text">等待遊戲開始...</div>
         <Box className="userlist" boxShadow={3}>
             {userlist}
