@@ -57,9 +57,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const GameIn = (props) => {
-    ////////////// for testing //////////////
-    // localStorage.setItem('username', '234')
-    /////////////////////////////////////////
 
     const classes = useStyles()
 
@@ -77,20 +74,7 @@ const GameIn = (props) => {
         if (values.pincode == '') {
             alert('請輸入PIN CODE')
         } else {
-            const params = new URLSearchParams()
-            params.append('roomNum', values.pincode)
-            params.append('ID', username)
-            params.append('schoolname', 'NCU')
-            params.append('username', username)
-
-            UserService.postEnterRoom(params).then((res) => {
-                if (res.status == '200') {
-                    const roomDetail = res.data.roomDetail
-                    // localStorage.setItem("countdown", roomDetail.roundTime)
-                    // props.history.push(`/gamelobby/:${values.pincode}/:${roomDetail.nowRound}`)
-                    props.history.push(`/loading/${values.pincode}`)
-                }
-            })
+            props.history.push(`/loading/${values.pincode}`)
         }
         event.preventDefault()
     }

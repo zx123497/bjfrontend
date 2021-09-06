@@ -25,7 +25,7 @@ const GameLobby = (props) => {
         totalMemNum: '',
         round: '',
         roundTime: '',
-        isGaming: false,
+        isGaming: '',
     })
 
     const [player, setPlayer] = useState({
@@ -43,12 +43,38 @@ const GameLobby = (props) => {
         roomAnnoucement: '',
     })
 
+    const getRoom = () => {
+        const getRoomParam = new URLSearchParams()
+        getRoomParam.append('roomNum', roomNum)
+
+        AdminService.postGetRoom(getRoomParam).then((res) => {
+            if (res.status == '200') {
+                setRoom({
+                    pincode: props.match.params.id,
+                    totalMemNum: res.data.allUsers.length,
+                    round: res.data.roomDetail.nowRound + 1,
+                    roundTime: res.data.roomDetail.roundTime,
+                    isGaming: res.data.roomDetail.isGaming
+                })
+            }
+        })
+    }
+
     useEffect(() => {
-        // 先socket enterRoom才能fetch公告
-        console.log('socket')
 
-        socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
+        console.log(props)
 
+        socket.emit('enterRoom', {
+            roomNum: roomNum,
+            ID: localStorage.getItem('id'),
+            username: localStorage.getItem('username')
+        })
+
+        getRoom()
+        localStorage.setItem("round", room.round)
+        socket.emit('currentTime', { roomNum: roomNum })
+
+        // listen to reqRole
         socket.on('resRole', (res) => {
             console.log(res)
             setPlayer({
@@ -63,39 +89,35 @@ const GameLobby = (props) => {
             })
         })
 
-        socket.on('sys', function (sysMsg) {
-            setAnnouncement({ roomAnnoucement: sysMsg })
-            console.log(`sysMsg: ${sysMsg}`)
+        // listen to sendsysmsg
+        socket.on('sys', function (res) {
+            console.log(res)
         })
 
-        socket.on('endRoundResponse', function (res) {
+        // listen to endRound
+        socket.on('endRoundResponse', (res) => {
+            console.log(res)
             if (res == 'endRoundMessage') {
                 props.history.push(`/loading/${roomNum}`)
             }
         })
 
-        socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('username') })
-
-        // 取得url param放localStorage
-        localStorage.setItem('roomNum', roomNum) //for Qrcode
-
-        // 增加param傳axios
-        console.log(roomNum)
-
-        const params = new URLSearchParams()
-        params.append('roomNum', roomNum)
-
-        AdminService.postGetRoom(params).then((res) => {
-            console.log(res.data)
-            setRoom({
-                pincode: roomNum,
-                totalMemNum: res.data.allUsers.length,
-                round: res.data.roomDetail.nowRound + 1,
-                roundTime: res.data.roomDetail.roundTime,
-                isGaming: res.data.roomDetail.isGaming,
-            })
-            localStorage.setItem("round", res.data.roomDetail.nowRound + 1)
+        // listen to sysmsg
+        socket.on('sys', (res) => {
+            if(res != 'error') {
+                setAnnouncement({ roomAnnoucement: res.message })
+                socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('id') })
+            }
         })
+
+        // listen to close room
+        socket.on('get_out', (res) => {
+            socket.emit('leaveRoom', { roomNum: roomNum })
+        })
+
+        // ask for user role
+        socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('id') })
+
     }, [])
 
     const classes = useStyles()

@@ -9,14 +9,6 @@ const AdminService = {
             throw error
         }
     },
-    postAssignRole: async(body) => {
-        try {
-            const response = await axios.post('/shuffle', body)
-            return response
-        } catch (error) {
-            throw error
-        }
-    },
     postChartData: async(body) => {
         try {
             const response = await axios.post('/chartData', body)
