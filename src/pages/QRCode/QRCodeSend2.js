@@ -422,7 +422,7 @@ const QRCodeSend2 = ({ history }, props) => {
             if (money <= 0) {
                 setError('付款金額需大於 0 元')
                 setOpen3(true)
-            } else if (money >= localStorage.getItem('money')) {
+            } else if (localStorage.getItem('userMoney') >= localStorage.getItem('money')) {
                 setError('超出您的餘額')
                 setOpen3(true)
             } else {
