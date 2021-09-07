@@ -1,0 +1,1557 @@
+[33mcommit 4622ef5e275b280768cc2031fe63872f79b526d2[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Merge: ed9e66e 63fb6d5
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Sep 3 13:13:20 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+    commit -m "change color"
+
+[33mcommit 63fb6d5ee9d1ca29e7436abfa6283dbc9e530ced[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: ally0108 <allyhappy@gmail.com>
+Date:   Fri Sep 3 21:10:44 2021 +0800
+
+    change textfield color
+
+[33mcommit 876e3423461eeddf6fc9fa068134c403e146168c[m
+Author: ally0108 <allyhappy@gmail.com>
+Date:   Fri Sep 3 17:04:19 2021 +0800
+
+    change color
+
+[33mcommit f8d85e11dbcd6fbfd11b61b0db49d5ba4f45b8ad[m
+Merge: 73dfcac 08b6eda
+Author: ally0108 <allyhappy@gmail.com>
+Date:   Thu Sep 2 19:57:40 2021 +0800
+
+    commit for pull
+
+[33mcommit 73dfcacdfd04f451e02b3dd21d831b8c4b305907[m
+Author: ally0108 <allyhappy@gmail.com>
+Date:   Thu Sep 2 19:54:22 2021 +0800
+
+    commit for pull
+
+[33mcommit 08b6edadb88dce7514e0aecc9f28babe5107dd3e[m
+Merge: 1d5d613 3f16a12
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Sep 2 15:20:55 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 1d5d613a8293c62302242fbec805f0073a4a5f7d[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Sep 2 15:20:50 2021 +0800
+
+    commit for pull
+
+[33mcommit 3f16a12551a8e3e07b5f81a690ed337ae13948d8[m
+Author: leo <leo000111444@gmail.com>
+Date:   Mon Aug 30 17:14:33 2021 +0800
+
+    improve style & transitions
+
+[33mcommit b6fc4d0d6919438bb2e4c1c0f01ef4fcb9e007ef[m
+Author: leo <leo000111444@gmail.com>
+Date:   Sun Aug 29 16:54:33 2021 +0800
+
+    fix menu style
+
+[33mcommit d0667872abd3fc2ed08dc777bc952a01006ef722[m
+Author: leo <leo000111444@gmail.com>
+Date:   Sun Aug 29 15:48:52 2021 +0800
+
+    fix menu style
+
+[33mcommit 03714f1d82722ea8ec4220a7ccdb174d42755227[m
+Author: leo <leo000111444@gmail.com>
+Date:   Sun Aug 29 15:33:48 2021 +0800
+
+    improve admin lobby style, but not yet do mobile style
+
+[33mcommit a3bf256681a9dceaceef9fc1a3237ac79e46503d[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Aug 26 20:24:07 2021 +0800
+
+    finish user gamelobby socket arrangment
+
+[33mcommit d2d5d1338905db26758f5d5c98f231c6d01b9565[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Aug 26 00:24:21 2021 +0800
+
+    change API for gamesum (unsolved)
+
+[33mcommit 31d580b484f9cccd7e3f1291550f2dc2c57ba464[m
+Merge: 4e0d36c 7e0b252
+Author: yww1327 <yww1327@gmail.com>
+Date:   Wed Aug 25 16:42:00 2021 +0800
+
+    unsolved: socket in gamesum page didn't work
+
+[33mcommit 4e0d36c4f0c85b37be0cf01b1bfff088f9b5508d[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Wed Aug 25 16:41:00 2021 +0800
+
+    unsolved: socket in gamesum page didn't work
+
+[33mcommit ed9e66e908790715df9eab5637f1481487e6ec55[m
+Merge: 27c9566 7e0b252
+Author: Dio <gank23456@gmail.com>
+Date:   Sat Aug 21 09:35:46 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 7e0b252c68ca077d734bab4a15d969ef155dfb9c[m
+Author: leo <leo000111444@gmail.com>
+Date:   Sat Aug 21 17:34:26 2021 +0800
+
+    merge and build
+
+[33mcommit 40b6367fae2d0d8a83899a80605f95b5911123a6[m
+Merge: c78cf1b 98c5eff
+Author: leo <leo000111444@gmail.com>
+Date:   Sat Aug 21 17:31:55 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit c78cf1bc56e787d9465aae1024fad68d9a00616e[m
+Author: leo <leo000111444@gmail.com>
+Date:   Sat Aug 21 17:30:22 2021 +0800
+
+    add access token for auth
+
+[33mcommit 98c5effd380a208d491c65f8a3ecf6c6dde1f64e[m
+Merge: 41fa308 f811c33
+Author: yww1327 <yww1327@gmail.com>
+Date:   Tue Aug 17 19:13:43 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 41fa3085c03f49d9c91f14fc8aa4bd926fadf550[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Tue Aug 17 19:13:37 2021 +0800
+
+    /admin/gamelobby fix assign role
+
+[33mcommit 767e835ae0f268ec2c1d951abea4e43f91fa22f1[m
+Author: leo <leo000111444@gmail.com>
+Date:   Sat Aug 14 02:51:44 2021 +0800
+
+    https
+
+[33mcommit 27c9566f0fe5220cc77ae49d9a033d92d3082698[m
+Merge: 0468d23 f811c33
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 16:00:44 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit f811c3395e04d376ca5a81aa7eeb708c050d9a10[m
+Author: leo <leo000111444@gmail.com>
+Date:   Sat Aug 14 00:00:31 2021 +0800
+
+    https
+
+[33mcommit 0468d2372b1832ecf11d75d94320995fdf6c480b[m
+Merge: 196a1fc d221b68
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 15:52:30 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit d221b68407d423382be9082c0c8d5ca8449b8fe1[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 23:51:41 2021 +0800
+
+    https
+
+[33mcommit 674e979fa87f98ed2fbc5524ff0df0ac6c7bea0c[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 23:50:56 2021 +0800
+
+    https
+
+[33mcommit 196a1fc5872237d857800bfe9b96704ae79609d4[m
+Merge: b9e2a1f 4aa6cc6
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 15:39:48 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit b9e2a1ff318badad0434d8960dace5eef7b67dab[m
+Merge: e3a798e 3571812
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 15:39:44 2021 +0000
+
+    bug
+
+[33mcommit 4aa6cc676dab76d10c64676a40f6c3b12b97da2c[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 23:38:31 2021 +0800
+
+    https
+
+[33mcommit 37b7e9e281bbb5d39baae82ad1317640d1bef100[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 23:37:42 2021 +0800
+
+    https
+
+[33mcommit 3571812e984e39faaebe50a57c125b05daf07b9c[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 18:01:26 2021 +0800
+
+    https
+
+[33mcommit e3a798e73a5db2365f4bac0467d8d4c1c33887d5[m
+Merge: 3cca9f6 8ca523b
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 09:51:30 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 8ca523b47778976dc4324e19557cf4969c6c1156[m
+Merge: 4278cf8 2a03b51
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 17:51:04 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 4278cf8b361973c2bc3fc07b2f2665105816364a[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 17:50:29 2021 +0800
+
+    https
+
+[33mcommit 3cca9f6626eb25a093b3752c8c1cd36c93fcded9[m
+Merge: 7242422 2a03b51
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 07:45:42 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 2a03b5107b583eeac69818de17c2a7a798702768[m
+Merge: e78b808 affdf36
+Author: ally0108 <allyhappy@gmail.com>
+Date:   Fri Aug 13 15:41:14 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit e78b80845313bacf0f6a2968eeed53aa0e46a447[m
+Author: ally0108 <allyhappy@gmail.com>
+Date:   Fri Aug 13 15:40:25 2021 +0800
+
+    teacher 可以扣同學錢
+
+[33mcommit 7242422a0de3bf128d2f7b27cd5c8a053ea835ad[m
+Merge: db09058 affdf36
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 07:13:45 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit affdf36aaeb1fec6c05052497433b06999fae107[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 15:13:10 2021 +0800
+
+    https
+
+[33mcommit 8c681ee76be2c94b8c75b1fa9ac258a696830cb7[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 15:12:06 2021 +0800
+
+    https
+
+[33mcommit db090583b4b46affb0cf508ea8ef90eb579d30ea[m
+Merge: 7edadce 8ce8c99
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 06:12:44 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 8ce8c99f5958c5531ca1a537926b22373bbd132e[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 14:12:30 2021 +0800
+
+    https
+
+[33mcommit 7edadce77385cbbcd71ded02e860aec7fadc92d0[m
+Merge: 115c6ea 8248981
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 06:05:06 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 8248981e2d21daee09af52281256905963b5a5ff[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 14:04:39 2021 +0800
+
+    https
+
+[33mcommit 115c6ea649c90f70f7321c333294696418487960[m
+Merge: 701eae0 b488a3a
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 06:01:19 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 701eae0a9a07d8403b122a483e837a5faa7aa58b[m
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 06:01:15 2021 +0000
+
+    ttt
+
+[33mcommit b488a3ac3ca0bb971db37ba193ce2187c0039340[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 14:00:01 2021 +0800
+
+    https
+
+[33mcommit a4353cf851ce6015518000dd4aae7f3983b65fd3[m
+Merge: 041405b 4c57cff
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 05:46:02 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 4c57cffb959ac6b564fce8a48e62db8679c94a5a[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 13:45:33 2021 +0800
+
+    https
+
+[33mcommit 041405b3fa478aa07da33b077354f1055a2a0e0c[m
+Merge: 9cff941 cfb43e4
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 05:36:39 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit cfb43e4d96c9ea683c8fb01ea98d02de38e33ade[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 13:36:27 2021 +0800
+
+    https
+
+[33mcommit 9cff9411fc1460e99ec0660fc081f6b5f13b1ab0[m
+Merge: 586d031 523fe55
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 04:46:36 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 523fe558a1e4a7ffb19cc978edabc23a94053aa1[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 12:46:26 2021 +0800
+
+    https
+
+[33mcommit 586d031122def7c7bc1ff13d5143e5b63e746eb3[m
+Merge: efb2c14 1396185
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 04:41:58 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 1396185f13a1eb66a02f7e1086502c7c45b93c0f[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 12:41:42 2021 +0800
+
+    https
+
+[33mcommit efb2c145bad6ac84604cb8cc9cf6f35556330941[m
+Merge: b21965f b27e4a2
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 04:38:35 2021 +0000
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit b27e4a2ec263cb6659d98ede86caf1c402233878[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 12:38:27 2021 +0800
+
+    https
+
+[33mcommit b21965f6d788bc1e7093cd289c4d9353bf276987[m
+Merge: 6a5a16a c8f8741
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 04:37:25 2021 +0000
+
+    asdadMerge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit c8f87419322c688d989e4936db7c85ff02d2deae[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 12:36:34 2021 +0800
+
+    https
+
+[33mcommit 6a5a16a117bfa341ea717764f29ac479baf4e206[m
+Merge: 4b4c6b4 5c4bbee
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 04:25:07 2021 +0000
+
+    wq
+    
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 5c4bbeeb18dabe9f1a2282d16502fb0a70efdc77[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 12:24:58 2021 +0800
+
+    https
+
+[33mcommit 4b4c6b4679239220cf2600eb27f27a6a04beff3d[m
+Merge: 93445d6 d25990f
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 04:20:06 2021 +0000
+
+    test
+
+[33mcommit 93445d6bc68f6681d0fc259a9a69fc4fa4cc395a[m
+Author: Dio <gank23456@gmail.com>
+Date:   Fri Aug 13 04:17:39 2021 +0000
+
+    test
+
+[33mcommit d25990f88205a62b3fe82f43ea1a0db351c66c6f[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 12:14:16 2021 +0800
+
+    https
+
+[33mcommit 6ce361187e5baac1671d54ab4273d5d931cc49e6[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 12:09:45 2021 +0800
+
+    https
+
+[33mcommit a681b818c958c050054de7f3381ba852c9e62705[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 12:01:38 2021 +0800
+
+    https
+
+[33mcommit e7922c60e3b318cc82aec3c967cea48ccb53f65f[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 11:57:34 2021 +0800
+
+    https
+
+[33mcommit 86687a8f8aa88607fa0d86666cf39582003cbfc8[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 11:53:01 2021 +0800
+
+    https
+
+[33mcommit 194ade2ce0b63157234ca979e8e1f242ab863b38[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 11:45:20 2021 +0800
+
+    https
+
+[33mcommit dec573536d235022a4394e6879599771faf376d2[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 11:44:10 2021 +0800
+
+    https
+
+[33mcommit df4f27b6d860004657c5e62ca7b82f7d524c7b2c[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 11:40:31 2021 +0800
+
+    https
+
+[33mcommit a7b1f140c5c22b94dd54e7864f16ba15ec95a7ac[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 11:34:43 2021 +0800
+
+    https
+
+[33mcommit 53557ec61058abde87e721f4349765f6a20b2e53[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 11:28:38 2021 +0800
+
+    https
+
+[33mcommit 9739a26afdec9ef90694b50cae2c697c56b5a93c[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 11:27:19 2021 +0800
+
+    https
+
+[33mcommit 99207de671ee4793487099fb74c21bbc7738d855[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 11:25:22 2021 +0800
+
+    https
+
+[33mcommit d0461f9fc336f83b2648d42de76049c658c2daa4[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 11:02:44 2021 +0800
+
+    https
+
+[33mcommit 6a66b761fcb3173783cdc6b74f2f619a436d8264[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 01:53:11 2021 +0800
+
+    heroku test
+
+[33mcommit 6191c81d11dcc799c09d88d7c7aee76589a87749[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 01:14:11 2021 +0800
+
+    heroku test
+
+[33mcommit a50a66af4bce5f471158700bd49f2cf71f913b53[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 01:00:58 2021 +0800
+
+    heroku test
+
+[33mcommit 2d8cc63064bac3ffda52b2e4df6febf3b44bd62e[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 00:59:04 2021 +0800
+
+    heroku test
+
+[33mcommit 387361414f9c2b66dc4374874b3c691ab4adb684[m
+Merge: 8e785b8 7cd5a25
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 00:50:47 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 8e785b831cfa13ccd7552f3afdce028fa181e70f[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Aug 13 00:50:19 2021 +0800
+
+    change port
+
+[33mcommit 7cd5a25a444727d073e407a1c8d0e01131d9024e[m
+Merge: d34300d 7b00d0c
+Author: yww1327 <yww1327@gmail.com>
+Date:   Fri Jul 30 19:47:50 2021 +0800
+
+    /admin/gamelobby socket emitting for adjusting price and announcing
+
+[33mcommit d34300db8110c4035892b26e8f5425e7ccf4370d[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Jul 24 22:05:37 2021 +0800
+
+    commit for pull
+
+[33mcommit 7b00d0c83972fb3c90262fa597cbdea561ab2654[m
+Author: leo <leo000111444@gmail.com>
+Date:   Mon Jul 19 02:22:52 2021 +0800
+
+    create icon
+
+[33mcommit 0ed3a6904ad00531405438b78ff387d9cc87c522[m
+Author: leo <leo000111444@gmail.com>
+Date:   Mon Jul 19 01:59:20 2021 +0800
+
+    clean code in gamelobby
+
+[33mcommit ee050c550f370f23905684c55b0d36b83715313d[m
+Merge: a045bc5 58a1d09
+Author: leo <leo000111444@gmail.com>
+Date:   Mon Jul 19 01:56:34 2021 +0800
+
+    fix conflict
+
+[33mcommit a045bc540bf48b33d088275f5345c8d879300b74[m
+Author: leo <leo000111444@gmail.com>
+Date:   Mon Jul 19 01:55:11 2021 +0800
+
+    add edit interval in gamelobby
+
+[33mcommit 58a1d09b9da41b174ed1dfca5affa4f237dd6c16[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Jul 17 23:05:07 2021 +0800
+
+    /admin/gamelobby endRound startGameTime
+
+[33mcommit 9033830a060abb89670329245d29e28b75efaa1f[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Jul 17 22:38:09 2021 +0800
+
+    /admin/gamelobby endRound startGameTime
+
+[33mcommit db98f9d3c77a44f1287a05bed23fb7372ec46de6[m
+Merge: 1be603d efa2384
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Sat Jul 17 01:22:42 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 1be603dca1e4da3f3d51c00f2f5ab4f2069b930b[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Sat Jul 17 01:22:32 2021 +0800
+
+    commit for pull
+
+[33mcommit efa23841b4600646bfc8e4abcc26f3e46bdd05e8[m
+Author: leo <leo000111444@gmail.com>
+Date:   Sat Jul 17 00:27:35 2021 +0800
+
+    fix icon menu syle
+
+[33mcommit 1e2c80e12826a10523ecf583fadfecc61380f811[m
+Merge: 665550a d13b0e3
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Jul 16 23:56:43 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 665550ab53bc6df286518d379f0a955b7bffbf86[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Jul 16 23:56:39 2021 +0800
+
+    commit for pull
+
+[33mcommit d13b0e37c2f95f687cd72885b32fb658b93fb19e[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Fri Jul 16 22:10:37 2021 +0800
+
+    /admin/gamelobby rendering bugs fixed
+
+[33mcommit 948009b29b05803a5877b3808b9b7d7d6b120562[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Fri Jul 16 22:03:52 2021 +0800
+
+    /admin/gamelobby rendering bugs fixed
+
+[33mcommit 1c95568f8326f9ae0defbb14490f238b0e119a84[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Fri Jul 16 19:05:19 2021 +0800
+
+    /admin/gamelobby render wrong info not fixed
+
+[33mcommit bf315e987fa4119bd763946903da2b86d6b7fb91[m
+Merge: bb8acee 7635fa6
+Author: yww1327 <yww1327@gmail.com>
+Date:   Fri Jul 16 17:01:37 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit bb8acee2ddcd6ff3a48bf84bc15de4ba434e2e58[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Fri Jul 16 17:01:26 2021 +0800
+
+    /admin/gamelobby render wrong info not fixed
+
+[33mcommit 7635fa62b015e831553c24c4fc14aed9fec4818c[m
+Merge: bc8adf8 c8aa648
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Fri Jul 16 15:46:14 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit bc8adf89f213a14324519602e41a9febc5ff5cad[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Fri Jul 16 15:45:58 2021 +0800
+
+    new logout
+
+[33mcommit c8aa648b853226e32a84d42f69c36f43dc06f3b2[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Fri Jul 16 14:06:44 2021 +0800
+
+    /admin/gamesum fix bugs
+
+[33mcommit 80a150e205d96f64cf71fc25f7fb778d0dec2231[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Fri Jul 16 12:59:01 2021 +0800
+
+    fix conflict
+
+[33mcommit c9fae0143b524f1d1a93a7d96ff53a7d9c2575d1[m
+Merge: 0fa98f1 0c82658
+Author: yww1327 <yww1327@gmail.com>
+Date:   Fri Jul 16 12:56:40 2021 +0800
+
+    /admin/gamelobby edit chart y-axis /gamein direct to loading page
+
+[33mcommit 0fa98f14415ef46d404249bcf558f75513083f7a[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Fri Jul 16 12:55:29 2021 +0800
+
+    /admin/gamelobby edit chart y-axis /gamein direct to loading page
+
+[33mcommit 0c826581c6d8d8fa33f9bf24b6f4c149fb301c26[m
+Merge: 78ae147 ded7e5a
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Fri Jul 16 04:23:00 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 78ae1474c9c2bc63b393470bba1d3b1319ae712a[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Fri Jul 16 04:22:28 2021 +0800
+
+    new teacherqrcode
+
+[33mcommit ded7e5a70335a65b0a9074c94daeda282dfcf46c[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Jul 16 03:15:46 2021 +0800
+
+    fix user lobby
+
+[33mcommit 38508fdeb4cf09f1b38075970162a6165a8c442d[m
+Merge: 81845e9 af46f7d
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Jul 16 02:46:42 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 81845e9b7ea1d5b8619bcd351d2284bd7b8f9207[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Jul 16 02:46:23 2021 +0800
+
+    fix user lobby
+
+[33mcommit af46f7d99793afbf2247c68f112a77472adc3e71[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Jul 15 22:03:35 2021 +0800
+
+    modify backstage path
+
+[33mcommit 96d61918f2288e6421740e20be1051be781b2e8a[m
+Merge: 04ab364 b15edcf
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Jul 15 21:33:56 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 04ab364b4f5e2b3e85ae877642cd32c3d64a5c5e[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Jul 15 21:33:49 2021 +0800
+
+    commit for push
+
+[33mcommit b15edcf7c4985032c3eb001491efe8d62a63577a[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Jul 15 21:01:54 2021 +0800
+
+    fix Bar
+
+[33mcommit 40740e030ecf8140f55029c2535c84e4ea92fab2[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Jul 15 20:57:42 2021 +0800
+
+    change test data to localStorage data
+
+[33mcommit aec6d7500d4f1a1e5a5f7a6f19691ca6384cbcee[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Jul 15 20:18:06 2021 +0800
+
+    new userLobby, change navbar and menu
+
+[33mcommit 4cf7c69425592dcf02e3ab4cea292132dc1db2b2[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Jul 15 16:44:13 2021 +0800
+
+    test of forgetpaw
+
+[33mcommit 58f1f909f8dd794f7decb82ebcc6623f02d5faa9[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Jul 15 16:29:06 2021 +0800
+
+    login store username
+
+[33mcommit 2f09ea19ebb953afc4d114129dced9f8f17d1cf5[m
+Merge: 40e67db de2a75b
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Jul 15 16:13:06 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 40e67dbe5c70552fd46e1e65e270f8f535527d55[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Jul 15 16:12:57 2021 +0800
+
+    commit for pull
+
+[33mcommit de2a75b082e7fcec6b637e16ce92e52845fe8204[m
+Merge: 9d0c9fc 60a862e
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Jul 15 02:32:50 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 9d0c9fcb7159b7f9794d4c50cc5fac5391639247[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Jul 15 02:32:12 2021 +0800
+
+    finish room dalete edit
+
+[33mcommit 60a862efcea66d2d8d1191149a6c91c38efb554f[m
+Merge: 95b7902 a4850ac
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sun Jul 11 21:30:57 2021 +0800
+
+    fix comflict
+
+[33mcommit 95b7902c3d6cd498ca0df0c9b3cb73938fd9c05d[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sun Jul 11 21:27:39 2021 +0800
+
+    admin/gamelobby edit single player info
+
+[33mcommit a4850acf8e124cd5ef504cef63ea1632186d1c99[m
+Author: leo <leo000111444@gmail.com>
+Date:   Sun Jul 11 19:58:18 2021 +0800
+
+    add icon menu
+
+[33mcommit 2f89f11bed772a7ff3f5b10c02eb4914c438aefe[m
+Author: leo <leo000111444@gmail.com>
+Date:   Sun Jul 11 16:28:17 2021 +0800
+
+    fix waiting room rwd
+
+[33mcommit 6b5f4f1d420c88a0760a1b75e9b7fe2634d8b155[m
+Author: leo <leo000111444@gmail.com>
+Date:   Sun Jul 11 16:00:33 2021 +0800
+
+    fix create room rwd
+
+[33mcommit ab7eeaff9ef77f5cde0b989b254a3962247c4ee2[m
+Author: leo <leo000111444@gmail.com>
+Date:   Sun Jul 11 15:16:26 2021 +0800
+
+    fix admin lobby style
+
+[33mcommit 63b565e6ef7d4dde254ee900f26f7f25fc1565ed[m
+Merge: 433d16d 42c48dd
+Author: leo <leo000111444@gmail.com>
+Date:   Sun Jul 11 15:08:49 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 433d16d3d10922037a1004a846987ce6933be986[m
+Author: leo <leo000111444@gmail.com>
+Date:   Sun Jul 11 15:08:31 2021 +0800
+
+    fix admin lobby rwd
+
+[33mcommit 42c48ddd0ffcdf9261ae58cad46e7a2a9d3b815d[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sun Jun 6 13:45:41 2021 +0800
+
+    /admin/gamesum round select and chart render
+
+[33mcommit efb2ea302267b7c46604e4f2b88cd0ac99ae4c29[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Jun 5 22:30:11 2021 +0800
+
+    /admin/gamelobby chart and chart events (wait for updating API)
+
+[33mcommit ad6358723404e359582e18549e33697fda5d2856[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Jun 5 16:07:48 2021 +0800
+
+    /admin/gamesum get total chart data
+
+[33mcommit 80bb30d3558d2e42b8d27787ca714abcbe5e93f9[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Jun 5 16:03:20 2021 +0800
+
+    /admin/gamesum routing
+
+[33mcommit 088839368ad2d72f9ba8570d3801220b68663dc1[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Jun 5 15:53:57 2021 +0800
+
+    delete duplicated function in UserService
+
+[33mcommit 12a62d479b83923900a6332625ec0611dc9ae4fc[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Jun 5 15:53:08 2021 +0800
+
+    /admin/gamelobby transaction records render // add AdminService file in service folder
+
+[33mcommit 1e91ceaa53a5809cf8037f71629c217d2aeeff84[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Jun 3 23:02:45 2021 +0800
+
+    /gamein /gamelobby correct params
+
+[33mcommit a0b94d34e654d6f7f4f77215a6f3fd5d05c2f1b2[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Jun 3 15:55:15 2021 +0800
+
+    /admin/gamelobby fix conflict
+
+[33mcommit a7ae4988e7c6ea1e97a839d015e3e297d2614d2b[m
+Merge: 5beab34 b66d77a
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Jun 3 15:53:50 2021 +0800
+
+    /gamelobby new api render
+
+[33mcommit 5beab349442222ce448467c7faf7c62d1dfc548f[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Jun 3 15:52:29 2021 +0800
+
+    /gamelobby new api render
+
+[33mcommit b66d77a28565f802de7ae0b74533ac340138bb34[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Jun 3 15:44:02 2021 +0800
+
+    change transaction detail
+
+[33mcommit 0c4950f7f1cbfdfca942a2173024948123eeb8a0[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Jun 3 15:39:23 2021 +0800
+
+    add transaction detail
+
+[33mcommit 2c4147453e496fd48837d27b7b06f9b95fca3a6d[m
+Merge: 58380fb 40858e0
+Author: leo <leo000111444@gmail.com>
+Date:   Sun May 30 15:40:32 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 58380fbf95ccff6fdd1af39a7ad980d6625de557[m
+Author: leo <leo000111444@gmail.com>
+Date:   Sun May 30 15:40:06 2021 +0800
+
+    for pulling
+
+[33mcommit 40858e06816fe4265e7a42fc3de45526d7377c13[m
+Merge: e69b8d6 dc3a3c8
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Fri May 28 21:12:08 2021 +0800
+
+    fix conflict
+
+[33mcommit e69b8d6d755ad7251c3d091a3d9a4f6e1dace92c[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Fri May 28 21:06:49 2021 +0800
+
+    lobby appearance
+
+[33mcommit dc3a3c8bfb6d182b5d17cdce9cbbcc1cd95ca7d7[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu May 27 15:22:19 2021 +0800
+
+    link admin start game
+
+[33mcommit 56527112ab254153bae65499edcef538c8cb1a3d[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu May 27 14:49:18 2021 +0800
+
+    finish admin ui
+
+[33mcommit 33fceb206550ff9b0d1d75c7c0d3dc902e3fcf58[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Tue May 25 13:53:59 2021 +0800
+
+    admin/gamelobby announcement getRecord socket
+
+[33mcommit 382ca1d31e0ee025f5b9a86d13fe583f92750ad3[m
+Merge: 3a3c80c cd3ce82
+Author: yww1327 <yww1327@gmail.com>
+Date:   Mon May 24 16:04:25 2021 +0800
+
+    admin/gamelobby socket failed
+
+[33mcommit 3a3c80ce83718d7c5201102bad8b81adbbe8516c[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Mon May 24 16:02:17 2021 +0800
+
+    admin/gamelobby socket failed
+
+[33mcommit cd3ce827911cc062cfa96b5264080c75d4e751fc[m
+Merge: 804814d 67ffa24
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Mon May 24 03:27:56 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 804814dc343eddbc07c287f8901571ff89e56226[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Mon May 24 03:27:38 2021 +0800
+
+    qrcode2 finally done!
+
+[33mcommit 67ffa24346c9a5f8be479f849cb43da42767c7fd[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu May 20 15:36:04 2021 +0800
+
+    for testing
+
+[33mcommit 11ae842cfb87e70d62f5542e724752de40bfff9a[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu May 20 14:26:18 2021 +0800
+
+    new qrcode
+
+[33mcommit c22755aefffb0db8539fcc10ff839b926889bd60[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Wed May 19 19:31:23 2021 +0800
+
+    scan qrcode done
+
+[33mcommit a83278a7f0a8c8f279d857464a01a69c4f5fddb1[m
+Merge: 0be7b4b 19ece55
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Mon May 17 15:10:26 2021 +0800
+
+    commit for pull
+
+[33mcommit 0be7b4b97bca54dbdd657b2007b2f45040ddd8fc[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Mon May 17 15:03:55 2021 +0800
+
+    commit for pull
+
+[33mcommit 19ece55b32399d0c0e8df6a13c7f2dc3013967bb[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat May 15 18:06:43 2021 +0800
+
+    /gamein /gamelobby call api to render game info
+
+[33mcommit e94b208a90560f878a3eaf99870a1b8a82334567[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu May 6 16:04:38 2021 +0800
+
+    admin/GameLobby GameIn debug
+
+[33mcommit 6a900fad9c5a2d126f85c144d4bf7d142c2f0f73[m
+Merge: 9af64de 3b52d49
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu May 6 15:58:39 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 9af64dec28ed7b3a5764963ba873075682385c40[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu May 6 15:58:33 2021 +0800
+
+    commit for pull
+
+[33mcommit 3b52d49409004f6fe22073e96ea32932947d4325[m
+Merge: 52307ad 2519a00
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu May 6 15:09:42 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 52307ad426ee91a5abe8118b708ba6ea0d329d3d[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu May 6 15:08:37 2021 +0800
+
+    commit for pull
+
+[33mcommit 2519a008dfceab63223b63bebd78a13d92c938fb[m
+Merge: 337e6a9 50e28f9
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sun May 2 18:33:42 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 337e6a93c01a32e66a6ce8a97b112037066df997[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sun May 2 18:33:38 2021 +0800
+
+    commit for pull
+
+[33mcommit 50e28f9f98170c4866774eb2064b9f1b0792ab19[m
+Merge: 4418608 ad5c931
+Author: leo <leo000111444@gmail.com>
+Date:   Wed Apr 28 20:29:44 2021 +0800
+
+    test http fix commits
+
+[33mcommit 4418608e3a7162ddd7aa7e9e392300d3f3c14905[m
+Author: leo <leo000111444@gmail.com>
+Date:   Wed Apr 28 20:28:40 2021 +0800
+
+    test http fix port 80
+
+[33mcommit ad5c93130940b744dd7a5ff5881c202a67354459[m
+Merge: 79b5199 d045f58
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Mon Apr 26 19:09:41 2021 +0800
+
+    commit for merge
+
+[33mcommit 79b5199a5b63b53d90e7bbdade54c7f673ce43aa[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Mon Apr 26 19:04:00 2021 +0800
+
+    commit for pull
+
+[33mcommit d045f58bedd250e15bc30d8d992419c2cef21206[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Mon Apr 26 15:00:08 2021 +0800
+
+    for back end error check
+
+[33mcommit 0b7aec771b214eacb75fa89dff12e395e1baca15[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Apr 24 21:19:48 2021 +0800
+
+    /GameLobby render player info and annoucement
+
+[33mcommit 88338908a28541b2399a78d76a8a4d2b585103c9[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Apr 24 16:08:08 2021 +0800
+
+    remove prettier in package.json
+
+[33mcommit 449efbd8fb99dc5e33f17a3e86606b3fc99c5d3d[m
+Merge: fb44a84 ad865d6
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Apr 24 15:22:31 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit fb44a840c96a124c3a3b8c018ee80f44826ef5ca[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Apr 24 15:21:29 2021 +0800
+
+    /service/UserService.js add postEnterRoom function
+
+[33mcommit ad865d611e1f54733ea39abb616b5df9647102d5[m
+Merge: c2a393d 3bbf9e9
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Sat Apr 24 12:48:36 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit c2a393dd72d2db77633247c0e9b86d139aab609b[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Sat Apr 24 12:48:26 2021 +0800
+
+    commit for pull
+
+[33mcommit 90eabf55851681e7b91108f69f01952efea9834e[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Sat Apr 24 12:46:47 2021 +0800
+
+    change register password input
+
+[33mcommit 3bbf9e984b192181a2ab2c8a54641d184ed8faf8[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Apr 24 11:59:21 2021 +0800
+
+    /gamein comment out post method
+
+[33mcommit cc5827379c39506b3bcdc512f34bfd649d69f3d6[m
+Merge: dcc6175 9ce4baa
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Apr 24 11:56:38 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit dcc61757e445b3402699beea445205dc8b4de612[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Sat Apr 24 11:56:28 2021 +0800
+
+    try post in /gamein
+
+[33mcommit 9ce4baaabea99b33c4d370d53a42c5a5e896e957[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Sat Apr 24 02:34:50 2021 +0800
+
+    change password input textfield
+
+[33mcommit 0c4e1bbb95d85695395613fecccf0f72ff90e6f6[m
+Merge: b44424a a2f59a8
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Apr 22 19:25:53 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit b44424a22f5eb136756e6691e6dd00cbaec73083[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Apr 22 19:22:36 2021 +0800
+
+    commit for pull
+
+[33mcommit a2f59a81280f44453806b0e2bd522909d39bb350[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Apr 22 18:53:46 2021 +0800
+
+    /gamein remove ajax
+
+[33mcommit 58d0dbc750eb4e473f5294a55352ab71e792f14e[m
+Merge: 87e6fa2 59b1e43
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Apr 22 18:51:13 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 87e6fa28827cd6a87a243ee7ef92b98bd34a3923[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Apr 22 18:50:51 2021 +0800
+
+    admin/gamelobby socket get room data
+
+[33mcommit 59b1e4312e1ba9c728c57c7717fe04f650adb596[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Apr 22 17:31:47 2021 +0800
+
+    https
+
+[33mcommit dd7ec74e8559931ddd1473b2ae9e9cbd54646cad[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Apr 22 16:57:09 2021 +0800
+
+    https
+
+[33mcommit a9160ee5fa7f31c6fd04800735860c381dc6ff92[m
+Merge: c6e74b9 69683ac
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Apr 22 16:51:38 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit c6e74b98f5147a63115dbc1dcfd07dc524398b3f[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Apr 22 16:51:29 2021 +0800
+
+    https
+
+[33mcommit d358d90dca1a9b23d1782f07e4ec60e9eeee0c11[m
+Merge: 7b8f97d 69683ac
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Apr 22 16:43:08 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 7b8f97d1b73bfebd42994746231fe6287f4cd58d[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Apr 22 16:42:57 2021 +0800
+
+    commot for pull
+
+[33mcommit 69683aca01862e8199f1cfab22afcf6c0e3f0e74[m
+Merge: 4fabf10 c3ebd8e
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Apr 22 16:39:31 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 4fabf106e860e6ca2de69be8aaa8b39f4688ad85[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Apr 22 16:38:56 2021 +0800
+
+    /admin/gamelobby /admin/gamesum adjust layout
+
+[33mcommit c3ebd8e0329894bab6ecf552d2c0caae31fea17f[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Apr 22 16:30:29 2021 +0800
+
+    fix
+
+[33mcommit 20f51b291901a155e714a3408c333fcea3f2671c[m
+Merge: 47c9237 777b819
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Apr 22 16:30:05 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 777b819ed68a44a9f883f608980b234ccd4f6573[m
+Merge: 22e9615 843bfe7
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Apr 22 16:29:38 2021 +0800
+
+    fix conflict
+
+[33mcommit 47c9237e81131679ac46951a2eefbdc348bc58f0[m
+Merge: 510b015 843bfe7
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Apr 22 16:28:54 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 22e961570c299765eda8eb07b0f7fc8cc13f13df[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Apr 22 16:28:10 2021 +0800
+
+    commit for pull
+
+[33mcommit 843bfe734acb201010e73affa6ea767ff6fc73f3[m
+Merge: 7630ec0 f4fab66
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Apr 22 16:25:19 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 7630ec0151361030f2f6ab039b7f54028428165e[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Apr 22 16:24:52 2021 +0800
+
+    /admin/gamesum adjust layout
+
+[33mcommit 510b015b46178327d4764f534c9285cd39b41faa[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Apr 22 16:20:09 2021 +0800
+
+    fix port 80
+
+[33mcommit f4fab661761a70653fabd2b0c9905e07d9ae10e0[m
+Merge: 779939d 8a40c24
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Apr 22 16:05:43 2021 +0800
+
+    fix conflict
+
+[33mcommit 779939d562559bd47b2f16e8fae903c29cf93aa5[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Apr 22 15:56:25 2021 +0800
+
+    commit for pull
+
+[33mcommit 8a40c24611405558524bc25ad8f1c1c71ef7082f[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Apr 22 15:55:09 2021 +0800
+
+    admin/gamelobby adjust layout
+
+[33mcommit b994f4068bd5f458d11a0ee6d603f03aa2810b9a[m
+Merge: d979033 6cdeac5
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Apr 8 18:00:39 2021 +0800
+
+    socket service build and test
+
+[33mcommit d9790339e5a97083ae7a55e79dd621cd6a934c2b[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Apr 8 17:57:52 2021 +0800
+
+    socket service build and test
+
+[33mcommit 6cdeac5fd865e4571132c0db90c5d6c75add5ac9[m
+Merge: 5e970c3 8fb26c6
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Apr 8 17:22:31 2021 +0800
+
+    config fix
+
+[33mcommit 5e970c3e9c3f18b0caa6c1f9cc402b4b3ed151af[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Apr 8 17:19:30 2021 +0800
+
+    commit for pull
+
+[33mcommit 8fb26c6be2990293a6af19a93906f434883721da[m
+Merge: a85f067 665196e
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Apr 8 15:19:02 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit a85f0674de1ac3c93f6840cf73a8ac500f29dad7[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Apr 8 15:18:10 2021 +0800
+
+    commit for pull
+
+[33mcommit 665196eae790f3b5168219b339b347ba773f96ba[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Apr 8 13:41:22 2021 +0800
+
+    0408 conf version
+
+[33mcommit 5a22b30b2d917157cc942cba7d6aa496da2a4f5d[m
+Merge: 05b284b 006034c
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Apr 8 13:40:10 2021 +0800
+
+    fix conflict
+
+[33mcommit 05b284b18c4e471a954b559b8b4e93306e57f1f6[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Thu Apr 8 13:39:05 2021 +0800
+
+    fix conflict
+
+[33mcommit 006034c6319165103e0ec0915f38e924f75e174d[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Wed Apr 7 06:20:06 2021 +0800
+
+    correct merge
+
+[33mcommit 753bb647d28624fd30014350302af33abced4179[m
+Merge: f404c0d 23696d6
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Wed Apr 7 05:15:12 2021 +0800
+
+    qrcode done
+
+[33mcommit f404c0dbba5676eb4ece0b65567049ba7225c536[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Wed Apr 7 05:13:12 2021 +0800
+
+    Qrcode done
+
+[33mcommit 23696d60a033b21c0d45cde12bb95ef8f5418fd1[m
+Merge: 3289f7e 9b52255
+Author: yww1327 <yww1327@gmail.com>
+Date:   Wed Apr 7 00:48:31 2021 +0800
+
+    fixed conflicts/ add new pages: gamelobby(admin and user), gamesum
+
+[33mcommit 3289f7e0d5195299d63073ea8514e14119a22b72[m
+Author: yww1327 <yww1327@gmail.com>
+Date:   Wed Apr 7 00:35:49 2021 +0800
+
+    BackStage/GameLobby & BackStage GameSum & GameLobby UI
+
+[33mcommit 9b522550c966b0fb685448bfd964cb7ad113cf39[m
+Author: leo <leo000111444@gmail.com>
+Date:   Tue Apr 6 23:49:57 2021 +0800
+
+    make docker
+
+[33mcommit 044b3b983cfc336dd59518529d526266fdaabf04[m
+Merge: 82897f9 192c55e
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Sun Apr 4 00:13:37 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 82897f9868d777b4492567b5009aa94e20cef53a[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Sun Apr 4 00:13:28 2021 +0800
+
+    commit for pull
+
+[33mcommit 192c55ebbe90c5159d416e20183b10e77f1eb92f[m
+Merge: 97c1c59 7014f03
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Apr 2 23:32:41 2021 +0800
+
+    fic conflict
+
+[33mcommit 97c1c5936c385425ea48c6b2ab806144b8eb0b1c[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Apr 2 23:31:04 2021 +0800
+
+    modify content area and navbar
+
+[33mcommit 7014f03ead8cbd71e994788389f67eb871d4bd59[m
+Merge: dbf003e 1a88c6a
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Apr 1 02:54:32 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit dbf003e9d64d782cb961c104eafeff452632bb3d[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Apr 1 02:54:19 2021 +0800
+
+    commit for push
+
+[33mcommit 1a88c6a4b8ea69dac3b34156fe4c8c79d8657874[m
+Merge: 1105c78 3e643c2
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Mar 25 17:49:29 2021 +0800
+
+    conflict
+
+[33mcommit 1105c780641abc14f637ba5cc681bd0f76d39126[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Mar 25 17:46:04 2021 +0800
+
+    menu fin
+
+[33mcommit 3e643c2f5c5f75e25ce9bc66c4bfbe56242c654a[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Fri Mar 19 00:30:25 2021 +0800
+
+    commit for push
+
+[33mcommit d288179336b52d9b48e594cd27b7e5118a26eebb[m
+Merge: a4b9a24 66f4a9e
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Mar 18 16:39:22 2021 +0800
+
+    register finish
+
+[33mcommit a4b9a24badbbbeda442e931b737c188cd6f09bca[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Thu Mar 18 16:34:13 2021 +0800
+
+    commit for push
+
+[33mcommit 66f4a9e470bee20f6f540425aefb35a814051df6[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Mar 18 16:23:09 2021 +0800
+
+    push to test
+
+[33mcommit 02dce61c4fff080e82d08c43019c4ef6f7a1e328[m
+Merge: 4cfcbda 7c6dabe
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Mon Mar 8 09:44:48 2021 +0800
+
+    pull home
+
+[33mcommit 4cfcbdac493caf2805ba94488501d26b6c11e00f[m
+Author: ally0108 <allyhappy@g.ncu.edu.tw>
+Date:   Mon Mar 8 09:30:23 2021 +0800
+
+    register testing
+
+[33mcommit 7c6dabe4819a20e9d77c3fc3b0893a7164b2d8fa[m
+Author: leo <leo000111444@gmail.com>
+Date:   Fri Mar 5 03:24:22 2021 +0800
+
+    app bar
+
+[33mcommit a686ca85ac1239f0bfe1343b88834aad3bc801e9[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Mar 4 19:02:49 2021 +0800
+
+    make home for testing & theme maked
+
+[33mcommit acd57db7eb0c25d31294c63cec9091df9731b962[m
+Merge: 6258db8 b02d19b
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Mar 4 17:03:46 2021 +0800
+
+    Merge branch 'master' of https://github.com/zx123497/bjfrontend
+
+[33mcommit 6258db8cb0ce5fa2e53f30462243160e223b644a[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Mar 4 17:03:20 2021 +0800
+
+    add home regisster
+
+[33mcommit b02d19b16a93ebeb530bc7d2cd8987c28cb80da6[m
+Author: yww1327 <50107421+yww1327@users.noreply.github.com>
+Date:   Thu Mar 4 17:01:09 2021 +0800
+
+    Update README.md
+
+[33mcommit 280adb172af9afd775523c3bea849cc33bcff243[m
+Author: yww1327 <50107421+yww1327@users.noreply.github.com>
+Date:   Thu Mar 4 17:00:41 2021 +0800
+
+    Update README.md
+
+[33mcommit 9e53a003441b18ab59054854c9fcc3fb99198064[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Mar 4 16:56:21 2021 +0800
+
+    add Home
+
+[33mcommit 7df2439ac8b206fd4b848c165b7ff4e9e44be577[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Mar 4 16:52:33 2021 +0800
+
+    add folders
+
+[33mcommit c0b45496e787229d0805415948604dbab7aad9b6[m
+Author: leo <leo000111444@gmail.com>
+Date:   Thu Mar 4 16:25:52 2021 +0800
+
+    Initialize project using Create React App

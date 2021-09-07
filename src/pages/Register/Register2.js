@@ -1,5 +1,5 @@
-import React from 'react'
-import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core'
+import React, { useState } from 'react'
+import { makeStyles, Card, CardActions, CardContent, Button, TextField, Typography } from '@material-ui/core'
 import { Link, withRouter, useHistory } from 'react-router-dom'
 import BackPage from '../../components/BackPage/BackPage'
 import UserService from '../../service/UserService'
@@ -12,6 +12,12 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import IconButton from '@material-ui/core/IconButton'
 import FormControl from '@material-ui/core/FormControl'
 import { createMuiTheme } from '@material-ui/core/styles'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import WarningIcon from '@material-ui/icons/Warning'
 
 const useStyles = makeStyles((theme) => ({
     Register2: {
@@ -121,6 +127,12 @@ const Register2 = (props) => {
         check_password: '',
     })
 
+    const [errorMessage, setError] = React.useState('')
+    const [open, setOpen] = useState(false)
+    const handleClose = () => {
+        setOpen(false)
+    }
+
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value })
     }
@@ -129,15 +141,26 @@ const Register2 = (props) => {
         var message = []
         message['email'] = ''
         message['password'] = ''
+        message['check_password'] = ''
         message['diffPassword'] = ''
         if (values.password !== values.check_password) {
             message['diffPassword'] = '密碼不相同\n'
         }
         if (values.email === '') message['email'] = '帳號 '
         if (values.password === '') message['password'] = '密碼'
-        if (values.email === '' || values.password === '' || values.username == '')
-            alert(message['diffPassword'] + '請輸入' + message['email'] + message['password'])
-        else {
+        if (values.check_password == '') message['check_password'] = '確認密碼'
+        if (values.email === '' || values.password === '' || values.check_password == '') {
+            if (values.password !== '' && values.check_password !== '') setError(message['diffPassword'])
+            else
+                setError(
+                    message['diffPassword'] +
+                        '請輸入' +
+                        message['email'] +
+                        message['password'] +
+                        message['check_password']
+                )
+            setOpen(true)
+        } else {
             const params = new URLSearchParams()
             params.append('schoolname', localStorage.getItem('schoolname'))
             params.append('ID', localStorage.getItem('ID'))
@@ -157,14 +180,16 @@ const Register2 = (props) => {
                     closeWith: ['click'],
                 }).show()
                 console.log(res.data)
+
                 if (res.status === 200) {
                     alert(localStorage.getItem('username') + ' 您已成功註冊!')
                     history.push('./login')
                 }
             })
-            localStorage.clear()
+            // localStorage.clear()
         }
         event.preventDefault()
+        localStorage.clear()
     }
 
     const handleClickShowPassword = () => {
@@ -260,6 +285,62 @@ const Register2 = (props) => {
                     </Link>
                 </CardActions>
             </Card>
+
+            {/* ErrorMessage */}
+            <Dialog
+                PaperProps={{
+                    style: {
+                        marginTop: '90px',
+                        borderRadius: 30,
+                        height: '28%',
+                        width: '300px',
+                        padding: '28px 20px 28px 20px',
+                        backgroundColor: '#EAEAEA',
+                    },
+                }}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    <Typography className="title" variant="h5" align="center">
+                        <WarningIcon color="disabled"></WarningIcon> &nbsp;提醒
+                    </Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <Typography
+                        align="center"
+                        justifyContent="center"
+                        style={{
+                            whiteSpace: 'pre-line',
+                            fontSize: '120%',
+                            marginTop: '3px',
+                        }}
+                    >
+                        {errorMessage}
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleClose}
+                        className="sure"
+                        style={{
+                            margin: 'auto',
+                            fontSize: '90%',
+                            fontWeight: '500',
+                            borderRadius: '20px',
+                            boxShadow: 'none',
+                            width: '40%',
+                            height: '110%',
+                            backgroundColor: '#00AAA4',
+                            color: '#FFFFFF',
+                        }}
+                    >
+                        確定
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }

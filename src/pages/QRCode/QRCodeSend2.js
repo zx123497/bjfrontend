@@ -119,14 +119,6 @@ const QRCodeSend2 = ({ history }, props) => {
         checked: true,
     })
 
-    // const result = {
-    //     round: '1',
-    //     buyer: '123',
-    //     seller: '234',
-    //     money: '60',
-    // }
-    // localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
-
     const handleSwitchChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked })
     }
@@ -152,17 +144,42 @@ const QRCodeSend2 = ({ history }, props) => {
     const [roundNum, setRoundNum] = React.useState('0')
     const [receiver_id, setReceiver_id] = React.useState('')
 
+    const handleClose1 = () => {
+        setOpen1(false)
+    }
+
+    useEffect(() => {
+        if (localStorage.getItem('role') == 'seller') {
+            setSeller(true)
+        } else {
+            setSeller(false)
+        }
+    }, [localStorage.getItem('role')])
+
     useEffect(() => {
         /*
        // 最後送get_chek_point的時候，他會自己再set一次id所以這邊讓他只能set一次
        // 若沒刪掉is_socketid user就不能再交易了
        */
-        if (localStorage.getItem('is_socketid') == null && !trans) {
+
+        console.log('set_socket:' + localStorage.getItem('is_socketid'))
+        console.log('trans:' + trans)
+
+        // if (localStorage.getItem('is_socketid') == null && !trans) {
+        if (localStorage.getItem('is_socketid') == null) {
             socket.emit('setSocket', {
                 roomNum: localStorage.getItem('roomNum'),
-                user_id: localStorage.getItem('username'),
+                user_id: localStorage.getItem('id'),
+                // user_id: localStorage.getItem('username'),
             })
             localStorage.setItem('is_socketid', true)
+
+            socket.on('disconnect ', function () {
+                console.log('Disconnect')
+            })
+            socket.on('connect_failed', function () {
+                console.log('Connection Failed')
+            })
         }
 
         //確認setSocketid成功與否
@@ -176,14 +193,17 @@ const QRCodeSend2 = ({ history }, props) => {
         socket.on('testbroadcast', function (data) {
             console.log(data.msg)
         })
-        // seller receiver 賣方 收款方
-        // buyer payer     買方 付款方
-        if (localStorage.getItem('role') == 'seller') {
-            setSeller(true)
-        } else {
-            setSeller(false)
-        }
-    }, [localStorage.getItem('role')])
+
+        socket.on('disconnect ', function () {
+            console.log('Disconnect')
+        })
+        socket.on('connect_failed', function () {
+            console.log('Connection Failed')
+        })
+        socket.on('error', function () {
+            console.log('An error event is sent from the server')
+        })
+    }, [])
 
     // 與老師交易時的setSocket
     useEffect(() => {
@@ -191,9 +211,9 @@ const QRCodeSend2 = ({ history }, props) => {
         if (localStorage.getItem('tranTeacher') == '1') {
             if (localStorage.getItem('is_socketid') == null) {
                 socket.emit('setSocket', {
-                    //for test之後改掉9487
                     roomNum: localStorage.getItem('roomNum'),
-                    user_id: localStorage.getItem('username'),
+                    // user_id: localStorage.getItem('username'),
+                    user_id: localStorage.getItem('id'),
                 })
                 localStorage.setItem('is_socketid', true)
             }
@@ -206,9 +226,6 @@ const QRCodeSend2 = ({ history }, props) => {
         }
     }, [localStorage.getItem('tranTeacher')])
 
-    const handleClose1 = () => {
-        setOpen1(false)
-    }
     const handleYes1 = () => {
         setOpen1(false)
         if (localStorage.getItem('tranTeacher') == '1') {
@@ -267,8 +284,8 @@ const QRCodeSend2 = ({ history }, props) => {
             socket.emit('get_chek_point', {
                 roomNum: localStorage.getItem('roomNum'),
                 round: localStorage.getItem('roundNum'),
-                money: money,
-                //money: localStorage.getItem('tranMoney'),
+                // money: money,
+                money: localStorage.getItem('tranMoney'),
                 payer_id: localStorage.getItem('username'),
                 receiver_id: localStorage.getItem('receiver_id'),
                 chek_point: '0',
@@ -395,14 +412,24 @@ const QRCodeSend2 = ({ history }, props) => {
     }
 
     const handleQRShow = () => {
-        if (money <= 0) {
-            setError('付款金額需大於 0 元')
-            setOpen3(true)
-        } else if (money >= localStorage.getItem('money')) {
-            setError('超出您的餘額')
+        if (seller) {
+            setError('賣方無法使用付款功能')
             setOpen3(true)
         } else {
-            setShowQR(true)
+            if (money <= 0) {
+                setError('付款金額需大於 0 元')
+                setOpen3(true)
+            } else if (parseInt(localStorage.getItem('userMoney'), 10) > parseInt(localStorage.getItem('money'), 10)) {
+                console.log(
+                    parseInt(localStorage.getItem('userMoney'), 10) +
+                        ' > ' +
+                        parseInt(localStorage.getItem('money'), 10)
+                )
+                setError('超出您的餘額')
+                setOpen3(true)
+            } else {
+                setShowQR(true)
+            }
         }
 
         if (!seller) {
@@ -420,8 +447,8 @@ const QRCodeSend2 = ({ history }, props) => {
 
     return (
         <div className={classes.QRCodeSend2}>
-            <BackPage refs={'gamelobby/' + localStorage.getItem('roomNum')}></BackPage>
-
+            {/* <BackPage refs={'gamelobby/' + localStorage.getItem('roomNum')}></BackPage> */}
+            <BackPage refs={`gamelobby/${localStorage.getItem('roomNum')}`}></BackPage>
             {/* 確認1 */}
             <Dialog
                 PaperProps={{
@@ -471,13 +498,24 @@ const QRCodeSend2 = ({ history }, props) => {
                     </Typography>
                     <Typography align="center" style={{ fontSize: '140%' }}>
                         {/* {seller ? ( */}
-                        {localStorage.getItem('role') == 'seller' ? (
+                        {/* {localStorage.getItem('role') == 'seller' ? (
                             <div>即將收取 ${localStorage.getItem('tranMoney')}</div>
                         ) : localStorage.getItem('tranTeacher') == '1' ? (
                             <div>即將收取 ${localStorage.getItem('tranMoney')}</div>
                         ) : (
                             <div>即將轉出 ${localStorage.getItem('tranMoney')}</div>
-                        )}
+                        )} */}
+                        {(() => {
+                            if (localStorage.getItem('tranTeacher') == '1') {
+                                if (localStorage.getItem('tranMoney') >= 0)
+                                    return <div>即將收取 ${localStorage.getItem('tranMoney')}</div>
+                                else return <div>即將扣款 ${localStorage.getItem('tranMoney')}</div>
+                            } else {
+                                if (localStorage.getItem('role') == 'seller')
+                                    return <div>即將收取 ${localStorage.getItem('tranMoney')}</div>
+                                else return <div>即將轉出 ${localStorage.getItem('tranMoney')}</div>
+                            }
+                        })()}
                     </Typography>
                 </DialogContent>
                 <DialogActions>
@@ -804,30 +842,10 @@ const QRCodeSend2 = ({ history }, props) => {
                 <QrReader
                     className="scan"
                     delay={300}
-                    // style={previewStyle}
                     onError={handleError}
                     onScan={handleScan}
                     facingMode={'environment'}
                 />
-                {/* <QRCodeScanner
-                className="scan"
-                onError={handleError}
-                onScan={handleScan}
-                onRead={this.onSuccess}
-                flashMode={RNCamera.Constants.FlashMode.torch}
-                topContent={
-                    <Text style={styles.centerText}>
-                        Go to{' '}
-                    <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
-                        your computer and scan the QR code.
-                    </Text>
-                }
-                bottomContent={
-                    <TouchableOpacity style={styles.buttonTouchable}>
-                    <Text style={styles.buttonText}>OK. Got it!</Text>
-                    </TouchableOpacity>
-                }
-            /> */}
             </div>
         </div>
     )

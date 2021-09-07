@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     QRCodeSend: {
         display: 'flex',
         color: theme.palette.ultimate.main,
-        // backgroundColor: theme.palette.primary.main,
         backgroundColor: '#555',
         height: '100vh',
         overflow: 'hidden',
@@ -28,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
 
         '& .switch': {
-            // color: theme.palette.ultimate.main,
             color: 'white',
         },
         '& .icon': {
@@ -176,16 +174,10 @@ const QRCodeSend2 = (props) => {
     //    setMoney(event.target.value);
     //    console.log(event.target.value);
     //}
+
     const handleQRShow = () => {
         console.log('checked:' + state.checked)
         if (state.checked) {
-            // if (values.money <= 0 && values.numpeople <= 0) {
-            //     setError('付款金額與人數上限皆需大於 0 ')
-            //     setOpen(true)
-            // } else if (values.money <= 0) {
-            //     setError('付款金額需大於 0 元')
-            //     setOpen(true)
-            // } else
             if (values.numpeople <= 0) {
                 setError('人數上限需大於0')
                 setOpen(true)
@@ -193,13 +185,7 @@ const QRCodeSend2 = (props) => {
                 setShowQR(true)
             }
         } else {
-            // if (values.money <= 0) {
-            //     setError('付款金額需大於 0 元')
-            //     setOpen(true)
-            // } else
-            {
-                setShowQR(true)
-            }
+            setShowQR(true)
         }
     }
     const handleQRHide = () => {

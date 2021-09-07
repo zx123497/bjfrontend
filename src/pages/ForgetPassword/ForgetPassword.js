@@ -1,9 +1,15 @@
-import React from 'react'
-import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core'
+import React, { useState } from 'react'
+import { makeStyles, Card, CardActions, CardContent, Button, TextField, Typography } from '@material-ui/core'
 import { Link, withRouter, useHistory } from 'react-router-dom'
 import BackPage from '../../components/BackPage/BackPage'
 import UserService from '../../service/UserService'
 import Noty from 'noty'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import WarningIcon from '@material-ui/icons/Warning'
 
 const useStyles = makeStyles((theme) => ({
     ForgetPassword: {
@@ -42,14 +48,33 @@ const useStyles = makeStyles((theme) => ({
             marginTop: '40px',
         },
         '& .input': {
-            color: theme.palette.ultimate.main,
+            marginTop: '15px',
+            color: theme.palette.ultimate.dark,
             fontSize: 20,
             height: '15px',
             marginLeft: '17%',
-            marginTop: '15px',
             '& .MuiTextField-root': {
+                marginTop: '3px',
                 width: '80%',
-                color: theme.palette.ultimate.main,
+                color: theme.palette.ultimate.dark,
+            },
+            '& label.Mui-focused': {
+                color: theme.palette.ultimate.dark,
+            },
+            '& .input-underline:after': {
+                borderBottomColor: theme.palette.ultimate.dark,
+            },
+            '& .input-underline:before': {
+                borderBottomColor: theme.palette.ultimate.dark,
+            },
+            '&:hover fieldset': {
+                borderColor: theme.palette.ultimate.dark,
+            },
+            '&:after fieldset': {
+                borderColor: theme.palette.ultimate.dark,
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: theme.palette.ultimate.dark,
             },
         },
         '& .next': {
@@ -76,13 +101,19 @@ const ForgetPassword = (props) => {
         setValues({ ...values, [prop]: event.target.value })
     }
 
+    const [errorMessage, setError] = React.useState('')
+    const [open, setOpen] = useState(false)
+    const handleClose = () => {
+        setOpen(false)
+    }
+
     const handleSubmit = (event) => {
-        //已登入
         if (localStorage.getItem('email') && values.email != localStorage.getItem('email')) {
-            alert('請輸入跟註冊時相同的電子信箱')
-        } else if (values.email == '') {
-            //未登入
-            alert('請輸入電子信箱')
+            setError('請輸入該帳號的電子信箱')
+            setOpen(true)
+        } else if (!values.email) {
+            setError('請輸入電子信箱')
+            setOpen(true)
         } else {
             const params = new URLSearchParams()
             params.append('email', values.email)
@@ -98,7 +129,8 @@ const ForgetPassword = (props) => {
                     closeWith: ['click'],
                 }).show()
                 if (res.status == '200') {
-                    alert('修改密碼連結已成功發送至 ' + values.email)
+                    setError('修改密碼連結已成功發送至 ' + values.email)
+                    setOpen(true)
                     if (!localStorage.getItem('email')) {
                         localStorage.clear()
                         history.push('/login')
@@ -148,6 +180,62 @@ const ForgetPassword = (props) => {
                     </Link>
                 </CardActions>
             </Card>
+
+            {/* ErrorMessage */}
+            <Dialog
+                PaperProps={{
+                    style: {
+                        marginTop: '90px',
+                        borderRadius: 30,
+                        height: '28%',
+                        width: '300px',
+                        padding: '28px 20px 28px 20px',
+                        backgroundColor: '#EAEAEA',
+                    },
+                }}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    <Typography className="title" variant="h5" align="center">
+                        <WarningIcon color="disabled"></WarningIcon> &nbsp;提醒
+                    </Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <Typography
+                        align="center"
+                        justifyContent="center"
+                        style={{
+                            whiteSpace: 'pre-line',
+                            fontSize: '120%',
+                            marginTop: '10px',
+                        }}
+                    >
+                        {errorMessage}
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleClose}
+                        className="sure"
+                        style={{
+                            margin: 'auto',
+                            fontSize: '90%',
+                            fontWeight: '500',
+                            borderRadius: '20px',
+                            boxShadow: 'none',
+                            width: '40%',
+                            height: '110%',
+                            backgroundColor: '#00AAA4',
+                            color: '#FFFFFF',
+                        }}
+                    >
+                        確定
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }

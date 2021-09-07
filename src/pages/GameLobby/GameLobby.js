@@ -37,6 +37,8 @@ const GameLobby = (props) => {
         totalScore: '',
         transPartner: '',
         tranAmount: '',
+        roomNum: '',
+        roundNum: '',
     })
 
     const [annoucement, setAnnouncement] = useState({
@@ -63,17 +65,20 @@ const GameLobby = (props) => {
     }
 
     useEffect(() => {
-
         console.log(props)
 
         socket.emit('enterRoom', {
             roomNum: roomNum,
             ID: localStorage.getItem('id'),
-            username: localStorage.getItem('username')
+            username: localStorage.getItem('username'),
         })
 
         getRoom()
-        localStorage.setItem("round", room.round)
+
+        localStorage.setItem('round', room.round)
+        localStorage.setItem('roomNum', roomNum)
+        console.log('roomNum2:' + roomNum)
+
         socket.emit('currentTime', { roomNum: roomNum })
 
         // listen to reqRole
@@ -88,6 +93,7 @@ const GameLobby = (props) => {
                 totalScore: 0,
                 transPartner: '',
                 tranAmount: 0,
+                roomNum: roomNum,
             })
         })
 
@@ -99,14 +105,19 @@ const GameLobby = (props) => {
         // listen to endRound
         socket.on('endRoundResponse', (res) => {
             console.log(res)
+<<<<<<< HEAD
             if ((res == 'endRoundMessage') || (res == 'error(no next round)')) {
                 props.history.replace(`/loading/${roomNum}`)
+=======
+            if (res == 'endRoundMessage' || res == 'error(no next round)') {
+                props.history.push(`/loading/${roomNum}`)
+>>>>>>> 343858897c2d8bc27ed7d67b4a97e263d1836df1
             }
         })
 
         // listen to sysmsg
         socket.on('sys', (res) => {
-            if(res != 'error') {
+            if (res != 'error') {
                 setAnnouncement({ roomAnnoucement: res.message })
                 socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('id') })
             }
@@ -119,7 +130,6 @@ const GameLobby = (props) => {
 
         // ask for user role
         socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('id') })
-
     }, [])
 
     const classes = useStyles()
