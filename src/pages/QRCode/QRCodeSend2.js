@@ -415,7 +415,7 @@ const QRCodeSend2 = ({ history }, props) => {
     }
 
     const handleQRShow = () => {
-        if (localStorage.getItem('role') == 'seller') {
+        if (seller) {
             setError('賣方無法使用付款功能')
             setOpen3(true)
         } else {
