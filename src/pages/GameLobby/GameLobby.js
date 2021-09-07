@@ -37,8 +37,8 @@ const GameLobby = (props) => {
         totalScore: '',
         transPartner: '',
         tranAmount: '',
-        roomNum:'',
-        roundNum:''
+        roomNum: '',
+        roundNum: '',
     })
 
     const [annoucement, setAnnouncement] = useState({
@@ -56,26 +56,26 @@ const GameLobby = (props) => {
                     totalMemNum: res.data.allUsers.length,
                     round: res.data.roomDetail.nowRound + 1,
                     roundTime: res.data.roomDetail.roundTime,
-                    isGaming: res.data.roomDetail.isGaming
+                    isGaming: res.data.roomDetail.isGaming,
                 })
             }
         })
     }
 
     useEffect(() => {
-
         console.log(props)
 
-        localStorage.setItem("roomNum",roomNum)
+        localStorage.setItem('roomNum', roomNum)
 
         socket.emit('enterRoom', {
             roomNum: roomNum,
             ID: localStorage.getItem('id'),
-            username: localStorage.getItem('username')
+            username: localStorage.getItem('username'),
         })
 
         getRoom()
-        localStorage.setItem("round", room.round)
+        localStorage.setItem('round', room.round)
+        localStorage.setItem('roomNum', roomNum)
         socket.emit('currentTime', { roomNum: roomNum })
 
         // listen to reqRole
@@ -90,6 +90,7 @@ const GameLobby = (props) => {
                 totalScore: 0,
                 transPartner: '',
                 tranAmount: 0,
+                roomNum: roomNum,
             })
         })
 
@@ -101,14 +102,14 @@ const GameLobby = (props) => {
         // listen to endRound
         socket.on('endRoundResponse', (res) => {
             console.log(res)
-            if ((res == 'endRoundMessage') || (res == 'error(no next round)')) {
+            if (res == 'endRoundMessage' || res == 'error(no next round)') {
                 props.history.push(`/loading/${roomNum}`)
             }
         })
 
         // listen to sysmsg
         socket.on('sys', (res) => {
-            if(res != 'error') {
+            if (res != 'error') {
                 setAnnouncement({ roomAnnoucement: res.message })
                 socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('id') })
             }
@@ -121,9 +122,6 @@ const GameLobby = (props) => {
 
         // ask for user role
         socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('id') })
-
-        localStorage.setItem("roomNum",  roomNum)  
-
     }, [])
 
     const classes = useStyles()
