@@ -37,6 +37,8 @@ const GameLobby = (props) => {
         totalScore: '',
         transPartner: '',
         tranAmount: '',
+        roomNum:'',
+        roundNum:''
     })
 
     const [annoucement, setAnnouncement] = useState({
@@ -119,6 +121,8 @@ const GameLobby = (props) => {
 
         // ask for user role
         socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('id') })
+
+        localStorage.setItem("roomNum",  roomNum)  
 
     }, [])
 

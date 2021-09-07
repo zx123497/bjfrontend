@@ -82,6 +82,8 @@ const UserInfo = (props) => {
         localStorage.setItem('role', props.data.role)
         localStorage.setItem('price', props.data.price)
         localStorage.setItem('money', props.data.money)
+        localStorage.setItem("roundNum",  props.data.roundNum)  
+        localStorage.setItem("roomNum",  props.data.roomNum)  
         
     }, [props])
 
