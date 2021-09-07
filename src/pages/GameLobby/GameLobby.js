@@ -51,13 +51,13 @@ const GameLobby = (props) => {
 
         AdminService.postGetRoom(getRoomParam).then((res) => {
             if (res.status == '200') {
-                if(res.data.allUsers) {
+                if (res.data.allUsers) {
                     setRoom({
                         pincode: props.match.params.id,
                         totalMemNum: res.data.allUsers.length,
                         round: res.data.roomDetail.nowRound + 1,
                         roundTime: res.data.roomDetail.roundTime,
-                        isGaming: res.data.roomDetail.isGaming
+                        isGaming: res.data.roomDetail.isGaming,
                     })
                 }
             }
