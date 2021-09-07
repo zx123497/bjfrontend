@@ -51,13 +51,15 @@ const GameLobby = (props) => {
 
         AdminService.postGetRoom(getRoomParam).then((res) => {
             if (res.status == '200') {
-                setRoom({
-                    pincode: props.match.params.id,
-                    totalMemNum: res.data.allUsers.length,
-                    round: res.data.roomDetail.nowRound + 1,
-                    roundTime: res.data.roomDetail.roundTime,
-                    isGaming: res.data.roomDetail.isGaming,
-                })
+                if(res.data.allUsers) {
+                    setRoom({
+                        pincode: props.match.params.id,
+                        totalMemNum: res.data.allUsers.length,
+                        round: res.data.roomDetail.nowRound + 1,
+                        roundTime: res.data.roomDetail.roundTime,
+                        isGaming: res.data.roomDetail.isGaming
+                    })
+                }
             }
         })
     }
@@ -103,8 +105,13 @@ const GameLobby = (props) => {
         // listen to endRound
         socket.on('endRoundResponse', (res) => {
             console.log(res)
+<<<<<<< HEAD
+            if ((res == 'endRoundMessage') || (res == 'error(no next round)')) {
+                props.history.replace(`/loading/${roomNum}`)
+=======
             if (res == 'endRoundMessage' || res == 'error(no next round)') {
                 props.history.push(`/loading/${roomNum}`)
+>>>>>>> 343858897c2d8bc27ed7d67b4a97e263d1836df1
             }
         })
 

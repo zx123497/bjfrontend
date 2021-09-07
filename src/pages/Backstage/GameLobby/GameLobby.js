@@ -70,13 +70,15 @@ const GameLobby = (props) => {
 
         AdminService.postGetRoom(getRoomParam).then((res) => {
             if (res.status == '200') {
-                setRoom({
-                    pincode: props.match.params.id,
-                    totalMemNum: res.data.allUsers.length,
-                    round: res.data.roomDetail.nowRound + 1,
-                    roundTime: res.data.roomDetail.roundTime,
-                    isGaming: res.data.roomDetail.isGaming
-                })
+                if(res.data.allUsers) {
+                    setRoom({
+                        pincode: props.match.params.id,
+                        totalMemNum: res.data.allUsers.length,
+                        round: res.data.roomDetail.nowRound + 1,
+                        roundTime: res.data.roomDetail.roundTime,
+                        isGaming: res.data.roomDetail.isGaming
+                    })
+                }
             }
         })
     }
@@ -125,7 +127,7 @@ const GameLobby = (props) => {
             func: () => {
                 socket.emit('shuffle', {
                     roomNum: `${roomNum}`,
-                    roundNum: `${room.round + 1}`
+                    roundNum: `${room.round}`
                 })
             },
         },
@@ -168,7 +170,7 @@ const GameLobby = (props) => {
             if(res == "error") {
                 alert("進行中的遊戲點擊開始按鈕無效")
             } else {
-                getRoom()
+                window.location.reload()
             }
         })
 
@@ -179,10 +181,10 @@ const GameLobby = (props) => {
             }
             else if(res == "error(no next round)") {
                 alert("已達設定回合上限，請回到管理者專區更改設定增加回合數")
+                props.history.replace('/admin/lobby')
             }
             else if(res == "endRoundMessage") {
-                setAnnouncement({roomAnnoucement: ''})
-                getRoom()
+                window.location.reload()
                 alert("此回合結束")
             }
         })

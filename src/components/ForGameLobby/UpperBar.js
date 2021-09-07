@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { Box, Card, Grid, makeStyles, Typography } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import '../../index.css';
-import { BorderColor } from '@material-ui/icons';
+import { BorderColor, ContactSupportOutlined } from '@material-ui/icons';
 import { useTimer } from 'react-timer-hook'
 import { socket } from '../../service/socket';
 
@@ -113,13 +113,24 @@ const UpperBar = (props) => {
 
     const expTime = new Date()
 
-    const [time, setTime] = useState(expTime)
+    const [ time, setTime ] = useState(expTime)
 
     useEffect(() => {
+        socket.emit('enterRoom', {
+            roomNum: roomNum,
+            ID: localStorage.getItem('id'),
+            username: localStorage.getItem('username')
+        })
+
         socket.on('currentTimeResponse', (res) => {
-            expTime.setSeconds(expTime.getSeconds() + res.remainSecond)
+            var temp = new Date()
+            console.log(temp)
+            expTime.setTime(temp.getTime() + 1000 * res.remainSecond)
+            console.log(res.remainSecond)
             console.log(expTime)
+            console.log('--------------------')
             setTime(expTime)
+            console.log('finish setState')
         })
     }, [])
 
