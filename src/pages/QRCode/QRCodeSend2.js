@@ -119,14 +119,6 @@ const QRCodeSend2 = ({ history }, props) => {
         checked: true,
     })
 
-    // const result = {
-    //     round: '1',
-    //     buyer: '123',
-    //     seller: '234',
-    //     money: '60',
-    // }
-    // localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
-
     const handleSwitchChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked })
     }
@@ -181,6 +173,13 @@ const QRCodeSend2 = ({ history }, props) => {
                 // user_id: localStorage.getItem('username'),
             })
             localStorage.setItem('is_socketid', true)
+
+            socket.on('disconnect ', function () {
+                console.log('Disconnect')
+            })
+            socket.on('connect_failed', function () {
+                console.log('Connection Failed')
+            })
         }
 
         //確認setSocketid成功與否
