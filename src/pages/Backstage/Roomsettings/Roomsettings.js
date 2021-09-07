@@ -250,6 +250,7 @@ const NewRoom = (props) => {
                     value={form.roomName}
                     onChange={handleTitleChange}
                     label="房間名稱"
+                    defaultValue="default" //之後刪掉
                 />
                 <Input
                     className="test"
@@ -263,6 +264,7 @@ const NewRoom = (props) => {
                     value={form.roundTime}
                     onChange={handleRoundTimeChange}
                     label="回合時間(秒)"
+                    defaultValue="100" //之後刪掉
                 />
                 <Input
                     className="init"
@@ -276,6 +278,7 @@ const NewRoom = (props) => {
                     value={form.initMoney}
                     onChange={handleInitChange}
                     label="初始金額"
+                    defaultValue="200" //之後刪掉
                 />
                 <Input
                     className="interval"
@@ -289,6 +292,7 @@ const NewRoom = (props) => {
                     value={form.interval}
                     onChange={handleIntervalChange}
                     label="單位金額(區間)"
+                    defaultValue="10" //之後刪掉
                 />
             </div>
             <h2 style={{ marginLeft: '1rem' }}>回合設定</h2>
@@ -339,6 +343,7 @@ const NewRoom = (props) => {
                             }}
                             value={form.rounds[round.round_id].buyMin}
                             onChange={handleBuyMinChange}
+                            defaultValue="80" //之後刪掉
                         />
                         -
                         <Input
@@ -352,6 +357,7 @@ const NewRoom = (props) => {
                             }}
                             value={form.rounds[round.round_id].buyMax}
                             onChange={handleBuyMaxChange}
+                            defaultValue="150" //之後刪掉
                         />
                     </div>
                     <h4 style={{ marginBottom: '5px' }}>賣家進貨成本</h4>
@@ -368,6 +374,7 @@ const NewRoom = (props) => {
                             }}
                             value={form.rounds[round.round_id].saleMin}
                             onChange={handleSellMinChange}
+                            defaultValue="70" //之後刪掉
                         />
                         -
                         <Input
@@ -381,6 +388,7 @@ const NewRoom = (props) => {
                             }}
                             value={form.rounds[round.round_id].saleMax}
                             onChange={handleSellMaxChange}
+                            defaultValue="120" //之後刪掉
                         />
                     </div>
                 </div>
