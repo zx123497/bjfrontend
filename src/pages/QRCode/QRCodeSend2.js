@@ -169,7 +169,8 @@ const QRCodeSend2 = ({ history }, props) => {
         if (localStorage.getItem('is_socketid') == null) {
             socket.emit('setSocket', {
                 roomNum: localStorage.getItem('roomNum'),
-                user_id: localStorage.getItem('username'),
+                user_id: localStorage.getItem('id'),
+                // user_id: localStorage.getItem('username'),
             })
             localStorage.setItem('is_socketid', true)
         }
@@ -212,7 +213,8 @@ const QRCodeSend2 = ({ history }, props) => {
             if (localStorage.getItem('is_socketid') == null) {
                 socket.emit('setSocket', {
                     roomNum: localStorage.getItem('roomNum'),
-                    user_id: localStorage.getItem('username'),
+                    // user_id: localStorage.getItem('username'),
+                    user_id: localStorage.getItem('id'),
                 })
                 localStorage.setItem('is_socketid', true)
             }

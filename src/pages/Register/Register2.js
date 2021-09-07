@@ -157,8 +157,9 @@ const Register2 = (props) => {
                     closeWith: ['click'],
                 }).show()
                 console.log(res.data)
+                
                 if (res.status === 200) {
-                    alert(localStorage.getItem('username') + ' 您已成功註冊!')
+                    alert(localStorage.getItem("username") + ' 您已成功註冊!')
                     history.push('./login')
                 }
             })
