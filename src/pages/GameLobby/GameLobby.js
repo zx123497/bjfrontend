@@ -64,6 +64,8 @@ const GameLobby = (props) => {
 
         console.log(props)
 
+        localStorage.setItem("roomNum",roomNum)
+
         socket.emit('enterRoom', {
             roomNum: roomNum,
             ID: localStorage.getItem('id'),
