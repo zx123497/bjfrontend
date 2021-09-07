@@ -180,8 +180,28 @@ const QRCodeSend2 = ({ history }, props) => {
         socket.on('testbroadcast', function (data) {
             console.log(data.msg)
         })
-        // seller receiver 賣方 收款方
-        // buyer payer     買方 付款方
+
+        socket.on('disconnect ', function () {
+            console.log('Disconnect')
+        })
+        socket.on('connect_failed', function () {
+            console.log('Connection Failed')
+        })
+        socket.on('error', function () {
+            console.log('An error event is sent from the server')
+        })
+        socket.on('reconnecting ', function () {
+            console.log(' the client is in the process of connecting')
+        })
+        socket.on('connecting ', function () {
+            console.log(' the client is in the process of connecting')
+        })
+        socket.on('reconnect_failed  ', function () {
+            console.log('the reconnection attempt fails')
+        })
+    }, [])
+
+    useEffect(() => {
         if (localStorage.getItem('role') == 'seller') {
             setSeller(true)
         } else {
