@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useRef, useState } from 'react'
-import { makeStyles, Card, CardActions, CardContent, Button } from '@material-ui/core'
+import { makeStyles, Card, CardActions, CardContent, Button, Typography } from '@material-ui/core'
 import { Link, withRouter, useLocation, useHistory, useParams } from 'react-router-dom'
 import IconButton from '@material-ui/core/IconButton'
 import BackPage from '../../components/BackPage/BackPage'
@@ -12,6 +12,13 @@ import InputLabel from '@material-ui/core/InputLabel'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import WarningIcon from '@material-ui/icons/Warning'
+
 const useStyles = makeStyles((theme) => ({
     ForgetPassword2: {
         display: 'flex',
@@ -43,14 +50,32 @@ const useStyles = makeStyles((theme) => ({
         },
         '& .input': {
             marginTop: '-10px',
-            color: theme.palette.ultimate.main,
+            color: theme.palette.ultimate.dark,
             fontSize: 20,
             height: '15px',
             marginLeft: '17%',
             '& .MuiTextField-root': {
                 marginTop: '25px',
                 width: '80%',
-                color: theme.palette.ultimate.main,
+                color: theme.palette.ultimate.dark,
+            },
+            '& label.Mui-focused': {
+                color: theme.palette.ultimate.dark,
+            },
+            '& .input-underline:after': {
+                borderBottomColor: theme.palette.ultimate.dark,
+            },
+            '& .input-underline:before': {
+                borderBottomColor: theme.palette.ultimate.dark,
+            },
+            '&:hover fieldset': {
+                borderColor: theme.palette.ultimate.dark,
+            },
+            '&:after fieldset': {
+                borderColor: theme.palette.ultimate.dark,
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: theme.palette.ultimate.dark,
             },
         },
         '& .pw': {
@@ -98,6 +123,8 @@ const ForgetPassword2 = (props) => {
         check_password: '',
     })
 
+    const [errorMessage, setError] = React.useState('')
+
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value })
     }
@@ -112,9 +139,11 @@ const ForgetPassword2 = (props) => {
         }
         if (values.password == '') message['password'] = '新密碼 '
         if (values.check_password == '') message['check_password'] = '確認密碼'
-        if (values.password == '' || values.check_password == '')
-            alert(message['diffPassword'] + '請輸入' + message['password'] + message['check_password'])
-        else {
+        if (values.password == '' || values.check_password == '' || values.password !== values.check_password) {
+            if (values.password !== '' && values.check_password !== '') setError(message['diffPassword'])
+            else setError(message['diffPassword'] + '請輸入' + message['password'] + message['check_password'])
+            setOpen(true)
+        } else {
             const params = new URLSearchParams()
             params.append('password', values.password)
 
@@ -132,7 +161,8 @@ const ForgetPassword2 = (props) => {
                 console.log(res.data)
                 if (res.status == 200) {
                     //history.push('./login');
-                    alert('成功重設密碼！')
+                    setError('成功重設密碼！')
+                    setOpen(true)
                 }
             })
         }
@@ -153,6 +183,11 @@ const ForgetPassword2 = (props) => {
 
     const handleMouseDownPassword2 = (event) => {
         event.preventDefault()
+    }
+
+    const [open, setOpen] = useState(false)
+    const handleClose = () => {
+        setOpen(false)
     }
 
     return (
@@ -218,6 +253,62 @@ const ForgetPassword2 = (props) => {
                     </Link>
                 </CardActions>
             </Card>
+
+            {/* ErrorMessage */}
+            <Dialog
+                PaperProps={{
+                    style: {
+                        marginTop: '90px',
+                        borderRadius: 30,
+                        height: '28%',
+                        width: '300px',
+                        padding: '28px 20px 28px 20px',
+                        backgroundColor: '#EAEAEA',
+                    },
+                }}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    <Typography className="title" variant="h5" align="center">
+                        <WarningIcon color="disabled"></WarningIcon> &nbsp;提醒
+                    </Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <Typography
+                        align="center"
+                        justifyContent="center"
+                        style={{
+                            whiteSpace: 'pre-line',
+                            fontSize: '120%',
+                            marginTop: '3px',
+                        }}
+                    >
+                        {errorMessage}
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleClose}
+                        className="sure"
+                        style={{
+                            margin: 'auto',
+                            fontSize: '90%',
+                            fontWeight: '500',
+                            borderRadius: '20px',
+                            boxShadow: 'none',
+                            width: '40%',
+                            height: '110%',
+                            backgroundColor: '#00AAA4',
+                            color: '#FFFFFF',
+                        }}
+                    >
+                        確定
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }
