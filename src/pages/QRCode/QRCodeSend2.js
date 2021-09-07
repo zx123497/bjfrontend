@@ -274,7 +274,7 @@ const QRCodeSend2 = ({ history }, props) => {
             console.log('buyer 取消交易1')
             socket.emit('get_chek_point', {
                 roomNum: localStorage.getItem('roomNum'),
-                round: parseInt(localStorage.getItem('roundNum')10)-1,
+                round: parseInt(localStorage.getItem('roundNum'),10)-1,
                 // money: money,
                 money: localStorage.getItem('tranMoney'),
                 payer_id: localStorage.getItem('id'),
