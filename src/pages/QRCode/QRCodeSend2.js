@@ -190,15 +190,6 @@ const QRCodeSend2 = ({ history }, props) => {
         socket.on('error', function () {
             console.log('An error event is sent from the server')
         })
-        socket.on('reconnecting ', function () {
-            console.log(' the client is in the process of connecting')
-        })
-        socket.on('connecting ', function () {
-            console.log(' the client is in the process of connecting')
-        })
-        socket.on('reconnect_failed  ', function () {
-            console.log('the reconnection attempt fails')
-        })
     }, [])
 
     useEffect(() => {
