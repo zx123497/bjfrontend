@@ -166,7 +166,7 @@ const QRCodeSend2 = ({ history }, props) => {
             socket.emit('setSocket', {
                 roomNum: localStorage.getItem('roomNum'),
                 // user_id: localStorage.getItem('id'),
-                user_id: localStorage.getItem('username'),
+                user_id: localStorage.getItem('id'),
             })
 
             localStorage.setItem('is_socketid', true)
@@ -202,8 +202,8 @@ const QRCodeSend2 = ({ history }, props) => {
             if (localStorage.getItem('is_socketid') == null) {
                 socket.emit('setSocket', {
                     roomNum: localStorage.getItem('roomNum'),
-                    user_id: localStorage.getItem('username'),
-                    // user_id: localStorage.getItem('id'),
+                    // user_id: localStorage.getItem('username'),
+                    user_id: localStorage.getItem('id'),
                 })
                 localStorage.setItem('is_socketid', true)
                 
@@ -228,7 +228,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 round: parseInt(localStorage.getItem('roundNum')10)-1,
                 limit_times: localStorage.getItem('tranLimit'),
                 payer_id: localStorage.getItem('tranUser'),
-                receiver_id: localStorage.getItem('username'),
+                receiver_id: localStorage.getItem('id'),
                 money: localStorage.getItem('tranMoney'),
             })
 
@@ -277,7 +277,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 round: parseInt(localStorage.getItem('roundNum')10)-1,
                 // money: money,
                 money: localStorage.getItem('tranMoney'),
-                payer_id: localStorage.getItem('username'),
+                payer_id: localStorage.getItem('id'),
                 receiver_id: localStorage.getItem('receiver_id'),
                 chek_point: '0',
             })
@@ -294,7 +294,7 @@ const QRCodeSend2 = ({ history }, props) => {
             socket.emit('checkQRcode', {
                 roomNum: localStorage.getItem('roomNum'),
                 payer_id: localStorage.getItem('tranUser'),
-                receiver_id: localStorage.getItem('username'),
+                receiver_id: localStorage.getItem('id'),
             })
 
             // 收款方等待接收 付款方是否確認交易之 socket
@@ -330,7 +330,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 roomNum: localStorage.getItem('roomNum'),
                 round: parseInt(localStorage.getItem('roundNum')10)-1,
                 money: money,
-                payer_id: localStorage.getItem('username'),
+                payer_id: localStorage.getItem('id'),
                 receiver_id: localStorage.getItem('receiver_id'),
                 chek_point: '1',
             })
@@ -359,7 +359,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 roomNum: localStorage.getItem('roomNum'),
                 round: parseInt(localStorage.getItem('roundNum')10)-1,
                 money: money,
-                payer_id: localStorage.getItem('username'),
+                payer_id: localStorage.getItem('id'),
                 receiver_id: localStorage.getItem('receiver_id'),
                 chek_point: '0',
             })
@@ -776,7 +776,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     <div>
                         <QRCode
                             className={`${showQR ? 'QRshow' : 'QRhide'}`}
-                            value={'teacher=0/' + 'money=' + money + '/userId=' + localStorage.getItem('username')}
+                            value={'teacher=0/' + 'money=' + money + '/userId=' + localStorage.getItem('id')}
                         />
                     </div>
                     <Link
