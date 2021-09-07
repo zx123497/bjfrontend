@@ -206,7 +206,6 @@ const QRCodeSend2 = ({ history }, props) => {
                     user_id: localStorage.getItem('id'),
                 })
                 localStorage.setItem('is_socketid', true)
-                
             }
 
             //確認setSocketid成功與否
@@ -225,7 +224,7 @@ const QRCodeSend2 = ({ history }, props) => {
             //確認接受老師轉入
             socket.emit('set_admin_transc_req', {
                 roomNum: localStorage.getItem('roomNum'),
-                round: parseInt(localStorage.getItem('roundNum')10)-1,
+                round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 limit_times: localStorage.getItem('tranLimit'),
                 payer_id: localStorage.getItem('tranUser'),
                 receiver_id: localStorage.getItem('id'),
@@ -274,7 +273,7 @@ const QRCodeSend2 = ({ history }, props) => {
             console.log('buyer 取消交易1')
             socket.emit('get_chek_point', {
                 roomNum: localStorage.getItem('roomNum'),
-                round: parseInt(localStorage.getItem('roundNum'),10)-1,
+                round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 // money: money,
                 money: localStorage.getItem('tranMoney'),
                 payer_id: localStorage.getItem('id'),
@@ -328,7 +327,7 @@ const QRCodeSend2 = ({ history }, props) => {
             console.log('buyer 確定要交易')
             socket.emit('get_chek_point', {
                 roomNum: localStorage.getItem('roomNum'),
-                round: parseInt(localStorage.getItem('roundNum')10)-1,
+                round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 money: money,
                 payer_id: localStorage.getItem('id'),
                 receiver_id: localStorage.getItem('receiver_id'),
@@ -357,7 +356,7 @@ const QRCodeSend2 = ({ history }, props) => {
             console.log('buyer 取消交易2')
             socket.emit('get_chek_point', {
                 roomNum: localStorage.getItem('roomNum'),
-                round: parseInt(localStorage.getItem('roundNum')10)-1,
+                round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 money: money,
                 payer_id: localStorage.getItem('id'),
                 receiver_id: localStorage.getItem('receiver_id'),
