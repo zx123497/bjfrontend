@@ -166,7 +166,7 @@ const QRCodeSend2 = ({ history }, props) => {
         console.log('trans:' + trans)
 
         // if (localStorage.getItem('is_socketid') == null && !trans) {
-        if (localStorage.getItem('is_socketid') == null) {
+        if (localStorage.getItem('is_socketid') == 'null') {
             socket.emit('setSocket', {
                 roomNum: localStorage.getItem('roomNum'),
                 user_id: localStorage.getItem('id'),

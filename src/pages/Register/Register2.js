@@ -121,6 +121,12 @@ const Register2 = (props) => {
         check_password: '',
     })
 
+    const [errorMessage, setError] = React.useState('')
+    const [open, setOpen] = useState(false)
+    const handleClose = () => {
+        setOpen(false)
+    }
+
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value })
     }
@@ -129,15 +135,26 @@ const Register2 = (props) => {
         var message = []
         message['email'] = ''
         message['password'] = ''
+        message['check_password'] = ''
         message['diffPassword'] = ''
         if (values.password !== values.check_password) {
             message['diffPassword'] = '密碼不相同\n'
         }
         if (values.email === '') message['email'] = '帳號 '
         if (values.password === '') message['password'] = '密碼'
-        if (values.email === '' || values.password === '' || values.username == '')
-            alert(message['diffPassword'] + '請輸入' + message['email'] + message['password'])
-        else {
+        if (values.check_password == '') message['check_password'] = '確認密碼'
+        if (values.email === '' || values.password === '' || values.check_password == '') {
+            if (values.password !== '' && values.check_password !== '') setError(message['diffPassword'])
+            else
+                setError(
+                    message['diffPassword'] +
+                        '請輸入' +
+                        message['email'] +
+                        message['password'] +
+                        message['check_password']
+                )
+            setOpen(true)
+        } else {
             const params = new URLSearchParams()
             params.append('schoolname', localStorage.getItem('schoolname'))
             params.append('ID', localStorage.getItem('ID'))
@@ -157,15 +174,16 @@ const Register2 = (props) => {
                     closeWith: ['click'],
                 }).show()
                 console.log(res.data)
-                
+
                 if (res.status === 200) {
-                    alert(localStorage.getItem("username") + ' 您已成功註冊!')
+                    alert(localStorage.getItem('username') + ' 您已成功註冊!')
                     history.push('./login')
                 }
             })
-            localStorage.clear()
+            // localStorage.clear()
         }
         event.preventDefault()
+        localStorage.clear()
     }
 
     const handleClickShowPassword = () => {
