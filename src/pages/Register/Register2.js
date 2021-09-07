@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core'
+import { makeStyles, Card, CardActions, CardContent, Button, TextField, Typography } from '@material-ui/core'
 import { Link, withRouter, useHistory } from 'react-router-dom'
 import BackPage from '../../components/BackPage/BackPage'
 import UserService from '../../service/UserService'
@@ -12,6 +12,12 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import IconButton from '@material-ui/core/IconButton'
 import FormControl from '@material-ui/core/FormControl'
 import { createMuiTheme } from '@material-ui/core/styles'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import WarningIcon from '@material-ui/icons/Warning'
 
 const useStyles = makeStyles((theme) => ({
     Register2: {
