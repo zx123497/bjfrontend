@@ -65,8 +65,6 @@ const GameLobby = (props) => {
     useEffect(() => {
         console.log(props)
 
-        localStorage.setItem('roomNum', roomNum)
-
         socket.emit('enterRoom', {
             roomNum: roomNum,
             ID: localStorage.getItem('id'),
@@ -74,8 +72,11 @@ const GameLobby = (props) => {
         })
 
         getRoom()
+
         localStorage.setItem('round', room.round)
         localStorage.setItem('roomNum', roomNum)
+        console.log('roomNum2:' + roomNum)
+
         socket.emit('currentTime', { roomNum: roomNum })
 
         // listen to reqRole

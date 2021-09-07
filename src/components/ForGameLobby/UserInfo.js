@@ -77,18 +77,13 @@ const useStyles = makeStyles((theme) => ({
 const UserInfo = (props) => {
     const classes = useStyles()
 
-    useEffect(() => {
-        localStorage.setItem('roomNum', props.data.roomNum)
-        console.log('room:' + props.data.roomNum)
-    }, [])
-
     //for Qrcode
     useEffect(() => {
         localStorage.setItem('role', props.data.role)
         localStorage.setItem('price', props.data.price)
         localStorage.setItem('money', props.data.money)
-        localStorage.setItem('roundNum', props.data.roundNum)
-        localStorage.setItem('roomNum', props.data.roomNum)
+        // localStorage.setItem('roundNum', props.data.roundNum)
+        // localStorage.setItem('roomNum', props.data.roomNum)
     }, [props])
 
     return (

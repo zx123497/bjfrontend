@@ -445,8 +445,8 @@ const QRCodeSend2 = ({ history }, props) => {
 
     return (
         <div className={classes.QRCodeSend2}>
-            <BackPage refs={'gamelobby/' + localStorage.getItem('roomNum')}></BackPage>
-
+            {/* <BackPage refs={'gamelobby/' + localStorage.getItem('roomNum')}></BackPage> */}
+            <BackPage refs={`gamelobby/${localStorage.getItem('roomNum')}`}></BackPage>
             {/* 確認1 */}
             <Dialog
                 PaperProps={{
