@@ -215,7 +215,6 @@ const QRCodeSend2 = ({ history }, props) => {
         if (localStorage.getItem('tranTeacher') == '1') {
             if (localStorage.getItem('is_socketid') == null) {
                 socket.emit('setSocket', {
-                    //for test之後改掉9487
                     roomNum: localStorage.getItem('roomNum'),
                     user_id: localStorage.getItem('username'),
                 })
@@ -288,8 +287,8 @@ const QRCodeSend2 = ({ history }, props) => {
             socket.emit('get_chek_point', {
                 roomNum: localStorage.getItem('roomNum'),
                 round: localStorage.getItem('roundNum'),
-                money: money,
-                //money: localStorage.getItem('tranMoney'),
+                // money: money,
+                money: localStorage.getItem('tranMoney'),
                 payer_id: localStorage.getItem('username'),
                 receiver_id: localStorage.getItem('receiver_id'),
                 chek_point: '0',
@@ -416,14 +415,19 @@ const QRCodeSend2 = ({ history }, props) => {
     }
 
     const handleQRShow = () => {
-        if (money <= 0) {
-            setError('付款金額需大於 0 元')
-            setOpen3(true)
-        } else if (money >= localStorage.getItem('money')) {
-            setError('超出您的餘額')
+        if (localStorage.getItem('role') == 'seller') {
+            setError('賣方無法使用付款功能')
             setOpen3(true)
         } else {
-            setShowQR(true)
+            if (money <= 0) {
+                setError('付款金額需大於 0 元')
+                setOpen3(true)
+            } else if (money >= localStorage.getItem('money')) {
+                setError('超出您的餘額')
+                setOpen3(true)
+            } else {
+                setShowQR(true)
+            }
         }
 
         if (!seller) {
