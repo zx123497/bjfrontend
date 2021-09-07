@@ -110,10 +110,10 @@ const NewRoom = (props) => {
                 items: '',
 
                 // for test
-                saleMax: 80,
-                saleMin: 150,
-                buyMax: 70,
-                buyMin: 130,
+                saleMax: 150,
+                saleMin: 80,
+                buyMax: 130,
+                buyMin: 70,
                 // saleMax: 0,
                 // saleMin: 0,
                 // buyMax: 0,
