@@ -158,7 +158,7 @@ const QRCodeSend2 = ({ history }, props) => {
 
     useEffect(() => {
         /*
-       // 最後送get_check_point的時候，他會自己再set一次id所以這邊讓他只能set一次
+       // 最後送get_chek_point的時候，他會自己再set一次id所以這邊讓他只能set一次
        // 若沒刪掉is_socketid user就不能再交易了
        */
 
@@ -278,14 +278,14 @@ const QRCodeSend2 = ({ history }, props) => {
             console.log('seller 取消交易1')
         } else {
             console.log('buyer 取消交易1')
-            socket.emit('get_check_point', {
+            socket.emit('get_chek_point', {
                 roomNum: localStorage.getItem('roomNum'),
                 round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 // money: money,
                 money: localStorage.getItem('tranMoney'),
                 payer_id: localStorage.getItem('id'),
                 receiver_id: localStorage.getItem('receiver_id'),
-                check_point: '0',
+                chek_point: '0',
             })
         }
     }
@@ -306,7 +306,7 @@ const QRCodeSend2 = ({ history }, props) => {
             // 收款方等待接收 付款方是否確認交易之 socket
             console.log('seller確認交易 等待buyer付款')
             socket.on('transcResp', function (data) {
-                //data = check_point
+                //data = chek_point
                 if (data == '1') {
                     setTrans(true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
@@ -332,13 +332,13 @@ const QRCodeSend2 = ({ history }, props) => {
 
         if (!seller) {
             console.log('buyer 確定要交易')
-            socket.emit('get_check_point', {
+            socket.emit('get_chek_point', {
                 roomNum: localStorage.getItem('roomNum'),
                 round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 money: money,
                 payer_id: localStorage.getItem('id'),
                 receiver_id: localStorage.getItem('receiver_id'),
-                check_point: '1',
+                chek_point: '1',
             })
             setTrans(true) // 設定每局交易過後便無法再進行第二次交易
             localStorage.removeItem('is_socketid')
@@ -361,13 +361,13 @@ const QRCodeSend2 = ({ history }, props) => {
         if (seller) console.log('seller 取消交易2')
         else {
             console.log('buyer 取消交易2')
-            socket.emit('get_check_point', {
+            socket.emit('get_chek_point', {
                 roomNum: localStorage.getItem('roomNum'),
                 round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 money: money,
                 payer_id: localStorage.getItem('id'),
                 receiver_id: localStorage.getItem('receiver_id'),
-                check_point: '0',
+                chek_point: '0',
             })
         }
     }
