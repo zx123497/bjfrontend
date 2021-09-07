@@ -161,7 +161,12 @@ const QRCodeSend2 = ({ history }, props) => {
        // 最後送get_chek_point的時候，他會自己再set一次id所以這邊讓他只能set一次
        // 若沒刪掉is_socketid user就不能再交易了
        */
-        if (localStorage.getItem('is_socketid') == null && !trans) {
+
+        console.log('set_socket:' + localStorage.getItem('is_socketid'))
+        console.log('trans:' + trans)
+
+        // if (localStorage.getItem('is_socketid') == null && !trans) {
+        if (localStorage.getItem('is_socketid') == null) {
             socket.emit('setSocket', {
                 roomNum: localStorage.getItem('roomNum'),
                 user_id: localStorage.getItem('username'),
