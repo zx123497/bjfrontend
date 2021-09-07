@@ -67,6 +67,20 @@ const GameLobby = (props) => {
     useEffect(() => {
         console.log(props)
 
+        socket.on('enterRoom_resp', (res) => {
+            setPlayer({
+                item: '',
+                money: res.user.money,
+                price: res.user.price,
+                role: res.user.role,
+                score: 0,
+                totalScore: 0,
+                transPartner: '',
+                tranAmount: 0,
+                roomNum: roomNum,
+            })
+        })
+
         socket.emit('enterRoom', {
             roomNum: roomNum,
             ID: localStorage.getItem('id'),
@@ -81,22 +95,6 @@ const GameLobby = (props) => {
 
         socket.emit('currentTime', { roomNum: roomNum })
 
-        // listen to reqRole
-        socket.on('resRole', (res) => {
-            console.log(res)
-            setPlayer({
-                item: '',
-                money: res.user.money,
-                price: res.user.price,
-                role: res.user.role,
-                score: 0,
-                totalScore: 0,
-                transPartner: '',
-                tranAmount: 0,
-                roomNum: roomNum,
-            })
-        })
-
         // listen to sendsysmsg
         socket.on('sys', function (res) {
             console.log(res)
@@ -105,8 +103,8 @@ const GameLobby = (props) => {
         // listen to endRound
         socket.on('endRoundResponse', (res) => {
             console.log(res)
-            if (res == 'endRoundMessage' || res == 'error(no next round)') {
-                props.history.push(`/loading/${roomNum}`)
+            if ((res == 'endRoundMessage') || (res == 'error(no next round)')) {
+                props.history.replace(`/loading/${roomNum}`)
             }
         })
 
@@ -123,8 +121,6 @@ const GameLobby = (props) => {
             socket.emit('leaveRoom', { roomNum: roomNum })
         })
 
-        // ask for user role
-        socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('id') })
     }, [])
 
     const classes = useStyles()
