@@ -279,6 +279,62 @@ const Register2 = (props) => {
                     </Link>
                 </CardActions>
             </Card>
+
+            {/* ErrorMessage */}
+            <Dialog
+                PaperProps={{
+                    style: {
+                        marginTop: '90px',
+                        borderRadius: 30,
+                        height: '28%',
+                        width: '300px',
+                        padding: '28px 20px 28px 20px',
+                        backgroundColor: '#EAEAEA',
+                    },
+                }}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    <Typography className="title" variant="h5" align="center">
+                        <WarningIcon color="disabled"></WarningIcon> &nbsp;提醒
+                    </Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <Typography
+                        align="center"
+                        justifyContent="center"
+                        style={{
+                            whiteSpace: 'pre-line',
+                            fontSize: '120%',
+                            marginTop: '3px',
+                        }}
+                    >
+                        {errorMessage}
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleClose}
+                        className="sure"
+                        style={{
+                            margin: 'auto',
+                            fontSize: '90%',
+                            fontWeight: '500',
+                            borderRadius: '20px',
+                            boxShadow: 'none',
+                            width: '40%',
+                            height: '110%',
+                            backgroundColor: '#00AAA4',
+                            color: '#FFFFFF',
+                        }}
+                    >
+                        確定
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }
