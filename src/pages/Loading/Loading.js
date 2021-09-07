@@ -78,7 +78,7 @@ const Loading = (props) => {
 
         // direct to gamelobby when the game start
         socket.on('startGameResponse', function (obj) {
-            props.history.push(`/gamelobby/${roomNum}`)
+            props.history.replace(`/gamelobby/${roomNum}`)
         })
         
         // enter room socket
