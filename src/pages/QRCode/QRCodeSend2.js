@@ -239,7 +239,8 @@ const QRCodeSend2 = ({ history }, props) => {
 
             // 收款方等待接收 與老師交易是否成功之 socket
             socket.on('get_admin_transc_rsp', function (data) {
-                if (data == '1') {
+                console.log(data)
+                if (data.point == '1') {
                     // console.log('get_admin_transc_rsp=1')
                     setError('恭喜您完成交易')
                     setOpen3(true)
@@ -249,7 +250,7 @@ const QRCodeSend2 = ({ history }, props) => {
                         'tranTeacher_' + localStorage.getItem('roundNum'),
                         localStorage.getItem('tranMoney')
                     )
-                } else if (data == '0') {
+                } else if (data.point == '0') {
                     // console.log('get_admin_transc_rsp=0')
                     localStorage.removeItem('is_socketid')
                     localStorage.removeItem('socketid')
