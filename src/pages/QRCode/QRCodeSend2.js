@@ -256,10 +256,14 @@ const QRCodeSend2 = ({ history }, props) => {
                     localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
                 } else if (data == '0') {
                     console.log('get_admin_transc_rsp=0')
+                    localStorage.removeItem('is_socketid')
+                    localStorage.removeItem('socketid')
                     setError('交易失敗，請再試一次')
                     setOpen3(true)
                 } else {
                     console.log('get_admin_transc_rsp=-1')
+                    localStorage.removeItem('is_socketid')
+                    localStorage.removeItem('socketid')
                     setError('交易次數已超過限制')
                     setOpen3(true)
                 }
@@ -435,6 +439,8 @@ const QRCodeSend2 = ({ history }, props) => {
 
     useEffect(() => {
         setTrans(false)
+        localStorage.removeItem('is_socketid')
+        localStorage.removeItem('socketid')
     }, [roundNum])
 
     // 設定轉出的金額
