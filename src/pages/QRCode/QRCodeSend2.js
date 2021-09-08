@@ -190,14 +190,8 @@ const QRCodeSend2 = ({ history }, props) => {
             console.log(data.msg)
         })
 
-        socket.on('disconnect ', function () {
-            console.log('Disconnect')
-        })
-        socket.on('connect_failed', function () {
-            console.log('Connection Failed')
-        })
-        socket.on('error', function () {
-            console.log('An error event is sent from the server')
+        socket.on('connect_error ', function (data) {
+            console.log(data)
         })
 
         // listen to endRound
