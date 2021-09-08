@@ -65,22 +65,25 @@ const GameLobby = (props) => {
     }
 
     useEffect(() => {
-        console.log(props)
+
+        console.log(localStorage.getItem(`trans_${room.round}`))
+
 
         socket.on('enterRoom_resp', (res) => {
             console.log(res)
-            if(localStorage.getItem('trans_' + room.round)) {
-                var JSONobj = JSON.parse(localStorage.getItem('trans_' + room.round))
-                console.log(JSONobj)
+            if((localStorage.getItem(`tran${room.round}_money`)) &&
+                (localStorage.getItem(`tran${room.round}_user`))) {
+                    console.log('ls')
+                    console.log((localStorage.getItem(`tran${room.round}_money`)))
                 setPlayer({
                     item: '',
                     money: res.user.money,
                     price: res.user.price,
                     role: res.user.role,
-                    score: JSONobj.money,
-                    totalScore: JSONobj.money - res.user.price,
-                    transPartner: JSONobj.tranUser,
-                    tranAmount: JSONobj.money,
+                    score: localStorage.getItem(`tran${room.round}_money`),
+                    totalScore: (localStorage.getItem(`tran${room.round}_money`)) - res.user.price,
+                    transPartner: localStorage.getItem(`tran${room.round}_user`),
+                    tranAmount: localStorage.getItem(`tran${room.round}_money`),
                     roomNum: roomNum,
                 })
             } else {
@@ -99,18 +102,17 @@ const GameLobby = (props) => {
         })
 
         socket.on('resRole', (res) => {
-            if(localStorage.getItem('trans_' + room.round)) {
-                var JSONobj = JSON.parse(localStorage.getItem('trans_' + room.round))
-                console.log(JSONobj)
+            if((localStorage.getItem(`tran${room.round}_money`)) &&
+                (localStorage.getItem(`tran${room.round}_user`))) {
                 setPlayer({
                     item: '',
                     money: res.user.money,
                     price: res.user.price,
                     role: res.user.role,
-                    score: JSONobj.money,
-                    totalScore: JSONobj.money - res.user.price,
-                    transPartner: JSONobj.tranUser,
-                    tranAmount: JSONobj.money,
+                    score: localStorage.getItem(`tran${room.round}_money`),
+                    totalScore: (localStorage.getItem(`tran${room.round}_money`)) - res.user.price,
+                    transPartner: localStorage.getItem(`tran${room.round}_user`),
+                    tranAmount: localStorage.getItem(`tran${room.round}_money`),
                     roomNum: roomNum,
                 })
             } else {
@@ -165,6 +167,7 @@ const GameLobby = (props) => {
         // listen to close room
         socket.on('get_out', (res) => {
             socket.emit('leaveRoom', { roomNum: roomNum })
+            props.history.push('/user/lobby')
         })
 
     }, [])

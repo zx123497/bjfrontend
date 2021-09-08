@@ -74,7 +74,13 @@ const Loading = (props) => {
 
     useEffect(() => {
 
-        console.log(props)
+        socket.on('enterRoom_resp', (res) => {
+            console.log(res)
+        })
+
+        socket.on('connect_error', (res) => {
+            console.log(res)
+        })
 
         // direct to gamelobby when the game start
         socket.on('startGameResponse', function (obj) {

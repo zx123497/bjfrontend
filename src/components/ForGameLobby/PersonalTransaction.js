@@ -44,6 +44,8 @@ const useStyles = makeStyles((theme) => ({
 
 const PersonalTransaction = (props) => {
 
+    console.log(props.data)
+
     const classes = useStyles();
 
     return (
