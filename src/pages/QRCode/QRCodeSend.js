@@ -364,7 +364,7 @@ const QRCodeSend2 = (props) => {
                                         '/limit=' +
                                         values.numpeople +
                                         '/userId=' +
-                                        localStorage.getItem('name')
+                                        localStorage.getItem('id')
                                     }
                                 />
                             ) : (

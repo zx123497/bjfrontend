@@ -85,13 +85,22 @@ const NewRoom = (props) => {
     const history = useHistory()
     const theme = useTheme()
     const [form, setForm] = useState({
-        roomName: '',
+        //for test
+        roomName: 'default',
         test: '0',
         roundNum: 1,
-        roundTime: 0,
+        roundTime: 100,
         gametype: 0,
         userName: '',
-        initMoney: 0,
+        initMoney: 300,
+        // roomName: '',
+        // test: '0',
+        // roundNum: 1,
+        // roundTime: 0,
+        // gametype: 0,
+        // userName: '',
+        // initMoney: 0,
+
         interval: 1,
         rounds: [
             {
@@ -99,11 +108,16 @@ const NewRoom = (props) => {
                 buyratio: 50,
                 sellratio: 50,
                 items: '',
-                saleMax: 0,
-                saleMin: 0,
 
-                buyMax: 0,
-                buyMin: 0,
+                // for test
+                saleMax: 150,
+                saleMin: 80,
+                buyMax: 130,
+                buyMin: 70,
+                // saleMax: 0,
+                // saleMin: 0,
+                // buyMax: 0,
+                // buyMin: 0,
             },
         ],
     })
