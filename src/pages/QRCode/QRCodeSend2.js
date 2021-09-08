@@ -143,7 +143,7 @@ const QRCodeSend2 = ({ history }, props) => {
     const [trans, setTrans] = React.useState(false)
     const [roundNum, setRoundNum] = React.useState('0')
     const [receiver_id, setReceiver_id] = React.useState('')
-
+    const [wait, setWait] = React.useState(false)
     const handleClose1 = () => {
         setOpen1(false)
     }
@@ -162,8 +162,8 @@ const QRCodeSend2 = ({ history }, props) => {
        // 若沒刪掉is_socketid user就不能再交易了
        */
 
-        // if (localStorage.getItem('is_socketid') == null && !trans) {
-        if (localStorage.getItem('is_socketid') == null) {
+        if (localStorage.getItem('is_socketid') == null && !trans) {
+            // if (localStorage.getItem('is_socketid') == null) {
             socket.emit('setSocket', {
                 roomNum: localStorage.getItem('roomNum'),
                 user_id: localStorage.getItem('id'),
@@ -225,6 +225,7 @@ const QRCodeSend2 = ({ history }, props) => {
 
     const handleYes1 = () => {
         setOpen1(false)
+
         if (localStorage.getItem('tranTeacher') == '1') {
             console.log('與老師交易')
 
@@ -305,6 +306,32 @@ const QRCodeSend2 = ({ history }, props) => {
 
             // 收款方等待接收 付款方是否確認交易之 socket
             console.log('seller確認交易 等待buyer付款')
+            setWait(true)
+        }
+
+        if (!seller) {
+            console.log('buyer 確定要交易')
+            socket.emit('get_chek_point', {
+                roomNum: localStorage.getItem('roomNum'),
+                round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
+                money: money,
+                payer_id: localStorage.getItem('id'),
+                receiver_id: localStorage.getItem('receiver_id'),
+                chek_point: '1',
+            })
+            setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+            localStorage.removeItem('is_socketid')
+            localStorage.removeItem('socketid')
+            const result = {
+                round: localStorage.getItem('roundNum'),
+                // buyer: localStorage.getItem('username'),
+                tranUser: localStorage.getItem('receiver_id'),
+                money: money,
+            }
+            localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
+        }
+
+        if (seller) {
             socket.on('transcResp', function (data) {
                 //data = chek_point
                 if (data == '1') {
@@ -329,29 +356,37 @@ const QRCodeSend2 = ({ history }, props) => {
             localStorage.removeItem('is_socketid')
             localStorage.removeItem('socketid')
         }
-
-        if (!seller) {
-            console.log('buyer 確定要交易')
-            socket.emit('get_chek_point', {
-                roomNum: localStorage.getItem('roomNum'),
-                round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
-                money: money,
-                payer_id: localStorage.getItem('id'),
-                receiver_id: localStorage.getItem('receiver_id'),
-                chek_point: '1',
-            })
-            setTrans(true) // 設定每局交易過後便無法再進行第二次交易
-            localStorage.removeItem('is_socketid')
-            localStorage.removeItem('socketid')
-            const result = {
-                round: localStorage.getItem('roundNum'),
-                // buyer: localStorage.getItem('username'),
-                tranUser: localStorage.getItem('receiver_id'),
-                money: money,
-            }
-            localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
-        }
     }
+
+    useEffect(() => {
+        if (wait) {
+            if (seller) {
+                socket.on('transcResp', function (data) {
+                    //data = chek_point
+                    if (data == '1') {
+                        setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                        setError('恭喜您完成交易')
+                        setOpen3(true)
+                        const result = {
+                            round: localStorage.getItem('roundNum'),
+                            tranUser: localStorage.getItem('tranUser'),
+                            // seller: localStorage.getItem('username'),
+                            money: localStorage.getItem('tranMoney'),
+                        }
+                        localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
+                    } else if (data == '0') {
+                        setError('交易失敗\n 付款方不想付款')
+                        setOpen3(true)
+                    } else {
+                        setError('交易失敗\n 付款方無回應')
+                        setOpen3(true)
+                    }
+                })
+                localStorage.removeItem('is_socketid')
+                localStorage.removeItem('socketid')
+            }
+        }
+    }, [wait])
 
     const handleNo2 = () => {
         setOpen2(false)
