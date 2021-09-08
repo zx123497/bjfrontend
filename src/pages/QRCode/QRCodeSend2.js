@@ -343,6 +343,8 @@ const QRCodeSend2 = ({ history }, props) => {
 
         if (seller) {
             socket.on('getRecordRequest', function (data) {
+                console.log('getRecordRequest1: ' + data)
+
                 if (data) {
                     setTrans(true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
@@ -386,49 +388,50 @@ const QRCodeSend2 = ({ history }, props) => {
     }
 
     useEffect(() => {
-        if (wait) {
-            if (seller) {
-                // socket.on('transcResp', function (data) {
-                //     if (data == '1') {
-                //         setTrans(true) // 設定每局交易過後便無法再進行第二次交易
-                //         setError('恭喜您完成交易')
-                //         setOpen3(true)
-                //         const result = {
-                //             round: localStorage.getItem('roundNum'),
-                //             tranUser: localStorage.getItem('tranUser'),
-                //             money: localStorage.getItem('tranMoney'),
-                //         }
-                //         localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
-                //     } else if (data == '0') {
-                //         setError('交易失敗\n 付款方不想付款')
-                //         setOpen3(true)
-                //     } else {
-                //         setError('交易失敗\n 付款方無回應')
-                //         setOpen3(true)
-                //     }
-                // })
-                socket.on('getRecordRequest', function (data) {
-                    if (data) {
-                        setTrans(true) // 設定每局交易過後便無法再進行第二次交易
-                        setError('恭喜您完成交易')
-                        setOpen3(true)
-                        const result = {
-                            round: localStorage.getItem('roundNum'),
-                            tranUser: localStorage.getItem('tranUser'),
-                            // seller: localStorage.getItem('username'),
-                            money: localStorage.getItem('tranMoney'),
-                        }
-                        localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
-                    } else {
-                        setError('交易失敗\n 付款方無回應')
-                        setOpen3(true)
+        // if (wait) {
+        if (seller) {
+            // socket.on('transcResp', function (data) {
+            //     if (data == '1') {
+            //         setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+            //         setError('恭喜您完成交易')
+            //         setOpen3(true)
+            //         const result = {
+            //             round: localStorage.getItem('roundNum'),
+            //             tranUser: localStorage.getItem('tranUser'),
+            //             money: localStorage.getItem('tranMoney'),
+            //         }
+            //         localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
+            //     } else if (data == '0') {
+            //         setError('交易失敗\n 付款方不想付款')
+            //         setOpen3(true)
+            //     } else {
+            //         setError('交易失敗\n 付款方無回應')
+            //         setOpen3(true)
+            //     }
+            // })
+            socket.on('getRecordRequest', function (data) {
+                console.log('getRecordRequest2: ' + data)
+                if (data) {
+                    setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                    setError('恭喜您完成交易')
+                    setOpen3(true)
+                    const result = {
+                        round: localStorage.getItem('roundNum'),
+                        tranUser: localStorage.getItem('tranUser'),
+                        // seller: localStorage.getItem('username'),
+                        money: localStorage.getItem('tranMoney'),
                     }
-                })
-                localStorage.removeItem('is_socketid')
-                localStorage.removeItem('socketid')
-            }
-            setWait(false)
+                    localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
+                } else {
+                    setError('交易失敗\n 付款方無回應')
+                    setOpen3(true)
+                }
+            })
+            localStorage.removeItem('is_socketid')
+            localStorage.removeItem('socketid')
         }
+        setWait(false)
+        // }
     }, [wait])
 
     const handleNo2 = () => {
