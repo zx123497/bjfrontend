@@ -55,7 +55,7 @@ const PersonalTransaction = (props) => {
                 <Grid container className="row pointSum" justify="center">
                     <Grid item xs={4} className="cell caption">
                         <Typography variant="subtitle">
-                            得分總計：
+                            得分總計1：
                         </Typography>
                     </Grid>
                     <Grid item xs={8} className="cell">

@@ -105,7 +105,7 @@ const UserInfo = (props) => {
                                     <Typography variant="subtitle">目前餘額 ${props.data.money}</Typography>
                                 </Box>
                                 <Box className="box identity_sell">
-                                    <Typography variant="h5">賣方1</Typography>
+                                    <Typography variant="h5">賣方</Typography>
                                 </Box>
                             </div>
                         )}
