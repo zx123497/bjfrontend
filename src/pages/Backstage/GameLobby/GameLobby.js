@@ -149,7 +149,7 @@ const GameLobby = (props) => {
             icon: <CropFreeIcon />,
             title: 'QRCODE',
             func: () => {
-                props.history.push('/qrcode')
+                props.history.push('/teacherqrcode')
             },
         },
     ]
