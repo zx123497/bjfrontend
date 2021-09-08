@@ -67,6 +67,7 @@ const GameLobby = (props) => {
     const getRoom = () => {
         const getRoomParam = new URLSearchParams()
         getRoomParam.append('roomNum', roomNum)
+        localStorage.setItem('roomNum',roomNum) 
 
         AdminService.postGetRoom(getRoomParam).then((res) => {
             if (res.status == '200') {
