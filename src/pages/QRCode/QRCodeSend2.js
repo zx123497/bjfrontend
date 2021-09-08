@@ -330,8 +330,8 @@ const QRCodeSend2 = ({ history }, props) => {
                 chek_point: '1',
             })
             setTrans(true) // 設定每局交易過後便無法再進行第二次交易
-            localStorage.removeItem('is_socketid')
-            localStorage.removeItem('socketid')
+            // localStorage.removeItem('is_socketid')
+            // localStorage.removeItem('socketid')
             const result = {
                 round: localStorage.getItem('roundNum'),
                 // buyer: localStorage.getItem('username'),
@@ -339,9 +339,8 @@ const QRCodeSend2 = ({ history }, props) => {
                 money: money,
             }
             localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
-        }
+            setWait(true)
 
-        if (seller) {
             socket.on('getRecordRequest', function (data) {
                 console.log('getRecordRequest1: ' + data)
 
@@ -361,35 +360,41 @@ const QRCodeSend2 = ({ history }, props) => {
                     setOpen3(true)
                 }
             })
+        }
 
-            // socket.on('transcResp', function (data) {
-            //     if (data == '1') {
-            //         setTrans(true) // 設定每局交易過後便無法再進行第二次交易
-            //         setError('恭喜您完成交易')
-            //         setOpen3(true)
-            //         const result = {
-            //             round: localStorage.getItem('roundNum'),
-            //             tranUser: localStorage.getItem('tranUser'),
-            //             // seller: localStorage.getItem('username'),
-            //             money: localStorage.getItem('tranMoney'),
-            //         }
-            //         localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
-            //     } else if (data == '0') {
-            //         setError('交易失敗\n 付款方不想付款')
-            //         setOpen3(true)
-            //     } else {
-            //         setError('交易失敗\n 付款方無回應')
-            //         setOpen3(true)
-            //     }
-            // })
-            // localStorage.removeItem('is_socketid')
-            // localStorage.removeItem('socketid')
+        // 賣方
+        if (seller) {
+            socket.on('transcResp', function (data) {
+                if (data == '1') {
+                    setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                    setError('恭喜您完成交易')
+                    setOpen3(true)
+                    const result = {
+                        round: localStorage.getItem('roundNum'),
+                        tranUser: localStorage.getItem('tranUser'),
+                        // seller: localStorage.getItem('username'),
+                        money: localStorage.getItem('tranMoney'),
+                    }
+                    localStorage.removeItem('is_socketid')
+                    localStorage.removeItem('socketid')
+
+                    localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
+                } else if (data == '0') {
+                    localStorage.removeItem('is_socketid')
+                    localStorage.removeItem('socketid')
+                    setError('交易失敗\n 付款方不想付款')
+                    setOpen3(true)
+                } else {
+                    setError('交易失敗\n 付款方無回應')
+                    setOpen3(true)
+                }
+            })
         }
     }
 
     useEffect(() => {
         // if (wait) {
-        if (seller) {
+        if (!seller) {
             // socket.on('transcResp', function (data) {
             //     if (data == '1') {
             //         setTrans(true) // 設定每局交易過後便無法再進行第二次交易
@@ -409,8 +414,10 @@ const QRCodeSend2 = ({ history }, props) => {
             //         setOpen3(true)
             //     }
             // })
+
             socket.on('getRecordRequest', function (data) {
-                console.log('getRecordRequest2: ' + data)
+                console.log('getRecordRequest1: ' + data)
+
                 if (data) {
                     setTrans(true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
@@ -429,6 +436,27 @@ const QRCodeSend2 = ({ history }, props) => {
             })
             localStorage.removeItem('is_socketid')
             localStorage.removeItem('socketid')
+        } else {
+            socket.on('transcResp', function (data) {
+                if (data == '1') {
+                    setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                    setError('恭喜您完成交易')
+                    setOpen3(true)
+                    const result = {
+                        round: localStorage.getItem('roundNum'),
+                        tranUser: localStorage.getItem('tranUser'),
+                        // seller: localStorage.getItem('username'),
+                        money: localStorage.getItem('tranMoney'),
+                    }
+                    localStorage.setItem('trans_' + localStorage.getItem('roundNum'), JSON.stringify(result))
+                } else if (data == '0') {
+                    setError('交易失敗\n 付款方不想付款')
+                    setOpen3(true)
+                } else {
+                    setError('交易失敗\n 付款方無回應')
+                    setOpen3(true)
+                }
+            })
         }
         setWait(false)
         // }
