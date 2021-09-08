@@ -24,7 +24,7 @@ import CropFreeIcon from '@material-ui/icons/CropFree'
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.ultimate.dark,
-        height: "100vh",
+        height: '100vh',
         marginTop: '40px',
         position: 'relative',
     },
@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const GameLobby = (props) => {
-
     const roomNum = props.location.pathname.split('/')[3]
 
     const theme = useTheme()
@@ -54,7 +53,7 @@ const GameLobby = (props) => {
         totalMemNum: '',
         round: '',
         roundTime: '',
-        isGaming: ''
+        isGaming: '',
     })
 
     const [annoucement, setAnnouncement] = useState({
@@ -71,13 +70,13 @@ const GameLobby = (props) => {
 
         AdminService.postGetRoom(getRoomParam).then((res) => {
             if (res.status == '200') {
-                if(res.data.allUsers) {
+                if (res.data.allUsers) {
                     setRoom({
                         pincode: props.match.params.id,
                         totalMemNum: res.data.allUsers.length,
                         round: res.data.roomDetail.nowRound + 1,
                         roundTime: res.data.roomDetail.roundTime,
-                        isGaming: res.data.roomDetail.isGaming
+                        isGaming: res.data.roomDetail.isGaming,
                     })
                 }
             }
@@ -89,7 +88,7 @@ const GameLobby = (props) => {
         chartdataParam.append('roomNum', `${roomNum}`)
 
         AdminService.postChartData(chartdataParam).then((res) => {
-            if(res.status == '200') {
+            if (res.status == '200') {
                 setChartData({ chartData: res.data.chartData })
             }
         })
@@ -102,6 +101,7 @@ const GameLobby = (props) => {
             title: '結束遊戲',
             func: () => {
                 socket.emit('closeRoom', { roomNum: `${props.match.params.id}` })
+                props.history.push('/admin/gamesum/' + roomNum)
             },
         },
         {
@@ -124,11 +124,11 @@ const GameLobby = (props) => {
         {
             // new chart
             icon: <AutorenewIcon />,
-            title: "分配身分",
+            title: '分配身分',
             func: () => {
                 socket.emit('shuffle', {
                     roomNum: `${roomNum}`,
-                    roundNum: `${room.round}`
+                    roundNum: `${room.round}`,
                 })
             },
         },
@@ -155,13 +155,12 @@ const GameLobby = (props) => {
     ]
 
     useEffect(() => {
-
         console.log(props)
 
         socket.emit('enterRoom', {
             roomNum: roomNum,
             ID: localStorage.getItem('id'),
-            username: localStorage.getItem('username')
+            username: localStorage.getItem('username'),
         })
 
         getRoom()
@@ -176,8 +175,8 @@ const GameLobby = (props) => {
 
         // listen to startGame
         socket.on('startGameResponse', (res) => {
-            if(res == "error") {
-                alert("進行中的遊戲點擊開始按鈕無效")
+            if (res == 'error') {
+                alert('進行中的遊戲點擊開始按鈕無效')
             } else {
                 window.location.reload()
             }
@@ -185,16 +184,14 @@ const GameLobby = (props) => {
 
         // listen to endRound
         socket.on('endRoundResponse', (res) => {
-            if(res == "error") {
-                alert("請先開始遊戲再執行結束回合")
-            }
-            else if(res == "error(no next round)") {
-                alert("已達設定回合上限，請回到管理者專區更改設定增加回合數")
+            if (res == 'error') {
+                alert('請先開始遊戲再執行結束回合')
+            } else if (res == 'error(no next round)') {
+                alert('已達設定回合上限，請回到管理者專區更改設定增加回合數')
                 props.history.replace('/admin/lobby')
-            }
-            else if(res == "endRoundMessage") {
+            } else if (res == 'endRoundMessage') {
                 window.location.reload()
-                alert("此回合結束")
+                alert('此回合結束')
             }
         })
 
@@ -203,18 +200,17 @@ const GameLobby = (props) => {
             console.log(res)
             getChartData()
         })
-        
+
         // listen to sendsysmsg
         socket.on('sys', (res) => {
             console.log(res)
-            if(res == 'error') {
-                alert("請先開始遊戲")
+            if (res == 'error') {
+                alert('請先開始遊戲')
             } else {
                 setAnnouncement({ roomAnnoucement: res.message })
                 getChartData()
             }
         })
-
     }, [])
 
     const classes = useStyles()
@@ -247,19 +243,17 @@ const GameLobby = (props) => {
         var seller = modalOpenState.seller
         var buyer = modalOpenState.buyer
 
-        var sysmsg = ""
+        var sysmsg = ''
 
-        if(seller > 0) {
+        if (seller > 0) {
             sysmsg += `賣家商品成本+$${seller}  `
-        }
-        else if(seller < 0) {
+        } else if (seller < 0) {
             sysmsg += `賣家商品成本-$${Math.abs(seller)}  `
         }
 
-        if(buyer > 0) {
+        if (buyer > 0) {
             sysmsg += `買家商品價值+$${buyer}`
-        }
-        else if(buyer < 0) {
+        } else if (buyer < 0) {
             sysmsg += `買家商品價值-$${Math.abs(buyer)}`
         }
 
@@ -267,9 +261,9 @@ const GameLobby = (props) => {
             msg: sysmsg,
             roomNum: roomNum,
             bAdjustPrice: buyer,
-            sAdjustPrice: seller
+            sAdjustPrice: seller,
         })
-        
+
         handleModalClose()
     }
 
