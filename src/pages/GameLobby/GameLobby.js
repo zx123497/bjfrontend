@@ -67,11 +67,41 @@ const GameLobby = (props) => {
     useEffect(() => {
         console.log(props)
 
-        var JSONobj = JSON.parse(localStorage.getItem('trans_' + room.round))
-
         socket.on('enterRoom_resp', (res) => {
             console.log(res)
             if(localStorage.getItem('trans_' + room.round)) {
+                var JSONobj = JSON.parse(localStorage.getItem('trans_' + room.round))
+                console.log(JSONobj)
+                setPlayer({
+                    item: '',
+                    money: res.user.money,
+                    price: res.user.price,
+                    role: res.user.role,
+                    score: JSONobj.money,
+                    totalScore: JSONobj.money - res.user.price,
+                    transPartner: JSONobj.tranUser,
+                    tranAmount: JSONobj.money,
+                    roomNum: roomNum,
+                })
+            } else {
+                setPlayer({
+                    item: '',
+                    money: res.user.money,
+                    price: res.user.price,
+                    role: res.user.role,
+                    score: 0,
+                    totalScore: 0,
+                    transPartner: '',
+                    tranAmount: 0,
+                    roomNum: roomNum,
+                })
+            }
+        })
+
+        socket.on('resRole', (res) => {
+            if(localStorage.getItem('trans_' + room.round)) {
+                var JSONobj = JSON.parse(localStorage.getItem('trans_' + room.round))
+                console.log(JSONobj)
                 setPlayer({
                     item: '',
                     money: res.user.money,
@@ -113,7 +143,7 @@ const GameLobby = (props) => {
 
         // listen to sendsysmsg
         socket.on('sys', function (res) {
-            console.log(res)
+            socket.emit('reqRole',{roomNum: roomNum, ID: localStorage.getItem('id')})
         })
 
         // listen to endRound
