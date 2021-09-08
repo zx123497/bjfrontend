@@ -19,6 +19,7 @@ import TimerOffIcon from '@material-ui/icons/TimerOff'
 import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet'
 import Button from '@material-ui/core/Button'
 import useTheme from '@material-ui/core/styles/useTheme'
+import CropFreeIcon from '@material-ui/icons/CropFree'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -141,6 +142,14 @@ const GameLobby = (props) => {
                 } catch (error) {
                     console.warn(error)
                 }
+            },
+        },
+        {
+            // qrcode
+            icon: <CropFreeIcon />,
+            title: 'QRCODE',
+            func: () => {
+                props.history.push('/qrcode')
             },
         },
     ]

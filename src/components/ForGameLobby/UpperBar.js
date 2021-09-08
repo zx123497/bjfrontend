@@ -124,13 +124,8 @@ const UpperBar = (props) => {
 
         socket.on('currentTimeResponse', (res) => {
             var temp = new Date()
-            console.log(temp)
             expTime.setTime(temp.getTime() + 1000 * res.remainSecond)
-            console.log(res.remainSecond)
-            console.log(expTime)
-            console.log('--------------------')
             setTime(expTime)
-            console.log('finish setState')
         })
     }, [])
 
