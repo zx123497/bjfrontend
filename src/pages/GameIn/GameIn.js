@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom'
+import { socket } from '../../service/socket'
 
 import UserService from '../../service/UserService'
 
@@ -64,16 +65,34 @@ const GameIn = (props) => {
         pincode: null,
     })
 
+    useEffect(() => {
+        socket.on('enterRoom_resp', (res) => {
+            console.log(res)
+            if(res.status == 2) {
+                alert(res.msg)
+            }
+        })
+
+        socket.on('connect_error', (res) => {
+            console.log(res)
+        })
+    }, [])
+
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value })
     }
 
     const handleSubmit = (event) => {
         const username = localStorage.getItem('username')
-
+        
         if (values.pincode == '') {
             alert('請輸入PIN CODE')
         } else {
+            socket.emit('enterRoom', {
+                roomNum: values.pincode,
+                ID: localStorage.getItem('id'),
+                username: localStorage.getItem('username')
+            })
             props.history.push(`/loading/${values.pincode}`)
         }
         event.preventDefault()
