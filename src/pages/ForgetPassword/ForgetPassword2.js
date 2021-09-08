@@ -18,6 +18,8 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import WarningIcon from '@material-ui/icons/Warning'
+import ErrorIcon from '@material-ui/icons/Error'
+
 const useStyles = makeStyles((theme) => ({
     ForgetPassword2: {
         display: 'flex',
@@ -254,25 +256,10 @@ const ForgetPassword2 = (props) => {
             </Card>
 
             {/* ErrorMessage */}
-            <Dialog
-                PaperProps={{
-                    style: {
-                        marginTop: '90px',
-                        borderRadius: 30,
-                        height: '28%',
-                        width: '300px',
-                        padding: '28px 20px 28px 20px',
-                        backgroundColor: '#EAEAEA',
-                    },
-                }}
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
+            <Dialog open={open} onClose={handleClose}>
                 <DialogTitle id="alert-dialog-title">
-                    <Typography className="title" variant="h5" align="center">
-                        <WarningIcon color="disabled"></WarningIcon> &nbsp;提醒
+                    <Typography variant="h6" style={{ fontWeight: '500' }} justifyContent="center" align="center">
+                        <ErrorIcon color="#555"></ErrorIcon> &nbsp;{'提醒'}
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
@@ -294,14 +281,7 @@ const ForgetPassword2 = (props) => {
                         className="sure"
                         style={{
                             margin: 'auto',
-                            fontSize: '90%',
-                            fontWeight: '500',
-                            borderRadius: '20px',
-                            boxShadow: 'none',
-                            width: '40%',
-                            height: '110%',
-                            backgroundColor: '#00AAA4',
-                            color: '#FFFFFF',
+                            color: '#00AAA4',
                         }}
                     >
                         確定

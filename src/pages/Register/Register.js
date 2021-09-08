@@ -1,8 +1,15 @@
-import React from 'react'
-import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core'
+import React, { useState } from 'react'
+import { makeStyles, Card, CardActions, CardContent, Button, TextField, Typography } from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom'
 import BackPage from '../../components/BackPage/BackPage'
 import { useHistory } from 'react-router-dom'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import WarningIcon from '@material-ui/icons/Warning'
+import ErrorIcon from '@material-ui/icons/Error'
 
 const useStyles = makeStyles((theme) => ({
     Register: {
@@ -11,9 +18,8 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         color: theme.palette.ultimate.main,
         backgroundColor: '#555',
-        // backgroundColor: theme.palette.primary.main,
         height: '100vh',
-        overflow: 'hidden', //解決margin-top塌陷,
+        overflow: 'hidden',
 
         '& .card': {
             backgroundColor: theme.palette.background.paper,
@@ -36,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
         },
         '& .input': {
             marginTop: '-10px',
-            // color: theme.palette.ultimate.main,
             color: theme.palette.ultimate.dark,
             fontSize: 20,
             height: '15px',
@@ -44,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
             '& .MuiTextField-root': {
                 marginTop: '25px',
                 width: '80%',
-                // color: theme.palette.ultimate.main,
                 color: theme.palette.ultimate.dark,
             },
             '& label.Mui-focused': {
@@ -88,6 +92,12 @@ const Register = (props) => {
         username: '',
     })
 
+    const [errorMessage, setError] = React.useState('')
+    const [open, setOpen] = useState(false)
+    const handleClose = () => {
+        setOpen(false)
+    }
+
     const handleChange = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value })
     }
@@ -100,9 +110,10 @@ const Register = (props) => {
         if (values.schoolname === '') message['schoolname'] = '學校 '
         if (values.ID === '') message['ID'] = '學號 '
         if (values.username === '') message['username'] = '使用者名稱'
-        if (values.schoolname === '' || values.ID === '' || values.username === '')
-            alert('請輸入' + message['schoolname'] + message['ID'] + message['username'])
-        else {
+        if (values.schoolname === '' || values.ID === '' || values.username === '') {
+            setError('請輸入' + message['schoolname'] + message['ID'] + message['username'])
+            setOpen(true)
+        } else {
             localStorage.setItem('schoolname', values.schoolname)
             localStorage.setItem('ID', values.ID)
             localStorage.setItem('username', values.username)
@@ -131,7 +142,7 @@ const Register = (props) => {
                             id="ID"
                             value={values.ID}
                             onChange={handleChange('ID')}
-                            label="玩家ID"
+                            label="玩家ID (學號)"
                             type="search"
                             variant="outlined"
                             size="small"
@@ -153,6 +164,40 @@ const Register = (props) => {
                     </Link>
                 </CardActions>
             </Card>
+
+            {/* ErrorMessage */}
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle id="alert-dialog-title">
+                    <Typography variant="h6" style={{ fontWeight: '500' }} justifyContent="center" align="center">
+                        <ErrorIcon color="#555"></ErrorIcon> &nbsp;{'提醒'}
+                    </Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <Typography
+                        align="center"
+                        justifyContent="center"
+                        style={{
+                            whiteSpace: 'pre-line',
+                            fontSize: '120%',
+                            marginTop: '3px',
+                        }}
+                    >
+                        {errorMessage}
+                    </Typography>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleClose}
+                        className="sure"
+                        style={{
+                            margin: 'auto',
+                            color: '#00AAA4',
+                        }}
+                    >
+                        確定
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }

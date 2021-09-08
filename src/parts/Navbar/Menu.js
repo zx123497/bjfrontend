@@ -17,7 +17,7 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import WarningIcon from '@material-ui/icons/Warning'
+import ErrorIcon from '@material-ui/icons/Error'
 
 const useStyles = makeStyles((theme) => ({
     PersonalMenu: {
@@ -270,22 +270,15 @@ const Menu = (props) => {
             <Dialog
                 PaperProps={{
                     style: {
-                        marginTop: '90px',
-                        borderRadius: 30,
-                        height: '28%',
-                        width: '300px',
-                        padding: '28px 20px 28px 20px',
-                        backgroundColor: '#EAEAEA',
+                        padding: '0px 20px 0px 20px',
                     },
                 }}
                 open={errorOpen}
                 onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    <Typography className="title" variant="h5" align="center">
-                        <WarningIcon color="disabled"></WarningIcon> &nbsp;提醒
+                    <Typography variant="h6" style={{ fontWeight: '500' }} justifyContent="center" align="center">
+                        <ErrorIcon color="#555"></ErrorIcon> &nbsp;{'提醒'}
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
@@ -307,14 +300,7 @@ const Menu = (props) => {
                         className="sure"
                         style={{
                             margin: 'auto',
-                            fontSize: '90%',
-                            fontWeight: '500',
-                            borderRadius: '20px',
-                            boxShadow: 'none',
-                            width: '40%',
-                            height: '110%',
-                            backgroundColor: '#00AAA4',
-                            color: '#FFFFFF',
+                            color: '#00AAA4',
                         }}
                     >
                         確定
