@@ -1,5 +1,6 @@
 {
   "files": {
+<<<<<<< HEAD
     "main.css": "/static/css/main.d1d37676.chunk.css",
     "main.js": "/static/js/main.d69f9128.chunk.js",
     "runtime-main.js": "/static/js/runtime-main.14eed91d.js",
@@ -9,16 +10,36 @@
     "index.html": "/index.html",
     "static/js/2.f20e37e2.chunk.js.LICENSE.txt": "/static/js/2.f20e37e2.chunk.js.LICENSE.txt",
     "static/media/F60DB5A60B3334BAE1AE87D845C2698E.cc882d26.txt": "/static/media/F60DB5A60B3334BAE1AE87D845C2698E.cc882d26.txt",
+=======
+    "main.css": "/static/css/main.84eac51d.chunk.css",
+    "main.js": "/static/js/main.e8585307.chunk.js",
+    "runtime-main.js": "/static/js/runtime-main.c0b05c51.js",
+    "static/css/2.5958f1ec.chunk.css": "/static/css/2.5958f1ec.chunk.css",
+    "static/js/2.f48024fb.chunk.js": "/static/js/2.f48024fb.chunk.js",
+    "static/js/3.dbfe6dcd.chunk.js": "/static/js/3.dbfe6dcd.chunk.js",
+    "static/js/4.a520f0fb.chunk.js": "/static/js/4.a520f0fb.chunk.js",
+    "index.html": "/index.html",
+    "static/js/2.f48024fb.chunk.js.LICENSE.txt": "/static/js/2.f48024fb.chunk.js.LICENSE.txt",
+    "static/media/F60DB5A60B3334BAE1AE87D845C2698E.1da8487e.txt": "/static/media/F60DB5A60B3334BAE1AE87D845C2698E.1da8487e.txt",
+>>>>>>> 184437aa68d2d70b6126ae71bec9aa70a484d3a7
     "static/media/LOGO.1c5aadb9.png": "/static/media/LOGO.1c5aadb9.png",
     "static/media/admin_lobby.9b2805bf.svg": "/static/media/admin_lobby.9b2805bf.svg",
     "static/media/cat.126a7207.jpg": "/static/media/cat.126a7207.jpg",
     "static/media/wait.e3086898.svg": "/static/media/wait.e3086898.svg"
   },
   "entrypoints": [
+<<<<<<< HEAD
     "static/js/runtime-main.14eed91d.js",
     "static/css/2.5958f1ec.chunk.css",
     "static/js/2.f20e37e2.chunk.js",
     "static/css/main.d1d37676.chunk.css",
     "static/js/main.d69f9128.chunk.js"
+=======
+    "static/js/runtime-main.c0b05c51.js",
+    "static/css/2.5958f1ec.chunk.css",
+    "static/js/2.f48024fb.chunk.js",
+    "static/css/main.84eac51d.chunk.css",
+    "static/js/main.e8585307.chunk.js"
+>>>>>>> 184437aa68d2d70b6126ae71bec9aa70a484d3a7
   ]
 }
