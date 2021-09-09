@@ -92,15 +92,15 @@ const PersonalTransaction = (props) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={8} className="cell">
-                        {trans.totalScore >= 0 && (
+                        {trans.score >= 0 && (
                             <Typography variant="h4">
-                                +${trans.totalScore}
+                                +${trans.score}
                             </Typography>
                         )}
 
-                        {trans.totalScore < 0 && (
+                        {trans.score < 0 && (
                             <Typography variant="h4">
-                                -${Math.abs(trans.totalScore)}
+                                -${Math.abs(trans.score)}
                             </Typography>
                         )}
                     </Grid>
@@ -128,13 +128,13 @@ const PersonalTransaction = (props) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={8} className="cell">
-                        {trans.tranAmount >= 0 && (
+                        {props.data.player.role == 'seller' && (
                             <Typography variant="h5">
                                 + ${trans.tranAmount}
                             </Typography>
                         )}
 
-                        {trans.tranAmount < 0 && (
+                        {props.data.player.role == 'buyer' && (
                             <Typography variant="h5">
                                 - ${Math.abs(trans.tranAmount)}
                             </Typography>

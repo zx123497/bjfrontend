@@ -23,7 +23,7 @@ const GameChart = (props) => {
     const classes = useStyles();
     var hTicks = [];
 
-    var chartData = [['玩家排序', '賣家', '買家']];
+    var chartData = [['玩家排序', '賣家', '買家'],[0,0,0]];
 
     useEffect(() => {
         console.log(props.data.chartData)
@@ -33,6 +33,7 @@ const GameChart = (props) => {
     }, [props.data])
 
     function processData(rawData) {
+        chartData.pop()
         const limit = Math.max(rawData.seller.length, rawData.buyer.length)
         for(let i=0;i<limit;i++) {
             let temp = [i+1, rawData.seller[i], rawData.buyer[i]]
