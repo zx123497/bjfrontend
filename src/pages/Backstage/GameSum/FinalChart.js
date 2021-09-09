@@ -18,10 +18,11 @@ const FinalChart = (props) => {
     const data= []
 
     if(props.data.chartData != null) {
+        console.log(rawChartData)
         const lengthSurvey = []
         for(let element of rawChartData) {
-            lengthSurvey.push(element[0].seller.length)
-            lengthSurvey.push(element[0].buyer.length)
+            lengthSurvey.push(element.seller.length)
+            lengthSurvey.push(element.buyer.length)
         }
         const limit = Math.max(...lengthSurvey)
 
@@ -43,8 +44,9 @@ const FinalChart = (props) => {
             let temp = []
             temp.push(i)
             for(let element of selectedRound) {
-                temp.push(element.data[0].seller[i])
-                temp.push(element.data[0].buyer[i])
+                console.log(element)
+                temp.push(element.data.seller[i])
+                temp.push(element.data.buyer[i])
             }
             data.push(temp)
         }

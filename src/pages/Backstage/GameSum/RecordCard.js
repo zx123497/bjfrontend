@@ -94,7 +94,7 @@ const RecordCard = (props) => {
                 console.log(obj)
                 let temp = []
                 let i = 0
-                if(round != []) {
+                if(round != [] && obj) {
                     obj.forEach((round) => {
                         round.forEach((element) => {
                             console.log(element)
@@ -132,7 +132,11 @@ const RecordCard = (props) => {
         } else {
             console.log(props.match.params.id)
             console.log(temp)
-            socket.emit('send_multiRecords_req', { roomNum: `${props.match.params.id}`, round: temp })
+            var newtemp = []
+            temp.forEach((element) => {
+                newtemp.push(element + 1)
+            })
+            socket.emit('send_multiRecords_req', { roomNum: `${props.match.params.id}`, round: newtemp })
         }
     }, [selected])    
 
