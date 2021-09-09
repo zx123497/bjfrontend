@@ -191,7 +191,9 @@ const QRCodeSend2 = ({ history }, props) => {
         socket.on('connect_error ', function (data) {
             console.log(data)
         })
+    }, [])
 
+    useEffect(() => {
         // listen to endRound
         socket.on('endRoundResponse', (res) => {
             console.log(res)
@@ -205,7 +207,7 @@ const QRCodeSend2 = ({ history }, props) => {
             console.log(res)
             localStorage.setItem('annoucement', res.message)
         })
-    }, [])
+    }, [socket])
 
     // 與老師交易時的setSocket
     useEffect(() => {
