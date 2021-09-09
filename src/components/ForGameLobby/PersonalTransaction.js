@@ -128,13 +128,13 @@ const PersonalTransaction = (props) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={8} className="cell">
-                        {trans.tranAmount >= 0 && (
+                        {props.data.player.role == 'seller' && (
                             <Typography variant="h5">
                                 + ${trans.tranAmount}
                             </Typography>
                         )}
 
-                        {trans.tranAmount < 0 && (
+                        {props.data.player.role == 'buyer' && (
                             <Typography variant="h5">
                                 - ${Math.abs(trans.tranAmount)}
                             </Typography>

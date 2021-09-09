@@ -6,28 +6,31 @@ import PersonIcon from '@material-ui/icons/Person'
 import { Link, withRouter } from 'react-router-dom'
 import RoomService from '../../../service/RoomService'
 import AdminService from '../../../service/AdminService'
+import PlayCircleFilledWhiteIcon from '@material-ui/icons/PlayCircleFilledWhite'
 const useStyles = makeStyles((theme) => ({
     waiting: {
         height: '100vh',
         display: 'flex',
         backgroundColor: theme.palette.ultimate.dark,
         alignItems: 'center',
-        justifyContent: 'center',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
         '& .card': {
-            backgroundColor: theme.palette.ultimate.main,
+            backgroundColor: '#555',
             display: 'flex',
+            boxSizing: 'border-box',
             justifyContent: 'center',
             alignItems: 'center',
-            flexDirection: 'column',
+
             width: '70%',
             height: 'max-content',
-            padding: '1rem',
+            padding: '0',
             borderRadius: '20px',
-            boxShadow: '0 0 15px rgba(0,0,0,0.3)',
+            // boxShadow: '0 0 15px rgba(0,0,0,0.3)',
         },
         '& .start': {
             marginTop: '1rem',
-            border: `2px ${theme.palette.ultimate.main} solid`,
+            // border: `2px ${theme.palette.ultimate.main} solid`,
             color: '#FFF',
             boxShadow: '0 0 6px rgba(0,0,0,0.3)',
             borderRadius: '10px',
@@ -35,8 +38,9 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.secondary.main,
         },
         '& .title': {
-            flexGrow: 1,
+            minWidth: 'max-content',
             color: '#FFF',
+            marginTop: '5rem',
         },
         '& .code': {
             flexGrow: 2,
@@ -68,11 +72,13 @@ const useStyles = makeStyles((theme) => ({
             },
             '& .start': {
                 marginBottom: '2rem',
-                border: `2px ${theme.palette.ultimate.main} solid`,
+                // border: `2px ${theme.palette.ultimate.main} solid`,
                 color: '#FFF',
                 boxShadow: '0 3px 6px rgba(0,0,0,0.3)',
                 borderRadius: '10px',
-                width: '50%',
+                width: '15rem',
+                // height: '100%',
+                border: 'none',
                 backgroundColor: theme.palette.secondary.main,
                 fontSize: '25px',
             },
@@ -85,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderRadius: '10px',
-                fontSize: '50px',
+                fontSize: '3rem',
             },
         },
         // "& .userlist": {
@@ -101,6 +107,35 @@ const useStyles = makeStyles((theme) => ({
         //     color: theme.palette.ultimate.light
         // }
     },
+    userList: {
+        backgroundColor: '#555',
+        width: '70%',
+        height: '45vh',
+        overflowX: 'hidden',
+        overflowY: 'scroll',
+        marginTop: '2rem',
+        boxSizing: 'border-box',
+        padding: '2rem',
+        borderRadius: '10px',
+        color: '#FFF',
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        '& .user': {
+            backgroundColor: 'rgba(0,0,0,0.3)',
+            margin: '0.5rem 1rem',
+            fontSize: '2rem',
+            padding: '.5rem 1rem ',
+            borderRadius: '10px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        '& .user:hover': {
+            transform: 'scale(1.1)',
+            transition: '.5s ease',
+        },
+    },
 }))
 
 const Waitingroom = (props) => {
@@ -108,7 +143,7 @@ const Waitingroom = (props) => {
     const id = props.match.params.id
     const [pin, setPin] = useState()
 
-    // const [userlist, setUserList] = useState('Loading members...')
+    const [userlist, setUserList] = useState('')
 
     useEffect(() => {
         let param = new URLSearchParams()
@@ -118,45 +153,51 @@ const Waitingroom = (props) => {
         RoomService.openRoom(param).then((res) => {
             console.log(res)
             setPin(res.data.pinCode)
-
-            // const intervalID = setInterval(() => {
-            //     const getRoomParam = new URLSearchParams();
-            //     getRoomParam.append("roomNum", res.data.pinCode)
-    
-            //     AdminService.postGetRoom(getRoomParam).then((res) => {
-            //         if(res.status == 200) {
-            //             console.log(res)
-            //             if(res.data.allUsers) {
-            //                 var temp = []
-            //                 res.data.allUsers.forEach(element => {
-            //                     temp.push(<Typography>{element[0]}</Typography>)
-            //                 });
-            //                 setUserList(temp)
-            //             }
-            //         }
-            //     })
-            // }, 5000)
-    
-            // return () => clearInterval(intervalID) 
+            localStorage.setItem('roomNum', res.data.pinCode)
         })
 
+        const intervalID = setInterval(() => {
+            const getRoomParam = new URLSearchParams()
+            getRoomParam.append('roomNum', localStorage.getItem('roomNum'))
+
+            AdminService.postGetRoom(getRoomParam).then((res) => {
+                if (res.status == 200) {
+                    console.log(res)
+                    if (res.data.allUsers) {
+                        var temp = []
+                        res.data.allUsers.forEach((element) => {
+                            temp.push(<Typography>{element[0]}</Typography>)
+                        })
+                        setUserList(temp)
+                    }
+                }
+            })
+        }, 5000)
+
+        return () => clearInterval(intervalID)
     }, [])
+    
     return (
         <div className={classes.waiting}>
+            <h2 className="title">輸入PIN 碼加入遊戲</h2>
             <div className="card">
-                <h2 className="title">等待入場...</h2>
-                <img src={SVG} className="App-logo img" />
-                {/* <Box className="userlist" boxShadow={3}>
-                    {userlist}
-                </Box> */}
+                {/* <img src={SVG} className="App-logo img" /> */}
+
                 <h4 className="code">{pin}</h4>
                 {/* <div className="status">
                     <PersonIcon />
                     等待人數：1000 人
                 </div> */}
-
+            </div>
+            <div className={classes.userList}>
+                {userlist}
+                {/* {userlist.map((user) => (
+                    <div className="user">{user}</div>
+                ))} */}
+            </div>
+            <div style={{ width: '70%', display: 'flex', justifyContent: 'flex-end' }}>
                 <Button className="start" component={Link} to={`/admin/gamelobby/${pin}`}>
-                    開始遊戲 !
+                    <PlayCircleFilledWhiteIcon style={{ marginRight: '1rem' }} /> 開始遊戲 !
                 </Button>
             </div>
         </div>

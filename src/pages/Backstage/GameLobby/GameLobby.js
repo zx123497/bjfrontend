@@ -102,7 +102,6 @@ const GameLobby = (props) => {
             title: '結束遊戲',
             func: () => {
                 socket.emit('closeRoom', { roomNum: `${props.match.params.id}` })
-                props.history.push('/admin/gamesum/' + roomNum)
             },
         },
         {
@@ -172,6 +171,8 @@ const GameLobby = (props) => {
         // listen to endGame
         socket.on('get_out', (res) => {
             // props.history.push(`/gamesum/${props.match.params.id}`)
+            localStorage.removeItem('announcement')
+            props.history.push('/admin/gamesum/' + roomNum)
             console.log(res)
         })
 
@@ -190,15 +191,18 @@ const GameLobby = (props) => {
                 alert('請先開始遊戲再執行結束回合')
             } else if (res == 'error(no next round)') {
                 alert('已達設定回合上限，請回到管理者專區更改設定增加回合數')
+                localStorage.removeItem('announcement')
                 props.history.replace('/admin/lobby')
             } else if (res == 'endRoundMessage') {
                 window.location.reload()
+                localStorage.removeItem('announcement')
                 alert('此回合結束')
             }
         })
 
         // listen to shuffle
         socket.on('shuffleResponse', (res) => {
+            console.log(res)
             if(res.status == '200') {
                 getChartData()
             }
