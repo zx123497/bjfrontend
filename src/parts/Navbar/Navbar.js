@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -54,6 +54,12 @@ const useStyles = makeStyles((theme) => ({
 const ButtonAppBar = (props) => {
     const classes = useStyles()
     const theme = useTheme()
+    const [name, setName] = React.useState('')
+
+    useLayoutEffect(() => {
+        setName(localStorage.getItem('name'))
+    }, [localStorage.getItem('name')])
+
     return (
         <div className={classes.root}>
             <AppBar className="bar">
@@ -76,7 +82,7 @@ const ButtonAppBar = (props) => {
                     {localStorage.getItem('name') ? (
                         <Button className="isLogin" color="inherit" component={Link} to="/login">
                             <PersonIcon />
-                            Hi, {localStorage.getItem('name')}
+                            Hi, {name}
                         </Button>
                     ) : (
                         <Button className="login" color="inherit" component={Link} to="/login">

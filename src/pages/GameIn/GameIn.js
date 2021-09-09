@@ -108,9 +108,11 @@ const GameIn = (props) => {
                             id="pincode"
                             value={values.pincode}
                             onChange={handleChange('pincode')}
+                            inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
                             type="search"
                             variant="outlined"
                             size="small"
+                            type="number"
                         />
                     </form>
                 </CardContent>

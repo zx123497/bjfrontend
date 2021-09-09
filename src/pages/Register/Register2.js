@@ -18,6 +18,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import WarningIcon from '@material-ui/icons/Warning'
+import ErrorIcon from '@material-ui/icons/Error'
 
 const useStyles = makeStyles((theme) => ({
     Register2: {
@@ -147,9 +148,10 @@ const Register2 = (props) => {
             message['diffPassword'] = '密碼不相同\n'
         }
         if (values.email === '') message['email'] = '帳號 '
-        if (values.password === '') message['password'] = '密碼'
+        if (values.password === '') message['password'] = '密碼 '
         if (values.check_password == '') message['check_password'] = '確認密碼'
-        if (values.email === '' || values.password === '' || values.check_password == '') {
+
+        if (values.email === '' || values.password === '' || values.check_password === '') {
             if (values.password !== '' && values.check_password !== '') setError(message['diffPassword'])
             else
                 setError(
@@ -160,6 +162,9 @@ const Register2 = (props) => {
                         message['check_password']
                 )
             setOpen(true)
+        } else if (values.password !== values.check_password) {
+            setError(message['diffPassword'])
+            setOpen(true)
         } else {
             const params = new URLSearchParams()
             params.append('schoolname', localStorage.getItem('schoolname'))
@@ -167,7 +172,6 @@ const Register2 = (props) => {
             params.append('username', localStorage.getItem('username'))
             params.append('email', values.email)
             params.append('password', values.password)
-            // console.log('hi ' + localStorage.getItem('username'))
 
             UserService.postRegister(params).then((res) => {
                 new Noty({
@@ -182,14 +186,15 @@ const Register2 = (props) => {
                 console.log(res.data)
 
                 if (res.status === 200) {
-                    alert(localStorage.getItem('username') + ' 您已成功註冊!')
-                    history.push('./login')
+                    // setError("註冊成功!")
+                    // setOpen(true)
+                    alert('註冊成功!')
                 }
             })
-            // localStorage.clear()
+            localStorage.clear()
+            history.push('./login')
         }
         event.preventDefault()
-        localStorage.clear()
     }
 
     const handleClickShowPassword = () => {
@@ -287,25 +292,10 @@ const Register2 = (props) => {
             </Card>
 
             {/* ErrorMessage */}
-            <Dialog
-                PaperProps={{
-                    style: {
-                        marginTop: '90px',
-                        borderRadius: 30,
-                        height: '28%',
-                        width: '300px',
-                        padding: '28px 20px 28px 20px',
-                        backgroundColor: '#EAEAEA',
-                    },
-                }}
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
+            <Dialog open={open} onClose={handleClose}>
                 <DialogTitle id="alert-dialog-title">
-                    <Typography className="title" variant="h5" align="center">
-                        <WarningIcon color="disabled"></WarningIcon> &nbsp;提醒
+                    <Typography variant="h6" style={{ fontWeight: '500' }} justifyContent="center" align="center">
+                        <ErrorIcon color="#555"></ErrorIcon> &nbsp;{'提醒'}
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
@@ -327,14 +317,7 @@ const Register2 = (props) => {
                         className="sure"
                         style={{
                             margin: 'auto',
-                            fontSize: '90%',
-                            fontWeight: '500',
-                            borderRadius: '20px',
-                            boxShadow: 'none',
-                            width: '40%',
-                            height: '110%',
-                            backgroundColor: '#00AAA4',
-                            color: '#FFFFFF',
+                            color: '#00AAA4',
                         }}
                     >
                         確定
