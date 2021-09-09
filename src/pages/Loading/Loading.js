@@ -108,8 +108,8 @@ const Loading = (props) => {
 
         // // request members list and render every 5 seconds
         // const intervalID = setInterval(() => {
-        //     const getRoomParam = new URLSearchParams();
-        //     getRoomParam.append("roomNum", roomNum)
+            const getRoomParam = new URLSearchParams();
+            getRoomParam.append("roomNum", roomNum)
 
             AdminService.postGetRoom(getRoomParam).then((res) => {
                 if(res.status == 200) {
