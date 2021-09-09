@@ -156,25 +156,25 @@ const Waitingroom = (props) => {
             localStorage.setItem('roomNum', res.data.pinCode)
         })
 
-        const intervalID = setInterval(() => {
-            const getRoomParam = new URLSearchParams()
-            getRoomParam.append('roomNum', localStorage.getItem('roomNum'))
+        // const intervalID = setInterval(() => {
+        //     const getRoomParam = new URLSearchParams()
+        //     getRoomParam.append('roomNum', localStorage.getItem('roomNum'))
 
-            AdminService.postGetRoom(getRoomParam).then((res) => {
-                if (res.status == 200) {
-                    console.log(res)
-                    if (res.data.allUsers) {
-                        var temp = []
-                        res.data.allUsers.forEach((element) => {
-                            temp.push(<Typography>{element[0]}</Typography>)
-                        })
-                        setUserList(temp)
-                    }
-                }
-            })
-        }, 5000)
+        //     AdminService.postGetRoom(getRoomParam).then((res) => {
+        //         if (res.status == 200) {
+        //             console.log(res)
+        //             if (res.data.allUsers) {
+        //                 var temp = []
+        //                 res.data.allUsers.forEach((element) => {
+        //                     temp.push(<Typography>{element[0]}</Typography>)
+        //                 })
+        //                 setUserList(temp)
+        //             }
+        //         }
+        //     })
+        // }, 5000)
 
-        return () => clearInterval(intervalID)
+        // return () => clearInterval(intervalID)
     }, [])
     
     return (
