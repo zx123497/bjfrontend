@@ -33,12 +33,6 @@ const GameLobby = (props) => {
         money: '',
         price: '',
         role: '',
-        score: '',
-        totalScore: '',
-        transPartner: '',
-        tranAmount: '',
-        roomNum: '',
-        roundNum: '',
     })
 
     const [annoucement, setAnnouncement] = useState({
@@ -66,54 +60,29 @@ const GameLobby = (props) => {
 
     useEffect(() => {
 
-        console.log(localStorage.getItem(`trans_${room.round}`))
-
+        getRoom()
 
         socket.on('enterRoom_resp', (res) => {
             console.log(res)
-            if((localStorage.getItem(`tran${room.round}_money`)) &&
-                (localStorage.getItem(`tran${room.round}_user`))) {
-                    console.log('ls')
-                    console.log((localStorage.getItem(`tran${room.round}_money`)))
-                setPlayer({
-                    item: '',
-                    money: res.user.money,
-                    price: res.user.price,
-                    role: res.user.role,
-                    score: localStorage.getItem(`tran${room.round}_money`),
-                    totalScore: (localStorage.getItem(`tran${room.round}_money`)) - res.user.price,
-                    transPartner: localStorage.getItem(`tran${room.round}_user`),
-                    tranAmount: localStorage.getItem(`tran${room.round}_money`),
-                    roomNum: roomNum,
-                })
-            } else {
-                setPlayer({
-                    item: '',
-                    money: res.user.money,
-                    price: res.user.price,
-                    role: res.user.role,
-                    score: 0,
-                    totalScore: 0,
-                    transPartner: '',
-                    tranAmount: 0,
-                    roomNum: roomNum,
-                })
-            }
+            console.log(room.round)
+            console.log(`tran${localStorage.getItem('round')}_money`)
+            console.log((localStorage.getItem(`tran${localStorage.getItem('round')}_money`)))
+            setPlayer({
+                item: '',
+                money: res.user.money,
+                price: res.user.price,
+                role: res.user.role,
+            })
         })
 
         socket.on('resRole', (res) => {
-            if((localStorage.getItem(`tran${room.round}_money`)) &&
-                (localStorage.getItem(`tran${room.round}_user`))) {
+            if((localStorage.getItem(`tran${localStorage.getItem('round')}_money`)) &&
+                (localStorage.getItem(`tran${localStorage.getItem('round')}_user`))) {
                 setPlayer({
                     item: '',
                     money: res.user.money,
                     price: res.user.price,
                     role: res.user.role,
-                    score: localStorage.getItem(`tran${room.round}_money`),
-                    totalScore: (localStorage.getItem(`tran${room.round}_money`)) - res.user.price,
-                    transPartner: localStorage.getItem(`tran${room.round}_user`),
-                    tranAmount: localStorage.getItem(`tran${room.round}_money`),
-                    roomNum: roomNum,
                 })
             } else {
                 setPlayer({
@@ -121,11 +90,6 @@ const GameLobby = (props) => {
                     money: res.user.money,
                     price: res.user.price,
                     role: res.user.role,
-                    score: 0,
-                    totalScore: 0,
-                    transPartner: '',
-                    tranAmount: 0,
-                    roomNum: roomNum,
                 })
             }
         })
@@ -135,8 +99,6 @@ const GameLobby = (props) => {
             ID: localStorage.getItem('id'),
             username: localStorage.getItem('username'),
         })
-
-        getRoom()
 
         localStorage.setItem('round', room.round)
         localStorage.setItem('roomNum', roomNum)
@@ -179,7 +141,7 @@ const GameLobby = (props) => {
             <UpperBar data={room} />
             <AnnouncementLine data={annoucement} />
             <UserInfo data={player} />
-            <PersonalTransaction data={player} />
+            <PersonalTransaction data={{room: room, player: player}} />
         </div>
     )
 }
