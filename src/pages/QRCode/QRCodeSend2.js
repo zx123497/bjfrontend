@@ -212,7 +212,7 @@ const QRCodeSend2 = ({ history }, props) => {
         // listen to sendsysmsg
         socket.on('sys', function (res) {
             console.log(res)
-            localStorage.setItem('annoucement', res.message)
+            localStorage.setItem('announcement', res.message)
         })
     }, [])
 

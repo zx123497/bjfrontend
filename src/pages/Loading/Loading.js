@@ -110,6 +110,9 @@ const Loading = (props) => {
                         setUserList(temp)
                     }
                 }
+                if(res.data.roomDetail.isGaming) {
+                    props.history.replace(`/gamelobby/${roomNum}`)
+                }
             })
         }, 5000)
 

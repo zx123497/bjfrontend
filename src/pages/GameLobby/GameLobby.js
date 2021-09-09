@@ -114,6 +114,8 @@ const GameLobby = (props) => {
         socket.on('endRoundResponse', (res) => {
             console.log(res)
             if ((res == 'endRoundMessage') || (res == 'error(no next round)')) {
+                localStorage.removeItem(`tran${localStorage.getItem('round')}_money`)
+                localStorage.removeItem(`tran${localStorage.getItem('round')}_user`)
                 props.history.replace(`/loading/${roomNum}`)
             }
         })
@@ -122,6 +124,7 @@ const GameLobby = (props) => {
         socket.on('sys', (res) => {
             if (res != 'error') {
                 setAnnouncement({ roomAnnoucement: res.message })
+                localStorage.setItem("announcement", res.message)
                 socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('id') })
             }
         })
@@ -129,6 +132,8 @@ const GameLobby = (props) => {
         // listen to close room
         socket.on('get_out', (res) => {
             socket.emit('leaveRoom', { roomNum: roomNum })
+            localStorage.removeItem(`tran${localStorage.getItem('round')}_money`)
+            localStorage.removeItem(`tran${localStorage.getItem('round')}_user`)
             props.history.push('/user/lobby')
         })
 
