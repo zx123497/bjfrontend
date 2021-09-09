@@ -3,6 +3,7 @@ import React from 'react';
 import { makeStyles, Paper } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import Chart from "react-google-charts";
+import { CompareArrowsOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,6 +17,7 @@ const FinalChart = (props) => {
     const rawChartData = props.data.chartData
     const selected = props.data.selected
     const data= []
+    const hTicks = []
 
     if(props.data.chartData != null) {
         console.log(rawChartData)
@@ -28,7 +30,7 @@ const FinalChart = (props) => {
 
         const selectedRound = []
         for(let element of selected) {
-            selectedRound.push({round: element.title, data: rawChartData[element.value]})
+            selectedRound.push({round: element.label, data: rawChartData[element.value]})
         }
 
         const chartLegend = ['x']
@@ -42,12 +44,14 @@ const FinalChart = (props) => {
 
         for(let i=0;i<limit;i++) {
             let temp = []
-            temp.push(i+1)
+            hTicks.push(i + 1)
+            temp.push(i + 1)
             for(let element of selectedRound) {
                 console.log(element)
                 temp.push(element.data.seller[i])
                 temp.push(element.data.buyer[i])
             }
+            console.log(temp)
             data.push(temp)
         }
     }
@@ -67,6 +71,7 @@ const FinalChart = (props) => {
                 options={{
                     hAxis: {
                         title: '玩家',
+                        ticks: hTicks
                     },
                     vAxis: {
                         title: '商品價值',

@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom'
 import { socket } from '../../service/socket'
-
-import UserService from '../../service/UserService'
 import AdminService from '../../service/AdminService'
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
     GameIn: {
@@ -89,34 +88,35 @@ const GameIn = (props) => {
         if (values.pincode == '') {
             alert('請輸入PIN CODE')
         } else {
-            socket.on('enterRoom_resp', (res) => {
-                console.log(res)
-                if(res.data.status == 0) {
-                    const getroomparmas = new URLSearchParams()
+            socket.on('enterRoom_resp', (socketRes) => {
+                const getroomparmas = new URLSearchParams()
                     getroomparmas.append('roomNum', values.pincode)
-                    AdminService.postGetRoom(getroomparmas).then((res) => {
-                        if(res.status == '200') {
-                            if(res.data.roomDetail.isGaming) {
-                                props.history.push(`/gamelobby/${values.pincode}`)
-                            } else {
-                                props.history.push(`/loading/${values.pincode}`)
+                    AdminService.postGetRoom(getroomparmas).then((axiosRes) => {
+                        console.log(axiosRes)
+                        if(axiosRes.status == '200') {
+                            if(socketRes.status == 0){
+                                if(axiosRes.data.roomDetail.isGaming) {
+                                    // in room & isGaming
+                                    props.history.replace(`/gamelobby/${values.pincode}`)
+                                } else {
+                                    // in room & !isGaming
+                                    props.history.push(`/loading/${values.pincode}`)
+                                }
+                            }
+                            else if(socketRes.status == 1) {
+                                if(axiosRes.data.roomDetail.isGaming) {
+                                    // new in & isGaming
+                                    alert('遊戲進行中，無法加入')
+                                } else {
+                                    // new in & !isGaming
+                                    props.history.push(`/loading/${values.pincode}`)
+                                }
+                            }
+                            else {
+                                alert('房間不存在')
                             }
                         }
                     })
-                }
-                else if(res.data.status == 1) {
-                    const getroomparmas = new URLSearchParams()
-                    getroomparmas.append('roomNum', values.pincode)
-                    AdminService.postGetRoom(getroomparmas).then((res) => {
-                        if(res.status == '200') {
-                            if(res.data.roomDetail.isGaming) {
-                                alert("遊戲進行期間無法加入")
-                            } else {
-                                props.history.push(`/loading/${values.pincode}`)
-                            }
-                        }
-                    })
-                }
             })
 
             socket.emit('enterRoom', {

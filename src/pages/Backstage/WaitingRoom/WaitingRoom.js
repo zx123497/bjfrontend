@@ -110,6 +110,9 @@ const useStyles = makeStyles((theme) => ({
     userList: {
         backgroundColor: '#555',
         width: '70%',
+        height: '45vh',
+        overflowX: 'hidden',
+        overflowY: 'scroll',
         marginTop: '2rem',
         boxSizing: 'border-box',
         padding: '2rem',
@@ -140,20 +143,7 @@ const Waitingroom = (props) => {
     const id = props.match.params.id
     const [pin, setPin] = useState()
 
-    const [userlist, setUserList] = useState([
-        'test1',
-        'test2',
-        'test1',
-        'test2',
-        'test1456456',
-        'test2',
-        'test1',
-        'test2123456',
-        'test1',
-        'test2456456',
-        'test1',
-        'test24534534',
-    ])
+    const [userlist, setUserList] = useState('')
 
     useEffect(() => {
         let param = new URLSearchParams()
@@ -163,27 +153,28 @@ const Waitingroom = (props) => {
         RoomService.openRoom(param).then((res) => {
             console.log(res)
             setPin(res.data.pinCode)
-
-            // const intervalID = setInterval(() => {
-            //     const getRoomParam = new URLSearchParams()
-            //     getRoomParam.append('roomNum', res.data.pinCode)
-
-            //     AdminService.postGetRoom(getRoomParam).then((res) => {
-            //         if (res.status == 200) {
-            //             console.log(res)
-            //             if (res.data.allUsers) {
-            //                 var temp = []
-            //                 res.data.allUsers.forEach((element) => {
-            //                     temp.push(<Typography>{element[0]}</Typography>)
-            //                 })
-            //                 setUserList(temp)
-            //             }
-            //         }
-            //     })
-            // }, 5000)
-
-            // return () => clearInterval(intervalID)
+            localStorage.setItem('roomNum', res.data.pinCode)
         })
+
+        const intervalID = setInterval(() => {
+            const getRoomParam = new URLSearchParams()
+            getRoomParam.append('roomNum', localStorage.getItem('roomNum'))
+
+            AdminService.postGetRoom(getRoomParam).then((res) => {
+                if (res.status == 200) {
+                    console.log(res)
+                    if (res.data.allUsers) {
+                        var temp = []
+                        res.data.allUsers.forEach((element) => {
+                            temp.push(<Typography>{element[0]}</Typography>)
+                        })
+                        setUserList(temp)
+                    }
+                }
+            })
+        }, 5000)
+
+        return () => clearInterval(intervalID)
     }, [])
     return (
         <div className={classes.waiting}>
@@ -198,9 +189,10 @@ const Waitingroom = (props) => {
                 </div> */}
             </div>
             <div className={classes.userList}>
-                {userlist.map((user) => (
+                {userlist}
+                {/* {userlist.map((user) => (
                     <div className="user">{user}</div>
-                ))}
+                ))} */}
             </div>
             <div style={{ width: '70%', display: 'flex', justifyContent: 'flex-end' }}>
                 <Button className="start" component={Link} to={`/admin/gamelobby/${pin}`}>
