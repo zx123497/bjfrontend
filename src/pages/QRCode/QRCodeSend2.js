@@ -495,6 +495,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 localStorage.setItem('tranLimit', data.match(/limit=([^&]+)/)[1].split('/')[0])
                 localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1])
             } else {
+                console.log('tranUser', data.match(/userId=([^&]+)/)[1])
                 // localStorage.setItem('tranTeacher', '0')
                 localStorage.setItem('tranMoney', data.match(/money=([^&]+)/)[1].split('/')[0])
                 localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1])
@@ -537,6 +538,7 @@ const QRCodeSend2 = ({ history }, props) => {
         if (!seller) {
             socket.on('transCheckReq', function (data) {
                 setReceiver_id(data)
+                console.log('receiver' + data)
                 localStorage.setItem('receiver_id', data)
                 localStorage.setItem('tranUser', data)
 
