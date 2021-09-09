@@ -89,23 +89,40 @@ const GameIn = (props) => {
         if (values.pincode == '') {
             alert('請輸入PIN CODE')
         } else {
+            socket.on('enterRoom_resp', (res) => {
+                console.log(res)
+                if(res.data.status == 0) {
+                    const getroomparmas = new URLSearchParams()
+                    getroomparmas.append('roomNum', values.pincode)
+                    AdminService.postGetRoom(getroomparmas).then((res) => {
+                        if(res.status == '200') {
+                            if(res.data.roomDetail.isGaming) {
+                                props.history.push(`/gamelobby/${values.pincode}`)
+                            } else {
+                                props.history.push(`/loading/${values.pincode}`)
+                            }
+                        }
+                    })
+                }
+                else if(res.data.status == 1) {
+                    const getroomparmas = new URLSearchParams()
+                    getroomparmas.append('roomNum', values.pincode)
+                    AdminService.postGetRoom(getroomparmas).then((res) => {
+                        if(res.status == '200') {
+                            if(res.data.roomDetail.isGaming) {
+                                alert("遊戲進行期間無法加入")
+                            } else {
+                                props.history.push(`/loading/${values.pincode}`)
+                            }
+                        }
+                    })
+                }
+            })
+
             socket.emit('enterRoom', {
                 roomNum: values.pincode,
                 ID: localStorage.getItem('id'),
                 username: localStorage.getItem('username')
-            })
-
-            const getroomparmas = new URLSearchParams()
-            getroomparmas.append('roomNum', values.pincode)
-            AdminService.postGetRoom(getroomparmas).then((res) => {
-                if(res.status == '200') {
-                    if(res.data.roomDetail.isGaming) {
-                        props.history.push(`/gamelobby/${values.pincode}`)
-
-                    } else {
-                        props.history.push(`/loading/${values.pincode}`)
-                    }
-                }
             })
         }
         event.preventDefault()

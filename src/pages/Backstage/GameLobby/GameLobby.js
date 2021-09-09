@@ -199,8 +199,9 @@ const GameLobby = (props) => {
 
         // listen to shuffle
         socket.on('shuffleResponse', (res) => {
-            console.log(res)
-            getChartData()
+            if(res.status == '200') {
+                getChartData()
+            }
         })
 
         // listen to sendsysmsg
