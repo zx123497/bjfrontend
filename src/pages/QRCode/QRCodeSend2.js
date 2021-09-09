@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { makeStyles, Button, Grid, TextField, Typography } from '@material-ui/core'
+import { IconButton, makeStyles, Button, Grid, TextField, Typography } from '@material-ui/core'
 import { Link, useHistory, withRouter } from 'react-router-dom'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
@@ -18,6 +18,8 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import ErrorIcon from '@material-ui/icons/Error'
+import FaceIcon from '@material-ui/icons/Face'
+import { ScreenBrightness } from '@capacitor-community/screen-brightness'
 
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
@@ -54,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
             alignItems: 'center',
             justifyContent: 'center',
             textAlign: 'center',
-            marginTop: '5%',
+            marginTop: '2%',
         },
         '& .sub_title': {
             color: 'white',
@@ -81,15 +83,13 @@ const useStyles = makeStyles((theme) => ({
             display: 'none',
         },
         '& .Tshow': {
-            // color: 'white',
             display: 'block',
-            marginTop: '10px',
+            // marginTop: '10px',
             marginBottom: '10px',
         },
         '& .Thide': {
-            // color: 'white',
             display: 'none',
-            marginTop: '10px',
+            // marginTop: '10px',
             marginBottom: '10px',
         },
         '& .scan': {
@@ -517,28 +517,49 @@ const QRCodeSend2 = ({ history }, props) => {
         localStorage.setItem('userMoney', event.target.value)
     }
 
+    // 設定轉出的交易對象id
+    const [values, setValues] = React.useState({
+        tranId: '',
+    })
+
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value })
+    }
+
     const handleQRShow = () => {
         if (seller) {
             setError('賣方無法使用付款功能')
             setOpen3(true)
         } else {
-            if (money <= 0) {
-                setError('付款金額需大於 0 元')
-                setOpen3(true)
-            } else if (localStorage.getItem('money') === null) {
-                setError('系統錯誤 請重整頁面')
-                setOpen3(true)
-            } else if (parseInt(localStorage.getItem('userMoney'), 10) > parseInt(localStorage.getItem('money'), 10)) {
-                console.log(
-                    parseInt(localStorage.getItem('userMoney'), 10) +
-                        ' > ' +
-                        parseInt(localStorage.getItem('money'), 10)
-                )
-                setError('超出您的餘額')
-                setOpen3(true)
+            if (values.tranId !== '') {
+                // 付款方傳送匯款要求
+                socket.emit('send_transc_req', {
+                    roomNum: localStorage.getItem('roundNum'),
+                    payer_id: localStorage.getItem('id'),
+                    receiver_id: values.tranId,
+                    transc_money: money,
+                })
             } else {
-                localStorage.setItem('tranMoney', money)
-                setShowQR(true)
+                if (money <= 0) {
+                    setError('付款金額需大於 0 元')
+                    setOpen3(true)
+                } else if (localStorage.getItem('money') === null) {
+                    setError('系統錯誤 請重整頁面')
+                    setOpen3(true)
+                } else if (
+                    parseInt(localStorage.getItem('userMoney'), 10) > parseInt(localStorage.getItem('money'), 10)
+                ) {
+                    console.log(
+                        parseInt(localStorage.getItem('userMoney'), 10) +
+                            ' > ' +
+                            parseInt(localStorage.getItem('money'), 10)
+                    )
+                    setError('超出您的餘額')
+                    setOpen3(true)
+                } else {
+                    localStorage.setItem('tranMoney', money)
+                    setShowQR(true)
+                }
             }
         }
 
@@ -808,13 +829,54 @@ const QRCodeSend2 = ({ history }, props) => {
                     className="switch"
                     label="付款"
                 />
+                <form onSubmit={handleSubmit} noValidate autoComplete="off">
+                    <Grid className="input" container spacing={1} alignItems="flex-end">
+                        <Grid item className="icon">
+                            <FaceIcon></FaceIcon>
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                disabled
+                                id="tranId"
+                                className={`${showQR ? 'Tshow' : 'Thide'}`}
+                                value={values.tranId}
+                                onChange={handleChange('tranId')}
+                                label={
+                                    <Typography style={{ color: 'white' }} variant="headline" component="h3">
+                                        轉出對象id
+                                    </Typography>
+                                }
+                                inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                style={{ width: '100%' }}
+                            />
 
-                <Grid className="input" container spacing={1} alignItems="flex-end">
-                    <Grid item className="icon">
-                        <MonetizationOnIcon />
+                            <TextField
+                                id="tranId"
+                                className={`${showQR ? 'Thide' : 'Tshow'}`}
+                                value={values.tranId}
+                                onChange={handleChange('tranId')}
+                                type="number"
+                                label={
+                                    <Typography style={{ color: 'white' }} variant="headline" component="h3">
+                                        轉出對象id
+                                    </Typography>
+                                }
+                                inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                fullWidth="true"
+                            />
+                        </Grid>
                     </Grid>
-                    <Grid item>
-                        <form onSubmit={handleSubmit} noValidate autoComplete="off">
+                    <Grid className="input" container spacing={1} alignItems="flex-end">
+                        <Grid item className="icon">
+                            <MonetizationOnIcon />
+                        </Grid>
+                        <Grid item>
                             <TextField
                                 disabled
                                 id="money"
@@ -851,14 +913,16 @@ const QRCodeSend2 = ({ history }, props) => {
                                 }}
                                 fullWidth="true"
                             />
-                        </form>
+                        </Grid>
                     </Grid>
-                </Grid>
+                </form>
                 <div className="sub_title">提醒目前餘額為 ${localStorage.getItem('money')}</div>
                 <div className="bottom">
                     <div>
                         <QRCode
                             className={`${showQR ? 'QRshow' : 'QRhide'}`}
+                            level="H"
+                            size={250}
                             value={'teacher=0/' + 'money=' + money + '/userId=' + localStorage.getItem('id')}
                         />
                     </div>
