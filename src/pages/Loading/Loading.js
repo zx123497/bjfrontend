@@ -5,9 +5,12 @@ import BackPage from '../../components/BackPage/BackPage'
 import { useLoading, Audio } from '@agney/react-loading';
 import { BallTriangle,Bars,Circles,Grid,Hearts,Oval,Puff,Rings,SpinningCircles,TailSpin,ThreeDots } from '@agney/react-loading';
 import { Box } from '@material-ui/core';
-import { socket } from '../../service/socket';
+// import { socket } from '../../service/socket';
 import UserService from '../../service/UserService';
 import AdminService from '../../service/AdminService';
+
+import { io } from 'socket.io-client/dist/socket.io'
+const URL = 'https://lbdgame.mgt.ncu.edu.tw:8080'
 
 const useStyles = makeStyles((theme) => ({
     Loading: {
@@ -61,6 +64,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Loading = (props) => {
+
+    const socket = io.connect(URL, {
+        withCredentials: true,
+        extraHeaders: { authorization: `Bearer ${localStorage.getItem('token')}`},
+        transports: [ 'websocket' ],
+        cors: {
+            origin: URL,
+            methods: ["GET", "POST"]
+          }
+        // query: localStorage.getItem('token'),
+        // transports: ['websocket', 'polling', 'flashsocket'],
+        // secure: true,
+        // reconnection: true,
+        // rejectUnauthorized: false
+    })
+
     const classes = useStyles();
 
     const { containerProps, indicatorEl } = useLoading({
@@ -73,6 +92,18 @@ const Loading = (props) => {
     const roomNum = props.location.pathname.split('/')[2]
 
     useEffect(() => {
+
+        socket.on('connect', function() {
+            console.warn("connect");
+        });
+
+        socket.on('disconnect', function() {
+            console.warn("disconnect");
+        });
+
+        socket.on('error', function (data) {
+            console.warn(data);
+        });
 
         socket.on('enterRoom_resp', (res) => {
             console.log(res)

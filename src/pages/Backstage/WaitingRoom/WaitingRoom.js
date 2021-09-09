@@ -176,6 +176,7 @@ const Waitingroom = (props) => {
 
         return () => clearInterval(intervalID)
     }, [])
+    
     return (
         <div className={classes.waiting}>
             <h2 className="title">輸入PIN 碼加入遊戲</h2>
