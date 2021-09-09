@@ -74,23 +74,7 @@ const Loading = (props) => {
 
     useEffect(() => {
 
-        socket.on('connect', function() {
-            console.warn("connect");
-        });
-
-        socket.on('disconnect', function() {
-            console.warn("disconnect");
-        });
-
-        socket.on('error', function (data) {
-            console.warn(data);
-        });
-
         socket.on('enterRoom_resp', (res) => {
-            console.log(res)
-        })
-
-        socket.on('connect_error', (res) => {
             console.log(res)
         })
 
@@ -105,31 +89,32 @@ const Loading = (props) => {
             ID: localStorage.getItem('id'),
             username: localStorage.getItem('username')
         })
+       
+    },[])
 
-        // // request members list and render every 5 seconds
-        // const intervalID = setInterval(() => {
-            const getRoomParam = new URLSearchParams();
-            getRoomParam.append("roomNum", roomNum)
+    useEffect(() => {
+
+        const intervalID = setInterval(() => {
+            const getRoomParam = new URLSearchParams()
+            getRoomParam.append('roomNum', localStorage.getItem('roomNum'))
 
             AdminService.postGetRoom(getRoomParam).then((res) => {
-                if(res.status == 200) {
+                if (res.status == 200) {
                     console.log(res)
-                    if(res.data.allUsers) {
+                    if (res.data.allUsers) {
                         var temp = []
-                        res.data.allUsers.forEach(element => {
+                        res.data.allUsers.forEach((element) => {
                             temp.push(<Typography>{element[0]}</Typography>)
-                        });
+                        })
                         setUserList(temp)
                     }
                 }
-                if(res.data.roomDetail.isGaming) {
-                    props.history.replace(`/gamelobby/${roomNum}`)
-                }
             })
-        // }, 5000)
+        }, 5000)
 
-        // return () => clearInterval(intervalID)        
-    },[])
+        return () => clearInterval(intervalID)
+
+    }, [ props ])
     
     return ( 
     <div className = { classes.Loading } >

@@ -155,8 +155,11 @@ const Waitingroom = (props) => {
             setPin(res.data.pinCode)
             localStorage.setItem('roomNum', res.data.pinCode)
         })
+    }, [])
 
-        // const intervalID = setInterval(() => {
+    useEffect(() => {
+        
+        const intervalID = setInterval(() => {
             const getRoomParam = new URLSearchParams()
             getRoomParam.append('roomNum', localStorage.getItem('roomNum'))
 
@@ -172,10 +175,11 @@ const Waitingroom = (props) => {
                     }
                 }
             })
-        // }, 5000)
+        }, 5000)
 
-        // return () => clearInterval(intervalID)
-    }, [])
+        return () => clearInterval(intervalID)
+
+    }, [ props ])
     
     return (
         <div className={classes.waiting}>
