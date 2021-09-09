@@ -43,7 +43,8 @@ const TransRecord = (props) => {
     });
 
     const rerender = () => {
-        socket.emit('faketransc', { roomNum: `${props.match.params.id}`, round: props.data.round })
+        console.log(props.data.round)
+        socket.emit('faketransc', { roomNum: `${props.match.params.id}`, round: props.data.round - 1 })
     }
 
     const classes = useStyles();
@@ -51,7 +52,7 @@ const TransRecord = (props) => {
     useEffect(() => {
         socket.on('getRecordRequest', function (obj) {
             console.log(obj)
-            if(obj != 'error') {
+            if(obj != 'error' && obj) {
                 let temp = []
                 let i = 0
                 for(let element of obj) {
