@@ -406,6 +406,8 @@ const QRCodeSend2 = ({ history }, props) => {
                         'tran' + localStorage.getItem('roundNum') + '_user',
                         localStorage.getItem('tranUser')
                     )
+
+                    console.log(localStorage.getItem('tranUser'))
                 } else {
                     setError('交易失敗\n 付款方無回應')
                     setOpen3(true)
@@ -528,6 +530,8 @@ const QRCodeSend2 = ({ history }, props) => {
             socket.on('transCheckReq', function (data) {
                 setReceiver_id(data)
                 localStorage.setItem('receiver_id', data)
+                localStorage.setItem('tranUser', data)
+
                 setOpen1(true)
             })
         }
