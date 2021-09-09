@@ -194,6 +194,13 @@ const QRCodeSend2 = ({ history }, props) => {
     }, [])
 
     useEffect(() => {
+        //enterRoom
+        socket.emit('enterRoom', {
+            roomNum: localStorage.getItem('roomNum'),
+            ID: localStorage.getItem('id'),
+            username: localStorage.getItem('username'),
+        })
+
         // listen to endRound
         socket.on('endRoundResponse', (res) => {
             console.log(res)
@@ -207,7 +214,7 @@ const QRCodeSend2 = ({ history }, props) => {
             console.log(res)
             localStorage.setItem('annoucement', res.message)
         })
-    }, [socket])
+    }, [])
 
     // 與老師交易時的setSocket
     useEffect(() => {
