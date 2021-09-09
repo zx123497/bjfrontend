@@ -48,6 +48,14 @@ const AdminService = {
         } catch(error) {
             throw error
         }
+    },
+    postCloseRoom: async(body) => {
+        try {
+            const response = await axios.post('/closeRoom', body)
+            return response
+        } catch(error) {
+            throw error
+        }
     }
 }
 

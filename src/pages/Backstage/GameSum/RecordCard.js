@@ -94,23 +94,25 @@ const RecordCard = (props) => {
                 console.log(obj)
                 let temp = []
                 let i = 0
-                obj.forEach((round) => {
-                    round.forEach((element) => {
-                        console.log(element)
-                        temp.push(
-                            <Grid container className="row" key={i}>
-                                <Grid item className="element buyer" xs={3}>{element.buyer}</Grid>
-                                <Grid item className="element icon" xs={1}>
-                                    <Icon fontSize="large"><NavigateNextIcon /></Icon>
+                if(round != []) {
+                    obj.forEach((round) => {
+                        round.forEach((element) => {
+                            console.log(element)
+                            temp.push(
+                                <Grid container className="row" key={i}>
+                                    <Grid item className="element buyer" xs={3}>{element.buyer}</Grid>
+                                    <Grid item className="element icon" xs={1}>
+                                        <Icon fontSize="large"><NavigateNextIcon /></Icon>
+                                    </Grid>
+                                    <Grid item className="element seller" xs={3}>{element.seller}</Grid>
+                                    <Grid item className="element amount" xs={5}>$ {element.price}</Grid>
                                 </Grid>
-                                <Grid item className="element seller" xs={3}>{element.seller}</Grid>
-                                <Grid item className="element amount" xs={5}>$ {element.price}</Grid>
-                            </Grid>
-                        )
-                        i++
+                            )
+                            i++
+                        })
                     })
-                })
-                setRecord({records: temp});
+                    setRecord({records: temp});
+                }
             }
             // console.log(records)
         });

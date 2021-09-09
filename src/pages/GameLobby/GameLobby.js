@@ -42,7 +42,7 @@ const GameLobby = (props) => {
     })
 
     const [annoucement, setAnnouncement] = useState({
-        roomAnnoucement: '',
+        roomAnnoucement: localStorage.getItem('annoucement'),
     })
 
     const getRoom = () => {
