@@ -5,12 +5,9 @@ import BackPage from '../../components/BackPage/BackPage'
 import { useLoading, Audio } from '@agney/react-loading';
 import { BallTriangle,Bars,Circles,Grid,Hearts,Oval,Puff,Rings,SpinningCircles,TailSpin,ThreeDots } from '@agney/react-loading';
 import { Box } from '@material-ui/core';
-// import { socket } from '../../service/socket';
+import { socket } from '../../service/socket';
 import UserService from '../../service/UserService';
 import AdminService from '../../service/AdminService';
-
-import { io } from 'socket.io-client/dist/socket.io'
-const URL = 'https://lbdgame.mgt.ncu.edu.tw:8080'
 
 const useStyles = makeStyles((theme) => ({
     Loading: {
@@ -64,22 +61,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Loading = (props) => {
-
-    const socket = io.connect(URL, {
-        withCredentials: true,
-        extraHeaders: { authorization: `Bearer ${localStorage.getItem('token')}`},
-        transports: [ 'websocket' ],
-        cors: {
-            origin: URL,
-            methods: ["GET", "POST"]
-          }
-        // query: localStorage.getItem('token'),
-        // transports: ['websocket', 'polling', 'flashsocket'],
-        // secure: true,
-        // reconnection: true,
-        // rejectUnauthorized: false
-    })
-
     const classes = useStyles();
 
     const { containerProps, indicatorEl } = useLoading({
@@ -125,29 +106,29 @@ const Loading = (props) => {
             username: localStorage.getItem('username')
         })
 
-        // request members list and render every 5 seconds
-        const intervalID = setInterval(() => {
-            const getRoomParam = new URLSearchParams();
-            getRoomParam.append("roomNum", roomNum)
+        // // request members list and render every 5 seconds
+        // const intervalID = setInterval(() => {
+        //     const getRoomParam = new URLSearchParams();
+        //     getRoomParam.append("roomNum", roomNum)
 
-            AdminService.postGetRoom(getRoomParam).then((res) => {
-                if(res.status == 200) {
-                    console.log(res)
-                    if(res.data.allUsers) {
-                        var temp = []
-                        res.data.allUsers.forEach(element => {
-                            temp.push(<Typography>{element[0]}</Typography>)
-                        });
-                        setUserList(temp)
-                    }
-                }
-                if(res.data.roomDetail.isGaming) {
-                    props.history.replace(`/gamelobby/${roomNum}`)
-                }
-            })
-        }, 5000)
+        //     AdminService.postGetRoom(getRoomParam).then((res) => {
+        //         if(res.status == 200) {
+        //             console.log(res)
+        //             if(res.data.allUsers) {
+        //                 var temp = []
+        //                 res.data.allUsers.forEach(element => {
+        //                     temp.push(<Typography>{element[0]}</Typography>)
+        //                 });
+        //                 setUserList(temp)
+        //             }
+        //         }
+        //         if(res.data.roomDetail.isGaming) {
+        //             props.history.replace(`/gamelobby/${roomNum}`)
+        //         }
+        //     })
+        // }, 5000)
 
-        return () => clearInterval(intervalID)        
+        // return () => clearInterval(intervalID)        
     },[])
     
     return ( 
