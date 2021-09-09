@@ -43,7 +43,7 @@ const TransRecord = (props) => {
     });
 
     const rerender = () => {
-        socket.emit('faketransc', { roomNum: `${props.match.params.id}`, round: 0 })
+        socket.emit('faketransc', { roomNum: `${props.match.params.id}`, round: props.data.round })
     }
 
     const classes = useStyles();

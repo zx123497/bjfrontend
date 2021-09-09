@@ -273,7 +273,7 @@ const GameLobby = (props) => {
             <AnnouncementLine data={annoucement} />
             <div className={classes.componenet}>
                 <GameChart data={chartData} />
-                <TransRecord />
+                <TransRecord data={room} />
             </div>
             <IconMenu icons={icons} />
 

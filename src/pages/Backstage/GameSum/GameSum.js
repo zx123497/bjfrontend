@@ -50,6 +50,12 @@ const GameSum = (props) => {
         chartData: []
     })
 
+    const close = () => {
+        var closeparams = new URLSearchParams()
+        closeparams.append('roomNum', roomNum)
+        AdminService.postCloseRoom(closeparams)
+    }
+
     useEffect(() => {
         const params = new URLSearchParams()
         params.append('roomNum', roomNum)
@@ -83,7 +89,7 @@ const GameSum = (props) => {
                             </Typography>
                         </Grid>
                         <Grid item xs={4}>
-                            <Link className="endGame btn" component={Button} to="/">
+                            <Link className="endGame btn" component={Button} onClick={close} to="/">
                                 <Typography variant="subtitle2">結束遊戲</Typography>
                             </Link>
                         </Grid>
