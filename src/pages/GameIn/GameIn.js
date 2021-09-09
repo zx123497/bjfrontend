@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { socket } from '../../service/socket'
 
 import UserService from '../../service/UserService'
+import AdminService from '../../service/AdminService'
 
 const useStyles = makeStyles((theme) => ({
     GameIn: {
@@ -93,7 +94,19 @@ const GameIn = (props) => {
                 ID: localStorage.getItem('id'),
                 username: localStorage.getItem('username')
             })
-            props.history.push(`/loading/${values.pincode}`)
+
+            const getroomparmas = new URLSearchParams()
+            getroomparmas.append('roomNum', values.pincode)
+            AdminService.postGetRoom(getroomparmas).then((res) => {
+                if(res.status == '200') {
+                    if(res.data.roomDetail.isGaming) {
+                        props.history.push(`/gamelobby/${values.pincode}`)
+
+                    } else {
+                        props.history.push(`/loading/${values.pincode}`)
+                    }
+                }
+            })
         }
         event.preventDefault()
     }

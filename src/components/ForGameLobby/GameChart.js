@@ -23,7 +23,7 @@ const GameChart = (props) => {
     const classes = useStyles();
     var hTicks = [];
 
-    var chartData = [['玩家排序', '賣家', '買家'],[0,0,0]];
+    var chartData = [['玩家排序', '賣家', '買家']];
 
     useEffect(() => {
         console.log(props.data.chartData)
@@ -58,6 +58,9 @@ const GameChart = (props) => {
                     },
                     vAxis: {
                         title: '商品價值',
+                        viewWindow: {
+                            min: 1
+                        }
                     },
                     enableInteractivity: true,
                     tooltip: {

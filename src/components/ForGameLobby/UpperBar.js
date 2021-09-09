@@ -25,17 +25,18 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         alignItems: "center",
         "& .box": {
-            display: "inline-block"
+            // display: "inline-block",
+            float: "right"
         },
         "& .round": {
             marginRight: "1rem",
             "& .MuiTypography-body1": {
-                fontSize: "3rem",
+                fontSize: "88%",
             }
         },
         "& .timer": {
             width: "6rem",
-            display: "inline-block",
+            // display: "inline-block",
         },
         "& .timeCard": {
             backgroundColor: theme.palette.ultimate.light,
@@ -74,7 +75,7 @@ function MyTimer({ expiryTimestamp }) {
     });
   
     return(
-        <div style={{textAlign: 'center'}}>
+        <div className="box" style={{textAlign: 'center'}}>
             <div className="box timer">
                 <Grid container>
                     <Grid item xs={8} spacing={3}>
