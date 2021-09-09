@@ -9,7 +9,9 @@ export const socket = io.connect(URL, {
     cors: {
         origin: URL,
         methods: ["GET", "POST"]
-      }
+    },
+    pingInterval: 1000 * 60 * 5,
+    pingTimeout: 1000 * 60 * 3
     // query: localStorage.getItem('token'),
     // transports: ['websocket', 'polling', 'flashsocket'],
     // secure: true,
