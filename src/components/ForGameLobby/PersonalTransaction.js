@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 
@@ -46,6 +46,31 @@ const PersonalTransaction = (props) => {
 
     console.log(props.data)
 
+    const [ trans, setTrans ] = useState({
+        score: '',
+        totalScore: '',
+        transPartner: '',
+        tranAmount: ''
+    })
+
+    useEffect(() => {
+        if(localStorage.getItem(`tran${props.data.room.round}_money`)) {
+            setTrans({
+                score: localStorage.getItem(`tran${props.data.room.round}_money`) - props.data.player.price,
+                totalScore: localStorage.getItem(`tran${props.data.room.round}_money`) - props.data.player.price,
+                transPartner: localStorage.getItem(`tran${props.data.room.round}_user`),
+                tranAmount: localStorage.getItem(`tran${props.data.room.round}_money`)
+            })
+        } else {
+            setTrans({
+                score: 0,
+                totalScore: 0,
+                transPartner: '',
+                tranAmount: 0
+            })
+        }
+    }, [props.data])
+
     const classes = useStyles();
 
     return (
@@ -61,15 +86,15 @@ const PersonalTransaction = (props) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={8} className="cell">
-                        {props.data.totalScore >= 0 && (
+                        {trans.totalScore >= 0 && (
                             <Typography variant="h4">
-                                +${props.data.totalScore}
+                                +${trans.totalScore}
                             </Typography>
                         )}
 
-                        {props.data.totalScore < 0 && (
+                        {trans.totalScore < 0 && (
                             <Typography variant="h4">
-                                -${Math.abs(props.data.totalScore)}
+                                -${Math.abs(trans.totalScore)}
                             </Typography>
                         )}
                     </Grid>
@@ -84,7 +109,7 @@ const PersonalTransaction = (props) => {
                     <Grid item xs={8} className="cell">
                         <div className="partnerInfo">
                             <div className="nameContainer">
-                                {props.data.transPartner}
+                                {trans.transPartner}
                             </div>
                         </div>
                     </Grid>
@@ -97,15 +122,15 @@ const PersonalTransaction = (props) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={8} className="cell">
-                        {props.data.tranAmount >= 0 && (
+                        {trans.tranAmount >= 0 && (
                             <Typography variant="h5">
-                                + ${props.data.tranAmount}
+                                + ${trans.tranAmount}
                             </Typography>
                         )}
 
-                        {props.data.tranAmount < 0 && (
+                        {trans.tranAmount < 0 && (
                             <Typography variant="h5">
-                                - ${Math.abs(props.data.tranAmount)}
+                                - ${Math.abs(trans.tranAmount)}
                             </Typography>
                         )}
                     </Grid>

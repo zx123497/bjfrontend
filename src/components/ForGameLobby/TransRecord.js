@@ -50,7 +50,8 @@ const TransRecord = (props) => {
 
     useEffect(() => {
         socket.on('getRecordRequest', function (obj) {
-            if(obj) {
+            console.log(obj)
+            if(obj != 'error') {
                 let temp = []
                 let i = 0
                 for(let element of obj) {
