@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { makeStyles } from '@material-ui/core'
+import { Box, makeStyles, Typography } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import SVG from './wait.svg'
 import PersonIcon from '@material-ui/icons/Person'
 import { Link, withRouter } from 'react-router-dom'
 import RoomService from '../../../service/RoomService'
+import AdminService from '../../../service/AdminService'
 const useStyles = makeStyles((theme) => ({
     waiting: {
         height: '100vh',
@@ -66,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
                 height: 'auto',
             },
             '& .start': {
-                margin: '2rem',
+                marginBottom: '2rem',
                 border: `2px ${theme.palette.ultimate.main} solid`,
                 color: '#FFF',
                 boxShadow: '0 3px 6px rgba(0,0,0,0.3)',
@@ -80,7 +81,6 @@ const useStyles = makeStyles((theme) => ({
                 display: 'flex',
                 // backgroundColor: theme.palette.primary.main,
                 width: '70%',
-                height: '1rem',
                 color: theme.palette.primary.main,
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -88,6 +88,18 @@ const useStyles = makeStyles((theme) => ({
                 fontSize: '50px',
             },
         },
+        "& .userlist": {
+            width: "80%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            margin: "1% 10%",
+            height: "25vh",
+            padding: "3% 0",
+            overflowY: "scroll",
+            backgroundColor: theme.palette.ultimate.dark,
+            color: theme.palette.ultimate.light
+        }
     },
 }))
 
@@ -95,6 +107,9 @@ const Waitingroom = (props) => {
     const classes = useStyles()
     const id = props.match.params.id
     const [pin, setPin] = useState()
+
+    const [userlist, setUserList] = useState('Loading members...')
+
     useEffect(() => {
         let param = new URLSearchParams()
         param.append('ID', localStorage.id)
@@ -103,13 +118,37 @@ const Waitingroom = (props) => {
         RoomService.openRoom(param).then((res) => {
             console.log(res)
             setPin(res.data.pinCode)
+
+            const intervalID = setInterval(() => {
+                const getRoomParam = new URLSearchParams();
+                getRoomParam.append("roomNum", res.data.pinCode)
+    
+                AdminService.postGetRoom(getRoomParam).then((res) => {
+                    if(res.status == 200) {
+                        console.log(res)
+                        if(res.data.allUsers) {
+                            var temp = []
+                            res.data.allUsers.forEach(element => {
+                                temp.push(<Typography>{element[0]}</Typography>)
+                            });
+                            setUserList(temp)
+                        }
+                    }
+                })
+            }, 5000)
+    
+            return () => clearInterval(intervalID) 
         })
+
     }, [])
     return (
         <div className={classes.waiting}>
             <div className="card">
                 <h2 className="title">等待入場...</h2>
                 <img src={SVG} className="App-logo img" />
+                <Box className="userlist" boxShadow={3}>
+                    {userlist}
+                </Box>
                 <h4 className="code">{pin}</h4>
                 {/* <div className="status">
                     <PersonIcon />

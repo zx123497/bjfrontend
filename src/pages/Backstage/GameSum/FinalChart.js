@@ -42,7 +42,7 @@ const FinalChart = (props) => {
 
         for(let i=0;i<limit;i++) {
             let temp = []
-            temp.push(i)
+            temp.push(i+1)
             for(let element of selectedRound) {
                 console.log(element)
                 temp.push(element.data.seller[i])

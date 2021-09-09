@@ -48,19 +48,25 @@ const PersonalTransaction = (props) => {
 
     const [ trans, setTrans ] = useState({
         score: '',
-        totalScore: '',
         transPartner: '',
         tranAmount: ''
     })
 
     useEffect(() => {
         if(localStorage.getItem(`tran${props.data.room.round}_money`)) {
-            setTrans({
-                score: localStorage.getItem(`tran${props.data.room.round}_money`) - props.data.player.price,
-                totalScore: localStorage.getItem(`tran${props.data.room.round}_money`) - props.data.player.price,
-                transPartner: localStorage.getItem(`tran${props.data.room.round}_user`),
-                tranAmount: localStorage.getItem(`tran${props.data.room.round}_money`)
-            })
+            if(props.data.player.role == "seller") {
+                setTrans({
+                    score: localStorage.getItem(`tran${props.data.room.round}_money`) - props.data.player.price,
+                    transPartner: localStorage.getItem(`tran${props.data.room.round}_user`),
+                    tranAmount: localStorage.getItem(`tran${props.data.room.round}_money`)
+                })
+            } else {
+                setTrans({
+                    score: props.data.player.price - localStorage.getItem(`tran${props.data.room.round}_money`),
+                    transPartner: localStorage.getItem(`tran${props.data.room.round}_user`),
+                    tranAmount: localStorage.getItem(`tran${props.data.room.round}_money`)
+                })
+            }
         } else {
             setTrans({
                 score: 0,

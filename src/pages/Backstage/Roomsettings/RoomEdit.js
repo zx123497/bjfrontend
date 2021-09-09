@@ -124,6 +124,7 @@ const NewRoom = (props) => {
                 roomName: res.data.roomName,
                 roundTime: res.data.roundTime,
                 initMoney: res.data.initMoney,
+                interval: res.data.interval
             })
         })
     }, [])
