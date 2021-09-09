@@ -157,8 +157,8 @@ const Waitingroom = (props) => {
         })
 
         // const intervalID = setInterval(() => {
-        //     const getRoomParam = new URLSearchParams()
-        //     getRoomParam.append('roomNum', localStorage.getItem('roomNum'))
+            const getRoomParam = new URLSearchParams()
+            getRoomParam.append('roomNum', localStorage.getItem('roomNum'))
 
             AdminService.postGetRoom(getRoomParam).then((res) => {
                 if (res.status == 200) {
