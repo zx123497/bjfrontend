@@ -191,7 +191,9 @@ const QRCodeSend2 = ({ history }, props) => {
         socket.on('connect_error ', function (data) {
             console.log(data)
         })
+    }, [])
 
+    useEffect(() => {
         // listen to endRound
         socket.on('endRoundResponse', (res) => {
             console.log(res)
@@ -199,7 +201,13 @@ const QRCodeSend2 = ({ history }, props) => {
                 props.history.push(`/loading/${localStorage.getItem('roomNum')}`)
             }
         })
-    }, [])
+
+        // listen to sendsysmsg
+        socket.on('sys', function (res) {
+            console.log(res)
+            localStorage.setItem('annoucement', res.message)
+        })
+    }, [socket])
 
     // 與老師交易時的setSocket
     useEffect(() => {
@@ -487,6 +495,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 localStorage.setItem('tranLimit', data.match(/limit=([^&]+)/)[1].split('/')[0])
                 localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1])
             } else {
+                console.log('tranUser', data.match(/userId=([^&]+)/)[1])
                 // localStorage.setItem('tranTeacher', '0')
                 localStorage.setItem('tranMoney', data.match(/money=([^&]+)/)[1].split('/')[0])
                 localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1])
@@ -529,6 +538,7 @@ const QRCodeSend2 = ({ history }, props) => {
         if (!seller) {
             socket.on('transCheckReq', function (data) {
                 setReceiver_id(data)
+                console.log('receiver' + data)
                 localStorage.setItem('receiver_id', data)
                 localStorage.setItem('tranUser', data)
 
