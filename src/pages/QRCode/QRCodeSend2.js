@@ -199,6 +199,12 @@ const QRCodeSend2 = ({ history }, props) => {
                 props.history.push(`/loading/${localStorage.getItem('roomNum')}`)
             }
         })
+
+        // listen to sendsysmsg
+        socket.on('sys', function (res) {
+            console.log(res)
+            localStorage.setItem('annoucement', res.message)
+        })
     }, [])
 
     // 與老師交易時的setSocket
