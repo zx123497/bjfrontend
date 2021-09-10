@@ -72,6 +72,7 @@ const Loading = (props) => {
 
     const roomNum = props.location.pathname.split('/')[2]
 
+
     useEffect(() => {
 
         socket.on('enterRoom_resp', (res) => {
@@ -96,7 +97,7 @@ const Loading = (props) => {
 
         const intervalID = setInterval(() => {
             const getRoomParam = new URLSearchParams()
-            getRoomParam.append('roomNum', localStorage.getItem('roomNum'))
+            getRoomParam.append('roomNum', roomNum)
 
             AdminService.postGetRoom(getRoomParam).then((res) => {
                 if (res.status == 200) {
@@ -114,7 +115,7 @@ const Loading = (props) => {
 
         return () => clearInterval(intervalID)
 
-    }, [ props ])
+    }, [])
     
     return ( 
     <div className = { classes.Loading } >

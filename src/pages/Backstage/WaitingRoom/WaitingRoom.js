@@ -124,7 +124,8 @@ const useStyles = makeStyles((theme) => ({
         '& .user': {
             backgroundColor: 'rgba(0,0,0,0.3)',
             margin: '0.5rem 1rem',
-            fontSize: '2rem',
+            fontSize: '1.2rem',
+            height: '1.8rem',
             padding: '.5rem 1rem ',
             borderRadius: '10px',
             display: 'flex',
@@ -143,7 +144,7 @@ const Waitingroom = (props) => {
     const id = props.match.params.id
     const [pin, setPin] = useState()
 
-    const [userlist, setUserList] = useState('')
+    const [userlist, setUserList] = useState(['Loading...'])
 
     useEffect(() => {
         let param = new URLSearchParams()
@@ -169,7 +170,7 @@ const Waitingroom = (props) => {
                     if (res.data.allUsers) {
                         var temp = []
                         res.data.allUsers.forEach((element) => {
-                            temp.push(<Typography>{element[0]}</Typography>)
+                            temp.push(element[0])
                         })
                         setUserList(temp)
                     }
@@ -194,10 +195,9 @@ const Waitingroom = (props) => {
                 </div> */}
             </div>
             <div className={classes.userList}>
-                {userlist}
-                {/* {userlist.map((user) => (
+                {userlist.map((user) => (
                     <div className="user">{user}</div>
-                ))} */}
+                ))}
             </div>
             <div style={{ width: '70%', display: 'flex', justifyContent: 'flex-end' }}>
                 <Button className="start" component={Link} to={`/admin/gamelobby/${pin}`}>
