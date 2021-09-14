@@ -110,6 +110,9 @@ const useStyles = makeStyles((theme) => ({
     userList: {
         backgroundColor: '#555',
         width: '70%',
+        height: '45vh',
+        overflowX: 'hidden',
+        overflowY: 'scroll',
         marginTop: '2rem',
         boxSizing: 'border-box',
         padding: '2rem',
@@ -121,7 +124,8 @@ const useStyles = makeStyles((theme) => ({
         '& .user': {
             backgroundColor: 'rgba(0,0,0,0.3)',
             margin: '0.5rem 1rem',
-            fontSize: '2rem',
+            fontSize: '1.2rem',
+            height: '1.8rem',
             padding: '.5rem 1rem ',
             borderRadius: '10px',
             display: 'flex',
@@ -140,20 +144,7 @@ const Waitingroom = (props) => {
     const id = props.match.params.id
     const [pin, setPin] = useState()
 
-    const [userlist, setUserList] = useState([
-        'test1',
-        'test2',
-        'test1',
-        'test2',
-        'test1456456',
-        'test2',
-        'test1',
-        'test2123456',
-        'test1',
-        'test2456456',
-        'test1',
-        'test24534534',
-    ])
+    const [userlist, setUserList] = useState(['Loading...'])
 
     useEffect(() => {
         let param = new URLSearchParams()
@@ -163,28 +154,34 @@ const Waitingroom = (props) => {
         RoomService.openRoom(param).then((res) => {
             console.log(res)
             setPin(res.data.pinCode)
-
-            // const intervalID = setInterval(() => {
-            //     const getRoomParam = new URLSearchParams()
-            //     getRoomParam.append('roomNum', res.data.pinCode)
-
-            //     AdminService.postGetRoom(getRoomParam).then((res) => {
-            //         if (res.status == 200) {
-            //             console.log(res)
-            //             if (res.data.allUsers) {
-            //                 var temp = []
-            //                 res.data.allUsers.forEach((element) => {
-            //                     temp.push(<Typography>{element[0]}</Typography>)
-            //                 })
-            //                 setUserList(temp)
-            //             }
-            //         }
-            //     })
-            // }, 5000)
-
-            // return () => clearInterval(intervalID)
+            localStorage.setItem('roomNum', res.data.pinCode)
         })
     }, [])
+
+    useEffect(() => {
+        
+        const intervalID = setInterval(() => {
+            const getRoomParam = new URLSearchParams()
+            getRoomParam.append('roomNum', localStorage.getItem('roomNum'))
+
+            AdminService.postGetRoom(getRoomParam).then((res) => {
+                if (res.status == 200) {
+                    console.log(res)
+                    if (res.data.allUsers) {
+                        var temp = []
+                        res.data.allUsers.forEach((element) => {
+                            temp.push(element[0])
+                        })
+                        setUserList(temp)
+                    }
+                }
+            })
+        }, 5000)
+
+        return () => clearInterval(intervalID)
+
+    }, [ props ])
+    
     return (
         <div className={classes.waiting}>
             <h2 className="title">輸入PIN 碼加入遊戲</h2>

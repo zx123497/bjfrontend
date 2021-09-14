@@ -36,7 +36,7 @@ const GameLobby = (props) => {
     })
 
     const [annoucement, setAnnouncement] = useState({
-        roomAnnoucement: localStorage.getItem('annoucement'),
+        roomAnnoucement: '',
     })
 
     const getRoom = () => {
@@ -61,6 +61,10 @@ const GameLobby = (props) => {
     useEffect(() => {
 
         getRoom()
+
+        if(localStorage.getItem('announcement')) {
+            setAnnouncement({roomAnnoucement: localStorage.getItem('announcement')})
+        }
 
         socket.on('enterRoom_resp', (res) => {
             console.log(res)
@@ -116,6 +120,7 @@ const GameLobby = (props) => {
             if ((res == 'endRoundMessage') || (res == 'error(no next round)')) {
                 localStorage.removeItem(`tran${localStorage.getItem('round')}_money`)
                 localStorage.removeItem(`tran${localStorage.getItem('round')}_user`)
+                localStorage.removeItem('announcement')
                 props.history.replace(`/loading/${roomNum}`)
             }
         })
@@ -134,6 +139,7 @@ const GameLobby = (props) => {
             socket.emit('leaveRoom', { roomNum: roomNum })
             localStorage.removeItem(`tran${localStorage.getItem('round')}_money`)
             localStorage.removeItem(`tran${localStorage.getItem('round')}_user`)
+            localStorage.removeItem('announcement')
             props.history.push('/user/lobby')
         })
 
