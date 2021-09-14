@@ -9,5 +9,3 @@ export const socket = io.connect(URL, {
     // reconnection: true,
     // rejectUnauthorized: false
 })
-
-
