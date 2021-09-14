@@ -276,7 +276,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }))
-const UserLobby = () => {
+const UserLobby = (props) => {
     const classes = useStyles()
     const theme = useTheme()
     const [rooms, setRooms] = useState([])
