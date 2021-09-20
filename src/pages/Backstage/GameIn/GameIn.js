@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom'
-import BackPage from '../../../components/BackPage/BackPage'
 import RoomService from '../../../service/RoomService'
 const useStyles = makeStyles((theme) => ({
     Register: {
