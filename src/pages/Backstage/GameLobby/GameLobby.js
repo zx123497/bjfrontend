@@ -89,6 +89,7 @@ const GameLobby = (props) => {
         chartdataParam.append('roomNum', `${roomNum}`)
 
         AdminService.postChartData(chartdataParam).then((res) => {
+            console.log(res)
             if (res.status == '200') {
                 setChartData({ chartData: res.data.chartData })
             }
@@ -203,9 +204,7 @@ const GameLobby = (props) => {
         // listen to shuffle
         socket.on('shuffleResponse', (res) => {
             console.log(res)
-            if(res.status == '200') {
-                getChartData()
-            }
+            getChartData()
         })
 
         // listen to sendsysmsg

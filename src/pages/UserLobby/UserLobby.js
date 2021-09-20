@@ -276,7 +276,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }))
-const UserLobby = () => {
+const UserLobby = (props) => {
     const classes = useStyles()
     const theme = useTheme()
     const [rooms, setRooms] = useState([])
@@ -388,7 +388,12 @@ const UserLobby = () => {
                         alt="logo"
                         style={{ width: '70%', marginTop: '2rem' }}
                     />
-                    <Button className="roombtn" component={Link} to="/gamein">
+                    <Button
+                        className="roombtn"
+                        onClick={() => {
+                            props.history.push('/gamein')
+                        }}
+                    >
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <AddCircleIcon style={{ marginRight: '.5rem' }} />
                             <p className="roomtext">進入房間</p>

@@ -9,6 +9,7 @@
         "@adrianso/react-native-device-brightness": "^1.2.5",
         "@agney/react-loading": "^0.1.2",
         "@capacitor-community/screen-brightness": "^1.0.1",
+        "@capacitor/core": "^3.2.2",
         "@date-io/core": "^2.10.7",
         "@date-io/date-fns": "^2.10.8",
         "@date-io/moment": "^2.10.8",
