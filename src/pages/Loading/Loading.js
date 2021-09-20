@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
-import BackPage from '../../components/BackPage/BackPage'
 import { useLoading, Audio } from '@agney/react-loading';
 import { BallTriangle,Bars,Circles,Grid,Hearts,Oval,Puff,Rings,SpinningCircles,TailSpin,ThreeDots } from '@agney/react-loading';
 import { Box } from '@material-ui/core';
@@ -119,7 +118,6 @@ const Loading = (props) => {
     
     return ( 
     <div className = { classes.Loading } >
-        <BackPage refs=""></BackPage> 
         <div>
             <section className="loading" {...containerProps}>
             {indicatorEl}
