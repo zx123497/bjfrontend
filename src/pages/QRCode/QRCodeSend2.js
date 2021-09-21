@@ -340,7 +340,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 socket.emit('send_chek_point', {
                     roomNum: localStorage.getItem('roomNum'),
                     round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
-                    money: localStorage.getItem('tranMoney'), // 這是不是要改
+                    money: localStorage.getItem('tranMoney'),
                     payer_id: localStorage.getItem('payer_id'),
                     receiver_id: localStorage.getItem('id'),
                     chek_point: '0',
@@ -727,6 +727,7 @@ const QRCodeSend2 = ({ history }, props) => {
                         transc_money: money,
                     })
 
+                    localStorage.setItem('tranUser', values.tranId)
                     // socket.on 交易對象id不存在
                     setError('等待收款方接受交易 請勿離開本畫面')
                     setTransById(true)
@@ -791,6 +792,7 @@ const QRCodeSend2 = ({ history }, props) => {
             if (data.transc_money !== undefined) {
                 console.log(data)
                 localStorage.setItem('payer_id', data.payer_id)
+                localStorage.setItem('tranUser', data.payer_id)
                 localStorage.setItem('tranMoney', data.transc_money)
                 setTransById(true)
                 setOpen1(true)
