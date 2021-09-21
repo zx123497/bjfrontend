@@ -216,8 +216,7 @@ const Register2 = (props) => {
                             }
                         })
                         .catch((e) => {
-                            setErrorMessage('登入失敗\n 請重新輸入帳號密碼')
-                            setOpen(true)
+                            console.log(e)
                         })
                 }
             })
