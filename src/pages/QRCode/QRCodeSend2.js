@@ -118,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
         },
         '& .scan2': {
             // margin: 'auto',
-            marginLeft: '15vw',
+            // marginLeft: '15vw',
             marginTop: '10px',
             marginBottom: '150px',
         },
@@ -766,6 +766,7 @@ const QRCodeSend2 = ({ history }, props) => {
         // 收款方監聽匯款要求(輸入id)
         if (seller) {
             socket.on('transCheckReq', function (data) {
+                console.log(data)
                 localStorage.setItem('payer_id', data.payer_id)
                 localStorage.setItem('tranMoney', data.transc_money)
                 setTransById(true)
@@ -1192,10 +1193,10 @@ const QRCodeSend2 = ({ history }, props) => {
                     className="scan2"
                     // delay={this.state.delay}
                     style={{
-                        height: '80%',
-                        width: '80%',
+                        height: '500',
+                        width: '500',
                     }}
-                    facingMode="front"
+                    facingMode="rear"
                     onError={handleError}
                     onScan={handleScan}
                 />
