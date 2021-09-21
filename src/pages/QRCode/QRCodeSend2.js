@@ -133,6 +133,8 @@ const QRCodeSend2 = ({ history }, props) => {
         })
     })
 
+    const history2 = useHistory()
+
     const [money, setMoney] = useState('') // 付款金額
     const [showQR, setShowQR] = useState(false)
     const [errorMessage, setError] = useState('')
@@ -231,14 +233,29 @@ const QRCodeSend2 = ({ history }, props) => {
         socket.on('endRoundResponse', (res) => {
             console.log(res)
             if (res == 'endRoundMessage' || res == 'error(no next round)') {
-                props.history.push(`/loading/${localStorage.getItem('roomNum')}`)
+                localStorage.removeItem(`tran${localStorage.getItem('round')}_money`)
+                localStorage.removeItem(`tran${localStorage.getItem('round')}_user`)
+                localStorage.removeItem('announcement')
+                history2.replace(`/loading/${localStorage.getItem('roomNum')}`)
             }
         })
 
-        // listen to sendsysmsg
-        socket.on('sys', function (res) {
-            console.log(res)
-            localStorage.setItem('announcement', res.message)
+        // listen to sysmsg
+        socket.on('sys', (res) => {
+            if (res != 'error') {
+                setAnnouncement({ roomAnnoucement: res.message })
+                localStorage.setItem('announcement', res.message)
+                socket.emit('reqRole', { roomNum: localStorage.getItem('roomNum'), ID: localStorage.getItem('id') })
+            }
+        })
+
+        // listen to close room
+        socket.on('get_out', (res) => {
+            socket.emit('leaveRoom', { roomNum: roomNum })
+            localStorage.removeItem(`tran${localStorage.getItem('round')}_money`)
+            localStorage.removeItem(`tran${localStorage.getItem('round')}_user`)
+            localStorage.removeItem('announcement')
+            history2.push('/user/lobby')
         })
     }, [])
 
@@ -765,15 +782,13 @@ const QRCodeSend2 = ({ history }, props) => {
 
     useEffect(() => {
         // 收款方監聽匯款要求(輸入id)
-        if (seller) {
-            socket.on('transCheckReq', function (data) {
-                console.log(data)
-                localStorage.setItem('payer_id', data.payer_id)
-                localStorage.setItem('tranMoney', data.transc_money)
-                setTransById(true)
-                setOpen1(true)
-            })
-        }
+        socket.on('transCheckReq', function (data) {
+            console.log(data)
+            localStorage.setItem('payer_id', data.payer_id)
+            localStorage.setItem('tranMoney', data.transc_money)
+            setTransById(true)
+            setOpen1(true)
+        })
     }, [])
 
     return (
