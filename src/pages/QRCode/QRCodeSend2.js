@@ -785,7 +785,7 @@ const QRCodeSend2 = ({ history }, props) => {
         // 收款方監聽匯款要求(輸入id)
 
         socket.on('transCheckReq', function (data) {
-            if (data.transc_money !== null) {
+            if (data.transc_money !== undefined) {
                 console.log(data)
                 localStorage.setItem('payer_id', data.payer_id)
                 localStorage.setItem('tranMoney', data.transc_money)
