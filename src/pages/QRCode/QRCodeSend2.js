@@ -648,7 +648,7 @@ const QRCodeSend2 = ({ history }, props) => {
     const handleScan = (data) => {
         setRoundNum(localStorage.getItem('roundNum'))
 
-        if (localStorage.getItem('haveTran') == true && data != null) {
+        if (localStorage.getItem('haveTran') == 'true' && data != null) {
             console.log('此回合已進行過交易')
             setError('此回合已進行過交易 \n無法再次交易')
             setOpen3(true)
@@ -696,7 +696,7 @@ const QRCodeSend2 = ({ history }, props) => {
             setError('賣方無法使用付款功能')
             setOpen3(true)
         } else {
-            if (localStorage.getItem('haveTran') == true) {
+            if (localStorage.getItem('haveTran') == 'true') {
                 console.log('此回合已進行過交易')
                 setError('此回合已進行過交易 \n無法再次交易')
                 setOpen3(true)
