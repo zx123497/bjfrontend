@@ -193,11 +193,11 @@ const Register2 = (props) => {
                     // 註冊成功直接登入
                     localStorage.removeItem('ID')
                     localStorage.removeItem('schoolname')
-                    params = new URLSearchParams()
-                    params.append('username', localStorage.getItem('username'))
-                    params.append('password', values.password)
+                    const params2 = new URLSearchParams()
+                    params2.append('username', localStorage.getItem('username'))
+                    params2.append('password', values.password)
 
-                    UserService.postLogin(params)
+                    UserService.postLogin(params2)
                         .then((res) => {
                             if (res.status == '200') {
                                 if (!res.data.user.isManager) {
