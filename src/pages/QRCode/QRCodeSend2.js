@@ -20,9 +20,9 @@ import ErrorIcon from '@material-ui/icons/Error'
 import FaceIcon from '@material-ui/icons/Face'
 // import { ScreenBrightness } from '@capacitor-community/screen-brightness'
 import ScreenBrightness from 'react-native-screen-brightness'
-// import QrReader from 'react-qr-reader' //v1
+import QrReader from 'react-qr-reader' //v1
 import BarcodeReader from 'react-barcode-reader' //v2 沒有用QQ
-import QrReader from 'react-weblineindia-qrcode-scanner' //v3
+// import QrReader from 'react-weblineindia-qrcode-scanner' //v3
 
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
@@ -118,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
         },
         '& .scan2': {
             // margin: 'auto',
-            marginLeft: '15vw',
+            // marginLeft: '15vw',
             marginTop: '10px',
             marginBottom: '150px',
         },
@@ -766,13 +766,14 @@ const QRCodeSend2 = ({ history }, props) => {
         // 收款方監聽匯款要求(輸入id)
         if (seller) {
             socket.on('transCheckReq', function (data) {
+                console.log(data)
                 localStorage.setItem('payer_id', data.payer_id)
                 localStorage.setItem('tranMoney', data.transc_money)
                 setTransById(true)
                 setOpen1(true)
             })
         }
-    })
+    }, [])
 
     return (
         <div className={classes.QRCodeSend2}>
@@ -1054,7 +1055,6 @@ const QRCodeSend2 = ({ history }, props) => {
                                 className={`${showQR ? 'Thide' : 'Tshow'}`}
                                 value={values.tranId}
                                 onChange={handleChange('tranId')}
-                                type="number"
                                 label={
                                     <Typography style={{ color: 'white' }} variant="headline" component="h3">
                                         轉出對象id
@@ -1168,15 +1168,15 @@ const QRCodeSend2 = ({ history }, props) => {
                     className="switch"
                     label="收款"
                 />
-                <h4>請掃描付款者 QRCode</h4>
+                <h4>請掃描付款者 QRCode!</h4>
                 {/* version 1 */}
-                {/* <QrReader
+                <QrReader
                     className="scan"
-                    delay={300}
+                    delay={200}
                     onError={handleError}
                     onScan={handleScan}
                     facingMode={'environment'}
-                /> */}
+                />
                 {/* version 2 */}
                 {/* <BarcodeReader className="scan" onError={handleError} onScan={handleScan} facingMode={'environment'} /> */}
                 {/* <BarcodeScannerComponent
@@ -1188,17 +1188,17 @@ const QRCodeSend2 = ({ history }, props) => {
                     }}
                 /> */}
                 {/* version 3 */}
-                <QrReader
+                {/* <QrReader
                     className="scan2"
                     // delay={this.state.delay}
                     style={{
-                        height: '80%',
-                        width: '80%',
+                        height: '500',
+                        width: '500',
                     }}
-                    facingMode="front"
+                    facingMode="environment"
                     onError={handleError}
                     onScan={handleScan}
-                />
+                /> */}
             </div>
         </div>
     )

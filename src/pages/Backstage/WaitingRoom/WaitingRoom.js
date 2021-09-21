@@ -112,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
         width: '70%',
         height: '45vh',
         overflowX: 'hidden',
-        overflowY: 'scroll',
+        overflowY: 'auto',
         marginTop: '2rem',
         boxSizing: 'border-box',
         padding: '2rem',
@@ -144,7 +144,7 @@ const Waitingroom = (props) => {
     const id = props.match.params.id
     const [pin, setPin] = useState()
 
-    const [userlist, setUserList] = useState(['Loading...'])
+    const [userlist, setUserList] = useState(['等待加入中...'])
 
     useEffect(() => {
         let param = new URLSearchParams()
@@ -159,7 +159,6 @@ const Waitingroom = (props) => {
     }, [])
 
     useEffect(() => {
-        
         const intervalID = setInterval(() => {
             const getRoomParam = new URLSearchParams()
             getRoomParam.append('roomNum', localStorage.getItem('roomNum'))
@@ -179,9 +178,8 @@ const Waitingroom = (props) => {
         }, 5000)
 
         return () => clearInterval(intervalID)
+    }, [props])
 
-    }, [ props ])
-    
     return (
         <div className={classes.waiting}>
             <h2 className="title">輸入PIN 碼加入遊戲</h2>
