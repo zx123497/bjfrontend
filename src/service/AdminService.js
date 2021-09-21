@@ -56,6 +56,14 @@ const AdminService = {
         } catch(error) {
             throw error
         }
+    },
+    postDownloadCSV: async(body) => {
+        try {
+            const response = await axios.post('/downloadCSV', body)
+            return response
+        } catch(error) {
+            throw error
+        }
     }
 }
 
