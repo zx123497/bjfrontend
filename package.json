@@ -33,7 +33,7 @@
         "pm2": "^5.1.0",
         "qs": "^6.10.1",
         "react": "^17.0.1",
-        "react-barcode-reader": "^0.0.2",
+        "react-barcode-reader": "0.0.2",
         "react-bootstrap": "^1.5.2",
         "react-dom": "^17.0.1",
         "react-google-charts": "^3.0.15",

@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3),
         paddingTop: theme.spacing(6),
         "& .PIN": {
+            marginTop: theme.spacing(3),
             "& .MuiTypography-root": {
                 textAlign: "center",
                 color: "white"
@@ -21,14 +22,20 @@ const useStyles = makeStyles((theme) => ({
             "& .MuiButton-text": {
                 float: "right"
             },
-            "& .MuiButton-label": {
-                backgroundColor: theme.palette.secondary.main,
+            "& .btn": {
                 color: "white",
                 paddingTop: theme.spacing(1),
                 paddingBottom: theme.spacing(1),
                 paddingLeft: theme.spacing(2),
                 paddingRight: theme.spacing(2),
-                borderRadius: theme.spacing(3)
+                borderRadius: theme.spacing(3),
+                marginLeft: theme.spacing(2)
+            },
+            "& .DownloadCSV": {
+                border: "1px solid white"
+            },
+            "& .endGame": {
+                backgroundColor: theme.palette.secondary.main
             }
         }
     },
@@ -65,14 +72,35 @@ const GameSum = (props) => {
                 if(res.data.data != null) {
                     setChartData({chartData: res.data.data});
                 }
-                else {
-                    alert("No Game Record")
-                    props.history.push("/user/lobby")
-                }
+                // else {
+                //     alert("No Game Record")
+                //     props.history.push("/user/lobby")
+                // }
             }
         })
     },[])
     
+    const downloadCSV = () => {
+        var downloadCSVparams = new URLSearchParams()
+        downloadCSVparams.append('roomNum', "<roomNum>")
+
+        AdminService.postDownloadCSV(downloadCSVparams).then((res) => {
+            if (res.status == "200") {
+                if (res.data.data != null) {
+                    console.log(res.data.data);
+                    const blob = new Blob(["\ufeff" + res.data.data], { type: "text/csv,charset=UTF-8" });
+                    const link = document.createElement("a")
+                    link.href = URL.createObjectURL(blob)
+                    link.download = roomNum + ".csv" 
+                    link.click()
+                    URL.revokeObjectURL(link.href)
+                }
+                else {
+                    alert(res.data.msg)
+                }
+            }
+        })
+    }
 
     return (
         <div className={classes.root}>
@@ -91,6 +119,9 @@ const GameSum = (props) => {
                         <Grid item xs={4}>
                             <Link className="endGame btn" component={Button} onClick={close} to="/">
                                 <Typography variant="subtitle2">結束遊戲</Typography>
+                            </Link>
+                            <Link className="DownloadCSV btn" component={Button} onClick={downloadCSV}>
+                                <Typography variant="subtitle2">下載成績表</Typography>
                             </Link>
                         </Grid>
                     </Grid>
