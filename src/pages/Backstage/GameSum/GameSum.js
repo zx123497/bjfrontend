@@ -82,7 +82,7 @@ const GameSum = (props) => {
     
     const downloadCSV = () => {
         var downloadCSVparams = new URLSearchParams()
-        downloadCSVparams.append('roomNum', "<roomNum>")
+        downloadCSVparams.append('roomNum', `${roomNum}`)
 
         AdminService.postDownloadCSV(downloadCSVparams).then((res) => {
             if (res.status == "200") {
