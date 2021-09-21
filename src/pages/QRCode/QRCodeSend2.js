@@ -783,6 +783,7 @@ const QRCodeSend2 = ({ history }, props) => {
 
     useEffect(() => {
         // 收款方監聽匯款要求(輸入id)
+        // if (seller) {
         socket.on('transCheckReq', function (data) {
             console.log(data)
             localStorage.setItem('payer_id', data.payer_id)
@@ -790,6 +791,7 @@ const QRCodeSend2 = ({ history }, props) => {
             setTransById(true)
             setOpen1(true)
         })
+        // }
     }, [])
 
     return (

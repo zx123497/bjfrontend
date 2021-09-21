@@ -247,20 +247,13 @@ const LogIn = (props) => {
                         localStorage.setItem('email', values.account)
                         localStorage.setItem('token', res.data.jwt)
                         localStorage.setItem('expireTime', res.data.expiresIn)
-                        document.cookie = 'username=values.account;max-age=2592000;';
-                        document.cookie = 'name=res.data.user.username;max-age=2592000;';
-                        document.cookie = 'id=res.data.user.ID;max-age=2592000;';
-                        document.cookie = 'email= values.account;max-age=2592000;';
-                        document.cookie = 'token=res.data.jwt;max-age=2592000;';
-                        document.cookie = 'expireTime=res.data.expiresIn;max-age=2592000;';
-                    }
+                       }
                 })
                 .catch((e) => {
                     setErrorMessage('登入失敗\n 請重新輸入帳號密碼')
                     setOpen(true)
                 })
         }
-        console.log(document.cookie)
         event.preventDefault()
     }
 
