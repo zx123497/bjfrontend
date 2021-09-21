@@ -318,9 +318,10 @@ const QRCodeSend2 = ({ history }, props) => {
         localStorage.removeItem('socketid')
         if (seller) {
             console.log('seller 取消交易1')
+
             if (transById) {
                 socket.emit('send_chek_point', {
-                    roomNum: localStorage.getItem('roundNum'),
+                    roomNum: localStorage.getItem('roomNum'),
                     round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                     money: localStorage.getItem('money'), // 這是不是要改
                     payer_id: localStorage.getItem('payer_id'),
@@ -350,7 +351,7 @@ const QRCodeSend2 = ({ history }, props) => {
         if (seller) {
             if (transById) {
                 socket.emit('send_chek_point', {
-                    roomNum: localStorage.getItem('roundNum'),
+                    roomNum: localStorage.getItem('roomNum'),
                     round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                     money: localStorage.getItem('money'), // 這是不是要改
                     payer_id: localStorage.getItem('payer_id'),
@@ -601,7 +602,7 @@ const QRCodeSend2 = ({ history }, props) => {
         if (seller) {
             if (transById) {
                 socket.emit('send_chek_point', {
-                    roomNum: localStorage.getItem('roundNum'),
+                    roomNum: localStorage.getItem('roomNum'),
                     round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                     money: localStorage.getItem('money'), // 這是不是要改
                     payer_id: localStorage.getItem('payer_id'),
@@ -1168,7 +1169,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     className="switch"
                     label="收款"
                 />
-                <h4>請掃描付款者 QRCode!</h4>
+                <h4>請掃描付款者 QRCode</h4>
                 {/* version 1 */}
                 <QrReader
                     className="scan"
@@ -1195,7 +1196,7 @@ const QRCodeSend2 = ({ history }, props) => {
                         height: '500',
                         width: '500',
                     }}
-                    facingMode="environment"
+                    facingMode="rear" //front
                     onError={handleError}
                     onScan={handleScan}
                 /> */}
