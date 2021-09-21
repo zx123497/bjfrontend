@@ -341,7 +341,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 socket.emit('send_chek_point', {
                     roomNum: localStorage.getItem('roomNum'),
                     round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
-                    money: localStorage.getItem('money'), // 這是不是要改
+                    money: localStorage.getItem('tranMoney'), // 這是不是要改
                     payer_id: localStorage.getItem('payer_id'),
                     receiver_id: localStorage.getItem('id'),
                     chek_point: '0',
@@ -371,7 +371,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 socket.emit('send_chek_point', {
                     roomNum: localStorage.getItem('roomNum'),
                     round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
-                    money: localStorage.getItem('money'), // 這是不是要改
+                    money: localStorage.getItem('tranMoney'),
                     payer_id: localStorage.getItem('payer_id'),
                     receiver_id: localStorage.getItem('id'),
                     chek_point: '1',
@@ -622,7 +622,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 socket.emit('send_chek_point', {
                     roomNum: localStorage.getItem('roomNum'),
                     round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
-                    money: localStorage.getItem('money'), // 這是不是要改
+                    money: localStorage.getItem('tranMoney'),
                     payer_id: localStorage.getItem('payer_id'),
                     receiver_id: localStorage.getItem('id'),
                     chek_point: '0',
