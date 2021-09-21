@@ -1,24 +1,36 @@
 {
   "files": {
+<<<<<<< HEAD
     "main.css": "/static/css/main.d1d37676.chunk.css",
     "main.js": "/static/js/main.7206cf6b.chunk.js",
     "runtime-main.js": "/static/js/runtime-main.a28372db.js",
+=======
+    "main.css": "/static/css/main.84eac51d.chunk.css",
+    "main.js": "/static/js/main.996f1e46.chunk.js",
+    "runtime-main.js": "/static/js/runtime-main.f9eb01e3.js",
+>>>>>>> bf546e0c2c64b266bc9b1a422b04c112b5071ccc
     "static/css/2.5958f1ec.chunk.css": "/static/css/2.5958f1ec.chunk.css",
-    "static/js/2.1ab32fd0.chunk.js": "/static/js/2.1ab32fd0.chunk.js",
-    "static/js/3.71208724.chunk.js": "/static/js/3.71208724.chunk.js",
+    "static/js/2.051edd08.chunk.js": "/static/js/2.051edd08.chunk.js",
+    "static/js/3.f2bd3b2d.chunk.js": "/static/js/3.f2bd3b2d.chunk.js",
     "index.html": "/index.html",
-    "static/js/2.1ab32fd0.chunk.js.LICENSE.txt": "/static/js/2.1ab32fd0.chunk.js.LICENSE.txt",
-    "static/media/F60DB5A60B3334BAE1AE87D845C2698E.cc882d26.txt": "/static/media/F60DB5A60B3334BAE1AE87D845C2698E.cc882d26.txt",
+    "static/js/2.051edd08.chunk.js.LICENSE.txt": "/static/js/2.051edd08.chunk.js.LICENSE.txt",
+    "static/media/F60DB5A60B3334BAE1AE87D845C2698E.1da8487e.txt": "/static/media/F60DB5A60B3334BAE1AE87D845C2698E.1da8487e.txt",
     "static/media/LOGO.1c5aadb9.png": "/static/media/LOGO.1c5aadb9.png",
     "static/media/admin_lobby.9b2805bf.svg": "/static/media/admin_lobby.9b2805bf.svg",
     "static/media/cat.126a7207.jpg": "/static/media/cat.126a7207.jpg",
     "static/media/wait.e3086898.svg": "/static/media/wait.e3086898.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.a28372db.js",
+    "static/js/runtime-main.f9eb01e3.js",
     "static/css/2.5958f1ec.chunk.css",
+<<<<<<< HEAD
     "static/js/2.1ab32fd0.chunk.js",
     "static/css/main.d1d37676.chunk.css",
     "static/js/main.7206cf6b.chunk.js"
+=======
+    "static/js/2.051edd08.chunk.js",
+    "static/css/main.84eac51d.chunk.css",
+    "static/js/main.996f1e46.chunk.js"
+>>>>>>> bf546e0c2c64b266bc9b1a422b04c112b5071ccc
   ]
 }
