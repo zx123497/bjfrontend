@@ -194,7 +194,7 @@ const Register2 = (props) => {
                     localStorage.removeItem('ID')
                     localStorage.removeItem('schoolname')
                     const params2 = new URLSearchParams()
-                    params2.append('username', localStorage.getItem('username'))
+                    params2.append('username', values.email)
                     params2.append('password', values.password)
 
                     UserService.postLogin(params2)
