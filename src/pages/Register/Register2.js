@@ -19,6 +19,7 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import WarningIcon from '@material-ui/icons/Warning'
 import ErrorIcon from '@material-ui/icons/Error'
+import UserService from '../../service/UserService'
 
 const useStyles = makeStyles((theme) => ({
     Register2: {
@@ -192,7 +193,7 @@ const Register2 = (props) => {
                 }
             })
             localStorage.clear()
-            history.push('./login')
+            // history.push('./login')
         }
         event.preventDefault()
     }
