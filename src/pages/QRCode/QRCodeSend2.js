@@ -1055,7 +1055,6 @@ const QRCodeSend2 = ({ history }, props) => {
                                 className={`${showQR ? 'Thide' : 'Tshow'}`}
                                 value={values.tranId}
                                 onChange={handleChange('tranId')}
-                                type="number"
                                 label={
                                     <Typography style={{ color: 'white' }} variant="headline" component="h3">
                                         轉出對象id
@@ -1169,7 +1168,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     className="switch"
                     label="收款"
                 />
-                <h4>請掃描付款者 QRCode</h4>
+                <h4>請掃描付款者 QRCode!</h4>
                 {/* version 1 */}
                 <QrReader
                     className="scan"
