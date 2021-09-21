@@ -194,7 +194,7 @@ const QRCodeSend2 = ({ history }, props) => {
        // 若沒刪掉is_socketid user就不能再交易了
        */
 
-        if (localStorage.getItem('is_socketid') == null && localStorage.getItem('haveTran') == false) {
+        if (localStorage.getItem('is_socketid') == null && localStorage.getItem('haveTran') == null) {
             socket.emit('setSocket', {
                 roomNum: localStorage.getItem('roomNum'),
                 user_id: localStorage.getItem('id'),
@@ -696,7 +696,11 @@ const QRCodeSend2 = ({ history }, props) => {
             setError('賣方無法使用付款功能')
             setOpen3(true)
         } else {
-            if (money <= 0) {
+            if (localStorage.getItem('haveTran') == true) {
+                console.log('此回合已進行過交易')
+                setError('此回合已進行過交易 \n無法再次交易')
+                setOpen3(true)
+            } else if (money <= 0) {
                 setError('付款金額需大於 0 元')
                 setOpen3(true)
             } else if (localStorage.getItem('money') === null) {
