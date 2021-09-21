@@ -221,7 +221,7 @@ const Register2 = (props) => {
                         })
                 }
             })
-            localStorage.clear()
+            // localStorage.clear()
             // history.push('./login')
         }
         event.preventDefault()
