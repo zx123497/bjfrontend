@@ -207,10 +207,10 @@ const Register2 = (props) => {
                                     localStorage.setItem('isAdmin', '1')
                                     history.push('/admin/lobby')
                                 }
-                                localStorage.setItem('username', values.account)
+                                localStorage.setItem('username', values.email)
                                 localStorage.setItem('name', res.data.user.username)
                                 localStorage.setItem('id', res.data.user.ID)
-                                localStorage.setItem('email', values.account)
+                                localStorage.setItem('email', values.email)
                                 localStorage.setItem('token', res.data.jwt)
                                 localStorage.setItem('expireTime', res.data.expiresIn)
                             }
