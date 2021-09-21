@@ -189,6 +189,36 @@ const Register2 = (props) => {
                     // setError("註冊成功!")
                     // setOpen(true)
                     alert('註冊成功!')
+
+                    // 註冊成功直接登入
+                    localStorage.removeItem('ID')
+                    localStorage.removeItem('schoolname')
+                    params = new URLSearchParams()
+                    params.append('username', localStorage.getItem('username'))
+                    params.append('password', values.password)
+
+                    UserService.postLogin(params)
+                        .then((res) => {
+                            if (res.status == '200') {
+                                if (!res.data.user.isManager) {
+                                    localStorage.setItem('isAdmin', '0')
+                                    history.push('/user/lobby')
+                                } else {
+                                    localStorage.setItem('isAdmin', '1')
+                                    history.push('/admin/lobby')
+                                }
+                                localStorage.setItem('username', values.account)
+                                localStorage.setItem('name', res.data.user.username)
+                                localStorage.setItem('id', res.data.user.ID)
+                                localStorage.setItem('email', values.account)
+                                localStorage.setItem('token', res.data.jwt)
+                                localStorage.setItem('expireTime', res.data.expiresIn)
+                            }
+                        })
+                        .catch((e) => {
+                            setErrorMessage('登入失敗\n 請重新輸入帳號密碼')
+                            setOpen(true)
+                        })
                 }
             })
             localStorage.clear()
