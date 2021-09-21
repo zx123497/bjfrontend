@@ -493,30 +493,30 @@ const QRCodeSend2 = ({ history }, props) => {
         // if (wait) {
         if (!seller) {
             // 轉帳方式: id
-            // socket.on('payer_transcResp', function (data) {
-            //     if (data == '1') {
-            //         setTrans(true) // 設定每局交易過後便無法再進行第二次交易
-            //         setError('恭喜您完成交易')
-            //         setOpen3(true)
+            socket.on('payer_transcResp', function (data) {
+                if (data == '1') {
+                    setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                    setError('恭喜您完成交易')
+                    setOpen3(true)
 
-            //         // 設定回合交易紀錄
-            //         localStorage.setItem(
-            //             'tran' + localStorage.getItem('roundNum') + '_money',
-            //             localStorage.getItem('tranMoney')
-            //         )
-            //         localStorage.setItem(
-            //             'tran' + localStorage.getItem('roundNum') + '_user',
-            //             localStorage.getItem('tranUser')
-            //         )
+                    // 設定回合交易紀錄
+                    localStorage.setItem(
+                        'tran' + localStorage.getItem('roundNum') + '_money',
+                        localStorage.getItem('tranMoney')
+                    )
+                    localStorage.setItem(
+                        'tran' + localStorage.getItem('roundNum') + '_user',
+                        localStorage.getItem('tranUser')
+                    )
 
-            //         localStorage.removeItem('is_socketid')
-            //         localStorage.removeItem('socketid')
-            //     } else if (data == '0') {
-            //         setError('交易失敗\n 付款方無回應')
-            //         setOpen3(true)
-            //     }
-            //     setTransById(false)
-            // })
+                    localStorage.removeItem('is_socketid')
+                    localStorage.removeItem('socketid')
+                } else if (data == '0') {
+                    setError('交易失敗\n 付款方無回應')
+                    setOpen3(true)
+                }
+                setTransById(false)
+            })
 
             // 轉帳方式: qrcode
             socket.on('getRecordRequest', function (data) {
