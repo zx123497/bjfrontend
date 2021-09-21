@@ -72,10 +72,10 @@ const GameSum = (props) => {
                 if(res.data.data != null) {
                     setChartData({chartData: res.data.data});
                 }
-                // else {
-                //     alert("No Game Record")
-                //     props.history.push("/user/lobby")
-                // }
+                else {
+                    alert("No Game Record")
+                    props.history.push("/user/lobby")
+                }
             }
         })
     },[])
