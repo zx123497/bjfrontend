@@ -242,6 +242,7 @@ const QRCodeSend2 = ({ history }, props) => {
 
         // listen to sysmsg
         socket.on('sys', (res) => {
+            console.log(res)
             if (res != 'error') {
                 setAnnouncement({ roomAnnoucement: res.message })
                 localStorage.setItem('announcement', res.message)
@@ -251,6 +252,7 @@ const QRCodeSend2 = ({ history }, props) => {
 
         // listen to close room
         socket.on('get_out', (res) => {
+            console.log('get_out')
             socket.emit('leaveRoom', { roomNum: roomNum })
             localStorage.removeItem(`tran${localStorage.getItem('round')}_money`)
             localStorage.removeItem(`tran${localStorage.getItem('round')}_user`)
