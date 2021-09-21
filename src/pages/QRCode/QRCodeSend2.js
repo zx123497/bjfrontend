@@ -8,7 +8,6 @@ import WarningIcon from '@material-ui/icons/Warning'
 import BackPage from '../../components/BackPage/BackPage'
 import Back from '../../components/BackPage/Back'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
-import QrReader from 'react-qr-reader'
 import QRCode from 'react-qr-code'
 import { socket } from '../../service/socket'
 import io from 'socket.io-client'
@@ -19,7 +18,11 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import ErrorIcon from '@material-ui/icons/Error'
 import FaceIcon from '@material-ui/icons/Face'
-import { ScreenBrightness } from '@capacitor-community/screen-brightness'
+// import { ScreenBrightness } from '@capacitor-community/screen-brightness'
+import ScreenBrightness from 'react-native-screen-brightness'
+// import QrReader from 'react-qr-reader' //v1
+import BarcodeReader from 'react-barcode-reader' //v2 沒有用QQ
+import QrReader from 'react-weblineindia-qrcode-scanner' //v3
 
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
@@ -74,6 +77,22 @@ const useStyles = makeStyles((theme) => ({
             margin: 'auto',
             marginLeft: '40%',
         },
+        '@media (max-width: 400px)': {
+            '& .QRshow': {
+                width: '40%',
+            },
+            '& .QRhide': {
+                width: '40%',
+            },
+        },
+        '@media (min-width: 401px)': {
+            '& .QRshow': {
+                width: '21%',
+            },
+            '& .QRhide': {
+                width: '21%',
+            },
+        },
         '& .QRshow': {
             margin: 'auto',
             marginBottom: '25px',
@@ -94,6 +113,12 @@ const useStyles = makeStyles((theme) => ({
         },
         '& .scan': {
             margin: 'auto',
+            marginTop: '10px',
+            marginBottom: '150px',
+        },
+        '& .scan2': {
+            // margin: 'auto',
+            // marginLeft: '15vw',
             marginTop: '10px',
             marginBottom: '150px',
         },
@@ -140,6 +165,7 @@ const QRCodeSend2 = ({ history }, props) => {
     const [roundNum, setRoundNum] = React.useState('0')
     const [receiver_id, setReceiver_id] = React.useState('')
     const [wait, setWait] = React.useState(false)
+    const [transById, setTransById] = React.useState(false)
 
     const handleClose1 = () => {
         setOpen1(false)
@@ -292,6 +318,16 @@ const QRCodeSend2 = ({ history }, props) => {
         localStorage.removeItem('socketid')
         if (seller) {
             console.log('seller 取消交易1')
+            if (transById) {
+                socket.emit('send_chek_point', {
+                    roomNum: localStorage.getItem('roundNum'),
+                    round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
+                    money: localStorage.getItem('money'), // 這是不是要改
+                    payer_id: localStorage.getItem('payer_id'),
+                    receiver_id: localStorage.getItem('id'),
+                    chek_point: '0',
+                })
+            }
         } else {
             console.log('buyer 取消交易1')
             socket.emit('get_chek_point', {
@@ -312,15 +348,26 @@ const QRCodeSend2 = ({ history }, props) => {
 
         // 收款方確認要交易
         if (seller) {
-            socket.emit('checkQRcode', {
-                roomNum: localStorage.getItem('roomNum'),
-                payer_id: localStorage.getItem('tranUser'),
-                receiver_id: localStorage.getItem('id'),
-            })
+            if (transById) {
+                socket.emit('send_chek_point', {
+                    roomNum: localStorage.getItem('roundNum'),
+                    round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
+                    money: localStorage.getItem('money'), // 這是不是要改
+                    payer_id: localStorage.getItem('payer_id'),
+                    receiver_id: localStorage.getItem('id'),
+                    chek_point: '1',
+                })
+            } else {
+                socket.emit('checkQRcode', {
+                    roomNum: localStorage.getItem('roomNum'),
+                    payer_id: localStorage.getItem('tranUser'),
+                    receiver_id: localStorage.getItem('id'),
+                })
+            }
 
+            setWait(true)
             // 收款方等待接收 付款方是否確認交易之 socket
             console.log('seller確認交易 等待buyer付款')
-            setWait(true)
         }
 
         if (!seller) {
@@ -336,6 +383,7 @@ const QRCodeSend2 = ({ history }, props) => {
 
             setWait(true)
 
+            // 轉帳方式: qrcode
             socket.on('getRecordRequest', function (data) {
                 console.log('getRecordRequest1: ' + data)
 
@@ -365,6 +413,35 @@ const QRCodeSend2 = ({ history }, props) => {
 
         // 賣方
         if (seller) {
+            // 轉帳方式: id
+            socket.on('receiver_transcResp', function (data) {
+                if (data == '1') {
+                    setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                    setError('恭喜您完成交易')
+                    setOpen3(true)
+
+                    // 設定回合交易紀錄
+                    localStorage.setItem(
+                        'tran' + localStorage.getItem('roundNum') + '_money',
+                        localStorage.getItem('tranMoney')
+                    )
+                    localStorage.setItem(
+                        'tran' + localStorage.getItem('roundNum') + '_user',
+                        localStorage.getItem('tranUser')
+                    )
+
+                    localStorage.removeItem('is_socketid')
+                    localStorage.removeItem('socketid')
+                } else if (data == '0') {
+                    localStorage.removeItem('is_socketid')
+                    localStorage.removeItem('socketid')
+                    setError('交易失敗\n 付款方不想付款')
+                    setOpen3(true)
+                }
+                setTransById(false)
+            })
+
+            // 轉帳方式: qrcode
             socket.on('transcResp', function (data) {
                 if (data == '1') {
                     setTrans(true) // 設定每局交易過後便無法再進行第二次交易
@@ -388,11 +465,6 @@ const QRCodeSend2 = ({ history }, props) => {
                     localStorage.removeItem('socketid')
                     setError('交易失敗\n 付款方不想付款')
                     setOpen3(true)
-                } else {
-                    setError('交易失敗\n 付款方無回應')
-                    setOpen3(true)
-                    localStorage.removeItem('is_socketid')
-                    localStorage.removeItem('socketid')
                 }
             })
         }
@@ -401,6 +473,33 @@ const QRCodeSend2 = ({ history }, props) => {
     useEffect(() => {
         // if (wait) {
         if (!seller) {
+            // 轉帳方式: id
+            // socket.on('payer_transcResp', function (data) {
+            //     if (data == '1') {
+            //         setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+            //         setError('恭喜您完成交易')
+            //         setOpen3(true)
+
+            //         // 設定回合交易紀錄
+            //         localStorage.setItem(
+            //             'tran' + localStorage.getItem('roundNum') + '_money',
+            //             localStorage.getItem('tranMoney')
+            //         )
+            //         localStorage.setItem(
+            //             'tran' + localStorage.getItem('roundNum') + '_user',
+            //             localStorage.getItem('tranUser')
+            //         )
+
+            //         localStorage.removeItem('is_socketid')
+            //         localStorage.removeItem('socketid')
+            //     } else if (data == '0') {
+            //         setError('交易失敗\n 付款方無回應')
+            //         setOpen3(true)
+            //     }
+            //     setTransById(false)
+            // })
+
+            // 轉帳方式: qrcode
             socket.on('getRecordRequest', function (data) {
                 console.log('getRecordRequest1: ' + data)
 
@@ -429,6 +528,35 @@ const QRCodeSend2 = ({ history }, props) => {
                 }
             })
         } else {
+            // 轉帳方式: id
+            socket.on('receiver_transcResp', function (data) {
+                if (data == '1') {
+                    setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                    setError('恭喜您完成交易')
+                    setOpen3(true)
+
+                    // 設定回合交易紀錄
+                    localStorage.setItem(
+                        'tran' + localStorage.getItem('roundNum') + '_money',
+                        localStorage.getItem('tranMoney')
+                    )
+                    localStorage.setItem(
+                        'tran' + localStorage.getItem('roundNum') + '_user',
+                        localStorage.getItem('tranUser')
+                    )
+
+                    localStorage.removeItem('is_socketid')
+                    localStorage.removeItem('socketid')
+                } else if (data == '0') {
+                    localStorage.removeItem('is_socketid')
+                    localStorage.removeItem('socketid')
+                    setError('交易失敗\n 付款方不想付款')
+                    setOpen3(true)
+                }
+                setTransById(false)
+            })
+
+            // 轉帳方式: qrcode
             socket.on('transcResp', function (data) {
                 if (data == '1') {
                     setTrans(true) // 設定每局交易過後便無法再進行第二次交易
@@ -470,8 +598,19 @@ const QRCodeSend2 = ({ history }, props) => {
         localStorage.removeItem('is_socketid')
         localStorage.removeItem('socketid')
 
-        if (seller) console.log('seller 取消交易2')
-        else {
+        if (seller) {
+            if (transById) {
+                socket.emit('send_chek_point', {
+                    roomNum: localStorage.getItem('roundNum'),
+                    round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
+                    money: localStorage.getItem('money'), // 這是不是要改
+                    payer_id: localStorage.getItem('payer_id'),
+                    receiver_id: localStorage.getItem('id'),
+                    chek_point: '0',
+                })
+            }
+            console.log('seller 取消交易2')
+        } else {
             console.log('buyer 取消交易2')
             socket.emit('get_chek_point', {
                 roomNum: localStorage.getItem('roomNum'),
@@ -526,37 +665,51 @@ const QRCodeSend2 = ({ history }, props) => {
         setValues({ ...values, [prop]: event.target.value })
     }
 
+    // const ScreenBrightness = require('react-native-device-brightness')
+
     const handleQRShow = () => {
+        // ScreenBrightness.setBrightness(0.6) // between 0 and 1
+        // ScreenBrightness.getBrightness().then((brightness) => {
+        //     console.log('brightness', brightness)
+        // })
+
         if (seller) {
             setError('賣方無法使用付款功能')
             setOpen3(true)
         } else {
-            if (values.tranId !== '') {
-                // 付款方傳送匯款要求
-                socket.emit('send_transc_req', {
-                    roomNum: localStorage.getItem('roundNum'),
-                    payer_id: localStorage.getItem('id'),
-                    receiver_id: values.tranId,
-                    transc_money: money,
-                })
+            if (money <= 0) {
+                setError('付款金額需大於 0 元')
+                setOpen3(true)
+            } else if (localStorage.getItem('money') === null) {
+                setError('系統錯誤 請重整頁面')
+                setOpen3(true)
+            } else if (parseInt(localStorage.getItem('userMoney'), 10) > parseInt(localStorage.getItem('money'), 10)) {
+                console.log(
+                    parseInt(localStorage.getItem('userMoney'), 10) +
+                        ' > ' +
+                        parseInt(localStorage.getItem('money'), 10)
+                )
+                setError('超出您的餘額')
+                setOpen3(true)
             } else {
-                if (money <= 0) {
-                    setError('付款金額需大於 0 元')
-                    setOpen3(true)
-                } else if (localStorage.getItem('money') === null) {
-                    setError('系統錯誤 請重整頁面')
-                    setOpen3(true)
-                } else if (
-                    parseInt(localStorage.getItem('userMoney'), 10) > parseInt(localStorage.getItem('money'), 10)
-                ) {
-                    console.log(
-                        parseInt(localStorage.getItem('userMoney'), 10) +
-                            ' > ' +
-                            parseInt(localStorage.getItem('money'), 10)
-                    )
-                    setError('超出您的餘額')
+                localStorage.setItem('tranMoney', money)
+
+                // 匯款方式:輸入id
+                if (values.tranId !== '') {
+                    // 付款方傳送匯款要求
+                    socket.emit('send_transc_req', {
+                        roomNum: localStorage.getItem('roundNum'),
+                        payer_id: localStorage.getItem('id'),
+                        receiver_id: values.tranId,
+                        transc_money: money,
+                    })
+
+                    // socket.on 交易對象id不存在
+                    setError('等待收款方接受交易 請勿離開本畫面')
+                    setTransById(true)
                     setOpen3(true)
                 } else {
+                    // 匯款方式:掃QRcode
                     localStorage.setItem('tranMoney', money)
                     setShowQR(true)
                 }
@@ -564,19 +717,63 @@ const QRCodeSend2 = ({ history }, props) => {
         }
 
         if (!seller) {
-            socket.on('transCheckReq', function (data) {
-                setReceiver_id(data)
-                console.log('receiver' + data)
-                localStorage.setItem('receiver_id', data)
-                localStorage.setItem('tranUser', data)
+            // 轉帳方式: id
+            if (transById) {
+                socket.on('payer_transcResp', function (data) {
+                    if (data == '1') {
+                        setOpen1(true)
+                        setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                        setError('恭喜您完成交易')
+                        setOpen3(true)
 
-                setOpen1(true)
-            })
+                        // 設定回合交易紀錄
+                        localStorage.setItem(
+                            'tran' + localStorage.getItem('roundNum') + '_money',
+                            localStorage.getItem('tranMoney')
+                        )
+                        localStorage.setItem(
+                            'tran' + localStorage.getItem('roundNum') + '_user',
+                            localStorage.getItem('tranUser')
+                        )
+
+                        localStorage.removeItem('is_socketid')
+                        localStorage.removeItem('socketid')
+                    } else if (data == '0') {
+                        setError('交易失敗\n 付款方無回應')
+                        setOpen3(true)
+                    }
+                    setTransById(false)
+                })
+            } else {
+                // 轉帳方式: qrcode
+                socket.on('transCheckReq', function (data) {
+                    setReceiver_id(data)
+                    console.log('receiver' + data)
+                    localStorage.setItem('receiver_id', data)
+                    localStorage.setItem('tranUser', data)
+
+                    setOpen1(true)
+                })
+            }
         }
     }
+
     const handleQRHide = () => {
         setShowQR(false)
     }
+
+    useEffect(() => {
+        // 收款方監聽匯款要求(輸入id)
+        if (seller) {
+            socket.on('transCheckReq', function (data) {
+                console.log(data)
+                localStorage.setItem('payer_id', data.payer_id)
+                localStorage.setItem('tranMoney', data.transc_money)
+                setTransById(true)
+                setOpen1(true)
+            })
+        }
+    }, [])
 
     return (
         <div className={classes.QRCodeSend2}>
@@ -858,7 +1055,6 @@ const QRCodeSend2 = ({ history }, props) => {
                                 className={`${showQR ? 'Thide' : 'Tshow'}`}
                                 value={values.tranId}
                                 onChange={handleChange('tranId')}
-                                type="number"
                                 label={
                                     <Typography style={{ color: 'white' }} variant="headline" component="h3">
                                         轉出對象id
@@ -922,7 +1118,7 @@ const QRCodeSend2 = ({ history }, props) => {
                         <QRCode
                             className={`${showQR ? 'QRshow' : 'QRhide'}`}
                             level="H"
-                            size={250}
+                            size={220}
                             value={'teacher=0/' + 'money=' + money + '/userId=' + localStorage.getItem('id')}
                         />
                     </div>
@@ -930,9 +1126,8 @@ const QRCodeSend2 = ({ history }, props) => {
                         component={Button}
                         style={{
                             margin: 'auto',
-                            borderRadius: '20px',
                             boxShadow: 'none',
-                            width: '20%',
+                            borderRadius: '20px',
                             backgroundColor: '#FFFFFF',
                             color: '#555',
                         }}
@@ -947,7 +1142,6 @@ const QRCodeSend2 = ({ history }, props) => {
                             margin: 'auto',
                             borderRadius: '20px',
                             boxShadow: 'none',
-                            width: '20%',
                             backgroundColor: '#FFFFFF',
                             color: '#555',
                         }}
@@ -974,14 +1168,37 @@ const QRCodeSend2 = ({ history }, props) => {
                     className="switch"
                     label="收款"
                 />
-                <h4>請掃描付款者 QRCode</h4>
+                <h4>請掃描付款者 QRCode!</h4>
+                {/* version 1 */}
                 <QrReader
                     className="scan"
-                    delay={300}
+                    delay={200}
                     onError={handleError}
                     onScan={handleScan}
                     facingMode={'environment'}
                 />
+                {/* version 2 */}
+                {/* <BarcodeReader className="scan" onError={handleError} onScan={handleScan} facingMode={'environment'} /> */}
+                {/* <BarcodeScannerComponent
+                    width={500}
+                    height={500}
+                    onUpdate={(err, result) => {
+                        if (result) setData(result.text)
+                        else setData('Not Found')
+                    }}
+                /> */}
+                {/* version 3 */}
+                {/* <QrReader
+                    className="scan2"
+                    // delay={this.state.delay}
+                    style={{
+                        height: '500',
+                        width: '500',
+                    }}
+                    facingMode="environment"
+                    onError={handleError}
+                    onScan={handleScan}
+                /> */}
             </div>
         </div>
     )
