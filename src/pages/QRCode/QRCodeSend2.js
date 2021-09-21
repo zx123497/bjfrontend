@@ -1196,7 +1196,7 @@ const QRCodeSend2 = ({ history }, props) => {
                         height: '500',
                         width: '500',
                     }}
-                    facingMode="rear"
+                    facingMode="environment"
                     onError={handleError}
                     onScan={handleScan}
                 />
