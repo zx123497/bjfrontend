@@ -163,7 +163,6 @@ const QRCodeSend2 = ({ history }, props) => {
     const [open1, setOpen1] = React.useState(false)
     const [open2, setOpen2] = React.useState(false)
     const [open3, setOpen3] = React.useState(false)
-    const [trans, setTrans] = React.useState(false)
     const [roundNum, setRoundNum] = React.useState('0')
     const [receiver_id, setReceiver_id] = React.useState('')
     const [wait, setWait] = React.useState(false)
@@ -175,7 +174,7 @@ const QRCodeSend2 = ({ history }, props) => {
 
     // 進入新回合時 皆設為沒交易過
     useEffect(() => {
-        setTrans(false)
+        localStorage.setItem('haveTran', false)
         localStorage.removeItem('is_socketid')
         localStorage.removeItem('socketid')
     }, [localStorage.getItem('roundNum')])
@@ -195,7 +194,7 @@ const QRCodeSend2 = ({ history }, props) => {
        // 若沒刪掉is_socketid user就不能再交易了
        */
 
-        if (localStorage.getItem('is_socketid') == null && !trans) {
+        if (localStorage.getItem('is_socketid') == null && localStorage.getItem('haveTran') == false) {
             socket.emit('setSocket', {
                 roomNum: localStorage.getItem('roomNum'),
                 user_id: localStorage.getItem('id'),
@@ -407,7 +406,8 @@ const QRCodeSend2 = ({ history }, props) => {
                 console.log('getRecordRequest1: ' + data)
 
                 if (data) {
-                    setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                    // 設定每局交易過後便無法再進行第二次交易
+                    localStorage.setItem('haveTran', true)
                     setError('恭喜您完成交易')
                     setOpen3(true)
 
@@ -435,7 +435,7 @@ const QRCodeSend2 = ({ history }, props) => {
             // 轉帳方式: id
             socket.on('receiver_transcResp', function (data) {
                 if (data == '1') {
-                    setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                    localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
                     setOpen3(true)
 
@@ -463,7 +463,7 @@ const QRCodeSend2 = ({ history }, props) => {
             // 轉帳方式: qrcode
             socket.on('transcResp', function (data) {
                 if (data == '1') {
-                    setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                    localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
                     setOpen3(true)
 
@@ -495,7 +495,7 @@ const QRCodeSend2 = ({ history }, props) => {
             // 轉帳方式: id
             socket.on('payer_transcResp', function (data) {
                 if (data == '1') {
-                    setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                    localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
                     setOpen3(true)
 
@@ -523,7 +523,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 console.log('getRecordRequest1: ' + data)
 
                 if (data) {
-                    setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                    localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
                     setOpen3(true)
 
@@ -550,7 +550,7 @@ const QRCodeSend2 = ({ history }, props) => {
             // 轉帳方式: id
             socket.on('receiver_transcResp', function (data) {
                 if (data == '1') {
-                    setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                    localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
                     setOpen3(true)
 
@@ -578,7 +578,7 @@ const QRCodeSend2 = ({ history }, props) => {
             // 轉帳方式: qrcode
             socket.on('transcResp', function (data) {
                 if (data == '1') {
-                    setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                    localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
                     setOpen3(true)
 
@@ -648,7 +648,7 @@ const QRCodeSend2 = ({ history }, props) => {
     const handleScan = (data) => {
         setRoundNum(localStorage.getItem('roundNum'))
 
-        if (trans && data != null) {
+        if (localStorage.getItem('haveTran') == true && data != null) {
             console.log('此回合已進行過交易')
             setError('此回合已進行過交易 \n無法再次交易')
             setOpen3(true)
@@ -741,7 +741,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 socket.on('payer_transcResp', function (data) {
                     if (data == '1') {
                         setOpen1(true)
-                        setTrans(true) // 設定每局交易過後便無法再進行第二次交易
+                        localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                         setError('恭喜您完成交易')
                         setOpen3(true)
 
@@ -783,7 +783,6 @@ const QRCodeSend2 = ({ history }, props) => {
 
     useEffect(() => {
         // 收款方監聽匯款要求(輸入id)
-
         socket.on('transCheckReq', function (data) {
             if (data.transc_money !== undefined) {
                 console.log(data)
