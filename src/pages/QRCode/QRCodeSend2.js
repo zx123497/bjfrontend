@@ -194,7 +194,7 @@ const QRCodeSend2 = ({ history }, props) => {
        // 若沒刪掉is_socketid user就不能再交易了
        */
 
-        if (localStorage.getItem('is_socketid') == null && localStorage.getItem('haveTran') == false) {
+        if (localStorage.getItem('is_socketid') == null && localStorage.getItem('haveTran') == 'false') {
             socket.emit('setSocket', {
                 roomNum: localStorage.getItem('roomNum'),
                 user_id: localStorage.getItem('id'),
