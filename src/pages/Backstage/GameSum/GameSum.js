@@ -61,6 +61,10 @@ const GameSum = (props) => {
         var closeparams = new URLSearchParams()
         closeparams.append('roomNum', roomNum)
         AdminService.postCloseRoom(closeparams)
+
+        var saveparams = new URLSearchParams()
+        saveparams.append('roomNum', roomNum)
+        AdminService.postSaveRecord(saveparams)
     }
 
     useEffect(() => {
