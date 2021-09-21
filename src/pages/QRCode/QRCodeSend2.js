@@ -698,7 +698,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 if (values.tranId !== '') {
                     // 付款方傳送匯款要求
                     socket.emit('send_transc_req', {
-                        roomNum: localStorage.getItem('roundNum'),
+                        roomNum: localStorage.getItem('roomNum'),
                         payer_id: localStorage.getItem('id'),
                         receiver_id: values.tranId,
                         transc_money: money,
