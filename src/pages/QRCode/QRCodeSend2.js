@@ -1168,7 +1168,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     className="switch"
                     label="收款"
                 />
-                <h4>請掃描付款者 QRCode!!</h4>
+                <h4>請掃描付款者 QRCode!</h4>
                 {/* version 1 */}
                 <QrReader
                     className="scan"
