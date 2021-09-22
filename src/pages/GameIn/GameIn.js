@@ -89,6 +89,7 @@ const GameIn = (props) => {
             alert('請輸入PIN CODE')
         } else {
             socket.on('enterRoom_resp', (socketRes) => {
+                console.log(socketRes)
                 const getroomparmas = new URLSearchParams()
                     getroomparmas.append('roomNum', values.pincode)
                     AdminService.postGetRoom(getroomparmas).then((axiosRes) => {

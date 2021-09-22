@@ -56,13 +56,13 @@ const PersonalTransaction = (props) => {
         if(localStorage.getItem(`tran${props.data.room.round}_money`)) {
             if(props.data.player.role == "seller") {
                 setTrans({
-                    score: localStorage.getItem(`tran${props.data.room.round}_money`) - props.data.player.price,
+                    score: props.data.player.score,
                     transPartner: localStorage.getItem(`tran${props.data.room.round}_user`),
                     tranAmount: localStorage.getItem(`tran${props.data.room.round}_money`)
                 })
             } else {
                 setTrans({
-                    score: props.data.player.price - localStorage.getItem(`tran${props.data.room.round}_money`),
+                    score: props.data.player.score,
                     transPartner: localStorage.getItem(`tran${props.data.room.round}_user`),
                     tranAmount: localStorage.getItem(`tran${props.data.room.round}_money`)
                 })
