@@ -24,7 +24,8 @@ import FaceIcon from '@material-ui/icons/Face'
 import BarcodeReader from 'react-barcode-reader' //v2 沒有用QQ
 // import QrReader from 'react-weblineindia-qrcode-scanner' //v3
 // import QrReader from 'react-qr-scanner' //v4
-import { QrReader } from '@blackbox-vision/react-qr-reader' //v5
+// import { QrReader } from '@blackbox-vision/react-qr-reader' //v5
+import QrReader from 'react-web-qr-reader' //v6
 
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
@@ -1210,14 +1211,6 @@ const QRCodeSend2 = ({ history }, props) => {
                 /> */}
                 {/* version 2 */}
                 {/* <BarcodeReader className="scan" onError={handleError} onScan={handleScan} facingMode={'environment'} /> */}
-                {/* <BarcodeScannerComponent
-                    width={500}
-                    height={500}
-                    onUpdate={(err, result) => {
-                        if (result) setData(result.text)
-                        else setData('Not Found')
-                    }}
-                /> */}
                 {/* version 3 */}
                 {/* <QrReader
                     className="scan2"
