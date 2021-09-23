@@ -126,29 +126,37 @@ function App() {
                                                     <Route path="/register2" exact component={Register2} />
                                                     <Route path="/forgetpassword" exact component={ForgetPassword} />
                                                     <Route path="/forgetpassword2" exact component={ForgetPassword2} />
-                                                    {loginState.isLogin ? (
+                                                    {loginState.isLogin && (
                                                         <>
-                                                            <Route path="/user/lobby" exact component={UserLobby} />
-                                                            <Route path="/loading/:id" exact component={Loading} />
-                                                            <Route path="/gamelobby/:id" exact component={GameLobby} />
-                                                            <Route path="/gamein" exact component={GameIn} />
-                                                            <Route path="/qrcode" exact component={QRCodeSend2} />
-                                                            <Route
-                                                                path="/user/edit/password"
-                                                                exact
-                                                                component={ForgetPassword}
-                                                            />
+                                                            <Switch>
+                                                                <Route path="/user/lobby" exact component={UserLobby} />
+                                                                <Route path="/loading/:id" exact component={Loading} />
+                                                                <Route
+                                                                    path="/gamelobby/:id"
+                                                                    exact
+                                                                    component={GameLobby}
+                                                                />
+                                                                <Route path="/gamein" exact component={GameIn} />
+                                                                <Route path="/qrcode" exact component={QRCodeSend2} />
+                                                                <Route
+                                                                    path="/user/edit/password"
+                                                                    exact
+                                                                    component={ForgetPassword}
+                                                                />
+                                                            </Switch>
                                                         </>
-                                                    ) : (
-                                                        <></>
                                                     )}
-                                                    {loginState.isAdmin ? (
+                                                    {loginState.isAdmin && (
                                                         <>
-                                                            <Route path="/admin" component={BackStage} />
-                                                            <Route path="/teacherqrcode" exact component={QRCodeSend} />
+                                                            <Switch>
+                                                                <Route path="/admin" component={BackStage} />
+                                                                <Route
+                                                                    path="/teacherqrcode"
+                                                                    exact
+                                                                    component={QRCodeSend}
+                                                                />
+                                                            </Switch>
                                                         </>
-                                                    ) : (
-                                                        <></>
                                                     )}
                                                     <Route path="/" component={NotFound} />
                                                 </Switch>
