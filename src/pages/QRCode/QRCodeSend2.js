@@ -246,7 +246,10 @@ const QRCodeSend2 = ({ history }, props) => {
         socket.on('sys', (res) => {
             console.log(res)
             if (res != 'error') {
-                localStorage.setItem('announcement', res.message)
+                localStorage.setItem(
+                    `announcement_${localStorage.getItem('roomNum')}_${localStorage.getItem('roundNum')}`,
+                    res.message
+                )
                 socket.emit('reqRole', { roomNum: localStorage.getItem('roomNum'), ID: localStorage.getItem('id') })
             }
         })
@@ -662,7 +665,7 @@ const QRCodeSend2 = ({ history }, props) => {
 
                     localStorage.setItem('tranUser', values.tranId)
                     // socket.on 交易對象id不存在
-                    setError('等待收款方接受交易 請勿離開本畫面')
+                    setError('等待收款方接受交易/n請勿離開本頁面')
                     setTransById(true)
                     setOpen3(true)
                 } else {
