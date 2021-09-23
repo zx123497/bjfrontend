@@ -79,7 +79,7 @@ const ButtonAppBar = (props) => {
                         </h1>
                     </div>
 
-                    {localStorage.getItem('name') ? (
+                    {name === '' ? (
                         <Button className="isLogin" color="inherit" component={Link} to="/login">
                             <PersonIcon />
                             Hi, {name}
