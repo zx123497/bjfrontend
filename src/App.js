@@ -53,7 +53,7 @@ function App() {
     useEffect(() => {
         if (localStorage.getItem('token')) {
             setIsLogin(true)
-        } else if (localStorage.getItem('isAdmin') === '1') {
+        } else if (localStorage.getItem('isAdmin') == '1') {
             setIsAdmin(true)
         } else {
             setIsLogin(false)
