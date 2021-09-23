@@ -50,6 +50,7 @@ function App() {
             setIsLogin(false)
         }
     }, [])
+
     useEffect(() => {
         if (localStorage.getItem('token')) {
             setIsLogin(true)
@@ -62,52 +63,53 @@ function App() {
     }, [localStorage])
 
     const appliedTheme = Theme
-    if (!isLogin) {
-        return (
-            <div className={classes.root}>
-                <ThemeProvider theme={appliedTheme}>
-                    <div className="App">
-                        <Navbar />
-                        <Switch>
-                            <Route
-                                path="/"
-                                render={() => (
-                                    <>
-                                        <main>
-                                            <AnimatePresence exitBeforeEnter>
-                                                <Switch>
-                                                    <Route path="/" exact component={LogIn} />
-                                                    <Route
-                                                        path="/user/edit/password"
-                                                        exact
-                                                        component={ForgetPassword}
-                                                    />
-                                                    <Route path="/login" exact component={LogIn} />
-                                                    <Route path="/register" exact component={Register} />
-                                                    <Route path="/register2" exact component={Register2} />
-                                                    <Route path="/forgetpassword" exact component={ForgetPassword} />
-                                                    <Route path="/forgetpassword2" exact component={ForgetPassword2} />
-                                                    <Route path="/resetpassword" exact component={ResetPassword} />
-                                                    <Route path="/" component={NotFound} />
-                                                </Switch>
-                                            </AnimatePresence>
-                                        </main>
-                                    </>
-                                )}
-                            />
-                            <Route path="/" component={NotFound} />
-                        </Switch>
-                    </div>
-                </ThemeProvider>
-            </div>
-        )
-    }
+    // if (!isLogin) {
+    //     return (
+    //         <div className={classes.root}>
+    //             <ThemeProvider theme={appliedTheme}>
+    //                 <div className="App">
+    //                     <Navbar />
+    //                     <Switch>
+    //                         <Route
+    //                             path="/"
+    //                             render={() => (
+    //                                 <>
+    //                                     <main>
+    //                                         <AnimatePresence exitBeforeEnter>
+    //                                             <Switch>
+    //                                                 <Route path="/" exact component={LogIn} />
+    //                                                 <Route
+    //                                                     path="/user/edit/password"
+    //                                                     exact
+    //                                                     component={ForgetPassword}
+    //                                                 />
+    //                                                 <Route path="/login" exact component={LogIn} />
+    //                                                 <Route path="/register" exact component={Register} />
+    //                                                 <Route path="/register2" exact component={Register2} />
+    //                                                 <Route path="/forgetpassword" exact component={ForgetPassword} />
+    //                                                 <Route path="/forgetpassword2" exact component={ForgetPassword2} />
+    //                                                 <Route path="/resetpassword" exact component={ResetPassword} />
+    //                                                 <Route path="/" component={NotFound} />
+    //                                             </Switch>
+    //                                         </AnimatePresence>
+    //                                     </main>
+    //                                 </>
+    //                             )}
+    //                         />
+    //                         <Route path="/" component={NotFound} />
+    //                     </Switch>
+    //                 </div>
+    //             </ThemeProvider>
+    //         </div>
+    //     )
+    // }
     return (
         <div className={classes.root}>
             <ThemeProvider theme={appliedTheme}>
                 <div className="App">
                     <Navbar />
                     <Switch>
+                    <Route path="/admin" exact component={BackStage} />
                         <Route
                             path="/"
                             render={() => (
@@ -130,7 +132,7 @@ function App() {
                                                 <Route path="/gamein" exact component={GameIn} />
                                                 <Route path="/qrcode" exact component={QRCodeSend2} />
                                                 <Route path="/teacherqrcode" exact component={QRCodeSend} />
-                                                {isAdmin && <Route path="/admin" exact component={BackStage} />}
+                                                {/* <Route path="/admin" exact component={BackStage} /> */}
                                                 <Route path="/" component={NotFound} />
                                             </Switch>
                                         </AnimatePresence>
