@@ -97,6 +97,12 @@ const GameLobby = (props) => {
                     transAmount: res.thisRound_Record.price,
                     transPartner: res.thisRound_Record.userid
                 })
+            } else {
+                setTrans({
+                    score: res.user.score,
+                    transAmount: 0,
+                    transPartner: ''
+                })
             }
         })
 
