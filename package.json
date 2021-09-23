@@ -28,6 +28,7 @@
         "framer-motion": "^4.1.17",
         "fs": "0.0.1-security",
         "https": "^1.0.0",
+        "modern-react-qr-reader": "^1.0.12",
         "noty": "^3.2.0-beta-deprecated",
         "path": "^0.12.7",
         "pm2": "^5.1.0",
