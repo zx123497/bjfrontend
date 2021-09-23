@@ -578,25 +578,25 @@ const QRCodeSend2 = ({ history }, props) => {
         setOpen3(false)
     }
 
-    const handleScan = (data) => {
+    const handleScan = (result) => {
         setRoundNum(localStorage.getItem('roundNum'))
 
-        if (localStorage.getItem('haveTran') == 'true' && data != null) {
+        if (localStorage.getItem('haveTran') == 'true' && result != null) {
             console.log('此回合已進行過交易')
             setError('此回合已進行過交易 \n無法再次交易')
             setOpen3(true)
-        } else if (data != null) {
-            if (data.match(/teacher=([^&]+)/)[1].split('/')[0] == '1') {
+        } else if (result != null) {
+            if (result.match(/teacher=([^&]+)/)[1].split('/')[0] == '1') {
                 //console.log('1:' + data.match(/teacher=([^&]+)/)[1].split('/')[0])
-                localStorage.setItem('tranMoney', data.match(/money=([^&]+)/)[1].split('/')[0])
+                localStorage.setItem('tranMoney', result.match(/money=([^&]+)/)[1].split('/')[0])
                 localStorage.setItem('tranTeacher', '1')
-                localStorage.setItem('tranLimit', data.match(/limit=([^&]+)/)[1].split('/')[0])
-                localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1])
+                localStorage.setItem('tranLimit', result.match(/limit=([^&]+)/)[1].split('/')[0])
+                localStorage.setItem('tranUser', result.match(/userId=([^&]+)/)[1])
             } else {
-                console.log('tranUser', data.match(/userId=([^&]+)/)[1])
+                console.log('tranUser', result.match(/userId=([^&]+)/)[1])
                 // localStorage.setItem('tranTeacher', '0')
-                localStorage.setItem('tranMoney', data.match(/money=([^&]+)/)[1].split('/')[0])
-                localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1])
+                localStorage.setItem('tranMoney', result.match(/money=([^&]+)/)[1].split('/')[0])
+                localStorage.setItem('tranUser', result.match(/userId=([^&]+)/)[1])
             }
             setOpen1(true)
         }
