@@ -111,7 +111,7 @@ function App() {
                     <div className="App">
                         <Navbar />
                         <Switch>
-                            {loginState.isAdmin && <Route path="/admin" component={BackStage} />}
+                            {loginState.isAdmin ? <Route path="/admin" component={BackStage} /> : <></>}
                             <Route
                                 path="/"
                                 render={() => (
@@ -121,31 +121,34 @@ function App() {
                                                 <Switch>
                                                     <Route path="/" exact component={LogIn} />
 
-                                                    <Route
-                                                        path="/user/edit/password"
-                                                        exact
-                                                        component={ForgetPassword}
-                                                    />
                                                     <Route path="/login" exact component={LogIn} />
                                                     <Route path="/register" exact component={Register} />
                                                     <Route path="/register2" exact component={Register2} />
                                                     <Route path="/forgetpassword" exact component={ForgetPassword} />
                                                     <Route path="/forgetpassword2" exact component={ForgetPassword2} />
-                                                    {loginState.isLogin && (
+                                                    {loginState.isLogin ? (
                                                         <>
                                                             <Route path="/user/lobby" exact component={UserLobby} />
                                                             <Route path="/loading/:id" exact component={Loading} />
                                                             <Route path="/gamelobby/:id" exact component={GameLobby} />
                                                             <Route path="/gamein" exact component={GameIn} />
                                                             <Route path="/qrcode" exact component={QRCodeSend2} />
+                                                            <Route
+                                                                path="/user/edit/password"
+                                                                exact
+                                                                component={ForgetPassword}
+                                                            />
                                                         </>
+                                                    ) : (
+                                                        <></>
                                                     )}
-
-                                                    {loginState.isAdmin && (
+                                                    {loginState.isAdmin ? (
                                                         <>
                                                             <Route path="/admin" component={BackStage} />
                                                             <Route path="/teacherqrcode" exact component={QRCodeSend} />
                                                         </>
+                                                    ) : (
+                                                        <></>
                                                     )}
                                                     <Route path="/" component={NotFound} />
                                                 </Switch>
