@@ -124,8 +124,7 @@ const GameLobby = (props) => {
         socket.on('sys', (res) => {
             if (res != 'error') {
                 setAnnouncement({ roomAnnoucement: res.message })
-                localStorage.setItem("announcement", res.message)
-                socket.emit('reqRole', { roomNum: roomNum, ID: localStorage.getItem('id') })
+                localStorage.setItem(`announcement_${roomNum}_${roundNum}`, res.message)
             }
         })
 
