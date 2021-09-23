@@ -20,9 +20,9 @@ import ErrorIcon from '@material-ui/icons/Error'
 import FaceIcon from '@material-ui/icons/Face'
 // import { ScreenBrightness } from '@capacitor-community/screen-brightness'
 import ScreenBrightness from 'react-native-screen-brightness'
-import QrReader from 'react-qr-reader' //v1
+// import QrReader from 'react-qr-reader' //v1
 import BarcodeReader from 'react-barcode-reader' //v2 沒有用QQ
-// import QrReader from 'react-weblineindia-qrcode-scanner' //v3
+import QrReader from 'react-weblineindia-qrcode-scanner' //v3
 
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
@@ -1213,7 +1213,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     }}
                 /> */}
                 {/* version 3 */}
-                {/* <QrReader
+                <QrReader
                     className="scan2"
                     // delay={this.state.delay}
                     style={{
@@ -1223,7 +1223,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     facingMode="rear" //front
                     onError={handleError}
                     onScan={handleScan}
-                /> */}
+                />
             </div>
         </div>
     )
