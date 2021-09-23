@@ -50,10 +50,11 @@ function App() {
             setIsLogin(false)
         }
     }, [])
+
     useEffect(() => {
         if (localStorage.getItem('token')) {
             setIsLogin(true)
-        } else if (localStorage.getItem('isAdmin') === '1') {
+        } else if (localStorage.getItem('isAdmin') == '1') {
             setIsAdmin(true)
         } else {
             setIsLogin(false)
@@ -130,7 +131,7 @@ function App() {
                                                 <Route path="/gamein" exact component={GameIn} />
                                                 <Route path="/qrcode" exact component={QRCodeSend2} />
                                                 <Route path="/teacherqrcode" exact component={QRCodeSend} />
-                                                {isAdmin && <Route path="/admin" exact component={BackStage} />}
+                                                {!isAdmin && <Route path="/admin" exact component={BackStage} />}
                                                 <Route path="/" component={NotFound} />
                                             </Switch>
                                         </AnimatePresence>

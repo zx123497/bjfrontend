@@ -79,6 +79,24 @@ const GameLobby = (props) => {
                 role: res.user.role,
                 score: res.user.score
             })
+            if (res.status == 0 && res.thisRound_Record) {
+                // 設定回合交易紀錄
+                localStorage.setItem(
+                    'tran' + localStorage.getItem('roundNum') + '_money',
+                    res.thisRound_Record.price
+                )
+                localStorage.setItem(
+                    'tran' + localStorage.getItem('roundNum') + '_user',
+                    res.thisRound_Record.userid
+                )
+
+            } else {
+                // 設定回合交易紀錄
+                localStorage.setItem(
+                    'tran' + localStorage.getItem('roundNum') + '_money',
+                    null
+                )
+            }
         })
 
         socket.on('resRole', (res) => {
