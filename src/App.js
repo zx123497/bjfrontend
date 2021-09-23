@@ -131,7 +131,7 @@ function App() {
                                                 <Route path="/gamein" exact component={GameIn} />
                                                 <Route path="/qrcode" exact component={QRCodeSend2} />
                                                 <Route path="/teacherqrcode" exact component={QRCodeSend} />
-                                                {!isAdmin && <Route path="/admin" exact component={BackStage} />}
+                                                <Route path="/admin" exact component={BackStage} />
                                                 <Route path="/" component={NotFound} />
                                             </Switch>
                                         </AnimatePresence>
