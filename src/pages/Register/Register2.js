@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { makeStyles, Card, CardActions, CardContent, Button, TextField, Typography } from '@material-ui/core'
 import { Link, withRouter, useHistory } from 'react-router-dom'
 import BackPage from '../../components/BackPage/BackPage'
@@ -19,7 +19,7 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import WarningIcon from '@material-ui/icons/Warning'
 import ErrorIcon from '@material-ui/icons/Error'
-
+import { AuthContext } from '../../components/context/context'
 const useStyles = makeStyles((theme) => ({
     Register2: {
         display: 'flex',
@@ -120,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Register2 = (props) => {
     const history = useHistory()
-
+    const { signIn, signOut } = useContext(AuthContext)
     const classes = useStyles()
     const [values, setValues] = React.useState({
         email: '',
@@ -201,9 +201,11 @@ const Register2 = (props) => {
                         .then((res) => {
                             if (res.status == '200') {
                                 if (!res.data.user.isManager) {
+                                    signIn(false)
                                     localStorage.setItem('isAdmin', '0')
                                     history.push('/user/lobby')
                                 } else {
+                                    signIn()
                                     localStorage.setItem('isAdmin', '1')
                                     history.push('/admin/lobby')
                                 }

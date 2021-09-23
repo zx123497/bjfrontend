@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { makeStyles, Typography, Card, CardActions, CardContent, Button, TextField } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
 import { Link, withRouter, useHistory } from 'react-router-dom'
@@ -19,7 +19,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import ErrorIcon from '@material-ui/icons/Error'
-
+import { AuthContext } from '../../components/context/context'
 const useStyles = makeStyles((theme) => ({
     LogIn: {
         display: 'flex',
@@ -195,7 +195,7 @@ const useStyles = makeStyles((theme) => ({
 const LogIn = (props) => {
     const history = useHistory()
     const classes = useStyles()
-
+    const { signIn, signOut } = useContext(AuthContext)
     const [errorMessage, setErrorMessage] = useState('')
     const [open, setOpen] = useState(false)
     const handleClose = () => {
@@ -212,6 +212,7 @@ const LogIn = (props) => {
     }
 
     const handleLogout = (event) => {
+        signOut()
         localStorage.clear()
         history.push('login')
     }
@@ -235,9 +236,11 @@ const LogIn = (props) => {
                 .then((res) => {
                     if (res.status == '200') {
                         if (!res.data.user.isManager) {
+                            signIn(false)
                             localStorage.setItem('isAdmin', '0')
                             history.push('/user/lobby')
                         } else {
+                            signIn(true)
                             localStorage.setItem('isAdmin', '1')
                             history.push('/admin/lobby')
                         }
@@ -247,7 +250,7 @@ const LogIn = (props) => {
                         localStorage.setItem('email', values.account)
                         localStorage.setItem('token', res.data.jwt)
                         localStorage.setItem('expireTime', res.data.expiresIn)
-                       }
+                    }
                 })
                 .catch((e) => {
                     setErrorMessage('登入失敗\n 請重新輸入帳號密碼')
