@@ -185,8 +185,6 @@ const QRCodeSend2 = ({ history }, props) => {
         localStorage.setItem('haveTran', false)
         localStorage.removeItem('is_socketid')
         localStorage.removeItem('socketid')
-        // setError('請確認交易雙方皆在此畫面\n 再進行交易')
-        // setOpen3(true)
     }, [localStorage.getItem('roundNum')])
 
     // 判斷身分
@@ -228,9 +226,7 @@ const QRCodeSend2 = ({ history }, props) => {
         socket.on('connect_error ', function (data) {
             console.log(data)
         })
-    }, [])
 
-    useEffect(() => {
         //enterRoom
         socket.emit('enterRoom', {
             roomNum: localStorage.getItem('roomNum'),
@@ -270,6 +266,12 @@ const QRCodeSend2 = ({ history }, props) => {
             localStorage.removeItem('announcement')
             history2.push('/user/lobby')
         })
+
+        if (localStorage.getItem('haveShow') == null) {
+            setError('請確認交易雙方皆在此面\n 再進行交易')
+            setOpen3(true)
+            localStorage.setItem('haveShow', true)
+        }
     }, [])
 
     // 與老師交易時的setSocket
@@ -676,7 +678,7 @@ const QRCodeSend2 = ({ history }, props) => {
 
                         localStorage.setItem('tranUser', values.tranId)
                         // socket.on 交易對象id不存在
-                        setError('等待收款方接受交易\n 請勿離開本頁面')
+                        setError('等待收款方接受交易\n 請勿離開本頁面\n')
                         setTransById(true)
                         setOpen3(true)
                     }
@@ -1077,7 +1079,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     </Grid>
                 </form>
                 <div className="sub_title">
-                    請確認交易雙方皆在此畫面再進行交易 <br />
+                    {/* 請確認交易雙方皆在此畫面再進行交易 <br /> */}
                     提醒目前餘額為 ${localStorage.getItem('money')}
                 </div>
 
@@ -1139,8 +1141,8 @@ const QRCodeSend2 = ({ history }, props) => {
                 />
                 <h4 className="subtitle2">
                     請掃描付款者 QRCode!
-                    <br />
-                    確認交易雙方皆在此畫面後 再進行交易
+                    {/* <br />
+                    確認交易雙方皆在此畫面後 再進行交易 */}
                 </h4>
                 {/* version 1 */}
                 <QrReader
