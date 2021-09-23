@@ -20,12 +20,12 @@ import ErrorIcon from '@material-ui/icons/Error'
 import FaceIcon from '@material-ui/icons/Face'
 // import { ScreenBrightness } from '@capacitor-community/screen-brightness'
 // import ScreenBrightness from 'react-native-screen-brightness'
-// import QrReader from 'react-qr-reader' //v1
+import QrReader from 'react-qr-reader' //v1
 import BarcodeReader from 'react-barcode-reader' //v2 沒有用QQ
 // import QrReader from 'react-weblineindia-qrcode-scanner' //v3
 // import QrReader from 'react-qr-scanner' //v4
 // import { QrReader } from '@blackbox-vision/react-qr-reader' //v5
-import QrReader from 'react-web-qr-reader' //v5
+// import QrReader from 'react-web-qr-reader' //v5
 
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
@@ -578,25 +578,25 @@ const QRCodeSend2 = ({ history }, props) => {
         setOpen3(false)
     }
 
-    const handleScan = (data) => {
+    const handleScan = (result) => {
         setRoundNum(localStorage.getItem('roundNum'))
 
-        if (localStorage.getItem('haveTran') == 'true' && data != null) {
+        if (localStorage.getItem('haveTran') == 'true' && result != null) {
             console.log('此回合已進行過交易')
             setError('此回合已進行過交易 \n無法再次交易')
             setOpen3(true)
-        } else if (data != null) {
-            if (data.match(/teacher=([^&]+)/)[1].split('/')[0] == '1') {
+        } else if (result != null) {
+            if (result.match(/teacher=([^&]+)/)[1].split('/')[0] == '1') {
                 //console.log('1:' + data.match(/teacher=([^&]+)/)[1].split('/')[0])
-                localStorage.setItem('tranMoney', data.match(/money=([^&]+)/)[1].split('/')[0])
+                localStorage.setItem('tranMoney', result.match(/money=([^&]+)/)[1].split('/')[0])
                 localStorage.setItem('tranTeacher', '1')
-                localStorage.setItem('tranLimit', data.match(/limit=([^&]+)/)[1].split('/')[0])
-                localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1])
+                localStorage.setItem('tranLimit', result.match(/limit=([^&]+)/)[1].split('/')[0])
+                localStorage.setItem('tranUser', result.match(/userId=([^&]+)/)[1])
             } else {
-                console.log('tranUser', data.match(/userId=([^&]+)/)[1])
+                console.log('tranUser', result.match(/userId=([^&]+)/)[1])
                 // localStorage.setItem('tranTeacher', '0')
-                localStorage.setItem('tranMoney', data.match(/money=([^&]+)/)[1].split('/')[0])
-                localStorage.setItem('tranUser', data.match(/userId=([^&]+)/)[1])
+                localStorage.setItem('tranMoney', result.match(/money=([^&]+)/)[1].split('/')[0])
+                localStorage.setItem('tranUser', result.match(/userId=([^&]+)/)[1])
             }
             setOpen1(true)
         }
@@ -1118,7 +1118,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 />
                 <h4>請掃描付款者 QRCode!</h4>
                 {/* version 1 */}
-                {/* <QrReader
+                <QrReader
                     className="scan"
                     delay={200}
                     onError={handleError}
@@ -1128,7 +1128,7 @@ const QRCodeSend2 = ({ history }, props) => {
                         height: '500',
                         width: '500',
                     }}
-                /> */}
+                />
                 {/* version 2 */}
                 {/* <BarcodeReader className="scan" onError={handleError} onScan={handleScan} facingMode={'environment'} /> */}
                 {/* version 3 */}
@@ -1156,14 +1156,14 @@ const QRCodeSend2 = ({ history }, props) => {
                     }}
                 /> */}
                 {/* version 5 */}
-                <QrReader
+                {/* <QrReader
                     className="scan"
                     onScan={handleScan}
                     style={{
                         height: '500',
                         width: '500',
                     }}
-                />
+                /> */}
             </div>
         </div>
     )
