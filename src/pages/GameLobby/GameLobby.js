@@ -32,7 +32,10 @@ const GameLobby = (props) => {
         item: '',
         money: '',
         price: '',
-        role: '',
+        role: ''
+    })
+
+    const [trans, setTrans] = useState({
         score: '',
         transAmount: '',
         transPartner: ''
@@ -65,8 +68,13 @@ const GameLobby = (props) => {
 
         getRoom()
 
-        if(localStorage.getItem('announcement')) {
-            setAnnouncement({roomAnnoucement: localStorage.getItem('announcement')})
+        localStorage.setItem('round', room.round)
+        localStorage.setItem('roomNum', roomNum)
+
+        const roundNum = localStorage.getItem('roundNum')
+
+        if(localStorage.getItem(`announcement_${roomNum}_${roundNum}`)) {
+            setAnnouncement({roomAnnoucement: localStorage.getItem(`announcement_${roomNum}_${roundNum}`)})
         }
 
         socket.on('enterRoom_resp', (res) => {
@@ -84,66 +92,21 @@ const GameLobby = (props) => {
                 //     'tran' + localStorage.getItem('roundNum') + '_user',
                 //     res.thisRound_Record.userid
                 // )
-                setPlayer({
-                    item: '',
-                    money: res.user.money,
-                    price: res.user.price,
-                    role: res.user.role,
+                setTrans({
                     score: res.user.score,
                     transAmount: res.thisRound_Record.price,
                     transPartner: res.thisRound_Record.userid
-                })
-            } else {
-                // 設定回合交易紀錄
-                // localStorage.setItem(
-                //     'tran' + localStorage.getItem('roundNum') + '_money',
-                //     null
-                // )
-                setPlayer({
-                    item: '',
-                    money: res.user.money,
-                    price: res.user.price,
-                    role: res.user.role,
-                    score: res.user.score,
-                    transAmount: '',
-                    transPartner: 0
                 })
             }
         })
 
         socket.on('resRole', (res) => {
-            if((localStorage.getItem(`tran${localStorage.getItem('round')}_money`)) &&
-                (localStorage.getItem(`tran${localStorage.getItem('round')}_user`))) {
-                setPlayer({
+            setPlayer({
                     item: '',
                     money: res.user.money,
                     price: res.user.price,
                     role: res.user.role,
-                })
-            } else {
-                setPlayer({
-                    item: '',
-                    money: res.user.money,
-                    price: res.user.price,
-                    role: res.user.role,
-                })
-            }
-        })
-
-        socket.emit('enterRoom', {
-            roomNum: roomNum,
-            ID: localStorage.getItem('id'),
-            username: localStorage.getItem('username'),
-        })
-
-        localStorage.setItem('round', room.round)
-        localStorage.setItem('roomNum', roomNum)
-
-        socket.emit('currentTime', { roomNum: roomNum })
-
-        // listen to sendsysmsg
-        socket.on('sys', function (res) {
-            socket.emit('reqRole',{roomNum: roomNum, ID: localStorage.getItem('id')})
+            })
         })
 
         // listen to endRound
@@ -175,6 +138,16 @@ const GameLobby = (props) => {
             props.history.push('/user/lobby')
         })
 
+        socket.emit('enterRoom', {
+            roomNum: roomNum,
+            ID: localStorage.getItem('id'),
+            username: localStorage.getItem('username'),
+        })
+
+        socket.emit('currentTime', { roomNum: roomNum })
+
+        socket.emit('reqRole',{roomNum: roomNum, ID: localStorage.getItem('id')})
+
     }, [])
 
     const classes = useStyles()
@@ -184,7 +157,7 @@ const GameLobby = (props) => {
             <UpperBar data={room} />
             <AnnouncementLine data={annoucement} />
             <UserInfo data={player} />
-            <PersonalTransaction data={{room: room, player: player}} />
+            <PersonalTransaction data={{room: room, player: player, trans: trans}} />
         </div>
     )
 }

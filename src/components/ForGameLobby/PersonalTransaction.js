@@ -53,9 +53,9 @@ const PersonalTransaction = (props) => {
 
     useEffect(() => {
         setTrans({
-            score: props.data.player.score,
-            transPartner: props.data.player.transPartner,
-            transAmount: props.data.player.transAmount
+            score: props.data.trans.score,
+            transPartner: props.data.trans.transPartner,
+            transAmount: props.data.trans.transAmount
         })
         // if (localStorage.getItem(`tran${props.data.room.round}_money`) != null) {
         //     if (props.data.player.role == 'seller') {
