@@ -111,7 +111,7 @@ function App() {
                     <div className="App">
                         <Navbar />
                         <Switch>
-                            {loginState.isAdmin ? <Route path="/admin" component={BackStage} /> : <></>}
+                            {loginState.isAdmin && <Route path="/admin" component={BackStage} />}
                             <Route
                                 path="/"
                                 render={() => (
