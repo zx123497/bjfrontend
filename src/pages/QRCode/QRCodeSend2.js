@@ -24,7 +24,7 @@ import FaceIcon from '@material-ui/icons/Face'
 import BarcodeReader from 'react-barcode-reader' //v2 沒有用QQ
 // import QrReader from 'react-weblineindia-qrcode-scanner' //v3
 // import QrReader from 'react-qr-scanner' //v4
-import { QrReader } from '@blackbox-vision/react-qr-reader@5.0.0' //v5
+import { QrReader } from '@blackbox-vision/react-qr-reader' //v5
 
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
