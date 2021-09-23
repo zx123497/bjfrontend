@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 const ButtonAppBar = (props) => {
     const classes = useStyles()
     const theme = useTheme()
-    const [name, setName] = React.useState('')
+    const [name, setName] = React.useState(false)
 
     useLayoutEffect(() => {
         setName(localStorage.getItem('name'))
@@ -79,7 +79,7 @@ const ButtonAppBar = (props) => {
                         </h1>
                     </div>
 
-                    {name === '' ? (
+                    {name ? (
                         <Button className="isLogin" color="inherit" component={Link} to="/login">
                             <PersonIcon />
                             登入
