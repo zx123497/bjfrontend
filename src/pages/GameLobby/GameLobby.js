@@ -33,7 +33,9 @@ const GameLobby = (props) => {
         money: '',
         price: '',
         role: '',
-        score: ''
+        score: '',
+        transAmount: '',
+        transPartner: ''
     })
 
     const [annoucement, setAnnouncement] = useState({
@@ -68,34 +70,44 @@ const GameLobby = (props) => {
         }
 
         socket.on('enterRoom_resp', (res) => {
-            console.log(res)
-            console.log(room.round)
-            console.log(`tran${localStorage.getItem('round')}_money`)
-            console.log((localStorage.getItem(`tran${localStorage.getItem('round')}_money`)))
-            setPlayer({
-                item: '',
-                money: res.user.money,
-                price: res.user.price,
-                role: res.user.role,
-                score: res.user.score
-            })
+            // console.log(res)
+            // console.log(room.round)
+            // console.log(`tran${localStorage.getItem('round')}_money`)
+            // console.log((localStorage.getItem(`tran${localStorage.getItem('round')}_money`)))
             if (res.status == 0 && res.thisRound_Record) {
                 // 設定回合交易紀錄
-                localStorage.setItem(
-                    'tran' + localStorage.getItem('roundNum') + '_money',
-                    res.thisRound_Record.price
-                )
-                localStorage.setItem(
-                    'tran' + localStorage.getItem('roundNum') + '_user',
-                    res.thisRound_Record.userid
-                )
-
+                // localStorage.setItem(
+                //     'tran' + localStorage.getItem('roundNum') + '_money',
+                //     res.thisRound_Record.price
+                // )
+                // localStorage.setItem(
+                //     'tran' + localStorage.getItem('roundNum') + '_user',
+                //     res.thisRound_Record.userid
+                // )
+                setPlayer({
+                    item: '',
+                    money: res.user.money,
+                    price: res.user.price,
+                    role: res.user.role,
+                    score: res.user.score,
+                    transAmount: res.thisRound_Record.price,
+                    transPartner: res.thisRound_Record.userid
+                })
             } else {
                 // 設定回合交易紀錄
-                localStorage.setItem(
-                    'tran' + localStorage.getItem('roundNum') + '_money',
-                    null
-                )
+                // localStorage.setItem(
+                //     'tran' + localStorage.getItem('roundNum') + '_money',
+                //     null
+                // )
+                setPlayer({
+                    item: '',
+                    money: res.user.money,
+                    price: res.user.price,
+                    role: res.user.role,
+                    score: res.user.score,
+                    transAmount: '',
+                    transPartner: 0
+                })
             }
         })
 

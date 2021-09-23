@@ -48,32 +48,37 @@ const PersonalTransaction = (props) => {
     const [trans, setTrans] = useState({
         score: '',
         transPartner: '',
-        tranAmount: '',
+        transAmount: '',
     })
 
     useEffect(() => {
-        if (localStorage.getItem(`tran${props.data.room.round}_money`) != null) {
-            if (props.data.player.role == 'seller') {
-                setTrans({
-                    score: props.data.player.score,
-                    transPartner: localStorage.getItem(`tran${props.data.room.round}_user`),
-                    tranAmount: localStorage.getItem(`tran${props.data.room.round}_money`),
-                })
-            } else {
-                setTrans({
-                    score: props.data.player.score,
-                    transPartner: localStorage.getItem(`tran${props.data.room.round}_user`),
-                    tranAmount: localStorage.getItem(`tran${props.data.room.round}_money`),
-                })
-            }
-        } else {
-            setTrans({
-                score: 0,
-                totalScore: 0,
-                transPartner: '',
-                tranAmount: 0,
-            })
-        }
+        setTrans({
+            score: props.data.player.score,
+            transPartner: props.data.player.transPartner,
+            transAmount: props.data.player.transAmount
+        })
+        // if (localStorage.getItem(`tran${props.data.room.round}_money`) != null) {
+        //     if (props.data.player.role == 'seller') {
+        //         setTrans({
+        //             score: props.data.player.score,
+        //             transPartner: localStorage.getItem(`tran${props.data.room.round}_user`),
+        //             tranAmount: localStorage.getItem(`tran${props.data.room.round}_money`),
+        //         })
+        //     } else {
+        //         setTrans({
+        //             score: props.data.player.score,
+        //             transPartner: localStorage.getItem(`tran${props.data.room.round}_user`),
+        //             tranAmount: localStorage.getItem(`tran${props.data.room.round}_money`),
+        //         })
+        //     }
+        // } else {
+        //     setTrans({
+        //         score: 0,
+        //         totalScore: 0,
+        //         transPartner: '',
+        //         tranAmount: 0,
+        //     })
+        // }
     }, [props.data])
 
     const classes = useStyles()
@@ -110,11 +115,11 @@ const PersonalTransaction = (props) => {
                     </Grid>
                     <Grid item xs={8} className="cell">
                         {props.data.player.role == 'seller' && (
-                            <Typography variant="h5">+ ${trans.tranAmount}</Typography>
+                            <Typography variant="h5">+ ${trans.transAmount}</Typography>
                         )}
 
                         {props.data.player.role == 'buyer' && (
-                            <Typography variant="h5">- ${Math.abs(trans.tranAmount)}</Typography>
+                            <Typography variant="h5">- ${Math.abs(trans.transAmount)}</Typography>
                         )}
                     </Grid>
                 </Grid>
