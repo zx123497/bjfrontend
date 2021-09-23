@@ -1203,7 +1203,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     facingMode={'environment'}
                 /> */}
                 {/* version 2 */}
-                {/* <BarcodeReader className="scan" onError={handleError} onScan={handleScan} facingMode={'environment'} /> */}
+                <BarcodeReader className="scan" onError={handleError} onScan={handleScan} facingMode={'environment'} />
                 {/* <BarcodeScannerComponent
                     width={500}
                     height={500}
@@ -1213,7 +1213,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     }}
                 /> */}
                 {/* version 3 */}
-                <QrReader
+                {/* <QrReader
                     className="scan2"
                     // delay={this.state.delay}
                     style={{
@@ -1223,7 +1223,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     facingMode="rear" //front
                     onError={handleError}
                     onScan={handleScan}
-                />
+                /> */}
             </div>
         </div>
     )
