@@ -1196,17 +1196,17 @@ const QRCodeSend2 = ({ history }, props) => {
                 />
                 <h4>請掃描付款者 QRCode</h4>
                 {/* version 1 */}
-                <QrReader
+                {/* <QrReader
                     className="scan"
                     delay={200}
                     onError={handleError}
                     onScan={handleScan}
-                    facingMode={'rear'}
+                    facingMode={'enviroment'}
                     style={{
                         height: '500',
                         width: '500',
                     }}
-                />
+                /> */}
                 {/* version 2 */}
                 {/* <BarcodeReader className="scan" onError={handleError} onScan={handleScan} facingMode={'environment'} /> */}
                 {/* <BarcodeScannerComponent
@@ -1230,14 +1230,17 @@ const QRCodeSend2 = ({ history }, props) => {
                     onScan={handleScan}
                 /> */}
                 {/* version 4 */}
-                {/* <QRCodeScanner
-                    onRead={handleScan}
-                    flashMode={RNCamera.Constants.FlashMode.torch}
+                <QrReader
+                    className="scan"
+                    delay={200}
+                    onError={handleError}
+                    onScan={handleScan}
+                    facingMode={'front'}
                     style={{
                         height: '500',
                         width: '500',
                     }}
-                /> */}
+                />
             </div>
         </div>
     )
