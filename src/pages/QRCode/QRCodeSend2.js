@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { IconButton, makeStyles, Button, Grid, TextField, Typography } from '@material-ui/core'
+import { IconButton, Box, makeStyles, Button, Grid, TextField, Typography } from '@material-ui/core'
 import { Link, useHistory, withRouter } from 'react-router-dom'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
@@ -36,6 +36,13 @@ const useStyles = makeStyles((theme) => ({
         alienItems: 'center',
         justifyContent: 'center',
 
+        '& .box': {
+            padding: theme.spacing(1),
+            borderRadius: theme.spacing(3),
+            textAlign: 'center',
+            backgroundColor: theme.palette.ultimate.main,
+            color: 'white',
+        },
         '& .pay': {
             display: 'block',
             alienItems: 'center',
@@ -180,8 +187,8 @@ const QRCodeSend2 = ({ history }, props) => {
         localStorage.setItem('haveTran', false)
         localStorage.removeItem('is_socketid')
         localStorage.removeItem('socketid')
-        setError('交易前請先確定交易雙方皆在此畫面')
-        setOpen3(true)
+        // setError('請確認交易雙方皆在此畫面\n 再進行交易')
+        // setOpen3(true)
     }, [localStorage.getItem('roundNum')])
 
     // 判斷身分
@@ -970,7 +977,10 @@ const QRCodeSend2 = ({ history }, props) => {
             </Dialog>
 
             {/* 付款 */}
+
             <div className={`${state.checked ? 'pay' : 'payhide'}`}>
+                <Box className="box">請確認交易雙方皆在此畫面再進行交易</Box>
+
                 <FormControlLabel
                     control={
                         <Switch
@@ -1112,7 +1122,10 @@ const QRCodeSend2 = ({ history }, props) => {
             </div>
 
             {/* 收款 */}
+
             <div className={`${state.checked ? 'payhide' : 'pay'}`}>
+                <Box className="box">請確認交易雙方皆在此畫面再進行交易</Box>
+
                 <FormControlLabel
                     control={
                         <Switch
