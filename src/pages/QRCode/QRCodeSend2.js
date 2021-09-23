@@ -20,12 +20,12 @@ import ErrorIcon from '@material-ui/icons/Error'
 import FaceIcon from '@material-ui/icons/Face'
 // import { ScreenBrightness } from '@capacitor-community/screen-brightness'
 // import ScreenBrightness from 'react-native-screen-brightness'
-// import QrReader from 'react-qr-reader' //v1
+import QrReader from 'react-qr-reader' //v1
 import BarcodeReader from 'react-barcode-reader' //v2 沒有用QQ
 // import QrReader from 'react-weblineindia-qrcode-scanner' //v3
 // import QrReader from 'react-qr-scanner' //v4
 // import { QrReader } from '@blackbox-vision/react-qr-reader' //v5
-import QrReader from 'react-web-qr-reader' //v6
+// import QrReader from 'react-web-qr-reader' //v6
 
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
@@ -1198,7 +1198,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 />
                 <h4>請掃描付款者 QRCode</h4>
                 {/* version 1 */}
-                {/* <QrReader
+                <QrReader
                     className="scan"
                     delay={200}
                     onError={handleError}
@@ -1208,7 +1208,7 @@ const QRCodeSend2 = ({ history }, props) => {
                         height: '500',
                         width: '500',
                     }}
-                /> */}
+                />
                 {/* version 2 */}
                 {/* <BarcodeReader className="scan" onError={handleError} onScan={handleScan} facingMode={'environment'} /> */}
                 {/* version 3 */}
@@ -1236,14 +1236,14 @@ const QRCodeSend2 = ({ history }, props) => {
                     }}
                 /> */}
                 {/* version 5 */}
-                <QrReader
+                {/* <QrReader
                     className="scan"
                     onResult={handleScan}
                     style={{
                         height: '500',
                         width: '500',
                     }}
-                />
+                /> */}
             </div>
         </div>
     )
