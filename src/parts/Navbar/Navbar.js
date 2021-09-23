@@ -1,3 +1,34 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@ally0108 
+zx123497
+/
+bjfrontend
+Public
+1
+00
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+bjfrontend/src/parts/Navbar/Navbar.js /
+@allyhaungg
+allyhaungg 更改dialog + qrcode result
+Latest commit dbaca3c 15 days ago
+ History
+ 4 contributors
+@zx123497@ally0108@yww1327@allyhaungg
+98 lines (93 sloc)  3.32 KB
+   
 import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -79,7 +110,7 @@ const ButtonAppBar = (props) => {
                         </h1>
                     </div>
 
-                    {name === '' ? (
+                    {localStorage.getItem('name') ? (
                         <Button className="isLogin" color="inherit" component={Link} to="/login">
                             <PersonIcon />
                             Hi, {name}
@@ -96,3 +127,4 @@ const ButtonAppBar = (props) => {
     )
 }
 export default withRouter(ButtonAppBar)
+

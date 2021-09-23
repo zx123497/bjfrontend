@@ -147,18 +147,6 @@ const ForgetPassword = (props) => {
 
     return (
         <div className={classes.ForgetPassword}>
-            {(() => {
-                if (localStorage.getItem('email') == null) {
-                    return <BackPage refs="/LogIn"></BackPage>
-                } else {
-                    if (localStorage.getItem('isAdmin') == '1') {
-                        return <BackPage refs="/admin/lobby"></BackPage>
-                    } else {
-                        return <BackPage refs="/user/lobby"></BackPage>
-                    }
-                }
-            })()}
-
             <Card className="card">
                 <CardContent>
                     {localStorage.getItem('email') ? (
