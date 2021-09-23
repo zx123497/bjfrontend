@@ -9,7 +9,7 @@ import BackPage from '../../components/BackPage/BackPage'
 import Back from '../../components/BackPage/Back'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import QRCode from 'react-qr-code'
-import { socket } from '../../service/socket'
+import { socketConnection } from '../../service/socket'
 import io from 'socket.io-client'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -136,7 +136,7 @@ const useStyles = makeStyles((theme) => ({
 const QRCodeSend2 = ({ history }, props) => {
     const classes = useStyles()
     history.listen(() => {
-        socket.on('disconnect', function () {
+        socketConnection.on('disconnect', function () {
             console.log('disconnect' + this.id)
         })
     })
@@ -203,7 +203,7 @@ const QRCodeSend2 = ({ history }, props) => {
        */
 
         if (localStorage.getItem('is_socketid') == null && localStorage.getItem('haveTran') == 'false') {
-            socket.emit('setSocket', {
+            socketConnection.emit('setSocket', {
                 roomNum: localStorage.getItem('roomNum'),
                 user_id: localStorage.getItem('id'),
             })
@@ -212,30 +212,30 @@ const QRCodeSend2 = ({ history }, props) => {
         }
 
         //確認setSocketid成功與否
-        socket.on('testsocket', function (data) {
+        socketConnection.on('testsocket', function (data) {
             console.log(data)
             localStorage.setItem('socketid', data.s)
         })
 
         //每次setsocket 都會傳送訊息給 user 234
         //user 234 要先建立過連線
-        socket.on('testbroadcast', function (data) {
+        socketConnection.on('testbroadcast', function (data) {
             console.log(data.msg)
         })
 
-        socket.on('connect_error ', function (data) {
+        socketConnection.on('connect_error ', function (data) {
             console.log(data)
         })
 
         //enterRoom
-        socket.emit('enterRoom', {
+        socketConnection.emit('enterRoom', {
             roomNum: localStorage.getItem('roomNum'),
             ID: localStorage.getItem('id'),
             username: localStorage.getItem('username'),
         })
 
         // listen to endRound
-        socket.on('endRoundResponse', (res) => {
+        socketConnection.on('endRoundResponse', (res) => {
             console.log(res)
             if (res == 'endRoundMessage' || res == 'error(no next round)') {
                 localStorage.removeItem(`tran${localStorage.getItem('round')}_money`)
@@ -246,21 +246,24 @@ const QRCodeSend2 = ({ history }, props) => {
         })
 
         // listen to sysmsg
-        socket.on('sys', (res) => {
+        socketConnection.on('sys', (res) => {
             console.log(res)
             if (res != 'error') {
                 localStorage.setItem(
                     `announcement_${localStorage.getItem('roomNum')}_${localStorage.getItem('roundNum')}`,
                     res.message
                 )
-                socket.emit('reqRole', { roomNum: localStorage.getItem('roomNum'), ID: localStorage.getItem('id') })
+                socketConnection.emit('reqRole', {
+                    roomNum: localStorage.getItem('roomNum'),
+                    ID: localStorage.getItem('id'),
+                })
             }
         })
 
         // listen to close room
-        socket.on('get_out', (res) => {
+        socketConnection.on('get_out', (res) => {
             console.log('get_out')
-            socket.emit('leaveRoom', { roomNum: localStorage.getItem('roomNum') })
+            socketConnection.emit('leaveRoom', { roomNum: localStorage.getItem('roomNum') })
             localStorage.removeItem(`tran${localStorage.getItem('round')}_money`)
             localStorage.removeItem(`tran${localStorage.getItem('round')}_user`)
             localStorage.removeItem('announcement')
@@ -280,7 +283,7 @@ const QRCodeSend2 = ({ history }, props) => {
         // 與老師交易時的setSocket
         if (localStorage.getItem('tranTeacher') == '1') {
             if (localStorage.getItem('is_socketid') == null) {
-                socket.emit('setSocket', {
+                socketConnection.emit('setSocket', {
                     roomNum: localStorage.getItem('roomNum'),
                     user_id: localStorage.getItem('id'),
                 })
@@ -288,7 +291,7 @@ const QRCodeSend2 = ({ history }, props) => {
             }
 
             //確認setSocketid成功與否
-            socket.on('testsocket', function (data) {
+            socketConnection.on('testsocket', function (data) {
                 console.log(data)
                 localStorage.setItem('socketid', data.s)
             })
@@ -302,7 +305,7 @@ const QRCodeSend2 = ({ history }, props) => {
             console.log('與老師交易')
 
             //確認接受老師轉入
-            socket.emit('set_admin_transc_req', {
+            socketConnection.emit('set_admin_transc_req', {
                 roomNum: localStorage.getItem('roomNum'),
                 round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 limit_times: localStorage.getItem('tranLimit'),
@@ -312,7 +315,7 @@ const QRCodeSend2 = ({ history }, props) => {
             })
 
             // 收款方等待接收 與老師交易是否成功之 socket
-            socket.on('get_admin_transc_rsp', function (data) {
+            socketConnection.on('get_admin_transc_rsp', function (data) {
                 console.log(data)
                 if (data.point == '1') {
                     // console.log('get_admin_transc_rsp=1')
@@ -353,7 +356,7 @@ const QRCodeSend2 = ({ history }, props) => {
             console.log('seller 取消交易1')
 
             if (transById) {
-                socket.emit('send_chek_point', {
+                socketConnection.emit('send_chek_point', {
                     roomNum: localStorage.getItem('roomNum'),
                     round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                     money: localStorage.getItem('tranMoney'),
@@ -364,7 +367,7 @@ const QRCodeSend2 = ({ history }, props) => {
             }
         } else {
             console.log('buyer 取消交易1')
-            socket.emit('get_chek_point', {
+            socketConnection.emit('get_chek_point', {
                 roomNum: localStorage.getItem('roomNum'),
                 round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 money: localStorage.getItem('tranMoney'),
@@ -383,7 +386,7 @@ const QRCodeSend2 = ({ history }, props) => {
         // 收款方確認要交易
         if (seller) {
             if (transById) {
-                socket.emit('send_chek_point', {
+                socketConnection.emit('send_chek_point', {
                     roomNum: localStorage.getItem('roomNum'),
                     round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                     money: localStorage.getItem('tranMoney'),
@@ -392,7 +395,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     chek_point: '1',
                 })
             } else {
-                socket.emit('checkQRcode', {
+                socketConnection.emit('checkQRcode', {
                     roomNum: localStorage.getItem('roomNum'),
                     payer_id: localStorage.getItem('tranUser'),
                     receiver_id: localStorage.getItem('id'),
@@ -406,7 +409,7 @@ const QRCodeSend2 = ({ history }, props) => {
 
         if (!seller) {
             console.log('buyer 確定要交易')
-            socket.emit('get_chek_point', {
+            socketConnection.emit('get_chek_point', {
                 roomNum: localStorage.getItem('roomNum'),
                 round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 money: money,
@@ -418,7 +421,7 @@ const QRCodeSend2 = ({ history }, props) => {
             setWait(true)
 
             // 轉帳方式: qrcode
-            socket.on('getRecordRequest', function (data) {
+            socketConnection.on('getRecordRequest', function (data) {
                 console.log('getRecordRequest1: ' + data)
 
                 if (data) {
@@ -439,7 +442,7 @@ const QRCodeSend2 = ({ history }, props) => {
         // 賣方
         if (seller) {
             // 轉帳方式: id
-            socket.on('receiver_transcResp', function (data) {
+            socketConnection.on('receiver_transcResp', function (data) {
                 if (data == '1') {
                     localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
@@ -457,7 +460,7 @@ const QRCodeSend2 = ({ history }, props) => {
             })
 
             // 轉帳方式: qrcode
-            socket.on('transcResp', function (data) {
+            socketConnection.on('transcResp', function (data) {
                 if (data == '1') {
                     localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
@@ -479,7 +482,7 @@ const QRCodeSend2 = ({ history }, props) => {
         // if (wait) {
         if (!seller) {
             // 轉帳方式: id
-            socket.on('payer_transcResp', function (data) {
+            socketConnection.on('payer_transcResp', function (data) {
                 if (data == '1') {
                     localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
@@ -495,7 +498,7 @@ const QRCodeSend2 = ({ history }, props) => {
             })
 
             // 轉帳方式: qrcode
-            socket.on('getRecordRequest', function (data) {
+            socketConnection.on('getRecordRequest', function (data) {
                 console.log('getRecordRequest1: ' + data)
 
                 if (data) {
@@ -514,7 +517,7 @@ const QRCodeSend2 = ({ history }, props) => {
             })
         } else {
             // 轉帳方式: id
-            socket.on('receiver_transcResp', function (data) {
+            socketConnection.on('receiver_transcResp', function (data) {
                 if (data == '1') {
                     localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
@@ -532,7 +535,7 @@ const QRCodeSend2 = ({ history }, props) => {
             })
 
             // 轉帳方式: qrcode
-            socket.on('transcResp', function (data) {
+            socketConnection.on('transcResp', function (data) {
                 if (data == '1') {
                     localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
@@ -565,7 +568,7 @@ const QRCodeSend2 = ({ history }, props) => {
 
         if (seller) {
             if (transById) {
-                socket.emit('send_chek_point', {
+                socketConnection.emit('send_chek_point', {
                     roomNum: localStorage.getItem('roomNum'),
                     round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                     money: localStorage.getItem('tranMoney'),
@@ -577,7 +580,7 @@ const QRCodeSend2 = ({ history }, props) => {
             console.log('seller 取消交易2')
         } else {
             console.log('buyer 取消交易2')
-            socket.emit('get_chek_point', {
+            socketConnection.emit('get_chek_point', {
                 roomNum: localStorage.getItem('roomNum'),
                 round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 money: money,
@@ -670,7 +673,7 @@ const QRCodeSend2 = ({ history }, props) => {
                         setOpen3(true)
                     } else {
                         // 付款方傳送匯款要求
-                        socket.emit('send_transc_req', {
+                        socketConnection.emit('send_transc_req', {
                             roomNum: localStorage.getItem('roomNum'),
                             payer_id: localStorage.getItem('id'),
                             receiver_id: values.tranId,
@@ -678,7 +681,7 @@ const QRCodeSend2 = ({ history }, props) => {
                         })
 
                         localStorage.setItem('tranUser', values.tranId)
-                        // socket.on 交易對象id不存在
+                        // socketConnection.on 交易對象id不存在
                         setError('等待收款方接受交易\n 請勿離開本頁面\n')
                         setTransById(true)
                         setOpen3(true)
@@ -694,7 +697,7 @@ const QRCodeSend2 = ({ history }, props) => {
         if (!seller) {
             // 轉帳方式: id
             if (transById) {
-                socket.on('payer_transcResp', function (data) {
+                sosocketConnectioncket.on('payer_transcResp', function (data) {
                     if (data == '1') {
                         setOpen1(true)
                         localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
@@ -711,7 +714,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 })
             } else {
                 // 轉帳方式: qrcode
-                socket.on('transCheckReq', function (data) {
+                socketConnection.on('transCheckReq', function (data) {
                     setReceiver_id(data)
                     console.log('receiver' + data)
                     localStorage.setItem('receiver_id', data)
@@ -729,7 +732,7 @@ const QRCodeSend2 = ({ history }, props) => {
 
     useEffect(() => {
         // 收款方監聽匯款要求(輸入id)
-        socket.on('transCheckReq', function (data) {
+        socketConnection.on('transCheckReq', function (data) {
             if (data.transc_money !== undefined) {
                 console.log(data)
                 localStorage.setItem('payer_id', data.payer_id)
