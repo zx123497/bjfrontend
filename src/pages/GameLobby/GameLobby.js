@@ -33,6 +33,7 @@ const GameLobby = (props) => {
         money: '',
         price: '',
         role: '',
+        score: ''
     })
 
     const [annoucement, setAnnouncement] = useState({
@@ -76,6 +77,7 @@ const GameLobby = (props) => {
                 money: res.user.money,
                 price: res.user.price,
                 role: res.user.role,
+                score: res.user.score
             })
         })
 
