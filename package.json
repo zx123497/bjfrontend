@@ -8,6 +8,7 @@
     "dependencies": {
         "@adrianso/react-native-device-brightness": "^1.2.5",
         "@agney/react-loading": "^0.1.2",
+        "@blackbox-vision/react-qr-reader": "^5.0.0",
         "@capacitor-community/screen-brightness": "^1.0.1",
         "@capacitor/core": "^3.2.2",
         "@date-io/core": "^2.10.7",
