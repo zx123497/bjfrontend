@@ -82,12 +82,12 @@ const ButtonAppBar = (props) => {
                     {name === '' ? (
                         <Button className="isLogin" color="inherit" component={Link} to="/login">
                             <PersonIcon />
-                            Hi, {name}
+                            登入
                         </Button>
                     ) : (
                         <Button className="login" color="inherit" component={Link} to="/login">
                             <PersonIcon />
-                            登入
+                            Hi, {name}
                         </Button>
                     )}
                 </Toolbar>
