@@ -20,9 +20,11 @@ import ErrorIcon from '@material-ui/icons/Error'
 import FaceIcon from '@material-ui/icons/Face'
 // import { ScreenBrightness } from '@capacitor-community/screen-brightness'
 import ScreenBrightness from 'react-native-screen-brightness'
-// import QrReader from 'react-qr-reader' //v1
+import QrReader from 'react-qr-reader' //v1
 import BarcodeReader from 'react-barcode-reader' //v2 沒有用QQ
-import QrReader from 'react-weblineindia-qrcode-scanner' //v3
+// import QrReader from 'react-weblineindia-qrcode-scanner' //v3
+import QRCodeScanner from 'react-native-qrcode-scanner'
+import { RNCamera } from 'react-native-camera'
 
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
@@ -1203,7 +1205,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     facingMode={'environment'}
                 /> */}
                 {/* version 2 */}
-                <BarcodeReader className="scan" onError={handleError} onScan={handleScan} facingMode={'environment'} />
+                {/* <BarcodeReader className="scan" onError={handleError} onScan={handleScan} facingMode={'environment'} /> */}
                 {/* <BarcodeScannerComponent
                     width={500}
                     height={500}
@@ -1224,6 +1226,15 @@ const QRCodeSend2 = ({ history }, props) => {
                     onError={handleError}
                     onScan={handleScan}
                 /> */}
+                {/* version 4 */}
+                <QRCodeScanner
+                    onRead={handleScan}
+                    flashMode={RNCamera.Constants.FlashMode.torch}
+                    style={{
+                        height: '500',
+                        width: '500',
+                    }}
+                />
             </div>
         </div>
     )
