@@ -109,7 +109,7 @@ function App() {
                 <div className="App">
                     <Navbar />
                     <Switch>
-                        <Route path="/admin" exact component={BackStage} />
+                        <Route path="/admin" component={BackStage} />
                         <Route
                             path="/"
                             render={() => (
