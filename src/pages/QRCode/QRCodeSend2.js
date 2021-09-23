@@ -19,12 +19,13 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import ErrorIcon from '@material-ui/icons/Error'
 import FaceIcon from '@material-ui/icons/Face'
 // import { ScreenBrightness } from '@capacitor-community/screen-brightness'
-import ScreenBrightness from 'react-native-screen-brightness'
+// import ScreenBrightness from 'react-native-screen-brightness'
 // import QrReader from 'react-qr-reader' //v1
 import BarcodeReader from 'react-barcode-reader' //v2 沒有用QQ
 // import QrReader from 'react-weblineindia-qrcode-scanner' //v3
 // import QrReader from 'react-qr-scanner' //v4
-import QrReader from 'modern-react-qr-reader' //v5
+import { QrReader } from '@blackbox-vision/react-qr-reader@5.0.0' //v5
+
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
         display: 'flex',
@@ -1243,11 +1244,9 @@ const QRCodeSend2 = ({ history }, props) => {
                 /> */}
                 {/* version 5 */}
                 <QrReader
+                    facingMode={'enviroment'}
                     className="scan"
-                    delay={200}
-                    onError={handleError}
-                    onScan={handleScan}
-                    facingMode={'environment'}
+                    onResult={handleScan}
                     style={{
                         height: '500',
                         width: '500',
