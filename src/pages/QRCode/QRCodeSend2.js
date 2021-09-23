@@ -1244,7 +1244,6 @@ const QRCodeSend2 = ({ history }, props) => {
                 /> */}
                 {/* version 5 */}
                 <QrReader
-                    facingMode={'user'}
                     className="scan"
                     onResult={handleScan}
                     style={{
