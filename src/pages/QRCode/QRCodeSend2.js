@@ -264,6 +264,7 @@ const QRCodeSend2 = ({ history }, props) => {
             localStorage.removeItem(`tran${localStorage.getItem('round')}_money`)
             localStorage.removeItem(`tran${localStorage.getItem('round')}_user`)
             localStorage.removeItem('announcement')
+            localStorage.removeItem('haveShow')
             history2.push('/user/lobby')
         })
 
