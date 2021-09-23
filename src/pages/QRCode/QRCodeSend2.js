@@ -20,12 +20,12 @@ import ErrorIcon from '@material-ui/icons/Error'
 import FaceIcon from '@material-ui/icons/Face'
 // import { ScreenBrightness } from '@capacitor-community/screen-brightness'
 // import ScreenBrightness from 'react-native-screen-brightness'
-import QrReader from 'react-qr-reader' //v1
+// import QrReader from 'react-qr-reader' //v1
 import BarcodeReader from 'react-barcode-reader' //v2 沒有用QQ
 // import QrReader from 'react-weblineindia-qrcode-scanner' //v3
 // import QrReader from 'react-qr-scanner' //v4
 // import { QrReader } from '@blackbox-vision/react-qr-reader' //v5
-// import QrReader from 'react-web-qr-reader' //v6
+import QrReader from 'react-web-qr-reader' //v5
 
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
@@ -414,16 +414,6 @@ const QRCodeSend2 = ({ history }, props) => {
                     setError('恭喜您完成交易')
                     setOpen3(true)
 
-                    // 設定回合交易紀錄
-                    localStorage.setItem(
-                        'tran' + localStorage.getItem('roundNum') + '_money',
-                        localStorage.getItem('tranMoney')
-                    )
-                    localStorage.setItem(
-                        'tran' + localStorage.getItem('roundNum') + '_user',
-                        localStorage.getItem('tranUser')
-                    )
-
                     localStorage.removeItem('is_socketid')
                     localStorage.removeItem('socketid')
                 } else {
@@ -442,16 +432,6 @@ const QRCodeSend2 = ({ history }, props) => {
                     setError('恭喜您完成交易')
                     setOpen3(true)
 
-                    // 設定回合交易紀錄
-                    localStorage.setItem(
-                        'tran' + localStorage.getItem('roundNum') + '_money',
-                        localStorage.getItem('tranMoney')
-                    )
-                    localStorage.setItem(
-                        'tran' + localStorage.getItem('roundNum') + '_user',
-                        localStorage.getItem('tranUser')
-                    )
-
                     localStorage.removeItem('is_socketid')
                     localStorage.removeItem('socketid')
                 } else if (data == '0') {
@@ -469,16 +449,6 @@ const QRCodeSend2 = ({ history }, props) => {
                     localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
                     setOpen3(true)
-
-                    // 設定回合交易紀錄
-                    localStorage.setItem(
-                        'tran' + localStorage.getItem('roundNum') + '_money',
-                        localStorage.getItem('tranMoney')
-                    )
-                    localStorage.setItem(
-                        'tran' + localStorage.getItem('roundNum') + '_user',
-                        localStorage.getItem('tranUser')
-                    )
 
                     localStorage.removeItem('is_socketid')
                     localStorage.removeItem('socketid')
@@ -502,16 +472,6 @@ const QRCodeSend2 = ({ history }, props) => {
                     setError('恭喜您完成交易')
                     setOpen3(true)
 
-                    // 設定回合交易紀錄
-                    localStorage.setItem(
-                        'tran' + localStorage.getItem('roundNum') + '_money',
-                        localStorage.getItem('tranMoney')
-                    )
-                    localStorage.setItem(
-                        'tran' + localStorage.getItem('roundNum') + '_user',
-                        localStorage.getItem('tranUser')
-                    )
-
                     localStorage.removeItem('is_socketid')
                     localStorage.removeItem('socketid')
                 } else if (data == '0') {
@@ -533,16 +493,6 @@ const QRCodeSend2 = ({ history }, props) => {
                     localStorage.removeItem('is_socketid')
                     localStorage.removeItem('socketid')
 
-                    // 設定回合交易紀錄
-                    localStorage.setItem(
-                        'tran' + localStorage.getItem('roundNum') + '_money',
-                        localStorage.getItem('tranMoney')
-                    )
-                    localStorage.setItem(
-                        'tran' + localStorage.getItem('roundNum') + '_user',
-                        localStorage.getItem('tranUser')
-                    )
-
                     console.log(localStorage.getItem('tranUser'))
                 } else {
                     setError('交易失敗\n 付款方無回應')
@@ -556,16 +506,6 @@ const QRCodeSend2 = ({ history }, props) => {
                     localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                     setError('恭喜您完成交易')
                     setOpen3(true)
-
-                    // 設定回合交易紀錄
-                    localStorage.setItem(
-                        'tran' + localStorage.getItem('roundNum') + '_money',
-                        localStorage.getItem('tranMoney')
-                    )
-                    localStorage.setItem(
-                        'tran' + localStorage.getItem('roundNum') + '_user',
-                        localStorage.getItem('tranUser')
-                    )
 
                     localStorage.removeItem('is_socketid')
                     localStorage.removeItem('socketid')
@@ -587,16 +527,6 @@ const QRCodeSend2 = ({ history }, props) => {
 
                     localStorage.removeItem('is_socketid')
                     localStorage.removeItem('socketid')
-
-                    // 設定回合交易紀錄
-                    localStorage.setItem(
-                        'tran' + localStorage.getItem('roundNum') + '_money',
-                        localStorage.getItem('tranMoney')
-                    )
-                    localStorage.setItem(
-                        'tran' + localStorage.getItem('roundNum') + '_user',
-                        localStorage.getItem('tranUser')
-                    )
                 } else if (data == '0') {
                     localStorage.removeItem('is_socketid')
                     localStorage.removeItem('socketid')
@@ -752,16 +682,6 @@ const QRCodeSend2 = ({ history }, props) => {
                         localStorage.setItem('haveTran', true) // 設定每局交易過後便無法再進行第二次交易
                         setError('恭喜您完成交易')
                         setOpen3(true)
-
-                        // 設定回合交易紀錄
-                        localStorage.setItem(
-                            'tran' + localStorage.getItem('roundNum') + '_money',
-                            localStorage.getItem('tranMoney')
-                        )
-                        localStorage.setItem(
-                            'tran' + localStorage.getItem('roundNum') + '_user',
-                            localStorage.getItem('tranUser')
-                        )
 
                         localStorage.removeItem('is_socketid')
                         localStorage.removeItem('socketid')
@@ -1236,14 +1156,14 @@ const QRCodeSend2 = ({ history }, props) => {
                     }}
                 /> */}
                 {/* version 5 */}
-                {/* <QrReader
+                <QrReader
                     className="scan"
                     onScan={handleScan}
                     style={{
                         height: '500',
                         width: '500',
                     }}
-                /> */}
+                />
             </div>
         </div>
     )
