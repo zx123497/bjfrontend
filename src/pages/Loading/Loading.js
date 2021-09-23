@@ -70,6 +70,7 @@ const Loading = (props) => {
     const [userlist, setUserList] = useState('Loading members...')
 
     const roomNum = props.location.pathname.split('/')[2]
+    const roundNum = localStorage.getItem('roundNum')
 
 
     useEffect(() => {
@@ -88,6 +89,12 @@ const Loading = (props) => {
             roomNum: roomNum,
             ID: localStorage.getItem('id'),
             username: localStorage.getItem('username')
+        })
+
+        socket.on('get_out', (res) => {
+            socket.emit('leaveRoom', { roomNum: roomNum })
+            localStorage.removeItem(`announcement_${roomNum}_${roundNum}`)
+            props.history.push('/user/lobby')
         })
        
     },[])
