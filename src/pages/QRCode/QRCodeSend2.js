@@ -119,8 +119,8 @@ const useStyles = makeStyles((theme) => ({
         '& .scan2': {
             // margin: 'auto',
             // marginLeft: '15vw',
-            marginTop: '10px',
-            marginBottom: '150px',
+            //marginTop: '10px',
+            //marginBottom: '150px',
         },
     },
 }))
@@ -1220,7 +1220,7 @@ const QRCodeSend2 = ({ history }, props) => {
                         height: '500',
                         width: '500',
                     }}
-                    facingMode="rear" //front
+                    facingMode="enviroment" //front
                     onError={handleError}
                     onScan={handleScan}
                 />
