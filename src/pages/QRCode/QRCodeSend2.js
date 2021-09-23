@@ -20,10 +20,11 @@ import ErrorIcon from '@material-ui/icons/Error'
 import FaceIcon from '@material-ui/icons/Face'
 // import { ScreenBrightness } from '@capacitor-community/screen-brightness'
 import ScreenBrightness from 'react-native-screen-brightness'
-import QrReader from 'react-qr-reader' //v1
+// import QrReader from 'react-qr-reader' //v1
 import BarcodeReader from 'react-barcode-reader' //v2 沒有用QQ
 // import QrReader from 'react-weblineindia-qrcode-scanner' //v3
-
+// import QrReader from 'react-qr-scanner' //v4
+import QrReader from 'modern-react-qr-reader' //v5
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
         display: 'flex',
@@ -119,8 +120,8 @@ const useStyles = makeStyles((theme) => ({
         '& .scan2': {
             // margin: 'auto',
             // marginLeft: '15vw',
-            marginTop: '10px',
-            marginBottom: '150px',
+            //marginTop: '10px',
+            //marginBottom: '150px',
         },
     },
 }))
@@ -1195,13 +1196,17 @@ const QRCodeSend2 = ({ history }, props) => {
                 />
                 <h4>請掃描付款者 QRCode</h4>
                 {/* version 1 */}
-                <QrReader
+                {/* <QrReader
                     className="scan"
                     delay={200}
                     onError={handleError}
                     onScan={handleScan}
-                    facingMode={'environment'}
-                />
+                    facingMode={'enviroment'}
+                    style={{
+                        height: '500',
+                        width: '500',
+                    }}
+                /> */}
                 {/* version 2 */}
                 {/* <BarcodeReader className="scan" onError={handleError} onScan={handleScan} facingMode={'environment'} /> */}
                 {/* <BarcodeScannerComponent
@@ -1224,6 +1229,30 @@ const QRCodeSend2 = ({ history }, props) => {
                     onError={handleError}
                     onScan={handleScan}
                 /> */}
+                {/* version 4 */}
+                {/* <QrReader
+                    className="scan"
+                    delay={200}
+                    onError={handleError}
+                    onScan={handleScan}
+                    facingMode="front"
+                    style={{
+                        height: '500',
+                        width: '500',
+                    }}
+                /> */}
+                {/* version 5 */}
+                <QrReader
+                    className="scan"
+                    delay={200}
+                    onError={handleError}
+                    onScan={handleScan}
+                    facingMode={'environment'}
+                    style={{
+                        height: '500',
+                        width: '500',
+                    }}
+                />
             </div>
         </div>
     )
