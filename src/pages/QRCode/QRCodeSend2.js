@@ -1118,7 +1118,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 />
                 <h4>請掃描付款者 QRCode!</h4>
                 {/* version 1 */}
-                <QrReader
+                {/* <QrReader
                     className="scan"
                     delay={200}
                     onError={handleError}
@@ -1128,7 +1128,7 @@ const QRCodeSend2 = ({ history }, props) => {
                         height: '500',
                         width: '500',
                     }}
-                />
+                /> */}
                 {/* version 2 */}
                 {/* <BarcodeReader className="scan" onError={handleError} onScan={handleScan} facingMode={'environment'} /> */}
                 {/* version 3 */}
