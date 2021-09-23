@@ -50,6 +50,17 @@ instance.interceptors.response.use(
                     closeWith: ['click'],
                 }).show()
                 localStorage.clear()
+            } else if (error.response.status === 401) {
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: `權限不足!請檢查身分!`,
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
+                localStorage.clear()
             } else {
                 new Noty({
                     type: 'error',
