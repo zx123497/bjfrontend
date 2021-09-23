@@ -109,6 +109,7 @@ function App() {
                 <div className="App">
                     <Navbar />
                     <Switch>
+                    <Route path="/admin" exact component={BackStage} />
                         <Route
                             path="/"
                             render={() => (
@@ -131,7 +132,7 @@ function App() {
                                                 <Route path="/gamein" exact component={GameIn} />
                                                 <Route path="/qrcode" exact component={QRCodeSend2} />
                                                 <Route path="/teacherqrcode" exact component={QRCodeSend} />
-                                                <Route path="/admin" exact component={BackStage} />
+                                                {/* <Route path="/admin" exact component={BackStage} /> */}
                                                 <Route path="/" component={NotFound} />
                                             </Switch>
                                         </AnimatePresence>
