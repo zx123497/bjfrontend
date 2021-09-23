@@ -23,8 +23,8 @@ import ScreenBrightness from 'react-native-screen-brightness'
 // import QrReader from 'react-qr-reader' //v1
 import BarcodeReader from 'react-barcode-reader' //v2 沒有用QQ
 // import QrReader from 'react-weblineindia-qrcode-scanner' //v3
-import QrReader from 'react-qr-scanner' //v4
-
+// import QrReader from 'react-qr-scanner' //v4
+import QrReader from 'modern-react-qr-reader' //v5
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
         display: 'flex',
@@ -1230,12 +1230,24 @@ const QRCodeSend2 = ({ history }, props) => {
                     onScan={handleScan}
                 /> */}
                 {/* version 4 */}
-                <QrReader
+                {/* <QrReader
                     className="scan"
                     delay={200}
                     onError={handleError}
                     onScan={handleScan}
                     facingMode="front"
+                    style={{
+                        height: '500',
+                        width: '500',
+                    }}
+                /> */}
+                {/* version 5 */}
+                <QrReader
+                    className="scan"
+                    delay={200}
+                    onError={handleError}
+                    onScan={handleScan}
+                    facingMode={'environment'}
                     style={{
                         height: '500',
                         width: '500',
