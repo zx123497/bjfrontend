@@ -36,13 +36,6 @@ const useStyles = makeStyles((theme) => ({
         alienItems: 'center',
         justifyContent: 'center',
 
-        '& .box': {
-            padding: theme.spacing(1),
-            borderRadius: theme.spacing(3),
-            textAlign: 'center',
-            backgroundColor: theme.palette.ultimate.main,
-            color: 'white',
-        },
         '& .pay': {
             display: 'block',
             alienItems: 'center',
@@ -79,7 +72,12 @@ const useStyles = makeStyles((theme) => ({
             flexDirection: 'column',
             alignItems: 'center',
             marginTop: '5px',
-            marginBottom: '20px',
+            // paddingTop: '5px',
+            lineHeight: '28px',
+            marginBottom: '16px',
+        },
+        '& .subtitle2': {
+            lineHeight: '24px',
         },
         '&. bottom': {
             fontSize: '12px',
@@ -979,8 +977,6 @@ const QRCodeSend2 = ({ history }, props) => {
             {/* 付款 */}
 
             <div className={`${state.checked ? 'pay' : 'payhide'}`}>
-                <Box className="box">請確認交易雙方皆在此畫面再進行交易</Box>
-
                 <FormControlLabel
                     control={
                         <Switch
@@ -1080,7 +1076,11 @@ const QRCodeSend2 = ({ history }, props) => {
                         </Grid>
                     </Grid>
                 </form>
-                <div className="sub_title">提醒目前餘額為 ${localStorage.getItem('money')}</div>
+                <div className="sub_title">
+                    請確認交易雙方皆在此畫面再進行交易 <br />
+                    提醒目前餘額為 ${localStorage.getItem('money')}
+                </div>
+
                 <div className="bottom">
                     <div>
                         <QRCode
@@ -1124,8 +1124,6 @@ const QRCodeSend2 = ({ history }, props) => {
             {/* 收款 */}
 
             <div className={`${state.checked ? 'payhide' : 'pay'}`}>
-                <Box className="box">請確認交易雙方皆在此畫面再進行交易</Box>
-
                 <FormControlLabel
                     control={
                         <Switch
@@ -1139,7 +1137,11 @@ const QRCodeSend2 = ({ history }, props) => {
                     className="switch"
                     label="收款"
                 />
-                <h4>請掃描付款者 QRCode!</h4>
+                <h4 className="subtitle2">
+                    請掃描付款者 QRCode!
+                    <br />
+                    確認交易雙方皆在此畫面後 再進行交易
+                </h4>
                 {/* version 1 */}
                 <QrReader
                     className="scan"
