@@ -41,26 +41,26 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
     const classes = useStyles()
-    const [isLogin, setIsLogin] = useState(false)
-    const [isAdmin, setIsAdmin] = useState(false)
-    useEffect(() => {
-        if (localStorage.getItem('token')) {
-            setIsLogin(true)
-        } else {
-            setIsLogin(false)
-        }
-    }, [])
+    // const [isLogin, setIsLogin] = useState(false)
+    // const [isAdmin, setIsAdmin] = useState(false)
+    // useEffect(() => {
+    //     if (localStorage.getItem('token')) {
+    //         setIsLogin(true)
+    //     } else {
+    //         setIsLogin(false)
+    //     }
+    // }, [])
 
-    useEffect(() => {
-        if (localStorage.getItem('token')) {
-            setIsLogin(true)
-        } else if (localStorage.getItem('isAdmin') == '1') {
-            setIsAdmin(true)
-        } else {
-            setIsLogin(false)
-            setIsAdmin(false)
-        }
-    }, [localStorage])
+    // useEffect(() => {
+    //     if (localStorage.getItem('token')) {
+    //         setIsLogin(true)
+    //     } else if (localStorage.getItem('isAdmin') == '1') {
+    //         setIsAdmin(true)
+    //     } else {
+    //         setIsLogin(false)
+    //         setIsAdmin(false)
+    //     }
+    // }, [localStorage])
 
     const appliedTheme = Theme
     // if (!isLogin) {
@@ -109,7 +109,7 @@ function App() {
                 <div className="App">
                     <Navbar />
                     <Switch>
-                    <Route path="/admin" exact component={BackStage} />
+                        <Route path="/admin" exact component={BackStage} />
                         <Route
                             path="/"
                             render={() => (
@@ -132,7 +132,7 @@ function App() {
                                                 <Route path="/gamein" exact component={GameIn} />
                                                 <Route path="/qrcode" exact component={QRCodeSend2} />
                                                 <Route path="/teacherqrcode" exact component={QRCodeSend} />
-                                                {/* <Route path="/admin" exact component={BackStage} /> */}
+                                                <Route path="/admin" exact component={BackStage} />
                                                 <Route path="/" component={NotFound} />
                                             </Switch>
                                         </AnimatePresence>
@@ -140,7 +140,7 @@ function App() {
                                 </>
                             )}
                         />
-                        <Route path="/" component={NotFound} />
+                        {/* <Route path="/" component={NotFound} /> */}
                     </Switch>
                 </div>
             </ThemeProvider>
