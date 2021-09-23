@@ -180,6 +180,8 @@ const QRCodeSend2 = ({ history }, props) => {
         localStorage.setItem('haveTran', false)
         localStorage.removeItem('is_socketid')
         localStorage.removeItem('socketid')
+        setError('交易前請先確定交易雙方皆在此畫面')
+        setOpen3(true)
     }, [localStorage.getItem('roundNum')])
 
     // 判斷身分
@@ -655,19 +657,24 @@ const QRCodeSend2 = ({ history }, props) => {
 
                 // 匯款方式:輸入id
                 if (values.tranId !== '') {
-                    // 付款方傳送匯款要求
-                    socket.emit('send_transc_req', {
-                        roomNum: localStorage.getItem('roomNum'),
-                        payer_id: localStorage.getItem('id'),
-                        receiver_id: values.tranId,
-                        transc_money: money,
-                    })
+                    if (values.tranId === localStorage.getItem('id')) {
+                        setError('請勿嘗試與自己交易')
+                        setOpen3(true)
+                    } else {
+                        // 付款方傳送匯款要求
+                        socket.emit('send_transc_req', {
+                            roomNum: localStorage.getItem('roomNum'),
+                            payer_id: localStorage.getItem('id'),
+                            receiver_id: values.tranId,
+                            transc_money: money,
+                        })
 
-                    localStorage.setItem('tranUser', values.tranId)
-                    // socket.on 交易對象id不存在
-                    setError('等待收款方接受交易/n請勿離開本頁面')
-                    setTransById(true)
-                    setOpen3(true)
+                        localStorage.setItem('tranUser', values.tranId)
+                        // socket.on 交易對象id不存在
+                        setError('等待收款方接受交易\n 請勿離開本頁面')
+                        setTransById(true)
+                        setOpen3(true)
+                    }
                 } else {
                     // 匯款方式:掃QRcode
                     localStorage.setItem('tranMoney', money)
