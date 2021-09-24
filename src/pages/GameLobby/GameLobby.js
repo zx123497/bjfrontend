@@ -71,10 +71,8 @@ const GameLobby = (props) => {
         localStorage.setItem('round', room.round)
         localStorage.setItem('roomNum', roomNum)
 
-        const roundNum = localStorage.getItem('roundNum')
-
         if(localStorage.getItem(`announcement_${roomNum}_${roundNum}`)) {
-            setAnnouncement({roomAnnoucement: localStorage.getItem(`announcement_${roomNum}_${roundNum}`)})
+            setAnnouncement({roomAnnoucement: localStorage.getItem(`announcement_${roomNum}_${room.round}`)})
         }
 
         socket.on('enterRoom_resp', (res) => {
