@@ -71,7 +71,7 @@ const GameLobby = (props) => {
         localStorage.setItem('round', room.round)
         localStorage.setItem('roomNum', roomNum)
 
-        if(localStorage.getItem(`announcement_${roomNum}_${roundNum}`)) {
+        if(localStorage.getItem(`announcement_${roomNum}_${room.round}`)) {
             setAnnouncement({roomAnnoucement: localStorage.getItem(`announcement_${roomNum}_${room.round}`)})
         }
 
@@ -117,7 +117,7 @@ const GameLobby = (props) => {
         socket.on('endRoundResponse', (res) => {
             console.log(res)
             if ((res == 'endRoundMessage') || (res == 'error(no next round)')) {
-                localStorage.removeItem(`announcement_${roomNum}_${roundNum}`)
+                localStorage.removeItem(`announcement_${roomNum}_${room.round}`)
                 props.history.replace(`/loading/${roomNum}`)
             }
         })
@@ -126,14 +126,14 @@ const GameLobby = (props) => {
         socket.on('sys', (res) => {
             if (res != 'error') {
                 setAnnouncement({ roomAnnoucement: res.message })
-                localStorage.setItem(`announcement_${roomNum}_${roundNum}`, res.message)
+                localStorage.setItem(`announcement_${roomNum}_${room.round}`, res.message)
             }
         })
 
         // listen to close room
         socket.on('get_out', (res) => {
             // socket.emit('leaveRoom', { roomNum: roomNum })
-            localStorage.removeItem(`announcement_${roomNum}_${roundNum}`)
+            localStorage.removeItem(`announcement_${roomNum}_${room.round}`)
             props.history.push('/user/lobby')
         })
 
