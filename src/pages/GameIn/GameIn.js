@@ -76,7 +76,8 @@ const GameIn = (props) => {
         socket.on('connect_error', (res) => {
             console.log(res)
             alert('請重新登入')
-            localStorage.removeItem('name')
+            // localStorage.removeItem('name')
+            localStorage.clear() 
             props.history.push('/')
         })
     }, [])
