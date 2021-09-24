@@ -105,6 +105,8 @@ const useStyles = makeStyles((theme) => ({
             margin: 'auto',
             marginBottom: '25px',
             display: 'block',
+            filter: 'brightness(700%)',
+            filter: 'contrast(170%)',
         },
         '& .QRhide': {
             display: 'none',
@@ -1095,29 +1097,32 @@ const QRCodeSend2 = ({ history }, props) => {
                     </div>
                     <Link
                         component={Button}
+                        onClick={handleQRShow}
+                        className={`${showQR ? 'QRhide' : 'QRshow'}`}
                         style={{
                             margin: 'auto',
                             boxShadow: 'none',
                             borderRadius: '20px',
                             backgroundColor: '#FFFFFF',
                             color: '#555',
+                            filter: 'brightness(1)',
                         }}
-                        onClick={handleQRShow}
-                        className={`${showQR ? 'QRhide' : 'QRshow'}`}
+                        s
                     >
                         確定金額
                     </Link>
                     <Link
                         component={Button}
+                        onClick={handleQRHide}
+                        className={`${showQR ? 'QRshow' : 'QRhide'}`}
                         style={{
                             margin: 'auto',
                             borderRadius: '20px',
                             boxShadow: 'none',
                             backgroundColor: '#FFFFFF',
+                            filter: 'brightness(1)',
                             color: '#555',
                         }}
-                        onClick={handleQRHide}
-                        className={`${showQR ? 'QRshow' : 'QRhide'}`}
                     >
                         重設金額
                     </Link>
