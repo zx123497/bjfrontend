@@ -11,6 +11,8 @@ import RoomService from '../../service/RoomService'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import EmailIcon from '@material-ui/icons/Email'
 import { useTheme } from '@material-ui/styles'
+import { socket } from '../../service/socket'
+
 const useStyles = makeStyles((theme) => ({
     UserLobby: {
         padding: '43px 1rem 1rem 1rem',
@@ -283,18 +285,20 @@ const UserLobby = (props) => {
 
     useEffect(() => {
         let params = new URLSearchParams()
-        params.append('email', 'leo000111444@gmail.com')
+        params.append('email', localStorage.getItem('email'))
         RoomService.getRooms(params).then((res) => {
             console.log(res)
             setRooms(res.data)
         })
+
+        socket.emit('leaveRoom')
     }, [])
 
     const handleDelete = (id) => {
         RoomService.deleteRoom(id).then((res) => {
             console.log(res)
             let params = new URLSearchParams()
-            params.append('email', 'leo000111444@gmail.com')
+            params.append('email', localStorage.getItem('email'))
             RoomService.getRooms(params).then((res2) => {
                 console.log(res2)
                 setRooms(res2.data)
