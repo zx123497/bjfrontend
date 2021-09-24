@@ -30,11 +30,12 @@ import BarcodeReader from 'react-barcode-reader' //v2 沒有用QQ
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
         display: 'flex',
-        backgroundColor: '#555',
+        backgroundColor: '#fff',
         height: '100vh',
         overflow: 'hidden',
         alienItems: 'center',
         justifyContent: 'center',
+        // color: 'black',
 
         '& .pay': {
             display: 'block',
@@ -105,8 +106,9 @@ const useStyles = makeStyles((theme) => ({
             margin: 'auto',
             marginBottom: '25px',
             display: 'block',
+            width: '21%',
             //     filter: 'brightness(700%)',
-            //     filter: 'contrast(170%)',
+            filter: 'contrast(200%)',
         },
         '& .QRhide': {
             display: 'none',
@@ -1025,11 +1027,11 @@ const QRCodeSend2 = ({ history }, props) => {
                                 value={values.tranId}
                                 onChange={handleChange('tranId')}
                                 label={
-                                    <Typography style={{ color: 'white' }} variant="headline" component="h3">
+                                    <Typography style={{ color: 'black' }} variant="headline" component="h3">
                                         轉出對象id
                                     </Typography>
                                 }
-                                inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
+                                inputProps={{ style: { fontFamily: 'Arial', color: 'black' } }}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -1050,11 +1052,11 @@ const QRCodeSend2 = ({ history }, props) => {
                                 onChange={handleOnChange}
                                 type="number"
                                 label={
-                                    <Typography style={{ color: 'white' }} variant="headline" component="h3">
+                                    <Typography style={{ color: 'black' }} variant="headline" component="h3">
                                         轉出
                                     </Typography>
                                 }
-                                inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
+                                inputProps={{ style: { fontFamily: 'Arial', color: 'black' } }}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -1068,11 +1070,11 @@ const QRCodeSend2 = ({ history }, props) => {
                                 onChange={handleOnChange}
                                 type="number"
                                 label={
-                                    <Typography style={{ color: 'white' }} variant="headline" component="h3">
+                                    <Typography style={{ color: 'black' }} variant="headline" component="h3">
                                         轉出
                                     </Typography>
                                 }
-                                inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
+                                inputProps={{ style: { fontFamily: 'Arial', color: 'black' } }}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -1090,8 +1092,8 @@ const QRCodeSend2 = ({ history }, props) => {
                     <div>
                         <QRCode
                             className={`${showQR ? 'QRshow' : 'QRhide'}`}
-                            level="H"
-                            size={220}
+                            level="L"
+                            size={250}
                             value={'teacher=0/' + 'money=' + money + '/userId=' + localStorage.getItem('id')}
                         />
                     </div>
@@ -1103,11 +1105,10 @@ const QRCodeSend2 = ({ history }, props) => {
                             margin: 'auto',
                             boxShadow: 'none',
                             borderRadius: '20px',
-                            backgroundColor: '#FFFFFF',
-                            color: '#555',
+                            backgroundColor: '#555',
+                            color: '#fff',
                             filter: 'brightness(1)',
                         }}
-                        s
                     >
                         確定金額
                     </Link>
@@ -1119,9 +1120,9 @@ const QRCodeSend2 = ({ history }, props) => {
                             margin: 'auto',
                             borderRadius: '20px',
                             boxShadow: 'none',
-                            backgroundColor: '#FFFFFF',
+                            backgroundColor: '#555',
                             filter: 'brightness(1)',
-                            color: '#555',
+                            color: '#fff',
                         }}
                     >
                         重設金額
