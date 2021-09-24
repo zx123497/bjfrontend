@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 const GameLobby = (props) => {
     const roomNum = props.location.pathname.split('/')[2]
-    const roundNum = localStorage.getItem('round')
+    const roundNum = localStorage.getItem('roundNum')
 
     const [room, setRoom] = useState({
         pincode: '',
@@ -69,7 +69,6 @@ const GameLobby = (props) => {
 
         getRoom()
 
-        localStorage.setItem('round', room.round)
         localStorage.setItem('roomNum', roomNum)
 
         socket.on('enterRoom_resp', (res) => {
