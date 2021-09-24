@@ -65,6 +65,8 @@ const GameIn = (props) => {
     })
 
     useEffect(() => {
+        socket.connect()
+
         socket.on('enterRoom_resp', (res) => {
             console.log(res)
             if(res.status == 2) {
