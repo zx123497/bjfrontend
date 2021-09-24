@@ -5,6 +5,7 @@ const URL = 'https://lbdgame.mgt.ncu.edu.tw:8080'
 export const socket = io.connect(URL, {
     // withCredentials: true,
     extraHeaders: { authorization: `Bearer ${localStorage.getItem('token')}`},
+    reconnection: true
     // transports: [ 'websocket' ],
     // cors: {
     //     origin: URL,
