@@ -77,6 +77,9 @@ const GameLobby = (props) => {
             // console.log(room.round)
             // console.log(`tran${localStorage.getItem('round')}_money`)
             // console.log((localStorage.getItem(`tran${localStorage.getItem('round')}_money`)))
+            console.log(roomNum)
+            console.log(roundNum)
+
             if(localStorage.getItem(`announcement_${roomNum}_${roundNum}`)) {
                 setAnnouncement({roomAnnoucement: localStorage.getItem(`announcement_${roomNum}_${roundNum}`)})
             }
