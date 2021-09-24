@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
             color: '#FFF',
         },
         '& .roombtn': {
-            height: '2.3rem',
+            height: '2.5rem',
             backgroundColor: theme.palette.secondary.main,
             color: theme.palette.background.paper,
             boxShadow: '0 0 10px rgba(0,0,0,0.2)',

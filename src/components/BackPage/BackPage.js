@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'fixed',
         top: '88px',
         left: '12px',
-        color:"white"
+        color: 'white',
     },
 }))
 
@@ -17,10 +17,23 @@ const BackPage = (props) => {
 
     return (
         <div>
-            <Link className={classes.btn} component={Button} to={props.refs}>
-                <ArrowBackIosIcon />
-                上一頁
-            </Link>
+            {(() => {
+                if (props.refs == `gamelobby/${localStorage.getItem('roomNum')}`) {
+                    return (
+                        <Link className={classes.btn} style={{ color: '#555' }} component={Button} to={props.refs}>
+                            <ArrowBackIosIcon />
+                            上一頁
+                        </Link>
+                    )
+                } else {
+                    return (
+                        <Link className={classes.btn} component={Button} to={props.refs}>
+                            <ArrowBackIosIcon />
+                            上一頁
+                        </Link>
+                    )
+                }
+            })()}
         </div>
     )
 }

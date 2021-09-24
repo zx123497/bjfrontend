@@ -52,10 +52,13 @@ const useStyles = makeStyles((theme) => ({
             position: 'fixed',
             right: '10%',
             top: '15%',
-            color: 'white',
+            color: '#555',
+            fontWeight: 700,
         },
         '& .icon': {
-            color: theme.palette.primary.main,
+            color: '#555',
+
+            // color: theme.palette.primary.main,
         },
         '& .input': {
             display: 'flex',
@@ -79,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
         },
         '& .subtitle2': {
             lineHeight: '24px',
+            color: '#555',
         },
         '&. bottom': {
             fontSize: '12px',
@@ -1000,7 +1004,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 <form onSubmit={handleSubmit} noValidate autoComplete="off">
                     <Grid className="input" container spacing={1} alignItems="flex-end">
                         <Grid item className="icon">
-                            <FaceIcon></FaceIcon>
+                            <FaceIcon style={{ fontSize: '2rem' }}></FaceIcon>
                         </Grid>
                         <Grid item>
                             <TextField
@@ -1010,11 +1014,11 @@ const QRCodeSend2 = ({ history }, props) => {
                                 value={values.tranId}
                                 onChange={handleChange('tranId')}
                                 label={
-                                    <Typography style={{ color: 'white' }} variant="headline" component="h3">
+                                    <Typography style={{ color: '#555' }} variant="headline" component="h3">
                                         轉出對象id
                                     </Typography>
                                 }
-                                inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
+                                inputProps={{ style: { fontFamily: 'Arial', color: '#555' } }}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -1027,11 +1031,11 @@ const QRCodeSend2 = ({ history }, props) => {
                                 value={values.tranId}
                                 onChange={handleChange('tranId')}
                                 label={
-                                    <Typography style={{ color: 'black' }} variant="headline" component="h3">
+                                    <Typography style={{ color: '#555' }} variant="headline" component="h3">
                                         轉出對象id
                                     </Typography>
                                 }
-                                inputProps={{ style: { fontFamily: 'Arial', color: 'black' } }}
+                                inputProps={{ style: { fontFamily: 'Arial', color: '#555' } }}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -1041,7 +1045,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     </Grid>
                     <Grid className="input" container spacing={1} alignItems="flex-end">
                         <Grid item className="icon">
-                            <MonetizationOnIcon />
+                            <MonetizationOnIcon style={{ fontSize: '2rem' }} />
                         </Grid>
                         <Grid item>
                             <TextField
@@ -1052,11 +1056,11 @@ const QRCodeSend2 = ({ history }, props) => {
                                 onChange={handleOnChange}
                                 type="number"
                                 label={
-                                    <Typography style={{ color: 'black' }} variant="headline" component="h3">
+                                    <Typography style={{ color: '#555' }} variant="headline" component="h3">
                                         轉出
                                     </Typography>
                                 }
-                                inputProps={{ style: { fontFamily: 'Arial', color: 'black' } }}
+                                inputProps={{ style: { fontFamily: 'Arial', color: '#555' } }}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -1070,11 +1074,11 @@ const QRCodeSend2 = ({ history }, props) => {
                                 onChange={handleOnChange}
                                 type="number"
                                 label={
-                                    <Typography style={{ color: 'black' }} variant="headline" component="h3">
+                                    <Typography style={{ color: '#555' }} variant="headline" component="h3">
                                         轉出
                                     </Typography>
                                 }
-                                inputProps={{ style: { fontFamily: 'Arial', color: 'black' } }}
+                                inputProps={{ style: { fontFamily: 'Arial', color: '#555' } }}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
@@ -1147,7 +1151,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     label="收款"
                 />
                 <h4 className="subtitle2">
-                    請掃描付款者 QRCode!
+                    請掃描付款者 QRCode
                     {/* <br />
                     確認交易雙方皆在此畫面後 再進行交易 */}
                 </h4>
