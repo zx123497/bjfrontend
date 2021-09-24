@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 const GameLobby = (props) => {
     const roomNum = props.location.pathname.split('/')[2]
+    const roundNum = localStorage.getItem('round')
 
     const [room, setRoom] = useState({
         pincode: '',
@@ -71,15 +72,15 @@ const GameLobby = (props) => {
         localStorage.setItem('round', room.round)
         localStorage.setItem('roomNum', roomNum)
 
-        if(localStorage.getItem(`announcement_${roomNum}_${room.round}`)) {
-            setAnnouncement({roomAnnoucement: localStorage.getItem(`announcement_${roomNum}_${room.round}`)})
-        }
-
         socket.on('enterRoom_resp', (res) => {
             // console.log(res)
             // console.log(room.round)
             // console.log(`tran${localStorage.getItem('round')}_money`)
             // console.log((localStorage.getItem(`tran${localStorage.getItem('round')}_money`)))
+            if(localStorage.getItem(`announcement_${roomNum}_${roundNum}`)) {
+                setAnnouncement({roomAnnoucement: localStorage.getItem(`announcement_${roomNum}_${roundNum}`)})
+            }
+
             if (res.status == 0 && res.thisRound_Record) {
                 // 設定回合交易紀錄
                 // localStorage.setItem(
@@ -117,7 +118,7 @@ const GameLobby = (props) => {
         socket.on('endRoundResponse', (res) => {
             console.log(res)
             if ((res == 'endRoundMessage') || (res == 'error(no next round)')) {
-                localStorage.removeItem(`announcement_${roomNum}_${room.round}`)
+                localStorage.removeItem(`announcement_${roomNum}_${roundNum}`)
                 props.history.replace(`/loading/${roomNum}`)
             }
         })
@@ -126,14 +127,14 @@ const GameLobby = (props) => {
         socket.on('sys', (res) => {
             if (res != 'error') {
                 setAnnouncement({ roomAnnoucement: res.message })
-                localStorage.setItem(`announcement_${roomNum}_${room.round}`, res.message)
+                localStorage.setItem(`announcement_${roomNum}_${roundNum}`, res.message)
             }
         })
 
         // listen to close room
         socket.on('get_out', (res) => {
             // socket.emit('leaveRoom', { roomNum: roomNum })
-            localStorage.removeItem(`announcement_${roomNum}_${room.round}`)
+            localStorage.removeItem(`announcement_${roomNum}_${roundNum}`)
             props.history.push('/user/lobby')
         })
 
