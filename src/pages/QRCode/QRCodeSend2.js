@@ -105,8 +105,8 @@ const useStyles = makeStyles((theme) => ({
             margin: 'auto',
             marginBottom: '25px',
             display: 'block',
-            filter: 'brightness(700%)',
-            filter: 'contrast(170%)',
+            //     filter: 'brightness(700%)',
+            //     filter: 'contrast(170%)',
         },
         '& .QRhide': {
             display: 'none',
