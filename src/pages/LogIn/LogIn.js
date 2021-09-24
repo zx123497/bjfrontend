@@ -195,7 +195,7 @@ const useStyles = makeStyles((theme) => ({
 const LogIn = (props) => {
     const history = useHistory()
     const classes = useStyles()
-    const { signIn, signOut } = useContext(AuthContext)
+    // const { signIn, signOut } = useContext(AuthContext)
     const [errorMessage, setErrorMessage] = useState('')
     const [open, setOpen] = useState(false)
     const handleClose = () => {
@@ -212,7 +212,7 @@ const LogIn = (props) => {
     }
 
     const handleLogout = (event) => {
-        signOut()
+        // signOut()
         localStorage.clear()
         history.push('login')
     }
@@ -236,11 +236,11 @@ const LogIn = (props) => {
                 .then((res) => {
                     if (res.status == '200') {
                         if (!res.data.user.isManager) {
-                            signIn(false)
+                            // signIn(false)
                             localStorage.setItem('isAdmin', '0')
                             history.push('/user/lobby')
                         } else {
-                            signIn(true)
+                            // signIn(true)
                             localStorage.setItem('isAdmin', '1')
                             history.push('/admin/lobby')
                         }
