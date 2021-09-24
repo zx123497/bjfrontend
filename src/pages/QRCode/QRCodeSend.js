@@ -21,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
     QRCodeSend: {
         display: 'flex',
         color: theme.palette.ultimate.main,
-        backgroundColor: '#555',
+        backgroundColor: 'white',
         height: '100vh',
         overflow: 'hidden',
         alienItems: 'center',
         justifyContent: 'center',
 
         '& .switch': {
-            color: 'white',
+            color: '#555',
         },
         '& .icon': {
             color: theme.palette.primary.main,
@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: 'center',
         },
         '& .people': {
+            color:"#555",
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
@@ -104,14 +105,14 @@ const useStyles = makeStyles((theme) => ({
             marginBottom: '10px',
         },
         '& .limit': {
-            color: 'white',
+            color: '#555',
             display: 'block',
             alienItems: 'center',
             margin: 'auto',
             textAlign: 'center',
         },
         '& .unlimit': {
-            color: 'white',
+            color: '#555',
             display: 'none',
         },
         '& .center-text': {
@@ -218,11 +219,11 @@ const QRCodeSend2 = (props) => {
                                     onChange={handleChange('money')}
                                     type="number"
                                     label={
-                                        <Typography style={{ color: 'white' }} variant="headline" component="h3">
+                                        <Typography style={{ color: '#555' }} variant="headline" component="h3">
                                             轉出
                                         </Typography>
                                     }
-                                    inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
+                                    inputProps={{ style: { fontFamily: 'Arial', color: '#555' } }}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -235,11 +236,11 @@ const QRCodeSend2 = (props) => {
                                     onChange={handleChange('money')}
                                     type="number"
                                     label={
-                                        <Typography style={{ color: 'white' }} variant="headline" component="h3">
+                                        <Typography style={{ color: '#555' }} variant="headline" component="h3">
                                             轉出
                                         </Typography>
                                     }
-                                    inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
+                                    inputProps={{ style: { fontFamily: 'Arial', color: '#555' } }}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
@@ -295,7 +296,7 @@ const QRCodeSend2 = (props) => {
                                             onChange={handleChange('numpeople')}
                                             type="number"
                                             style={{ width: '32%' }}
-                                            inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
+                                            inputProps={{ style: { fontFamily: 'Arial', color: '#555' } }}
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
@@ -307,7 +308,7 @@ const QRCodeSend2 = (props) => {
                                             onChange={handleChange('numpeople')}
                                             type="number"
                                             style={{ width: '32%' }}
-                                            inputProps={{ style: { fontFamily: 'Arial', color: 'white' } }}
+                                            inputProps={{ style: { fontFamily: 'Arial', color: '#555' } }}
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
@@ -366,7 +367,7 @@ const QRCodeSend2 = (props) => {
                                         '/limit=' +
                                         values.numpeople +
                                         '/userId=' +
-                                        localStorage.getItem('id')
+                                        localStorage.getItem('email')
                                     }
                                 />
                             ) : (
@@ -378,7 +379,7 @@ const QRCodeSend2 = (props) => {
                                         values.money +
                                         '/limit=-1' +
                                         '/userId=' +
-                                        localStorage.getItem('name')
+                                        localStorage.getItem('email')
                                     }
                                 />
                             )}
@@ -390,9 +391,9 @@ const QRCodeSend2 = (props) => {
                                 borderRadius: '20px',
                                 boxShadow: 'none',
                                 width: '20%',
-                                backgroundColor: '#FFFFFF',
+                                backgroundColor: '#555',
                                 // color: '#939597',
-                                color: '#555',
+                                color: '#fff',
                             }}
                             onClick={handleQRShow}
                             className={`${showQR ? 'QRhide' : 'QRshow'}`}
@@ -406,9 +407,9 @@ const QRCodeSend2 = (props) => {
                                 borderRadius: '20px',
                                 boxShadow: 'none',
                                 width: '20%',
-                                backgroundColor: '#FFFFFF',
+                                backgroundColor: '#555',
                                 // color: '#939597',
-                                color: '#555',
+                                color: '#fff',
                             }}
                             onClick={handleQRHide}
                             className={`${showQR ? 'QRshow' : 'QRhide'}`}

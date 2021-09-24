@@ -185,7 +185,10 @@ const Register2 = (props) => {
                 }).show()
                 console.log(res.data)
 
-                if (res.status === 200) {
+                if (res.status === 500) {
+                    alert('此email已被註冊!')
+                }
+                else if (res.status === 200) {
                     // setError("註冊成功!")
                     // setOpen(true)
                     alert('註冊成功!')

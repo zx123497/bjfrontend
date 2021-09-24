@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
             marginTop: '2%',
         },
         '& .sub_title': {
-            color: 'white',
+            color: '#555',
             fontSize: 15,
             fontWeight: 400,
             display: 'flex',
@@ -213,7 +213,7 @@ const QRCodeSend2 = ({ history }, props) => {
         if (localStorage.getItem('is_socketid') == null && localStorage.getItem('haveTran') == 'false') {
             socket.emit('setSocket', {
                 roomNum: localStorage.getItem('roomNum'),
-                user_id: localStorage.getItem('id'),
+                user_id: localStorage.getItem('email'),
             })
 
             localStorage.setItem('is_socketid', true)
@@ -238,7 +238,7 @@ const QRCodeSend2 = ({ history }, props) => {
         //enterRoom
         socket.emit('enterRoom', {
             roomNum: localStorage.getItem('roomNum'),
-            ID: localStorage.getItem('id'),
+            ID: localStorage.getItem('email'),
             username: localStorage.getItem('username'),
         })
 
@@ -261,7 +261,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     `announcement_${localStorage.getItem('roomNum')}_${localStorage.getItem('roundNum')}`,
                     res.message
                 )
-                socket.emit('reqRole', { roomNum: localStorage.getItem('roomNum'), ID: localStorage.getItem('id') })
+                socket.emit('reqRole', { roomNum: localStorage.getItem('roomNum'), ID: localStorage.getItem('email') })
             }
         })
 
@@ -290,7 +290,7 @@ const QRCodeSend2 = ({ history }, props) => {
             if (localStorage.getItem('is_socketid') == null) {
                 socket.emit('setSocket', {
                     roomNum: localStorage.getItem('roomNum'),
-                    user_id: localStorage.getItem('id'),
+                    user_id: localStorage.getItem('email'),
                 })
                 localStorage.setItem('is_socketid', true)
             }
@@ -315,7 +315,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 limit_times: localStorage.getItem('tranLimit'),
                 payer_id: localStorage.getItem('tranUser'),
-                receiver_id: localStorage.getItem('id'),
+                receiver_id: localStorage.getItem('email'),
                 money: localStorage.getItem('tranMoney'),
             })
 
@@ -366,7 +366,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                     money: localStorage.getItem('tranMoney'),
                     payer_id: localStorage.getItem('payer_id'),
-                    receiver_id: localStorage.getItem('id'),
+                    receiver_id: localStorage.getItem('email'),
                     chek_point: '0',
                 })
             }
@@ -376,7 +376,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 roomNum: localStorage.getItem('roomNum'),
                 round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 money: localStorage.getItem('tranMoney'),
-                payer_id: localStorage.getItem('id'),
+                payer_id: localStorage.getItem('email'),
                 receiver_id: localStorage.getItem('receiver_id'),
                 chek_point: '0',
             })
@@ -396,14 +396,14 @@ const QRCodeSend2 = ({ history }, props) => {
                     round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                     money: localStorage.getItem('tranMoney'),
                     payer_id: localStorage.getItem('payer_id'),
-                    receiver_id: localStorage.getItem('id'),
+                    receiver_id: localStorage.getItem('email'),
                     chek_point: '1',
                 })
             } else {
                 socket.emit('checkQRcode', {
                     roomNum: localStorage.getItem('roomNum'),
                     payer_id: localStorage.getItem('tranUser'),
-                    receiver_id: localStorage.getItem('id'),
+                    receiver_id: localStorage.getItem('email'),
                 })
             }
 
@@ -418,7 +418,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 roomNum: localStorage.getItem('roomNum'),
                 round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 money: money,
-                payer_id: localStorage.getItem('id'),
+                payer_id: localStorage.getItem('email'),
                 receiver_id: localStorage.getItem('receiver_id'),
                 chek_point: '1',
             })
@@ -578,7 +578,7 @@ const QRCodeSend2 = ({ history }, props) => {
                     round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                     money: localStorage.getItem('tranMoney'),
                     payer_id: localStorage.getItem('payer_id'),
-                    receiver_id: localStorage.getItem('id'),
+                    receiver_id: localStorage.getItem('email'),
                     chek_point: '0',
                 })
             }
@@ -589,7 +589,7 @@ const QRCodeSend2 = ({ history }, props) => {
                 roomNum: localStorage.getItem('roomNum'),
                 round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
                 money: money,
-                payer_id: localStorage.getItem('id'),
+                payer_id: localStorage.getItem('email'),
                 receiver_id: localStorage.getItem('receiver_id'),
                 chek_point: '0',
             })
@@ -673,14 +673,14 @@ const QRCodeSend2 = ({ history }, props) => {
 
                 // 匯款方式:輸入id
                 if (values.tranId !== '') {
-                    if (values.tranId === localStorage.getItem('id')) {
+                    if (values.tranId === localStorage.getItem('email')) {
                         setError('請勿嘗試與自己交易')
                         setOpen3(true)
                     } else {
                         // 付款方傳送匯款要求
                         socket.emit('send_transc_req', {
                             roomNum: localStorage.getItem('roomNum'),
-                            payer_id: localStorage.getItem('id'),
+                            payer_id: localStorage.getItem('email'),
                             receiver_id: values.tranId,
                             transc_money: money,
                         })

@@ -11,6 +11,7 @@ import Roomsettings from './Roomsettings/Roomsettings'
 import WaitingRoom from './WaitingRoom/WaitingRoom'
 import ValueSetting from './ValueSetting/ValueSetting'
 import NotFound from '../NotFound/NotFound'
+import QRCodeSend from '../QRCode/QRCodeSend'
 const BackStage = (props) => {
     let { path } = useRouteMatch()
     return (
@@ -27,6 +28,7 @@ const BackStage = (props) => {
                     <Route path={`${path}/waitingroom/:id`} component={WaitingRoom} />
                     <Route path={`${path}/valuesetting/:id`} component={ValueSetting} />
                     <Route path={`${path}/roomedit/:id`} component={RoomEdit} />
+                    <Route path={`${path}/teacherqrcode`} exact component={QRCodeSend} />
                     <Route path={`${path}/`} component={NotFound} />
                 </Switch>
             </div>

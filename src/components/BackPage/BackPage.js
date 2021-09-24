@@ -18,7 +18,10 @@ const BackPage = (props) => {
     return (
         <div>
             {(() => {
-                if (props.refs == `gamelobby/${localStorage.getItem('roomNum')}`) {
+                if (
+                    props.refs == `gamelobby/${localStorage.getItem('roomNum')}` ||
+                    props.refs == `admin/gamelobby/${localStorage.getItem('roomNum')}`
+                ) {
                     return (
                         <Link className={classes.btn} style={{ color: '#555' }} component={Button} to={props.refs}>
                             <ArrowBackIosIcon />
