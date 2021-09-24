@@ -253,6 +253,7 @@ const LogIn = (props) => {
                     }
                 })
                 .catch((e) => {
+                    console.log(e)
                     setErrorMessage('登入失敗\n 請重新輸入帳號密碼')
                     setOpen(true)
                 })

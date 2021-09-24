@@ -9,7 +9,7 @@ import BackPage from '../../components/BackPage/BackPage'
 import Back from '../../components/BackPage/Back'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import QRCode from 'react-qr-code'
-import { socket } from '../../service/socket'
+// import { socket } from '../../service/socket'
 import io from 'socket.io-client'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -143,6 +143,8 @@ const useStyles = makeStyles((theme) => ({
 
 const QRCodeSend2 = ({ history }, props) => {
     const classes = useStyles()
+    const socket = props.socket
+
     history.listen(() => {
         socket.on('disconnect', function () {
             console.log('disconnect' + this.id)

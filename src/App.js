@@ -172,18 +172,7 @@ function App() {
                                                             </Switch>
                                                         </>
                                                     )}
-                                                    {/* {loginState.isAdmin && ( */}
-                                                        <>
-                                                            {/* <Switch> */}
-                                                                <Route
-                                                                    path="/teacherqrcode"
-                                                                    exact
-                                                                    component={QRCodeSend}
-                                                                />
-                                                                {/* <Route path="/" component={NotFound} /> */}
-                                                            {/* </Switch> */}
-                                                        </>
-                                                    {/* )} */}
+                                                   
 
                                                     <Route path="/" component={NotFound} />
                                                 </Switch>
