@@ -134,7 +134,7 @@ const GameLobby = (props) => {
 
         // listen to close room
         socket.on('get_out', (res) => {
-            socket.emit('leaveRoom', { roomNum: roomNum })
+            // socket.emit('leaveRoom', { roomNum: roomNum })
             localStorage.removeItem(`announcement_${roomNum}_${roundNum}`)
             props.history.push('/user/lobby')
         })
