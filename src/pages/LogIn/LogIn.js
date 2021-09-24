@@ -212,7 +212,7 @@ const LogIn = (props) => {
     }
 
     const handleLogout = (event) => {
-        signOut()
+        // signOut()
         localStorage.clear()
         history.push('login')
     }
