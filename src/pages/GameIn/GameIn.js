@@ -72,45 +72,9 @@ const GameIn = (props) => {
             }
         })
 
-        socket.on('connect_error', (res) => {
+        socket.on('error', (res) => {
             console.log(res)
-            alert('請重新登入')
-            // localStorage.removeItem('name')
-            localStorage.clear() 
-            props.history.push('/')
         })
-
-        socket.on('enterRoom_resp', (socketRes) => {
-            const getroomparmas = new URLSearchParams()
-                getroomparmas.append('roomNum', values.pincode)
-                AdminService.postGetRoom(getroomparmas).then((axiosRes) => {
-                    console.log(axiosRes)
-                    if(axiosRes.status == '200') {
-                        if(socketRes.status == 0){
-                            if(axiosRes.data.roomDetail.isGaming) {
-                                // in room & isGaming
-                                props.history.replace(`/gamelobby/${values.pincode}`)
-                            } else {
-                                // in room & !isGaming
-                                props.history.push(`/loading/${values.pincode}`)
-                            }
-                        }
-                        else if(socketRes.status == 1) {
-                            if(axiosRes.data.roomDetail.isGaming) {
-                                // new in & isGaming
-                                alert('遊戲進行中，無法加入')
-                            } else {
-                                // new in & !isGaming
-                                props.history.push(`/loading/${values.pincode}`)
-                            }
-                        }
-                        else {
-                            alert('房間不存在')
-                        }
-                    }
-                })
-        })
-
     }, [])
 
     const handleChange = (prop) => (event) => {
@@ -118,11 +82,43 @@ const GameIn = (props) => {
     }
 
     const handleSubmit = (event) => {
+        console.log(event)
         const username = localStorage.getItem('username')
         
         if (values.pincode == '') {
             alert('請輸入PIN CODE')
         } else {
+            socket.on('enterRoom_resp', (socketRes) => {
+                const getroomparmas = new URLSearchParams()
+                    getroomparmas.append('roomNum', values.pincode)
+                    AdminService.postGetRoom(getroomparmas).then((axiosRes) => {
+                        console.log(axiosRes)
+                        if(axiosRes.status == '200') {
+                            if(socketRes.status == 0){
+                                if(axiosRes.data.roomDetail.isGaming) {
+                                    // in room & isGaming
+                                    props.history.replace(`/gamelobby/${values.pincode}`)
+                                } else {
+                                    // in room & !isGaming
+                                    props.history.push(`/loading/${values.pincode}`)
+                                }
+                            }
+                            else if(socketRes.status == 1) {
+                                if(axiosRes.data.roomDetail.isGaming) {
+                                    // new in & isGaming
+                                    alert('遊戲進行中，無法加入')
+                                } else {
+                                    // new in & !isGaming
+                                    props.history.push(`/loading/${values.pincode}`)
+                                }
+                            }
+                            else {
+                                alert('房間不存在')
+                            }
+                        }
+                    })
+            })
+
             socket.emit('enterRoom', {
                 roomNum: values.pincode,
                 ID: localStorage.getItem('id'),
