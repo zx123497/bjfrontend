@@ -82,7 +82,8 @@ const GameIn = (props) => {
     }
 
     const handleSubmit = (event) => {
-        console.log(event)
+        console.log(values)
+
         const username = localStorage.getItem('username')
         
         if (values.pincode == '') {
