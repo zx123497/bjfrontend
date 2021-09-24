@@ -3,7 +3,6 @@ import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@
 import { Link, withRouter } from 'react-router-dom'
 import { socket } from '../../service/socket'
 import AdminService from '../../service/AdminService'
-import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
     GameIn: {
@@ -66,6 +65,8 @@ const GameIn = (props) => {
     })
 
     useEffect(() => {
+        socket.connect()
+
         socket.on('enterRoom_resp', (res) => {
             console.log(res)
             if(res.status == 2) {
@@ -73,12 +74,15 @@ const GameIn = (props) => {
             }
         })
 
-        socket.on('connect_error', (res) => {
+        socket.on('error', (res) => {
             console.log(res)
+<<<<<<< HEAD
             alert('請重新登入')
             localStorage.removeItem('name')
             // localStorage.clear() 
             props.history.push('/')
+=======
+>>>>>>> 1324decf36d878238122bbd4be12d431a0d26afe
         })
     }, [])
 
@@ -87,6 +91,9 @@ const GameIn = (props) => {
     }
 
     const handleSubmit = (event) => {
+        console.log(values.pincode)
+        console.log(event)
+
         const username = localStorage.getItem('username')
         
         if (values.pincode == '') {
