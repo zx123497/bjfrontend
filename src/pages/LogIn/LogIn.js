@@ -195,7 +195,7 @@ const useStyles = makeStyles((theme) => ({
 const LogIn = (props) => {
     const history = useHistory()
     const classes = useStyles()
-    // const { signIn, signOut } = useContext(AuthContext)
+    const { signIn, signOut } = useContext(AuthContext)
     const [errorMessage, setErrorMessage] = useState('')
     const [open, setOpen] = useState(false)
     const handleClose = () => {
@@ -212,7 +212,7 @@ const LogIn = (props) => {
     }
 
     const handleLogout = (event) => {
-        // signOut()
+        signOut()
         localStorage.clear()
         history.push('login')
     }
@@ -235,21 +235,21 @@ const LogIn = (props) => {
             UserService.postLogin(params)
                 .then((res) => {
                     if (res.status == '200') {
-                        if (!res.data.user.isManager) {
-                            // signIn(false)
-                            localStorage.setItem('isAdmin', '0')
-                            history.push('/user/lobby')
-                        } else {
-                            // signIn(true)
-                            localStorage.setItem('isAdmin', '1')
-                            history.push('/admin/lobby')
-                        }
                         localStorage.setItem('username', values.account)
                         localStorage.setItem('name', res.data.user.username)
                         localStorage.setItem('id', res.data.user.ID)
                         localStorage.setItem('email', values.account)
                         localStorage.setItem('token', res.data.jwt)
                         localStorage.setItem('expireTime', res.data.expiresIn)
+                        if (!res.data.user.isManager) {
+                            localStorage.setItem('isAdmin', '0')
+                            signIn(false, res.data.jwt)
+                            history.push('/user/lobby')
+                        } else {
+                            localStorage.setItem('isAdmin', '1')
+                            signIn(true, res.data.jwt)
+                            history.push('/admin/lobby')
+                        }
                     }
                 })
                 .catch((e) => {

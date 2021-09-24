@@ -120,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Register2 = (props) => {
     const history = useHistory()
-    // const { signIn, signOut } = useContext(AuthContext)
+    const { signIn, signOut } = useContext(AuthContext)
     const classes = useStyles()
     const [values, setValues] = React.useState({
         email: '',
@@ -200,21 +200,21 @@ const Register2 = (props) => {
                     UserService.postLogin(params2)
                         .then((res) => {
                             if (res.status == '200') {
-                                if (!res.data.user.isManager) {
-                                    // signIn(false)
-                                    localStorage.setItem('isAdmin', '0')
-                                    history.push('/user/lobby')
-                                } else {
-                                    // signIn()
-                                    localStorage.setItem('isAdmin', '1')
-                                    history.push('/admin/lobby')
-                                }
                                 localStorage.setItem('username', values.email)
                                 localStorage.setItem('name', res.data.user.username)
                                 localStorage.setItem('id', res.data.user.ID)
                                 localStorage.setItem('email', values.email)
                                 localStorage.setItem('token', res.data.jwt)
                                 localStorage.setItem('expireTime', res.data.expiresIn)
+                                if (!res.data.user.isManager) {
+                                    localStorage.setItem('isAdmin', '0')
+                                    signIn(false, res.data.jwt)
+                                    history.push('/user/lobby')
+                                } else {
+                                    localStorage.setItem('isAdmin', '1')
+                                    signIn(true, res.data.jwt)
+                                    history.push('/admin/lobby')
+                                }
                             }
                         })
                         .catch((e) => {

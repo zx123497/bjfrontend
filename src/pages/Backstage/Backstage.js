@@ -10,6 +10,7 @@ import RoomEdit from './Roomsettings/RoomEdit'
 import Roomsettings from './Roomsettings/Roomsettings'
 import WaitingRoom from './WaitingRoom/WaitingRoom'
 import ValueSetting from './ValueSetting/ValueSetting'
+import NotFound from '../NotFound/NotFound'
 const BackStage = (props) => {
     let { path } = useRouteMatch()
     return (
@@ -26,6 +27,7 @@ const BackStage = (props) => {
                     <Route path={`${path}/waitingroom/:id`} component={WaitingRoom} />
                     <Route path={`${path}/valuesetting/:id`} component={ValueSetting} />
                     <Route path={`${path}/roomedit/:id`} component={RoomEdit} />
+                    <Route path={`${path}/`} component={NotFound} />
                 </Switch>
             </div>
         </div>
