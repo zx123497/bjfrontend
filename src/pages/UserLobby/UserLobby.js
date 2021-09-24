@@ -341,7 +341,7 @@ const UserLobby = (props) => {
                                             color: '#FFF',
                                         }}
                                     >
-                                        {localStorage.getItem('name')}
+                                        {localStorage.getItem('id')}
                                     </div>
                                 </div>
                             </div>
