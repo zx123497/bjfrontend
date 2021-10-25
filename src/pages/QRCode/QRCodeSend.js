@@ -153,8 +153,6 @@ const QRCodeSend2 = (props) => {
     }
 
     const handleSubmit = (event) => {
-        //alert('money: ' + values.money);
-
         event.preventDefault()
     }
 
@@ -171,11 +169,6 @@ const QRCodeSend2 = (props) => {
         if (data != null) setResult(data)
         console.log(result)
     }
-
-    //const handleOnChange=(event)=>{
-    //    setMoney(event.target.value);
-    //    console.log(event.target.value);
-    //}
 
     const handleQRShow = () => {
         console.log('checked:' + state.checked)
@@ -323,7 +316,6 @@ const QRCodeSend2 = (props) => {
                                         control={
                                             <Switch
                                                 checked={state.checked}
-                                                // color="default"
                                                 color="ultimate"
                                                 onChange={handleSwitchChange}
                                                 name="checked"
@@ -339,7 +331,6 @@ const QRCodeSend2 = (props) => {
                                         control={
                                             <Switch
                                                 checked={state.checked}
-                                                // color="default"
                                                 color="ultimate"
                                                 onChange={handleSwitchChange}
                                                 name="checked"
@@ -392,7 +383,6 @@ const QRCodeSend2 = (props) => {
                                 boxShadow: 'none',
                                 width: '20%',
                                 backgroundColor: '#555',
-                                // color: '#939597',
                                 color: '#fff',
                             }}
                             onClick={handleQRShow}
@@ -408,7 +398,6 @@ const QRCodeSend2 = (props) => {
                                 boxShadow: 'none',
                                 width: '20%',
                                 backgroundColor: '#555',
-                                // color: '#939597',
                                 color: '#fff',
                             }}
                             onClick={handleQRHide}

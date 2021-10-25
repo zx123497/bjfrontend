@@ -125,9 +125,7 @@ const ResetPassword = (props) => {
                 closeWith: ['click']
             }).show();
             console.log(res.data);
-            if( res.status==200){
-                //history.push('./login');
-            }
+           
           });
           
         }

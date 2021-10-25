@@ -35,5 +35,4 @@ const BackStage = (props) => {
         </div>
     )
 }
-
 export default BackStage

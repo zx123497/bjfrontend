@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.ultimate.main,
         backgroundColor: '#555',
         height: '100vh',
-        overflow: 'hidden', //解決margin-top塌陷
+        overflow: 'hidden',
         alienItems: 'center',
         justifyContent: 'center',
 
