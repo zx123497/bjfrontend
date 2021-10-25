@@ -5,6 +5,7 @@ import AnnouncementLine from '../../../components/ForGameLobby/AnnouncementLine'
 import UpperBar from '../../../components/ForGameLobby/UpperBar'
 import GameChart from '../../../components/ForGameLobby/GameChart'
 import TransRecord from '../../../components/ForGameLobby/TransRecord'
+import { socket } from '../../../service/socket'
 import UserService from '../../../service/UserService'
 import AdminService from '../../../service/AdminService'
 import IconMenu from '../../../components/IconMenu/IconMenu'
@@ -20,8 +21,6 @@ import Button from '@material-ui/core/Button'
 import useTheme from '@material-ui/core/styles/useTheme'
 import CropFreeIcon from '@material-ui/icons/CropFree'
 import ShuffleIcon from '@material-ui/icons/Shuffle';
-import { socket } from '../../../service/socket'
-
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.ultimate.dark,
@@ -43,13 +42,9 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }))
-
 const GameLobby = (props) => {
-
-    const roomNum = window.location.href.split('/')[5]
-    
+    const roomNum = props.location.pathname.split('/')[3]
     const theme = useTheme()
-
     const [room, setRoom] = useState({
         pincode: '',
         totalMemNum: '',
@@ -57,25 +52,21 @@ const GameLobby = (props) => {
         roundTime: '',
         isGaming: '',
     })
-
     const [annoucement, setAnnouncement] = useState({
         roomAnnoucement: '',
     })
-
     const [chartData, setChartData] = useState({
         chartData: [],
     })
-
     const getRoom = () => {
         const getRoomParam = new URLSearchParams()
         getRoomParam.append('roomNum', roomNum)
         localStorage.setItem('roomNum',roomNum) 
-
         AdminService.postGetRoom(getRoomParam).then((res) => {
             if (res.status == '200') {
                 if (res.data.allUsers) {
                     setRoom({
-                        pincode: window.location.href.split('/')[5],
+                        pincode: props.match.params.id,
                         totalMemNum: res.data.allUsers.length,
                         round: res.data.roomDetail.nowRound + 1,
                         roundTime: res.data.roomDetail.roundTime,
@@ -85,11 +76,9 @@ const GameLobby = (props) => {
             }
         })
     }
-
     const getChartData = () => {
         const chartdataParam = new URLSearchParams()
         chartdataParam.append('roomNum', `${roomNum}`)
-
         AdminService.postChartData(chartdataParam).then((res) => {
             console.log(res)
             if (res.status == '200') {
@@ -97,14 +86,13 @@ const GameLobby = (props) => {
             }
         })
     }
-
     const icons = [
         {
             // end game
             icon: <TimerOffIcon />,
             title: '結束遊戲',
             func: () => {
-                socket.emit('closeRoom', { roomNum: `${window.location.href.split('/')[5]}` })
+                socket.emit('closeRoom', { roomNum: `${props.match.params.id}` })
             },
         },
         {
@@ -112,7 +100,7 @@ const GameLobby = (props) => {
             icon: <FastForwardIcon />,
             title: '下一回合',
             func: () => {
-                socket.emit('endRound', { roomNum: `${window.location.href.split('/')[5]}` })
+                socket.emit('endRound', { roomNum: `${props.match.params.id}` })
             },
         },
         {
@@ -126,22 +114,24 @@ const GameLobby = (props) => {
         },
         {
             // new chart
-            icon: <ShuffleIcon />,
+            icon: <AutorenewIcon />,
             title: '調整供需',
             func: () => {
                 socket.emit('shuffle', {
                     roomNum: `${roomNum}`,
                     roundNum: `${room.round}`,
-                    teacherID: localStorage.getItem('email')
+                    teacherID: localStorage.getItem('id')
                 })
             },
         },
         {
             // new chart
-            icon: <AutorenewIcon />,
+            icon: <ShuffleIcon />,
             title: '分配身分',
             func: () => {
-                socket.emit('sameSetShuffle', {roomNum: `${roomNum}`})
+                socket.emit('sameSetShuffle', {
+                    roomNum: `${roomNum}`
+                })
             },
         },
         {
@@ -165,34 +155,25 @@ const GameLobby = (props) => {
             },
         },
     ]
-
     useEffect(() => {
+        console.log(props)
 
-        socket.connect()
-
-        socket.on('connect', () => {
-
-            socket.emit('enterRoom', {
-                roomNum: roomNum,
-                ID: localStorage.getItem('email'),
-                username: localStorage.getItem('username'),
-            })
-
-            socket.emit('currentTime', { roomNum: roomNum })
-
+        socket.emit('enterRoom', {
+            roomNum: roomNum,
+            ID: localStorage.getItem('email'),
+            username: localStorage.getItem('username'),
         })
 
         getRoom()
         getChartData()
-        
-
+        socket.emit('currentTime', { roomNum: roomNum })
         // listen to endGame
         socket.on('get_out', (res) => {
             // props.history.push(`/gamesum/${props.match.params.id}`)
             localStorage.removeItem('announcement')
-            props.history.replace('/admin/gamesum/' + roomNum)
+            props.history.push('/admin/gamesum/' + roomNum)
+            console.log(res)
         })
-
         // listen to startGame
         socket.on('startGameResponse', (res) => {
             if (res == 'error') {
@@ -201,7 +182,6 @@ const GameLobby = (props) => {
                 window.location.reload()
             }
         })
-
         // listen to endRound
         socket.on('endRoundResponse', (res) => {
             if (res == 'error') {
@@ -216,18 +196,11 @@ const GameLobby = (props) => {
                 alert('此回合結束')
             }
         })
-
-        // listen to sameSetShuffle
-        socket.on('sameSetShuffleResponse', (res) => {
-            console.log(res)
-        })
-
         // listen to shuffle
         socket.on('shuffleResponse', (res) => {
             console.log(res)
             getChartData()
         })
-
         // listen to sendsysmsg
         socket.on('sys', (res) => {
             console.log(res)
@@ -238,17 +211,13 @@ const GameLobby = (props) => {
                 getChartData()
             }
         })
-
     }, [])
-
     const classes = useStyles()
-
     const [modalOpenState, setModalOpenState] = useState({
         seller: null,
         buyer: null,
         open: false,
     })
-
     const handleModalClose = () => {
         setModalOpenState({
             seller: null,
@@ -256,7 +225,6 @@ const GameLobby = (props) => {
             open: false,
         })
     }
-
     const handleModalOpen = () => {
         setModalOpenState({
             ...modalOpenState,
@@ -266,35 +234,28 @@ const GameLobby = (props) => {
     const handleIntervalChanged = async (id, value) => {
         setModalOpenState({ ...modalOpenState, [id]: value })
     }
-
     const handleChangeInterval = () => {
         var seller = modalOpenState.seller
         var buyer = modalOpenState.buyer
-
         var sysmsg = ''
-
         if (seller > 0) {
             sysmsg += `賣家商品成本+$${seller}  `
         } else if (seller < 0) {
             sysmsg += `賣家商品成本-$${Math.abs(seller)}  `
         }
-
         if (buyer > 0) {
             sysmsg += `買家商品價值+$${buyer}`
         } else if (buyer < 0) {
             sysmsg += `買家商品價值-$${Math.abs(buyer)}`
         }
-
         socket.emit('sendsysmsg', {
             msg: sysmsg,
             roomNum: roomNum,
             bAdjustPrice: buyer,
             sAdjustPrice: seller,
         })
-
         handleModalClose()
     }
-
     return (
         <div className={classes.root}>
             <UpperBar data={room} />
@@ -304,7 +265,6 @@ const GameLobby = (props) => {
                 <TransRecord data={room} />
             </div>
             <IconMenu icons={icons} />
-
             <Modal opened={modalOpenState.open} handleClose={handleModalClose}>
                 <h2>調整區間</h2>
                 <Input
@@ -343,5 +303,4 @@ const GameLobby = (props) => {
         </div>
     )
 }
-
 export default GameLobby
