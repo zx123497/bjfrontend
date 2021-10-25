@@ -142,13 +142,13 @@ const GameLobby = (props) => {
 
         socket.emit('enterRoom', {
             roomNum: roomNum,
-            ID: localStorage.getItem('id'),
+            ID: localStorage.getItem('email'),
             username: localStorage.getItem('username'),
         })
 
         socket.emit('currentTime', { roomNum: roomNum })
 
-        socket.emit('reqRole',{roomNum: roomNum, ID: localStorage.getItem('id')})
+        socket.emit('reqRole',{roomNum: roomNum, ID: localStorage.getItem('email')})
 
     }, [])
 

@@ -125,7 +125,7 @@ const GameIn = (props) => {
 
             socket.emit('enterRoom', {
                 roomNum: values.pincode,
-                ID: localStorage.getItem('id'),
+                ID: localStorage.getItem('email'),
                 username: localStorage.getItem('username')
             })
         }

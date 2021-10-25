@@ -119,7 +119,7 @@ const UpperBar = (props) => {
     useEffect(() => {
         socket.emit('enterRoom', {
             roomNum: roomNum,
-            ID: localStorage.getItem('id'),
+            ID: localStorage.getItem('email'),
             username: localStorage.getItem('username')
         })
 
