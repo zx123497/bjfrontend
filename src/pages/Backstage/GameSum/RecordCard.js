@@ -120,7 +120,6 @@ const RecordCard = (props) => {
 
     useEffect(() => {
         console.log(selected)
-        socket.emit('enterRoom', { roomNum: `${props.match.params.id}` })
         setRecord({records: []})
         let temp = []
         selected.selected.forEach((element) => {

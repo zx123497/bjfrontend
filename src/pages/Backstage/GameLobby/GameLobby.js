@@ -174,6 +174,7 @@ const GameLobby = (props) => {
             roomNum: roomNum,
             ID: localStorage.getItem('email'),
             username: localStorage.getItem('username'),
+            name: localStorage.getItem('name')
         })
 
         getRoom()

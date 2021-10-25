@@ -120,7 +120,8 @@ const UpperBar = (props) => {
         socket.emit('enterRoom', {
             roomNum: roomNum,
             ID: localStorage.getItem('email'),
-            username: localStorage.getItem('username')
+            username: localStorage.getItem('username'),
+            name: localStorage.getItem('name')
         })
 
         socket.on('currentTimeResponse', (res) => {

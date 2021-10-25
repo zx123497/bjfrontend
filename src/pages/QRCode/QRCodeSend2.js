@@ -242,6 +242,7 @@ const QRCodeSend2 = ({ history }, props) => {
             roomNum: localStorage.getItem('roomNum'),
             ID: localStorage.getItem('email'),
             username: localStorage.getItem('username'),
+            name: localStorage.getItem('name')
         })
 
         // listen to endRound
