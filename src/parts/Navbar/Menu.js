@@ -160,6 +160,10 @@ const Menu = (props) => {
                         title: '管理者專區',
                         id: 'lobby',
                     },
+                    {
+                        title: '網頁連結',
+                        id: 'showurl',
+                    },
                 ],
             },
         ]
