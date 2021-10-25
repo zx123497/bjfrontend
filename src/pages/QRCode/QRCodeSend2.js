@@ -238,7 +238,7 @@ const QRCodeSend2 = (props) => {
             roomNum: localStorage.getItem('roomNum'),
             ID: localStorage.getItem('email'),
             username: localStorage.getItem('username'),
-            name: localStorage.getItem('name')
+            name: localStorage.getItem('name'),
         })
 
         // listen to endRound
@@ -399,11 +399,17 @@ const QRCodeSend2 = (props) => {
                     chek_point: '1',
                 })
             } else {
-                socket.emit('checkQRcode', {
-                    roomNum: localStorage.getItem('roomNum'),
-                    payer_id: localStorage.getItem('tranUser'),
-                    receiver_id: localStorage.getItem('email'),
-                })
+                if (localStorage.getItem('haveTran') == 'true') {
+                    console.log('此回合已進行過交易')
+                    setError('此回合已進行過交易 \n無法再次交易')
+                    setOpen3(true)
+                } else {
+                    socket.emit('checkQRcode', {
+                        roomNum: localStorage.getItem('roomNum'),
+                        payer_id: localStorage.getItem('tranUser'),
+                        receiver_id: localStorage.getItem('email'),
+                    })
+                }
             }
 
             setWait(true)
@@ -413,15 +419,20 @@ const QRCodeSend2 = (props) => {
 
         if (!seller) {
             console.log('buyer 確定要交易')
-            socket.emit('get_chek_point', {
-                roomNum: localStorage.getItem('roomNum'),
-                round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
-                money: money,
-                payer_id: localStorage.getItem('email'),
-                receiver_id: localStorage.getItem('receiver_id'),
-                chek_point: '1',
-            })
-
+            if (localStorage.getItem('haveTran') == 'true') {
+                console.log('此回合已進行過交易')
+                setError('此回合已進行過交易 \n無法再次交易')
+                setOpen3(true)
+            } else {
+                socket.emit('get_chek_point', {
+                    roomNum: localStorage.getItem('roomNum'),
+                    round: parseInt(localStorage.getItem('roundNum'), 10) - 1,
+                    money: money,
+                    payer_id: localStorage.getItem('email'),
+                    receiver_id: localStorage.getItem('receiver_id'),
+                    chek_point: '1',
+                })
+            }
             setWait(true)
 
             // 轉帳方式: qrcode
