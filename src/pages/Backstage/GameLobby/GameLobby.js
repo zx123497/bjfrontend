@@ -20,6 +20,7 @@ import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet'
 import Button from '@material-ui/core/Button'
 import useTheme from '@material-ui/core/styles/useTheme'
 import CropFreeIcon from '@material-ui/icons/CropFree'
+import ShuffleIcon from '@material-ui/icons/Shuffle';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -125,12 +126,22 @@ const GameLobby = (props) => {
         {
             // new chart
             icon: <AutorenewIcon />,
-            title: '分配身分',
+            title: '調整供需',
             func: () => {
                 socket.emit('shuffle', {
                     roomNum: `${roomNum}`,
                     roundNum: `${room.round}`,
                     teacherID: localStorage.getItem('id')
+                })
+            },
+        },
+        {
+            // new chart
+            icon: <ShuffleIcon />,
+            title: '分配身分',
+            func: () => {
+                socket.emit('sameSetShuffle', {
+                    roomNum: `${roomNum}`
                 })
             },
         },
