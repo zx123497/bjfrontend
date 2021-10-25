@@ -12,6 +12,7 @@ import WaitingRoom from './WaitingRoom/WaitingRoom'
 import ValueSetting from './ValueSetting/ValueSetting'
 import NotFound from '../NotFound/NotFound'
 import QRCodeSend from '../QRCode/QRCodeSend'
+import ShowUrl from '../ShowUrl/ShowUrl'
 const BackStage = (props) => {
     let { path } = useRouteMatch()
     return (
@@ -22,6 +23,7 @@ const BackStage = (props) => {
                     <Route path={`${path}/newroom`} component={NewRoom} />
                     <Route path={`${path}/gamein/:id`} component={GameIn} />
                     <Route path={`${path}/lobby`} component={Lobby} />
+                    <Route path={`${path}/showurl`} component={ShowUrl} />
                     <Route path={`${path}/gamelobby/:id`} component={GameLobby} />
                     <Route path={`${path}/gamesum/:id`} component={GameSum} />
                     <Route path={`${path}/roomsettings`} component={Roomsettings} />
