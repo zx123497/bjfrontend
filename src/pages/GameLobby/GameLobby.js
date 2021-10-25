@@ -9,17 +9,19 @@ import { socket } from '../../service/socket'
 import UserService from '../../service/UserService'
 import AdminService from '../../service/AdminService'
 
+const roundNum = localStorage.getItem('roundNum')
+
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.ultimate.dark,
-        height: '100vh',
+        height: 'auto',
         marginTop: '35px',
+        
     },
 }))
 
 const GameLobby = (props) => {
     const roomNum = props.location.pathname.split('/')[2]
-    const roundNum = localStorage.getItem('roundNum')
 
     const [room, setRoom] = useState({
         pincode: '',
@@ -79,8 +81,8 @@ const GameLobby = (props) => {
             console.log(roomNum)
             console.log(roundNum)
 
-            if(localStorage.getItem(`announcement_${roomNum}_${roundNum}`)) {
-                setAnnouncement({roomAnnoucement: localStorage.getItem(`announcement_${roomNum}_${roundNum}`)})
+            if(localStorage.getItem(`announcement_${roomNum}_${localStorage.getItem('roundNum')}`)) {
+                setAnnouncement({roomAnnoucement: localStorage.getItem(`announcement_${roomNum}_${localStorage.getItem('roundNum')}`)})
             }
 
             if (res.status == 0 && res.thisRound_Record) {
@@ -96,7 +98,7 @@ const GameLobby = (props) => {
                 setTrans({
                     score: res.user.score,
                     transAmount: res.thisRound_Record.price,
-                    transPartner: res.thisRound_Record.userid
+                    transPartner: res.thisRound_Record.name
                 })
             } else {
                 setTrans({
@@ -129,7 +131,7 @@ const GameLobby = (props) => {
         socket.on('sys', (res) => {
             if (res != 'error') {
                 setAnnouncement({ roomAnnoucement: res.message })
-                localStorage.setItem(`announcement_${roomNum}_${roundNum}`, res.message)
+                localStorage.setItem(`announcement_${roomNum}_${localStorage.getItem('roundNum')}`, res.message)
             }
         })
 
@@ -144,6 +146,7 @@ const GameLobby = (props) => {
             roomNum: roomNum,
             ID: localStorage.getItem('email'),
             username: localStorage.getItem('username'),
+            name: localStorage.getItem('name')
         })
 
         socket.emit('currentTime', { roomNum: roomNum })

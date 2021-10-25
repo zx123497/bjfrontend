@@ -238,6 +238,7 @@ const QRCodeSend2 = (props) => {
             roomNum: localStorage.getItem('roomNum'),
             ID: localStorage.getItem('email'),
             username: localStorage.getItem('username'),
+            name: localStorage.getItem('name')
         })
 
         // listen to endRound
