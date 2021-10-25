@@ -19,8 +19,6 @@ import ErrorIcon from '@material-ui/icons/Error'
 import FaceIcon from '@material-ui/icons/Face'
 import QrReader from 'react-qr-reader' //v1
 
-socket.connect()
-
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
         display: 'flex',
