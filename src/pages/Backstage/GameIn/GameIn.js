@@ -79,6 +79,8 @@ const NewRoom = (props) => {
     const classes = useStyles()
     const [name, setName] = useState('')
     const id = props.match.params.id
+
+   
     useEffect(() => {
         RoomService.showRoom(id).then((res) => {
             console.log(res.data)

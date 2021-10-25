@@ -6,11 +6,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import WarningIcon from '@material-ui/icons/Warning'
 import BackPage from '../../components/BackPage/BackPage'
-import Back from '../../components/BackPage/Back'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import QRCode from 'react-qr-code'
-// import { socket } from '../../service/socket'
-import io from 'socket.io-client'
+import { socket } from '../../service/socket'
+// import io from 'socket.io-client'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -18,14 +17,9 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import ErrorIcon from '@material-ui/icons/Error'
 import FaceIcon from '@material-ui/icons/Face'
-// import { ScreenBrightness } from '@capacitor-community/screen-brightness'
-// import ScreenBrightness from 'react-native-screen-brightness'
 import QrReader from 'react-qr-reader' //v1
-import BarcodeReader from 'react-barcode-reader' //v2 沒有用QQ
-// import QrReader from 'react-weblineindia-qrcode-scanner' //v3
-// import QrReader from 'react-qr-scanner' //v4
-// import { QrReader } from '@blackbox-vision/react-qr-reader' //v5
-// import QrReader from 'react-web-qr-reader' //v5
+
+socket.connect()
 
 const useStyles = makeStyles((theme) => ({
     QRCodeSend2: {
@@ -141,14 +135,18 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const QRCodeSend2 = ({ history }, props) => {
+const QRCodeSend2 = (props) => {
     const classes = useStyles()
-    const socket = props.socket
+    // const socket = props.socket
 
-    history.listen(() => {
+    props.history.listen(() => {
         socket.on('disconnect', function () {
             console.log('disconnect' + this.id)
         })
+    })
+
+    useEffect(() => {
+        console.log(props)
     })
 
     const history2 = useHistory()
@@ -227,8 +225,8 @@ const QRCodeSend2 = ({ history }, props) => {
             localStorage.setItem('socketid', data.s)
         })
 
-        //每次setsocket 都會傳送訊息給 user 234
-        //user 234 要先建立過連線
+        //每次setsocket 都會傳送訊息給 user
+        //user 要先建立過連線
         socket.on('testbroadcast', function (data) {
             console.log(data.msg)
         })
@@ -279,7 +277,7 @@ const QRCodeSend2 = ({ history }, props) => {
         })
 
         if (localStorage.getItem('haveShow') == null) {
-            setError('請確認交易雙方皆在此面\n 再進行交易')
+            setError('請確認交易雙方皆在此頁\n 再進行交易')
             setOpen3(true)
             localStorage.setItem('haveShow', true)
         }
@@ -753,7 +751,12 @@ const QRCodeSend2 = ({ history }, props) => {
 
     return (
         <div className={classes.QRCodeSend2}>
-            <BackPage refs={`gamelobby/${localStorage.getItem('roomNum')}`}></BackPage>
+            <BackPage
+                style={{
+                    color: '#555',
+                }}
+                refs={`gamelobby/${localStorage.getItem('roomNum')}`}
+            ></BackPage>
             {/* 確認1 */}
             <Dialog
                 PaperProps={{
@@ -1015,9 +1018,10 @@ const QRCodeSend2 = ({ history }, props) => {
                                 className={`${showQR ? 'Tshow' : 'Thide'}`}
                                 value={values.tranId}
                                 onChange={handleChange('tranId')}
+                                multiline
                                 label={
                                     <Typography style={{ color: '#555' }} variant="headline" component="h3">
-                                        轉出對象id
+                                        轉出對象email
                                     </Typography>
                                 }
                                 inputProps={{ style: { fontFamily: 'Arial', color: '#555' } }}
@@ -1034,7 +1038,7 @@ const QRCodeSend2 = ({ history }, props) => {
                                 onChange={handleChange('tranId')}
                                 label={
                                     <Typography style={{ color: '#555' }} variant="headline" component="h3">
-                                        轉出對象id
+                                        轉出對象email
                                     </Typography>
                                 }
                                 inputProps={{ style: { fontFamily: 'Arial', color: '#555' } }}
@@ -1100,7 +1104,7 @@ const QRCodeSend2 = ({ history }, props) => {
                             className={`${showQR ? 'QRshow' : 'QRhide'}`}
                             level="L"
                             size={250}
-                            value={'teacher=0/' + 'money=' + money + '/userId=' + localStorage.getItem('id')}
+                            value={'teacher=0/' + 'money=' + money + '/userId=' + localStorage.getItem('email')}
                         />
                     </div>
                     <Link

@@ -161,7 +161,7 @@ const ForgetPassword2 = (props) => {
 
                 console.log(res.data)
                 if (res.status == 200) {
-                    //history.push('./login');
+                   
                     setError('成功重設密碼！')
                     setOpen(true)
                 }

@@ -198,7 +198,7 @@ const Waitingroom = (props) => {
                 ))}
             </div>
             <div style={{ width: '70%', display: 'flex', justifyContent: 'flex-end' }}>
-                <Button className="start" component={Link} to={`/admin/gamelobby/${pin}`}>
+                <Button className="start" component={Link} to={`/admingamecenter/gamelobby/${pin}`}>
                     <PlayCircleFilledWhiteIcon style={{ marginRight: '1rem' }} /> 開始遊戲 !
                 </Button>
             </div>
