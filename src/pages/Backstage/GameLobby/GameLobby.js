@@ -170,6 +170,7 @@ const GameLobby = (props) => {
         getRoom()
         getChartData()
         socket.emit('currentTime', { roomNum: roomNum })
+        
         // listen to endGame
         socket.on('get_out', (res) => {
             // props.history.push(`/gamesum/${props.match.params.id}`)
@@ -177,6 +178,7 @@ const GameLobby = (props) => {
             props.history.push('/admin/gamesum/' + roomNum)
             console.log(res)
         })
+
         // listen to startGame
         socket.on('startGameResponse', (res) => {
             if (res == 'error') {
@@ -193,6 +195,7 @@ const GameLobby = (props) => {
                 window.location.reload()
             }
         })
+
         // listen to endRound
         socket.on('endRoundResponse', (res) => {
             if (res == 'error') {
@@ -231,11 +234,34 @@ const GameLobby = (props) => {
                 }).show()
             }
         })
+
         // listen to shuffle
         socket.on('shuffleResponse', (res) => {
-            console.log(res)
-            getChartData()
+            if(res == "shuffleError") {
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '遊戲中途無法調整',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
+            } else if (res == "error") {
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '請重新整理頁面再試一次',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
+            } else {
+                getChartData()
+            }
         })
+
         // listen to sendsysmsg
         socket.on('sys', (res) => {
             console.log(res)
@@ -254,17 +280,40 @@ const GameLobby = (props) => {
                 getChartData()
             }
         })
+
         // listen to sameSetShuffle
         socket.on('sameSetShuffleResponse', (res) => {
-            new Noty({
-                type: 'success',
-                layout: 'topRight',
-                theme: 'mint',
-                text: '已重新分配身分',
-                timeout: '4000',
-                progressBar: true,
-                closeWith: ['click'],
-            }).show()
+            if(res == "sameSetShuffleError") {
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '遊戲中途無法重新分配',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
+            } else if (res == "error") {
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '請重新整理頁面再試一次',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
+            } else {
+                new Noty({
+                    type: 'success',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '已重新分配身分',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
+            }
         })
     }, [])
     const classes = useStyles()
