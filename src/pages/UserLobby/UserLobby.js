@@ -47,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
             color: '#FFF',
         },
         '& .roombtn': {
-            height: '2.5rem',
             backgroundColor: theme.palette.secondary.main,
             color: theme.palette.background.paper,
             boxShadow: '0 0 10px rgba(0,0,0,0.2)',
@@ -398,9 +397,18 @@ const UserLobby = (props) => {
                             props.history.push('/gamein')
                         }}
                     >
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                minHeight: 'max-content',
+                                height: 'max-content',
+                                fontSize: '20px',
+                            }}
+                        >
                             <AddCircleIcon style={{ marginRight: '.5rem' }} />
-                            <p className="roomtext">進入房間</p>
+                            進入房間
                         </div>
                     </Button>
                 </div>
