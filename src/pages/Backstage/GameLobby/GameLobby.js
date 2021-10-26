@@ -120,7 +120,7 @@ const GameLobby = (props) => {
                 socket.emit('shuffle', {
                     roomNum: `${roomNum}`,
                     roundNum: `${room.round}`,
-                    teacherID: localStorage.getItem('id')
+                    teacherID: localStorage.getItem('email')
                 })
             },
         },
