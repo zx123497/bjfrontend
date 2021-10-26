@@ -90,6 +90,7 @@ const RecordCard = (props) => {
 
     useEffect(() => {
         socket.on('getmultiRecordsResponse', function (obj) {
+            console.log(obj)
             if(obj && (!obj.s)) {
                 console.log(obj)
                 let temp = []
