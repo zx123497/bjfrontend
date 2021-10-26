@@ -60,6 +60,9 @@ const GameLobby = (props) => {
     const [chartData, setChartData] = useState({
         chartData: [],
     })
+
+    const [ time, setTime ] = useState()
+
     const getRoom = () => {
         const getRoomParam = new URLSearchParams()
         getRoomParam.append('roomNum', roomNum)
@@ -179,6 +182,12 @@ const GameLobby = (props) => {
             console.log(res)
         })
 
+        socket.on('currentTimeResponse', (res) => {
+            var temp = new Date()
+            expTime.setTime(temp.getTime() + 1000 * res.remainSecond)
+            setTime(expTime)
+        })
+
         // listen to startGame
         socket.on('startGameResponse', (res) => {
             if (res == 'error') {
@@ -192,7 +201,7 @@ const GameLobby = (props) => {
                     closeWith: ['click'],
                 }).show()
             } else {
-                window.location.reload()
+                getRoom()
             }
         })
 
@@ -363,7 +372,7 @@ const GameLobby = (props) => {
     }
     return (
         <div className={classes.root}>
-            <UpperBar data={room} />
+            <UpperBar data={{room: room, time: time}} />
             <AnnouncementLine data={annoucement} />
             <div className={classes.componenet}>
                 <GameChart data={chartData} />

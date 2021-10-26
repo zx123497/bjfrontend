@@ -48,6 +48,8 @@ const GameLobby = (props) => {
         roomAnnoucement: '',
     })
 
+    const [ time, setTime ] = useState()
+
     const getRoom = () => {
         const getRoomParam = new URLSearchParams()
         getRoomParam.append('roomNum', roomNum)
@@ -109,6 +111,12 @@ const GameLobby = (props) => {
             }
         })
 
+        socket.on('currentTimeResponse', (res) => {
+            var temp = new Date()
+            expTime.setTime(temp.getTime() + 1000 * res.remainSecond)
+            setTime(expTime)
+        })
+
         socket.on('resRole', (res) => {
             setPlayer({
                     item: '',
@@ -160,7 +168,7 @@ const GameLobby = (props) => {
 
     return (
         <div className={classes.root}>
-            <UpperBar data={room} />
+            <UpperBar data={{room: room, time: time}} />
             <AnnouncementLine data={annoucement} />
             <UserInfo data={player} />
             <PersonalTransaction data={{room: room, player: player, trans: trans}} />

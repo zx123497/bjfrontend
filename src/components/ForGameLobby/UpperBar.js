@@ -113,32 +113,17 @@ const UpperBar = (props) => {
     })
 
     const expTime = new Date()
-
     const [ time, setTime ] = useState(expTime)
-
-    useEffect(() => {
-        socket.emit('enterRoom', {
-            roomNum: roomNum,
-            ID: localStorage.getItem('email'),
-            username: localStorage.getItem('username'),
-            name: localStorage.getItem('name')
-        })
-
-        socket.on('currentTimeResponse', (res) => {
-            var temp = new Date()
-            expTime.setTime(temp.getTime() + 1000 * res.remainSecond)
-            setTime(expTime)
-        })
-    }, [])
-
+ 
     useEffect(() => {
         setRoom({
-            pincode: props.data.pincode,
-            totalMemNum: props.data.totalMemNum,
-            round: props.data.round,
-            roundTime: props.data.roundTime,
-            isGaming: props.data.isGaming
+            pincode: props.data.room.pincode,
+            totalMemNum: props.data.room.totalMemNum,
+            round: props.data.room.round,
+            roundTime: props.data.room.roundTime,
+            isGaming: props.data.room.isGaming
         })
+        setTime(props.data.time)
         localStorage.setItem('roundNum',  props.data.round) //for Qrcode
         // localStorage.setItem("roomNum",  room.pincode)  
     }, [props.data])

@@ -5,6 +5,8 @@ import { socket } from '../../service/socket'
 import AdminService from '../../service/AdminService'
 import Noty from 'noty'
 
+socket.connect()
+
 const useStyles = makeStyles((theme) => ({
     GameIn: {
         display: 'flex',
@@ -66,23 +68,6 @@ const GameIn = (props) => {
     })
 
     useEffect(() => {
-        socket.connect()
-
-        socket.on('enterRoom_resp', (res) => {
-            console.log(res)
-            if(res.status == 2) {
-                new Noty({
-                    type: 'error',
-                    layout: 'topRight',
-                    theme: 'mint',
-                    text: res.msg,
-                    timeout: '4000',
-                    progressBar: true,
-                    closeWith: ['click'],
-                }).show()
-            }
-        })
-
         socket.on('error', (res) => {
             console.log(res)
         })
