@@ -193,7 +193,7 @@ const QRCodeSend2 = (props) => {
 
     return (
         <div className={classes.QRCodeSend}>
-            <BackPage refs={`admin/gamelobby/${localStorage.getItem('roomNum')}`}></BackPage>
+            <BackPage refs={`gamelobby/${localStorage.getItem('roomNum')}`}></BackPage>
 
             {/* 付款 */}
             <div className="grid-container">
