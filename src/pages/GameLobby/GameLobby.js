@@ -48,6 +48,7 @@ const GameLobby = (props) => {
         roomAnnoucement: '',
     })
 
+    const expTime = new Date()
     const [ time, setTime ] = useState()
 
     const getRoom = () => {

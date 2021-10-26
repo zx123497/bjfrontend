@@ -61,6 +61,7 @@ const GameLobby = (props) => {
         chartData: [],
     })
 
+    const expTime = new Date()
     const [ time, setTime ] = useState()
 
     const getRoom = () => {
