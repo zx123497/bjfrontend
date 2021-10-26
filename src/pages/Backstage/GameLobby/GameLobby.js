@@ -21,6 +21,8 @@ import Button from '@material-ui/core/Button'
 import useTheme from '@material-ui/core/styles/useTheme'
 import CropFreeIcon from '@material-ui/icons/CropFree'
 import ShuffleIcon from '@material-ui/icons/Shuffle';
+import Noty from 'noty'
+
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.ultimate.dark,
@@ -211,6 +213,18 @@ const GameLobby = (props) => {
                 setAnnouncement({ roomAnnoucement: res.message })
                 getChartData()
             }
+        })
+        // listen to sameSetShuffle
+        socket.on('sameSetShuffleResponse', (res) => {
+            new Noty({
+                type: 'success',
+                layout: 'topRight',
+                theme: 'mint',
+                text: '已重新分配身分',
+                timeout: '4000',
+                progressBar: true,
+                closeWith: ['click'],
+            }).show()
         })
     }, [])
     const classes = useStyles()
