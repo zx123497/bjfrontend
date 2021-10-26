@@ -51,8 +51,9 @@ const useStyles = makeStyles((theme) => ({
             '& .basic': {
                 display: 'flex',
                 padding: '1.5rem',
-                minWidth: 'max-content',
+                flexWrap: 'wrap',
                 width: '60%',
+                alignItems: 'center',
                 justifyContent: 'center',
             },
             '& .basic_round': {
@@ -292,7 +293,7 @@ const NewRoom = (props) => {
                     label="初始金額"
                 />
                 <Input
-                    className="interval"
+                    className="test"
                     key="interval"
                     id="interval"
                     elementType="input"
@@ -309,7 +310,16 @@ const NewRoom = (props) => {
             {form.rounds.map((round) => (
                 <div className="basic_round">
                     <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-                        <h3 style={{ margin: 'auto', textAlign: 'center', flex: '1' }}>第{round.round_id + 1}回合</h3>
+                        {round.round_id != 0 && round.round_id + 1 === form.rounds.length ? (
+                            <Button style={{ border: '1px solid #FFF', color: '#FFF', opacity: 0 }} disabled>
+                                刪除回合
+                            </Button>
+                        ) : (
+                            <></>
+                        )}
+                        <h3 style={{ margin: 'auto', textAlign: 'center', flex: '1', width: '100%' }}>
+                            第{round.round_id + 1}回合
+                        </h3>
                         {round.round_id != 0 && round.round_id + 1 === form.rounds.length ? (
                             <Button style={{ border: '1px solid #FFF', color: '#FFF' }} onClick={handleGetParent}>
                                 刪除回合
