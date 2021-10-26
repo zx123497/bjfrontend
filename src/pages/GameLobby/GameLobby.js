@@ -48,9 +48,6 @@ const GameLobby = (props) => {
         roomAnnoucement: '',
     })
 
-    const expTime = new Date()
-    const [ time, setTime ] = useState()
-
     const getRoom = () => {
         const getRoomParam = new URLSearchParams()
         getRoomParam.append('roomNum', roomNum)
@@ -71,6 +68,11 @@ const GameLobby = (props) => {
     }
 
     useEffect(() => {
+
+        socket.emit('setSocket', { roomNum: props.match.params.id, user_id: localStorage.getItem('email')})
+        socket.on('testSocket', (res) => {
+            console.log(res)
+        })
 
         getRoom()
 
@@ -110,12 +112,6 @@ const GameLobby = (props) => {
                     transPartner: ''
                 })
             }
-        })
-
-        socket.on('currentTimeResponse', (res) => {
-            var temp = new Date()
-            expTime.setTime(temp.getTime() + 1000 * res.remainSecond)
-            setTime(expTime)
         })
 
         socket.on('resRole', (res) => {
@@ -169,7 +165,7 @@ const GameLobby = (props) => {
 
     return (
         <div className={classes.root}>
-            <UpperBar data={{room: room, time: time}} />
+            <UpperBar data={room} />
             <AnnouncementLine data={annoucement} />
             <UserInfo data={player} />
             <PersonalTransaction data={{room: room, player: player, trans: trans}} />

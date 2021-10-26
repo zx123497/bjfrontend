@@ -49,12 +49,7 @@ const TransRecord = (props) => {
 
     const classes = useStyles();
 
-    useEffect(() => {
-        socket.emit('setSocket', { roomNum: props.match.params.id, user_id: localStorage.getItem('email')})
-        socket.on('testSocket', (res) => {
-            console.log(res)
-        })
-        
+    useEffect(() => {        
         socket.on('getRecordRequest', function (obj) {
             console.log(obj)
             if(obj != 'error' && obj) {
