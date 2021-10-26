@@ -5,6 +5,7 @@ import { Link, withRouter } from 'react-router-dom'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import SettingsIcon from '@material-ui/icons/Settings'
+import PollIcon from '@material-ui/icons/Poll'
 const useStyles = makeStyles((theme) => ({
     Card: {
         boxShadow: '0 3px 6px rgba(0,0,0,0.3)',
@@ -123,6 +124,9 @@ const Roomcard = (props) => {
                 </IconButton>
                 <IconButton component={Link} to={`/admin/roomedit/${props.id}`}>
                     <SettingsIcon className="icon" />
+                </IconButton>
+                <IconButton onClick={() => {}}>
+                    <PollIcon className="icon" />
                 </IconButton>
             </div>
         </div>
