@@ -124,7 +124,7 @@ const NewRoom = (props) => {
                 roomName: res.data.roomName,
                 roundTime: res.data.roundTime,
                 initMoney: res.data.initMoney,
-                interval: res.data.interval
+                interval: res.data.interval,
             })
         })
     }, [])
@@ -132,16 +132,9 @@ const NewRoom = (props) => {
     const handleAddRound = () => {
         let new_rounds = form.rounds
         let id = form.roundNum
-        new_rounds.push({
-            round_id: id,
-            buyratio: 50,
-            sellratio: 50,
-            items: '',
-            saleMax: 0,
-            saleMin: 0,
-            buyMax: 0,
-            buyMin: 0,
-        })
+        let prev = form.rounds[0]
+        prev = { ...prev, round_id: id }
+        new_rounds.push(prev)
         setForm({ ...form, rounds: new_rounds, roundNum: id + 1 })
     }
     const handleCreateRoom = () => {
@@ -182,6 +175,13 @@ const NewRoom = (props) => {
             }).show()
             history.push('/admin/lobby')
         })
+    }
+
+    const handleDeleteLast = async (id, value) => {
+        let newRound = form.rounds
+        let round_id = form.roundNum
+        newRound.pop()
+        setForm({ ...form, rounds: newRound, roundNum: round_id - 1 })
     }
 
     const handleTitleChange = async (id, value) => {
@@ -304,7 +304,16 @@ const NewRoom = (props) => {
             <h2 style={{ marginLeft: '1rem' }}>回合設定</h2>
             {form.rounds.map((round) => (
                 <div className="basic_round">
-                    <h3 style={{ margin: 'auto', textAlign: 'center' }}>第{round.round_id + 1}回合</h3>
+                    <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                        <h3 style={{ margin: 'auto', textAlign: 'center', flex: '1' }}>第{round.round_id + 1}回合</h3>
+                        {round.round_id != 0 && round.round_id + 1 === form.rounds.length ? (
+                            <Button style={{ border: '1px solid #FFF', color: '#FFF' }} onClick={handleDeleteLast}>
+                                刪除回合
+                            </Button>
+                        ) : (
+                            <></>
+                        )}
+                    </div>
                     <h4 style={{ marginBottom: '5px' }}>買賣家比例(%)</h4>
                     <div style={{ display: 'flex' }}>
                         <Input

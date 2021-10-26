@@ -126,17 +126,7 @@ const NewRoom = (props) => {
         let id = form.roundNum
         let prev = form.rounds[0]
         prev = { ...prev, round_id: id }
-        new_rounds.push(
-            // round_id: id,
-            // buyratio: 50,
-            // sellratio: 50,
-            // items: '',
-            // saleMax: 0,
-            // saleMin: 0,
-            // buyMax: 0,
-            // buyMin: 0,
-            prev
-        )
+        new_rounds.push(prev)
         setForm({ ...form, rounds: new_rounds, roundNum: id + 1 })
     }
     const handleCreateRoom = () => {
