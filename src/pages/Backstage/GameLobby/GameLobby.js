@@ -170,7 +170,7 @@ const GameLobby = (props) => {
         getRoom()
         getChartData()
         socket.emit('currentTime', { roomNum: roomNum })
-        
+
         // listen to endGame
         socket.on('get_out', (res) => {
             // props.history.push(`/gamesum/${props.match.params.id}`)
@@ -258,6 +258,7 @@ const GameLobby = (props) => {
                     closeWith: ['click'],
                 }).show()
             } else {
+                console.log(res)
                 getChartData()
             }
         })
