@@ -83,7 +83,9 @@ const RecordCard = (props) => {
         selected: []
     })
 
-    const [record, setRecord] = useState({})
+    const [record, setRecord] = useState({
+        records: []
+    })
 
 
     useEffect(() => {
@@ -110,7 +112,7 @@ const RecordCard = (props) => {
                             i++
                         })
                     })
-                    setRecord(temp);
+                    setRecord({records: temp});
                 }
             }
             // console.log(records)
@@ -171,7 +173,7 @@ const RecordCard = (props) => {
                     <div className="record">
                         <Typography className="label" variant="caption">交易紀錄</Typography>
                         <div className="recordContainer">
-                            {record}
+                            {record.records}
                         </div>                    
                     </div>
                 </div>
