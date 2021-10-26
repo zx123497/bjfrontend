@@ -187,8 +187,7 @@ const Register2 = (props) => {
 
                 if (res.status === 500) {
                     alert('此email已被註冊!')
-                }
-                else if (res.status === 200) {
+                } else if (res.status === 200) {
                     // setError("註冊成功!")
                     // setOpen(true)
                     alert('註冊成功!')
@@ -263,7 +262,7 @@ const Register2 = (props) => {
                             }}
                             className="input1"
                             multiline
-                            label="帳號 (請使用Gmail信箱)"
+                            label="帳號 (請使用Email信箱)"
                             type="search"
                             variant="outlined"
                             size="small"
