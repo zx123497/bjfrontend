@@ -180,7 +180,15 @@ const GameLobby = (props) => {
         // listen to startGame
         socket.on('startGameResponse', (res) => {
             if (res == 'error') {
-                alert('進行中的遊戲點擊開始按鈕無效')
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '進行中的遊戲點擊開始按鈕無效',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
             } else {
                 window.location.reload()
             }
@@ -188,15 +196,39 @@ const GameLobby = (props) => {
         // listen to endRound
         socket.on('endRoundResponse', (res) => {
             if (res == 'error') {
-                alert('請先開始遊戲再執行結束回合')
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '請先開始遊戲',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
             } else if (res == 'error(no next round)') {
-                alert('已達設定回合上限，請回到管理者專區更改設定增加回合數')
+                new Noty({
+                    type: 'warning',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '已達回合上限，請回到管理者專區更改設定',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
                 localStorage.removeItem('announcement')
                 props.history.replace('/admin/lobby')
             } else if (res == 'endRoundMessage') {
                 window.location.reload()
                 localStorage.removeItem('announcement')
-                alert('此回合結束')
+                new Noty({
+                    type: 'success',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '此回合結束',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
             }
         })
         // listen to shuffle
@@ -208,7 +240,15 @@ const GameLobby = (props) => {
         socket.on('sys', (res) => {
             console.log(res)
             if (res == 'error') {
-                alert('請先開始遊戲')
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '請先開始遊戲',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
             } else {
                 setAnnouncement({ roomAnnoucement: res.message })
                 getChartData()
