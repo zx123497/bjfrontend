@@ -65,8 +65,8 @@
         ],
         "rules": {
             "eqeqeq": "off",
-            "curly": "error",
-            "quotes": ["error", "double"]
+            "curly": "off",
+            "quotes": ["off", "double"]
     }
     },
     "browserslist": {
