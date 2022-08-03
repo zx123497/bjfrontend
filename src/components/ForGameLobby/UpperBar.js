@@ -117,13 +117,6 @@ const UpperBar = (props) => {
     const [ time, setTime ] = useState(expTime)
 
     useEffect(() => {
-        socket.emit('enterRoom', {
-            roomNum: roomNum,
-            ID: localStorage.getItem('email'),
-            username: localStorage.getItem('username'),
-            name: localStorage.getItem('name')
-        })
-
         socket.on('currentTimeResponse', (res) => {
             var temp = new Date()
             expTime.setTime(temp.getTime() + 1000 * res.remainSecond)

@@ -49,7 +49,7 @@ const TransRecord = (props) => {
 
     const classes = useStyles();
 
-    useEffect(() => {
+    useEffect(() => {        
         socket.on('getRecordRequest', function (obj) {
             console.log(obj)
             if(obj != 'error' && obj) {

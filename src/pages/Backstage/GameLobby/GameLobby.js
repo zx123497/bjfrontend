@@ -21,6 +21,8 @@ import Button from '@material-ui/core/Button'
 import useTheme from '@material-ui/core/styles/useTheme'
 import CropFreeIcon from '@material-ui/icons/CropFree'
 import ShuffleIcon from '@material-ui/icons/Shuffle';
+import Noty from 'noty'
+
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.ultimate.dark,
@@ -120,7 +122,7 @@ const GameLobby = (props) => {
                 socket.emit('shuffle', {
                     roomNum: `${roomNum}`,
                     roundNum: `${room.round}`,
-                    teacherID: localStorage.getItem('id')
+                    teacherID: localStorage.getItem('email')
                 })
             },
         },
@@ -168,6 +170,7 @@ const GameLobby = (props) => {
         getRoom()
         getChartData()
         socket.emit('currentTime', { roomNum: roomNum })
+
         // listen to endGame
         socket.on('get_out', (res) => {
             // props.history.push(`/gamesum/${props.match.params.id}`)
@@ -175,41 +178,142 @@ const GameLobby = (props) => {
             props.history.push('/admin/gamesum/' + roomNum)
             console.log(res)
         })
+
         // listen to startGame
         socket.on('startGameResponse', (res) => {
             if (res == 'error') {
-                alert('進行中的遊戲點擊開始按鈕無效')
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '進行中的遊戲點擊開始按鈕無效',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
             } else {
                 window.location.reload()
             }
         })
+
         // listen to endRound
         socket.on('endRoundResponse', (res) => {
             if (res == 'error') {
-                alert('請先開始遊戲再執行結束回合')
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '請先開始遊戲',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
             } else if (res == 'error(no next round)') {
-                alert('已達設定回合上限，請回到管理者專區更改設定增加回合數')
+                new Noty({
+                    type: 'warning',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '已達回合上限，請回到管理者專區更改設定',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
                 localStorage.removeItem('announcement')
                 props.history.replace('/admin/lobby')
             } else if (res == 'endRoundMessage') {
                 window.location.reload()
                 localStorage.removeItem('announcement')
-                alert('此回合結束')
+                new Noty({
+                    type: 'success',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '此回合結束',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
             }
         })
+
         // listen to shuffle
         socket.on('shuffleResponse', (res) => {
-            console.log(res)
-            getChartData()
+            if(res == "shuffleError") {
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '遊戲中途無法調整',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
+            } else if (res == "error") {
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '請重新整理頁面再試一次',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
+            } else {
+                console.log(res)
+                getChartData()
+            }
         })
+
         // listen to sendsysmsg
         socket.on('sys', (res) => {
             console.log(res)
             if (res == 'error') {
-                alert('請先開始遊戲')
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '請先開始遊戲',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
             } else {
                 setAnnouncement({ roomAnnoucement: res.message })
                 getChartData()
+            }
+        })
+
+        // listen to sameSetShuffle
+        socket.on('sameSetShuffleResponse', (res) => {
+            if(res == "sameSetShuffleError") {
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '遊戲中途無法重新分配',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
+            } else if (res == "error") {
+                new Noty({
+                    type: 'error',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '請重新整理頁面再試一次',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
+            } else {
+                new Noty({
+                    type: 'success',
+                    layout: 'topRight',
+                    theme: 'mint',
+                    text: '已重新分配身分',
+                    timeout: '4000',
+                    progressBar: true,
+                    closeWith: ['click'],
+                }).show()
             }
         })
     }, [])

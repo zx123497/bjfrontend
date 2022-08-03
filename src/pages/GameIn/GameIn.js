@@ -3,6 +3,9 @@ import { makeStyles, Card, CardActions, CardContent, Button, TextField } from '@
 import { Link, withRouter } from 'react-router-dom'
 import { socket } from '../../service/socket'
 import AdminService from '../../service/AdminService'
+import Noty from 'noty'
+
+socket.connect()
 
 const useStyles = makeStyles((theme) => ({
     GameIn: {
@@ -65,15 +68,6 @@ const GameIn = (props) => {
     })
 
     useEffect(() => {
-        socket.connect()
-
-        socket.on('enterRoom_resp', (res) => {
-            console.log(res)
-            if(res.status == 2) {
-                alert(res.msg)
-            }
-        })
-
         socket.on('error', (res) => {
             console.log(res)
         })
@@ -90,7 +84,15 @@ const GameIn = (props) => {
         const username = localStorage.getItem('username')
         
         if (values.pincode == '') {
-            alert('請輸入PIN CODE')
+            new Noty({
+                type: 'error',
+                layout: 'topRight',
+                theme: 'mint',
+                text: '請輸入PIN CODE',
+                timeout: '4000',
+                progressBar: true,
+                closeWith: ['click'],
+            }).show()
         } else {
             socket.on('enterRoom_resp', (socketRes) => {
                 const getroomparmas = new URLSearchParams()
@@ -110,14 +112,30 @@ const GameIn = (props) => {
                             else if(socketRes.status == 1) {
                                 if(axiosRes.data.roomDetail.isGaming) {
                                     // new in & isGaming
-                                    alert('遊戲進行中，無法加入')
+                                    new Noty({
+                                        type: 'error',
+                                        layout: 'topRight',
+                                        theme: 'mint',
+                                        text: '遊戲進行中，無法加入',
+                                        timeout: '4000',
+                                        progressBar: true,
+                                        closeWith: ['click'],
+                                    }).show()
                                 } else {
                                     // new in & !isGaming
                                     props.history.push(`/loading/${values.pincode}`)
                                 }
                             }
                             else {
-                                alert('房間不存在')
+                                new Noty({
+                                    type: 'error',
+                                    layout: 'topRight',
+                                    theme: 'mint',
+                                    text: '房間不存在',
+                                    timeout: '4000',
+                                    progressBar: true,
+                                    closeWith: ['click'],
+                                }).show()
                             }
                         }
                     })

@@ -69,6 +69,11 @@ const GameLobby = (props) => {
 
     useEffect(() => {
 
+        socket.emit('setSocket', { roomNum: props.match.params.id, user_id: localStorage.getItem('email')})
+        socket.on('testSocket', (res) => {
+            console.log(res)
+        })
+
         getRoom()
 
         localStorage.setItem('roomNum', roomNum)
